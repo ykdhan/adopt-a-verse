@@ -14,7 +14,7 @@
     <script type="text/javascript" src="js/load-chapter.js?v=1.7"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    
+    <script type="text/javascript" src="https://cdn.rawgit.com/filamentgroup/fixed-sticky/master/fixedsticky.js"></script>
     
     
     <!-- Wycliffe links -->
@@ -67,9 +67,9 @@
     </div>
     <div id="toggle-menu">
         <div class="div-tab font--bold">
-            <button class="tabs tabs-now" onclick="tab(event, 'tab-donate')">DONATE</button>
-            <button class="tabs" onclick="tab(event, 'tab-about')">ABOUT THE LANGUAGE</button>
-            <button class="tabs" onclick="tab(event, 'tab-goal')">OUR CAMPAIGN GOAL</button>
+            <button class="capitalize tabs tabs-now" onclick="tab(event, 'tab-donate')">Donate</button>
+            <button class="capitalize tabs" onclick="tab(event, 'tab-about')">About the Language</button>
+            <button class="capitalize tabs" onclick="tab(event, 'tab-goal')">Our Campaign Goal</button>
         </div>
     </div>
     
@@ -91,11 +91,11 @@
             <div class="donate-bar">
                 
                 <div>
-                    <span class="title">LANGUAGE</span>
+                    <span class="title capitalize">Language</span>
                     <span class="language">Kaninuwa</span><span class="region">Papua New Guinea</span>
                 </div>
                 <div>
-                    <span class="title book-chapter">BOOK &amp; CHAPTER</span>
+                    <span class="title book-chapter capitalize">Book &amp; Chapter</span>
                     <button id="button-chapter" onclick="show_chapters()">
                         <img alt="" src="img/arrow-down.png" />
                     </button>
@@ -136,12 +136,12 @@
     </div>
     
     <!-- side bar -->
-    <div id="side-bar">
+    <div id="side-bar" >
         
         <!-- Total Raised Side Bar -->
         <div id="side-total" class="sides border--round">
             <div class="total-top-bar">
-                <div class="total-bar">TOTAL RAISED</div>
+                <div class="total-bar capitalize">Total Raised</div>
             </div>
             
             <div id="total-raised">
@@ -151,7 +151,7 @@
             <!-- Total raised percentage in the donut -->
             <span class="total-percent-span" id="total-percentage">70%</span>
             <br>
-            <span class="total-percent-span">FUNDED</span>
+            <span class="total-percent-span capitalize">Funded</span>
             
             <!-- Still need -->
             <div class="total-info-1">
@@ -172,7 +172,7 @@
         <!-- Cart Side Bar -->
         <div id="side-cart" class="sides border--round">
             <div class="cart-top-bar">
-                <div class="cart-bar">MY CART</div>
+                <div class="cart-bar capitalize">My Cart</div>
             </div>
             
             <div id="div-cart">
@@ -199,7 +199,7 @@
         <!-- Total Raised Side Bar (Tablet) -->
         <div id="small-side-total" class="small-sides border--round">
             <div id="small-total" class="small-side-bar" onclick="toggle_small_total()">
-                <span class="small-title">TOTAL RAISED</span>
+                <span class="small-title capitalize">Total Raised</span>
                 <img id="small-total-icon" alt="" src="img/cart_open.png">
             </div>
             
@@ -211,7 +211,7 @@
                 <!-- Total raised percentage in the donut -->
                 <span class="total-percent-span" id="small-total-percentage">70%</span>
                 <br>
-                <span class="total-percent-span">FUNDED</span>
+                <span class="total-percent-span capitalize">Funded</span>
 
                 <!-- Still need -->
                 <div class="total-info-1">
@@ -234,7 +234,7 @@
         <div id="small-side-cart" class="small-sides border--round">
             
             <div id="small-cart" class="small-side-bar" onclick="toggle_small_cart()">
-                <span class="small-title">MY CART</span>
+                <span class="small-title capitalize">My Cart</span>
                 <span id="num_items"></span>
                 <img id="small-cart-icon" alt="" src="img/cart_close.png">
             </div>
@@ -285,7 +285,7 @@
             </div>
 
             <div id="cart-label">
-                <span class="label-title">CART</span><br>
+                <span class="label-title capitalize">My Cart</span><br>
                 <span class="highlight">1</span> verse selected
             </div>
 
@@ -307,11 +307,35 @@
     
     
 </div> <!-- wrapper -->
+    
+    
 </div> <!-- bg -->
+    
+    
+
     
 
 <script>
-
+    
+$(document).ready(function() {
+var stickyNavTop = $('#side-bar').offset().top;
+ 
+var stickyNav = function(){
+var scrollTop = $(window).scrollTop();
+      
+if (scrollTop > stickyNavTop) { 
+    $('#side-bar').addClass('sticky');
+} else {
+    $('#side-bar').removeClass('sticky'); 
+}
+};
+ 
+stickyNav();
+ 
+$(window).scroll(function() {
+  stickyNav();
+});
+});
     
 // church object - data should be retrieved from database
 church = {

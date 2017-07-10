@@ -1,6 +1,6 @@
 #tab-donate {
     padding: 0;
-    padding-bottom: 2em;
+    padding-bottom: 5em;
 }
 
 
@@ -203,9 +203,6 @@
     width: 100%;
     margin: 0;
     padding: 0;
-    overflow-y: auto;
-    box-sizing: border-box !important;
-    height: 80%;
 }
 
 .verse {
@@ -1045,6 +1042,10 @@
         padding-top: 1.5em;
         padding-bottom: 1.5em;
         margin: 0;
+    }
+    
+    #chapters div:hover {
+        background: #fff;
     }
 
 }
