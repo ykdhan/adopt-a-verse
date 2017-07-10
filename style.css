@@ -1,0 +1,341 @@
+@import url("css/top-bar.css?ver=2.1");
+@import url("css/donate.css?ver=2.1");
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+
+@font-face {
+    font-family: "Gotham-Book";
+    src: url('font/GothamSSm-Book.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Gotham-Bold";
+    src: url('font/GothamSSm-Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'FontAwesome';
+    src: url('font/fontawesome-webfont.eot?v=4.7.0');
+    src: url('font/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('font/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('font/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('font/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('font/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html {
+    box-sizing: border-box;
+    display: block;
+}
+html[Attributes Style] {
+    -webkit-locale: "en-US";
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+    transition: all ease-out 0.3s;
+}
+
+body {
+    overflow: hidden;
+    box-sizing: border-box;
+    display: block;
+    font-size: 0.9em;
+    background-image: url("img/bg.jpg");
+    min-height: 100%;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: "Gotham-Book";
+    color: #777;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3 {
+    color: inherit;
+    font-family: "Gotham-Bold" !important;
+}
+
+h1 {
+    font-size: 1.2em;
+}
+
+table {
+    display: table;
+    border-collapse: collapse;
+    border-spacing: 0;
+    table-layout: fixed;
+    width: 100%;
+}
+
+/*   appreanace: none   */
+a,
+input[type='text']
+input[type='submit'],
+textarea,
+button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/*   margin, padding: 0   */
+img {
+    margin: 0;
+    padding: 0;
+}
+
+input[type='text']
+input[type='submit'],
+button,
+textarea {
+    font-size: 0.9em;
+    color: #777;
+}
+
+a {
+    text-decoration: none;
+    color: inherit !important;
+}
+
+
+/*   fonts   */
+.font--book {
+    font-family: "Gotham-Book" !important;
+}
+.font--bold {
+    font-family: "Gotham-Bold" !important;
+}
+
+
+/*   border-radius: 4px   */
+.border--round {
+    border-radius: 4px;
+}
+
+.hide {
+    display: none !important;
+}
+
+.mobile {
+    display: none;
+}
+
+/*   orange gradient on top of background   */
+#bg {
+    box-sizing: border-box;
+    padding: 0.5em;
+    padding-top: 6em;
+    padding-bottom: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: none;
+    /*
+    background: #fd9a00;
+    background: -webkit-linear-gradient(-45deg,rgba(253,154,0,0.85),rgba(253,97,44,0.85));
+    background: -o-linear-gradient(-45deg,rgba(253,154,0,0.85),rgba(253,97,44,0.85)); 
+    background: -moz-linear-gradient(-45deg,rgba(253,154,0,0.85),rgba(253,97,44,0.85)); 
+    background: linear-gradient(135deg,rgba(253,154,0,0.85),rgba(253,97,44,0.85));
+    */
+}
+#wrapper {
+    width: 100%;
+    height: 100%;
+    max-width: 1300px;
+    padding: 1em;
+    padding-bottom: 0;
+    box-sizing: border-box !important;
+    display: flex;
+}
+
+#content {
+    box-sizing: border-box;
+    float: left;
+    vertical-align: top;
+    flex: 0.72;
+    padding: 0;
+    padding-right: 0.7em;
+}
+#side-bar {
+    box-sizing: border-box;
+    margin: 0;
+    vertical-align: top;
+    flex: 0.28;
+    padding: 0;
+    padding-left: 0.7em;
+}
+
+
+.tab-content {
+    display: none;
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    padding: 2em;
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    background: #fff;
+    max-width: 1100px;
+    margin: 0;
+    border-radius: 4px 4px 0 0 !important;
+    float: right;
+}
+.tab-content-now {
+    display: block;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+
+.sides {
+    text-align: left;
+    margin: 0;
+    margin-bottom: 1.5em;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    height: 47%;
+    padding: 1em;
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    background: #fff;
+}
+
+
+.highlight {
+    color: #039da6;
+}
+
+
+
+
+.small-sides {
+    display: none;
+    text-align: left;
+    margin: 0;
+    margin-bottom: 1em;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.5em;
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    background: #fff;
+}
+.small-side-bar {
+    background: none;
+    margin: 0.5em;
+    cursor: pointer;
+}
+.small-title {
+    font-family: "Gotham-Bold";
+    color: #5d5c5a;
+    font-size: 1.1em;
+    margin-left: 0.2em;
+    vertical-align: middle;
+}
+.small-side-bar img {
+    float: right;
+    width: 1.1em;
+    margin-top: 0.3em;
+    vertical-align: middle;
+}
+
+.total-top-bar {
+    margin: 0;
+    margin-top: 0.5em;
+}
+.small-side-content {
+    height: 20em;
+    text-align: center !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1200px) {
+    
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+    #wrapper {
+        padding: 0.5em;
+        padding-top: 0.5em;
+        padding-bottom: 0;
+    }
+    #content {
+        flex: 0.72;
+        padding: 0;
+        padding-right: 0.5em;
+    }
+    #side-bar {
+        flex: 0.28;
+        padding: 0;
+        padding-left: 0.5em;
+    }
+    .sides {
+        display: none;
+    }
+    .small-sides {
+        display: block !important;
+    }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px) {
+    .desktop {
+        display: none !important;
+    }
+    .mobile {
+        display: block !important;
+    }
+    #wrapper {
+        padding: 0.5em;
+        padding-top: 0;
+        padding-bottom: 0;
+        box-sizing: border-box !important;
+        display: flex;
+    }
+    #content {
+        box-sizing: border-box;
+        float: initial;
+        width: 100%;
+        flex: 1;
+        padding: 0;
+    }
+    #side-bar {
+        display: none;
+        flex: 0;
+    }
+}
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (max-width : 480px) {
+
+    #wrapper {
+        padding-top: 0;
+    }
+    
+    
+}
+

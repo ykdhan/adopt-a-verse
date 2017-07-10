@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf8" />
+    <title>Adopt a Verse | Wycliffe Bible Translators</title>
+    
+    <!-- Links -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css?ver=2.1" />
+    <script type="text/javascript" src="js/init.js?v=1.7"></script>
+    <script type="text/javascript" src="js/select-verse.js?v=1.7"></script>
+    <script type="text/javascript" src="js/navigate-tab.js?v=1.7"></script>
+    <script type="text/javascript" src="js/load-chapter.js?v=1.7"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    
+    
+    
+    <!-- Wycliffe links -->
+    <link rel="stylesheet" type="text/css" href="//cloud.typography.com/7939554/692048/css/fonts.css" />
+    <script type="text/javascript" src="https://www.wycliffe.org/tpl/wycliffeOrg/assets/javascript/script.js"></script>
+
+    
+</head>
+    
+<body>
+    
+    
+<!-- Top Bar -->
+<div class="top-bar desktop">
+    <table><tr>
+    <td>
+        <img id="adopt-logo" alt="Adopt-a-Verse Logo" align="middle" src="img/wycliffe-logo.png">
+    </td>
+    <th>
+        <div class="div-tab font--bold">
+        <button class="tabs tabs-now" onclick="tab(event, 'tab-donate')">DONATE</button>
+        <button class="tabs" onclick="tab(event, 'tab-about')">ABOUT THE LANGUAGE</button>
+        <button class="tabs" onclick="tab(event, 'tab-goal')">OUR CAMPAIGN GOAL</button>
+        </div>
+    </th>
+    <td>
+        <table class="top-bar-church">
+        <tr>
+        <td id="cell-church-logo">
+            <img id="church-logo" alt="Church Logo" align="middle" src="img/church-logo.png">
+        </td>    
+        <td id="cell-church-name">
+            
+        </td>
+        </tr>
+        </table>
+    </td>
+    </tr></table>
+</div>
+    
+    
+<!-- Top Bar (mobile) -->
+<div class="top-bar mobile">
+    
+    <div id="top-bar-menu" onclick="toggle_menu()">
+        <img id="menu-icon" alt="Menu" align="middle"  src="img/menu_open.png">
+    </div>
+    <div id="top-bar-logo">
+        <img id="adopt-logo" alt="Adopt-a-Verse Logo" align="middle" src="img/wycliffe-logo.png">
+    </div>
+    <div id="toggle-menu">
+        <div class="div-tab font--bold">
+            <button class="tabs tabs-now" onclick="tab(event, 'tab-donate')">DONATE</button>
+            <button class="tabs" onclick="tab(event, 'tab-about')">ABOUT THE LANGUAGE</button>
+            <button class="tabs" onclick="tab(event, 'tab-goal')">OUR CAMPAIGN GOAL</button>
+        </div>
+    </div>
+    
+</div>
+    
+    
+    
+<!-- Body -->
+<div id="bg" align="center">
+<div id="wrapper">
+    
+    <!-- Tab -->
+    <div id="content">
+        
+        
+        <!-- Donate Tab -->
+        <div id="tab-donate" class="tab-content tab-content-now">
+            <div class="donate-top-bar">
+            <div class="donate-bar">
+                
+                <div>
+                    <span class="title">LANGUAGE</span>
+                    <span class="language">Kaninuwa</span><span class="region">Papua New Guinea</span>
+                </div>
+                <div>
+                    <span class="title book-chapter">BOOK &amp; CHAPTER</span>
+                    <button id="button-chapter" onclick="show_chapters()">
+                        <img alt="" src="img/arrow-down.png" />
+                    </button>
+                                
+                    <div id="select-chapter">
+                        <div id="select-chapter-close" onclick="hide_chapters()">
+                            <img alt="X" src="img/menu_close.png" />
+                        </div>
+                        <div id="book"></div>
+                        <div id="chapters"></div>
+                    </div>
+                </div>
+                
+            </div>
+            </div>
+            
+            <div id="div-select-all">
+            </div>
+            
+            <div id="bible">
+                <!-- Bible verses -->
+            </div>
+        </div>
+        
+        
+        <!-- About the Language Tab -->
+        <div id="tab-about" class="tab-content">
+            <h3>About the Language</h3>
+        </div>
+
+        
+        <!-- Our Campaign Goal Tab -->
+        <div id="tab-goal" class="tab-content">
+            <h3>Our Campaign Goal</h3>
+        </div>
+
+        
+    </div>
+    
+    <!-- side bar -->
+    <div id="side-bar">
+        
+        <!-- Total Raised Side Bar -->
+        <div id="side-total" class="sides border--round">
+            <div class="total-top-bar">
+                <div class="total-bar">TOTAL RAISED</div>
+            </div>
+            
+            <div id="total-raised">
+                <!-- Donut graph -->
+            </div>
+            
+            <!-- Total raised percentage in the donut -->
+            <span class="total-percent-span" id="total-percentage">70%</span>
+            <br>
+            <span class="total-percent-span">FUNDED</span>
+            
+            <!-- Still need -->
+            <div class="total-info-1">
+                Still Need <span id="total-still-need"></span><br>
+            </div>
+            
+            <!-- Total goal -->
+            <div class="total-info-2">
+                Goal <span id="total-goal"></span>
+            </div>
+            
+            <!-- Total verses adopted -->
+            <div class="total-adopted-verses">
+                <span id="total-adopted"></span> of <span id="total-verses"></span> verses adopted
+            </div>
+        </div>
+        
+        <!-- Cart Side Bar -->
+        <div id="side-cart" class="sides border--round">
+            <div class="cart-top-bar">
+                <div class="cart-bar">MY CART</div>
+            </div>
+            
+            <div id="div-cart">
+            </div>
+        
+            <div id="div-cart-empty">
+                <img id="img-empty-cart" alt="Empty Cart" src="img/empty-cart.png">
+                <br>
+                Add verses to your cart.
+            </div>
+            
+            <div id="div-cart-label" class="no-label">&nbsp;</div>
+            
+            <div class="div-checkout">
+                <button id="checkout" class="checkout border--round empty">Give $0</button>
+            </div>
+        </div>
+        
+        
+        
+        
+        
+        
+        <!-- Total Raised Side Bar (Tablet) -->
+        <div id="small-side-total" class="small-sides border--round">
+            <div id="small-total" class="small-side-bar" onclick="toggle_small_total()">
+                <span class="small-title">TOTAL RAISED</span>
+                <img id="small-total-icon" alt="" src="img/cart_open.png">
+            </div>
+            
+            <div id="small-total-content" class="small-side-content">
+                <div id="small-total-raised">
+                    <!-- Donut graph -->
+                </div>
+            
+                <!-- Total raised percentage in the donut -->
+                <span class="total-percent-span" id="small-total-percentage">70%</span>
+                <br>
+                <span class="total-percent-span">FUNDED</span>
+
+                <!-- Still need -->
+                <div class="total-info-1">
+                    Still Need <span id="small-total-still-need"></span><br>
+                </div>
+
+                <!-- Total goal -->
+                <div class="total-info-2">
+                    Goal <span id="small-total-goal"></span>
+                </div>
+
+                <!-- Total verses adopted -->
+                <div class="total-adopted-verses">
+                    <span id="small-total-adopted" class="highlight"></span> of <span id="small-total-verses"></span> verses adopted
+                </div>
+            </div>
+        </div>
+        
+        <!-- Cart Side Bar (Tablet) -->
+        <div id="small-side-cart" class="small-sides border--round">
+            
+            <div id="small-cart" class="small-side-bar" onclick="toggle_small_cart()">
+                <span class="small-title">MY CART</span>
+                <span id="num_items"></span>
+                <img id="small-cart-icon" alt="" src="img/cart_close.png">
+            </div>
+            
+            <div id="small-cart-content" class="small-side-content"> 
+                <div id="small-div-cart">
+                </div>
+
+                <div id="small-div-cart-empty">
+                    <img id="img-empty-cart" alt="Empty Cart" src="img/empty-cart.png">
+                    <br>
+                    Add verses to your cart.
+                </div>
+
+                <div id="small-div-cart-label" class="no-label">&nbsp;</div>
+
+                <div class="div-checkout">
+                    <button id="small-checkout" class="checkout border--round empty">Give $0</button>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        
+        
+        
+        <!-- Language Group Details Side Bar -->
+        <div id="side-language" class="sides border--round hide">
+            <h1>Language Group Details</h1>
+        </div>
+        
+        <!-- Photo Side Bar -->
+        <div id="side-photo" class="sides border--round hide">
+            <h1>Photo</h1>
+        </div>
+    </div>
+    
+    
+    
+    
+    <!-- Mobile Cart -->
+    <div id="mobile-cart">
+        
+        <div id="cart-1">
+            <div id="cart-toggle" onclick="toggle_cart()">
+                <img id="cart-icon" alt="Cart" src="img/cart_open.png">
+            </div>
+
+            <div id="cart-label">
+                <span class="label-title">CART</span><br>
+                <span class="highlight">1</span> verse selected
+            </div>
+
+            <div id="cart-checkout">
+                <button id="checkout-mobile" class="checkout border--round">Give $0</button>
+            </div>
+        </div>
+        
+        <div id="cart-2">
+            <div id="div-cart-mobile">
+                <!-- cart items -->
+            </div>
+            
+        </div>
+        
+        
+        
+    </div>
+    
+    
+</div> <!-- wrapper -->
+</div> <!-- bg -->
+    
+
+<script>
+
+    
+// church object - data should be retrieved from database
+church = {
+    name: "First Baptist Church of Orlando",
+    language: "Kaninuwa",
+    region: "Papua New Guinea",
+    book: "Genesis",
+    proejct_description: "",
+    goal_description: "",
+    goal_amount: 100000,
+    verse_price: 15
+}
+
+    
+// initialize all the necessary fields on page
+function init() {
+    // assign global variables
+    book = church.book;
+    chapter = 1;
+    verses = [];
+    selected = {};
+    verse_price = church.verse_price;
+    
+    total_adopted = 525;
+    total_verses = 750;
+    total_percentage = 70;
+    total_raised = 70000;
+    
+    total_goal = church.goal_amount;
+
+    cart = {
+        price: 0,       // total price
+        items: {},      // items 
+        total: 0        // total number of items
+    }
+    
+    // load book of the Bible
+    load_book(book);
+    document.getElementById('book').innerHTML = book;
+    
+    // fill in the fields on page
+    document.getElementById('cell-church-name').innerHTML = church.name;
+    document.getElementById('total-adopted').innerHTML = total_adopted;
+    document.getElementById('total-verses').innerHTML = total_verses;
+    document.getElementById('small-total-adopted').innerHTML = total_adopted;
+    document.getElementById('small-total-verses').innerHTML = total_verses;
+}
+    
+init();
+    
+    
+    
+// draw total-raised chart
+
+google.charts.load("current", {packages: ["corechart"]});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+    
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'text');
+    data.addColumn('number', 'number');
+
+    data.addRows(2);
+    data.setValue(0, 0, 'Total Raised');
+    data.setValue(0, 1, 0);
+    data.setValue(1, 0, 'Still Needed');
+    data.setValue(1, 1, total_goal);
+
+    var options = {
+        pieHole: 0.6,
+        chartArea: {
+            width: 160,
+            height: 160,
+            backgroundColor: '#dbdbdb'
+        },
+        height: 180,
+        colors: [ '#dbdbdb', '#039da6'],
+        pieSliceBorderColor: '#dbdbdb',
+        legend: 'none',
+        pieSliceText: 'none',
+        pieSliceBorderColor: 'white',
+        reverseCategories: true,
+        tooltip: {
+            textStyle: {
+                fontName: "Gotham-Book",
+                fontSize: 14
+            },
+            text: 'value'
+        },
+        animation: {
+            duration: 1000,
+            easing: 'out',
+            startup: true
+        }
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('total-raised'));
+    chart.draw(data, options);
+    
+    
+    document.getElementById('total-goal').innerHTML = "$" + total_goal.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+    var total_still_need = total_goal - total_raised;
+    document.getElementById('total-still-need').innerHTML = "$" + total_still_need.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+    
+    // initial value
+    var percent = 0;
+    // start the animation loop
+    var handler = setInterval(function(){
+        // values increment
+        percent += 1;
+        document.getElementById('total-percentage').innerHTML = percent + "%";
+        // apply new values
+        data.setValue(0, 1, (total_goal * percent / 100));
+        data.setValue(1, 1, total_goal - (total_goal * percent / 100));
+        // update the pie
+        chart.draw(data, options);
+        // check if we have reached the desired value
+        if (percent >= total_percentage)
+            // stop the loop
+            clearInterval(handler);
+    }, 15);
+}
+
+
+    
+    
+    
+// draw total-raised chart (tablet)
+
+google.charts.load("current", {packages: ["corechart"]});
+google.charts.setOnLoadCallback(drawSmallChart);
+
+function drawSmallChart() {
+    
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'text');
+    data.addColumn('number', 'number');
+
+    data.addRows(2);
+    data.setValue(0, 0, 'Total Raised');
+    data.setValue(0, 1, 0);
+    data.setValue(1, 0, 'Still Needed');
+    data.setValue(1, 1, total_goal);
+
+    var options = {
+        pieHole: 0.6,
+        chartArea: {
+            width: 160,
+            height: 160,
+            backgroundColor: '#dbdbdb'
+        },
+        height: 180,
+        colors: [ '#dbdbdb', '#039da6'],
+        pieSliceBorderColor: '#dbdbdb',
+        legend: 'none',
+        pieSliceText: 'none',
+        pieSliceBorderColor: 'white',
+        reverseCategories: true,
+        tooltip: {
+            textStyle: {
+                fontName: "Gotham-Book",
+                fontSize: 14
+            },
+            text: 'value'
+        },
+        animation: {
+            duration: 1000,
+            easing: 'out',
+            startup: true
+        }
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('small-total-raised'));
+    chart.draw(data, options);
+    
+    
+    document.getElementById('small-total-goal').innerHTML = "$" + total_goal.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+    var total_still_need = total_goal - total_raised;
+    document.getElementById('small-total-still-need').innerHTML = "$" + total_still_need.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+    
+    // initial value
+    var percent = 0;
+    // start the animation loop
+    var handler = setInterval(function(){
+        // values increment
+        percent += 1;
+        document.getElementById('small-total-percentage').innerHTML = percent + "%";
+        // apply new values
+        data.setValue(0, 1, (total_goal * percent / 100));
+        data.setValue(1, 1, total_goal - (total_goal * percent / 100));
+        // update the pie
+        chart.draw(data, options);
+        // check if we have reached the desired value
+        if (percent >= total_percentage)
+            // stop the loop
+            clearInterval(handler);
+    }, 15);
+}
+    
+    
+    
+    
+
+    
+// Toggle mobile menu
+ function toggle_menu() {
+    $('#toggle-menu').slideToggle('2000', "swing");
+    
+    // open menu
+    if (!menu) {
+        $('#menu-icon').attr('src', 'img/menu_close.png');
+        document.getElementById('top-bar-logo').innerHTML = '<div id="mobile-church"><img id="church-logo" alt="Church Logo" align="middle" src="img/church-logo.png"><span id="mobile-church-name">'+church.name+'</span></div>';
+        menu = true;
+    } 
+    // close menu
+    else {
+        $('#menu-icon').attr('src', 'img/menu_open.png');
+        document.getElementById('top-bar-logo').innerHTML = '<img id="adopt-logo" alt="Adopt-a-Verse Logo" align="middle" src="img/wycliffe-logo.png">';
+        menu = false;    
+    }
+    
+    $('#cart-2').slideUp('2000', "swing");
+    $('#cart-icon').attr('src', 'img/cart_close.png');
+    cart = false;
+}
+    
+
+// Toggle mobile cart
+function toggle_cart() {
+    $('#cart-2').slideToggle('2000', "swing");
+    
+    // open menu
+    if (!cart) {
+        $('#cart-icon').attr('src', 'img/cart_open.png');
+        cart = true;
+    } 
+    // close menu
+    else {
+        $('#cart-icon').attr('src', 'img/cart_close.png');
+        cart = false;    
+    }
+}
+    
+    
+    
+// Toggle small sides
+function toggle_small_total() {
+
+    $('#small-total-content').slideToggle('2000', "swing");
+    
+    if (small_total) {
+        $('#small-total-icon').attr('src', 'img/cart_close.png');
+        small_total = false;
+    } else {
+        $('#small-total-icon').attr('src', 'img/cart_open.png');
+        small_total = true;
+    }
+    
+    if (small_cart) {
+        $('#small-cart-content').slideToggle('2000', "swing");
+        $('#small-cart-icon').attr('src', 'img/cart_close.png');
+        small_cart = false;
+    }
+}
+function toggle_small_cart() {
+
+    $('#small-cart-content').slideToggle('2000', "swing");
+    
+    if (small_cart) {
+        $('#small-cart-icon').attr('src', 'img/cart_close.png');
+        small_cart = false;
+    } else {
+        $('#small-cart-icon').attr('src', 'img/cart_open.png');
+        small_cart = true;
+    }
+    
+    if (small_total) {
+        $('#small-total-content').slideToggle('2000', "swing");
+        $('#small-total-icon').attr('src', 'img/cart_close.png');
+        small_total = false;
+    }
+} 
+
+    
+    
+</script>
+    
+    
+</body>
+    
+<footer>
+</footer>
+    
+</html>

@@ -1,0 +1,108 @@
+@media all and (min-width: 1150px) and (min-width: 750px) {
+
+
+    
+    
+/*   vertical-align: middle   */
+#cell-church-logo,
+#cell-church-name,
+#adopt-logo,
+#church-logo {
+    vertical-align: middle !important;
+}
+
+.top-bar {
+    position: fixed;
+    top: 0;
+    left; 0;
+    background: #fff;
+    z-index: 10;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+}
+.top-bar table {
+    padding: 0;
+    margin: 0;
+}
+.top-bar td, tr {
+    margin: 0 !impotant;
+    padding: 0 !important;
+    width: 25%;
+}
+.top-bar th {
+    margin: 0 !impotant;
+    padding: 0 !important;
+    width: 50%;
+    vertical-align: bottom !important;
+}
+
+
+#cell-church-logo {
+    width: 25%;
+}
+#cell-church-name {
+    font-size: 0.9em;
+    font-family: "Gotham-Bold" !important;
+}
+
+.top-bar-church {
+    max-width: 350px;
+    right: 0;
+    float: right;
+    margin-right: 1.5em !important;
+}
+
+
+#adopt-logo {
+    width: 6em;
+    height: auto;
+    margin: 1.5em !important;
+}
+#church-logo {
+    float: right;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    background: #555;
+    width: 2.6em;
+    height: 2.6em;
+    margin: 1.5em !important;
+    margin-right: 1em !important;
+}
+
+
+
+.div-nav {
+    text-align: center;
+    vertical-align: bottom !impmortant;
+}
+
+.div-tab {
+    
+}
+
+.tabs {
+    font-size: 0.9em;
+    background: none;
+    border: none;
+    outline: none;
+    color: #606060;
+    font-family: "Gotham-Bold" !important;
+    cursor: pointer;
+    padding: 1em;
+    border-bottom: 6px solid #fff;
+    margin-left: 1em;
+    margin-right: 1em;
+}
+.tabs-now {
+    border-bottom: 6px solid #039da6;
+}
+   
+    
+    
+    
+    
+}
