@@ -147,7 +147,7 @@ a {
 	-ms-box-sizing: border-box;
 	box-sizing: border-box;
     display: block;
-    position: relative;
+    position: relative; 
 }
 
 #content {
@@ -164,18 +164,13 @@ a {
     padding-right: 0.6em;
 }
 #side-bar {
-    -moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	-ms-box-sizing: border-box;
-	box-sizing: border-box;
-    position: -webkit-sticky;
     margin: 0;
     vertical-align: top;
     width: 28%;
     display: inline-block;
     padding: 0;
     padding-left: 0.6em;
-
+    transition: all ease-out 0.3s;
 }
 
 .tab-content {

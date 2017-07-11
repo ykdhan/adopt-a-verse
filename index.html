@@ -15,6 +15,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/filamentgroup/fixed-sticky/master/fixedsticky.js"></script>
+    <script type="text/javascript" src="js/sidebar.js"></script>
     
     
     <!-- Wycliffe links -->
@@ -317,25 +318,33 @@
 
 <script>
     
-$(document).ready(function() {
-var stickyNavTop = $('#side-bar').offset().top;
- 
-var stickyNav = function(){
-var scrollTop = $(window).scrollTop();
-      
-if (scrollTop > stickyNavTop) { 
-    $('#side-bar').addClass('sticky');
-} else {
-    $('#side-bar').removeClass('sticky'); 
-}
-};
- 
-stickyNav();
- 
-$(window).scroll(function() {
-  stickyNav();
+    
+$(function() {
+
+    var $sidebar   = $("#side-bar"), 
+        $window    = $(window),
+        offset     = $sidebar.offset(),
+        topPadding = 100;
+
+    $window.scroll(function() {
+        if ($window.scrollTop() > offset.top) {
+            var newMargin = $window.scrollTop() - offset.top + topPadding
+            $sidebar.css('margin-top', newMargin);
+        } else {
+            $sidebar.css('margin-top', 0);
+        }
+    });
+    
 });
+
+    
+$(window).on('resize', function(){
+    google.charts.load("current", {packages: ["corechart"]});
+    google.charts.setOnLoadCallback(drawSmallChart);
+
 });
+    
+    
     
 // church object - data should be retrieved from database
 church = {
@@ -406,6 +415,10 @@ function drawChart() {
     data.setValue(1, 1, total_goal);
 
     var options = {
+        backgroundColor: {
+            fill: 'none',
+            
+        },
         pieHole: 0.6,
         chartArea: {
             width: 160,
@@ -466,74 +479,124 @@ function drawChart() {
     
 // draw total-raised chart (tablet)
 
+var initial_chart = true;
+    
 google.charts.load("current", {packages: ["corechart"]});
 google.charts.setOnLoadCallback(drawSmallChart);
 
 function drawSmallChart() {
+    console.log(initial_chart);
     
-    var data = new google.visualization.DataTable();
-    data.addColumn('string', 'text');
-    data.addColumn('number', 'number');
+    if (initial_chart) {
+        console.log("animate")
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'text');
+        data.addColumn('number', 'number');
 
-    data.addRows(2);
-    data.setValue(0, 0, 'Total Raised');
-    data.setValue(0, 1, 0);
-    data.setValue(1, 0, 'Still Needed');
-    data.setValue(1, 1, total_goal);
+        data.addRows(2);
+        data.setValue(0, 0, 'Total Raised');
+        data.setValue(0, 1, 0);
+        data.setValue(1, 0, 'Still Needed');
+        data.setValue(1, 1, total_goal);
 
-    var options = {
-        pieHole: 0.6,
-        chartArea: {
-            width: 160,
-            height: 160,
-            backgroundColor: '#dbdbdb'
-        },
-        height: 180,
-        colors: [ '#dbdbdb', '#039da6'],
-        pieSliceBorderColor: '#dbdbdb',
-        legend: 'none',
-        pieSliceText: 'none',
-        pieSliceBorderColor: 'white',
-        reverseCategories: true,
-        tooltip: {
-            textStyle: {
-                fontName: "Gotham-Book",
-                fontSize: 14
+        var options = {
+            backgroundColor: 'none',
+            pieHole: 0.6,
+            chartArea: {
+                width: 160,
+                height: 160,
+                backgroundColor: '#dbdbdb'
             },
-            text: 'value'
-        },
-        animation: {
-            duration: 1000,
-            easing: 'out',
-            startup: true
-        }
-    };
+            height: 180,
+            colors: [ '#dbdbdb', '#039da6'],
+            pieSliceBorderColor: '#dbdbdb',
+            legend: 'none',
+            pieSliceText: 'none',
+            pieSliceBorderColor: 'white',
+            reverseCategories: true,
+            tooltip: {
+                trigger: 'none'
+            },
+            animation: {
+                duration: 1000,
+                easing: 'out',
+                startup: true
+            }
+        };
 
-    var chart = new google.visualization.PieChart(document.getElementById('small-total-raised'));
-    chart.draw(data, options);
-    
-    
-    document.getElementById('small-total-goal').innerHTML = "$" + total_goal.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
-    var total_still_need = total_goal - total_raised;
-    document.getElementById('small-total-still-need').innerHTML = "$" + total_still_need.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
-    
-    // initial value
-    var percent = 0;
-    // start the animation loop
-    var handler = setInterval(function(){
-        // values increment
-        percent += 1;
-        document.getElementById('small-total-percentage').innerHTML = percent + "%";
-        // apply new values
-        data.setValue(0, 1, (total_goal * percent / 100));
-        data.setValue(1, 1, total_goal - (total_goal * percent / 100));
-        // update the pie
+        var chart = new google.visualization.PieChart(document.getElementById('small-total-raised'));
         chart.draw(data, options);
-        // check if we have reached the desired value
-        if (percent >= total_percentage)
-            // stop the loop
-            clearInterval(handler);
-    }, 15);
+
+
+        document.getElementById('small-total-goal').innerHTML = "$" + total_goal.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+        var total_still_need = total_goal - total_raised;
+        document.getElementById('small-total-still-need').innerHTML = "$" + total_still_need.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+
+        // initial value
+        var percent = 0;
+        // start the animation loop
+        var handler = setInterval(function(){
+            // values increment
+            percent += 1;
+            document.getElementById('small-total-percentage').innerHTML = percent + "%";
+            // apply new values
+            data.setValue(0, 1, (total_goal * percent / 100));
+            data.setValue(1, 1, total_goal - (total_goal * percent / 100));
+            // update the pie
+            chart.draw(data, options);
+            // check if we have reached the desired value
+            if (percent >= total_percentage)
+                // stop the loop
+                clearInterval(handler);
+        }, 15);
+        
+        
+    } else {
+        console.log("do not animate")
+        
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'text');
+        data.addColumn('number', 'number');
+
+        data.addRows(2);
+        data.setValue(0, 0, 'Total Raised');
+        data.setValue(0, 1, total_raised);
+        data.setValue(1, 0, 'Still Needed');
+        data.setValue(1, 1, total_goal-total_raised);
+
+        var options = {
+            pieHole: 0.6,
+            chartArea: {
+                width: 160,
+                height: 160,
+                backgroundColor: '#dbdbdb'
+            },
+            height: 180,
+            colors: [ '#dbdbdb', '#039da6'],
+            pieSliceBorderColor: '#dbdbdb',
+            legend: 'none',
+            pieSliceText: 'none',
+            pieSliceBorderColor: 'white',
+            reverseCategories: true,
+            tooltip: {
+                trigger: 'none'
+            },
+            animation: {
+                duration: 1000,
+                easing: 'out',
+                startup: true
+            }
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('small-total-raised'));
+        chart.draw(data, options);
+
+
+        document.getElementById('small-total-goal').innerHTML = "$" + total_goal.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+        var total_still_need = total_goal - total_raised;
+        document.getElementById('small-total-still-need').innerHTML = "$" + total_still_need.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+    }
+    initial_chart = false;
 }
     
     
@@ -595,10 +658,12 @@ function toggle_small_total() {
         small_total = true;
     }
     
-    if (small_cart) {
-        $('#small-cart-content').slideToggle('2000', "swing");
-        $('#small-cart-icon').attr('src', 'img/cart_close.png');
-        small_cart = false;
+    if ($(window).height() < 700) {
+        if (small_cart) {
+            $('#small-cart-content').slideToggle('2000', "swing");
+            $('#small-cart-icon').attr('src', 'img/cart_close.png');
+            small_cart = false;
+        }
     }
 }
 function toggle_small_cart() {
@@ -613,10 +678,12 @@ function toggle_small_cart() {
         small_cart = true;
     }
     
-    if (small_total) {
-        $('#small-total-content').slideToggle('2000', "swing");
-        $('#small-total-icon').attr('src', 'img/cart_close.png');
-        small_total = false;
+    if ($(window).height() < 700) {
+        if (small_total) {
+            $('#small-total-content').slideToggle('2000', "swing");
+            $('#small-total-icon').attr('src', 'img/cart_close.png');
+            small_total = false;
+        }
     }
 } 
 
