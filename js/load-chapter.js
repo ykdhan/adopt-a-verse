@@ -33,8 +33,6 @@ function load_book (bk) {
     
     fill_chapters(max_chapter);
     
-    console.log(max_chapter);
-    
     chapter = 1;
     load_chapter(book,chapter);
 }

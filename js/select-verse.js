@@ -18,7 +18,6 @@ function select(ch,verse) {
         
         
         if (inList) {
-            console.log("in");
             // remove this verse from list of selected
             var removedList = []
             for (i in selected[ch]) {
@@ -31,7 +30,6 @@ function select(ch,verse) {
             
             selected[ch] = [];
             for (i in removedList) {
-                console.log(removedList[i]);
                 selected[ch].push(removedList[i]);
             }
             
@@ -179,13 +177,13 @@ function add_cart() {
             count ++;
             
             document.getElementById('mobile-cart').style.display = "block";
-            document.getElementById('div-cart-mobile').innerHTML += "<div class='item border--round'>"+ book + " " + b + ":" + items[b][c] + "<img alt='' src='img/item_close.png' class='unselect-mobile' onclick='select("+b+","+items[b][c]+")' /></div>";
+            document.getElementById('div-cart-mobile').innerHTML += "<div class='div-item'><div class='item border--round'>"+ book + " " + b + ":" + items[b][c] + "<img alt='' src='img/item_close.png' class='unselect-mobile' onclick='select("+b+","+items[b][c]+")' /></div></div>";
             
-            document.getElementById('small-div-cart').style.display = 'grid';
+            document.getElementById('small-div-cart').style.display = 'block';
             document.getElementById('small-div-cart-label').style.display = 'block';
             document.getElementById('small-checkout').className = document.getElementById('small-checkout').className.replace(" empty", "");
             document.getElementById('small-div-cart-empty').style.display = 'none';
-            document.getElementById('small-div-cart').innerHTML += "<div class='item border--round' onmouseover='show_unselect("+b+","+items[b][c]+")' onmouseout='hide_unselect("+b+","+items[b][c]+")'>"+ book[0] + book[1] + book[2] + ". " + b + ":" + items[b][c] + "<img alt='' src='img/item_close.png' class='small-unselect' id='small-unselect-"+b+"-"+items[b][c]+"' onclick='select("+b+","+items[b][c]+")' /></div>";
+            document.getElementById('small-div-cart').innerHTML += "<div class='div-item'><div class='item border--round' onmouseover='show_unselect("+b+","+items[b][c]+")' onmouseout='hide_unselect("+b+","+items[b][c]+")'>"+ book[0] + book[1] + book[2] + ". " + b + ":" + items[b][c] + "<img alt='' src='img/item_close.png' class='small-unselect' id='small-unselect-"+b+"-"+items[b][c]+"' onclick='select("+b+","+items[b][c]+")' /></div></div>";
         }
     }
     
@@ -207,6 +205,13 @@ function add_cart() {
         document.getElementById('small-div-cart-label').className = '';
         document.getElementById('small-div-cart-label').innerHTML = "<span class='highlight'>" + count + "</span> verse selected";
         
+        if (small_cart == false) {
+            toggle_small_cart();
+        }
+        
+        num_items = count + " verse";
+        document.getElementById('num-items').innerHTML = num_items;
+        
     } else if (count != 0) {
         document.getElementById('div-cart-label').className = '';
         document.getElementById('div-cart-label').innerHTML = "<span class='highlight'>" + count + "</span> verses selected";
@@ -215,13 +220,23 @@ function add_cart() {
         
         document.getElementById('small-div-cart-label').className = '';
         document.getElementById('small-div-cart-label').innerHTML = "<span class='highlight'>" + count + "</span> verses selected";
+        
+        document.getElementById('mobile-cart').style.display = "block";
+
+        if (small_cart == false) {
+            toggle_small_cart();
+        }
+        
+        num_items = count + " verses";
+        document.getElementById('num-items').innerHTML = num_items;
+    } else if (count == 0) {
+        document.getElementById('mobile-cart').style.display = "none";
+        
+        num_items = 0;
+        document.getElementById('num-items').style.display = 'none';
     }
     
-    if (total == 0) {
-        document.getElementById('mobile-cart').style.display = "none";
-    } else {
-        document.getElementById('mobile-cart').style.display = "block";
-    }
+        
     
     // update cart object
     cart.items = items;

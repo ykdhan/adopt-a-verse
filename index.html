@@ -7,11 +7,11 @@
     
     <!-- Links -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="style.css?ver=2.1" />
-    <script type="text/javascript" src="js/init.js?v=1.7"></script>
-    <script type="text/javascript" src="js/select-verse.js?v=1.7"></script>
-    <script type="text/javascript" src="js/navigate-tab.js?v=1.7"></script>
-    <script type="text/javascript" src="js/load-chapter.js?v=1.7"></script>
+    <link rel="stylesheet" type="text/css" href="style.css?ver=2.2" />
+    <script type="text/javascript" src="js/init.js?v=1.8"></script>
+    <script type="text/javascript" src="js/select-verse.js?v=1.8"></script>
+    <script type="text/javascript" src="js/navigate-tab.js?v=1.8"></script>
+    <script type="text/javascript" src="js/load-chapter.js?v=1.8"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/filamentgroup/fixed-sticky/master/fixedsticky.js"></script>
@@ -36,9 +36,9 @@
     </td>
     <th>
         <div class="div-tab font--bold">
-        <button class="tabs tabs-now" onclick="tab(event, 'tab-donate')">DONATE</button>
-        <button class="tabs" onclick="tab(event, 'tab-about')">ABOUT THE LANGUAGE</button>
-        <button class="tabs" onclick="tab(event, 'tab-goal')">OUR CAMPAIGN GOAL</button>
+        <button class="tabs capitalize tabs-now" onclick="tab(event, 'tab-donate')">Donate</button>
+        <button class="tabs capitalize" onclick="tab(event, 'tab-about')">About the Language</button>
+        <button class="tabs capitalize" onclick="tab(event, 'tab-goal')">Our Campaign Goal</button>
         </div>
     </th>
     <td>
@@ -47,7 +47,7 @@
         <td id="cell-church-logo">
             <img id="church-logo" alt="Church Logo" align="middle" src="img/church-logo.png">
         </td>    
-        <td id="cell-church-name">
+        <td id="cell-church-name" class="capitalize">
             
         </td>
         </tr>
@@ -58,7 +58,7 @@
     
     
 <!-- Top Bar (mobile) -->
-<div class="top-bar mobile">
+<div id="top-bar" class="top-bar mobile">
     
     <div id="top-bar-menu" onclick="toggle_menu()">
         <img id="menu-icon" alt="Menu" align="middle"  src="img/menu_open.png">
@@ -133,11 +133,15 @@
             <h3>Our Campaign Goal</h3>
         </div>
 
-        
+        <div id="footer">
+    Holy Bible, New Living Translation, copyright © 1996, 2004, 2015 by Tyndale House Foundation.<br>
+    ©2017 Wycliffe Bible Translators. All rights reserved.
+    </div>
     </div>
     
     <!-- side bar -->
     <div id="side-bar" >
+        
         
         <!-- Total Raised Side Bar -->
         <div id="side-total" class="sides border--round">
@@ -195,8 +199,6 @@
         
         
         
-        
-        
         <!-- Total Raised Side Bar (Tablet) -->
         <div id="small-side-total" class="small-sides border--round">
             <div id="small-total" class="small-side-bar" onclick="toggle_small_total()">
@@ -236,7 +238,7 @@
             
             <div id="small-cart" class="small-side-bar" onclick="toggle_small_cart()">
                 <span class="small-title capitalize">My Cart</span>
-                <span id="num_items"></span>
+                <div id="num-items"></div>
                 <img id="small-cart-icon" alt="" src="img/cart_close.png">
             </div>
             
@@ -307,6 +309,8 @@
     </div>
     
     
+    
+    
 </div> <!-- wrapper -->
     
     
@@ -336,7 +340,6 @@ $(function() {
     });
     
 });
-
     
 $(window).on('resize', function(){
     google.charts.load("current", {packages: ["corechart"]});
@@ -485,10 +488,8 @@ google.charts.load("current", {packages: ["corechart"]});
 google.charts.setOnLoadCallback(drawSmallChart);
 
 function drawSmallChart() {
-    console.log(initial_chart);
     
     if (initial_chart) {
-        console.log("animate")
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'text');
         data.addColumn('number', 'number');
@@ -552,7 +553,6 @@ function drawSmallChart() {
         
         
     } else {
-        console.log("do not animate")
         
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'text');
@@ -606,38 +606,45 @@ function drawSmallChart() {
     
 // Toggle mobile menu
  function toggle_menu() {
-    $('#toggle-menu').slideToggle('2000', "swing");
-    
+     
     // open menu
     if (!menu) {
+        original_menu_height = $('#top-bar').height();
+        $('#top-bar').animate({height: '40vh'}, '2000');
+        document.getElementById('toggle-menu').style.display = 'block';
+        
         $('#menu-icon').attr('src', 'img/menu_close.png');
-        document.getElementById('top-bar-logo').innerHTML = '<div id="mobile-church"><img id="church-logo" alt="Church Logo" align="middle" src="img/church-logo.png"><span id="mobile-church-name">'+church.name+'</span></div>';
+        document.getElementById('top-bar-logo').innerHTML = '<div id="mobile-church"><img id="church-logo" alt="Church Logo" align="middle" src="img/church-logo.png"><span id="mobile-church-name" class="capitalize">'+church.name+'</span></div>';
         menu = true;
     } 
     // close menu
     else {
+        
+        document.getElementById('toggle-menu').style.display = 'none';
+        $('#top-bar').animate({height: original_menu_height}, '2000');
         $('#menu-icon').attr('src', 'img/menu_open.png');
         document.getElementById('top-bar-logo').innerHTML = '<img id="adopt-logo" alt="Adopt-a-Verse Logo" align="middle" src="img/wycliffe-logo.png">';
         menu = false;    
     }
     
-    $('#cart-2').slideUp('2000', "swing");
-    $('#cart-icon').attr('src', 'img/cart_close.png');
-    cart = false;
 }
     
-
 // Toggle mobile cart
 function toggle_cart() {
-    $('#cart-2').slideToggle('2000', "swing");
     
     // open menu
     if (!cart) {
+        document.getElementById('cart-2').style.display = 'none';
         $('#cart-icon').attr('src', 'img/cart_open.png');
+        $('#mobile-cart').animate({height: original_cart_height});
         cart = true;
+        
     } 
     // close menu
     else {
+        original_cart_height = $('#mobile-cart').height();
+        $('#mobile-cart').animate({height: '100vh'});
+        document.getElementById('cart-2').style.display = 'block';
         $('#cart-icon').attr('src', 'img/cart_close.png');
         cart = false;    
     }
@@ -662,6 +669,8 @@ function toggle_small_total() {
         if (small_cart) {
             $('#small-cart-content').slideToggle('2000', "swing");
             $('#small-cart-icon').attr('src', 'img/cart_close.png');
+            document.getElementById('num-items').style.display = "inline-block";
+            document.getElementById('num-items').innerHTML = num_items;
             small_cart = false;
         }
     }
@@ -673,9 +682,17 @@ function toggle_small_cart() {
     if (small_cart) {
         $('#small-cart-icon').attr('src', 'img/cart_close.png');
         small_cart = false;
+        if (num_items != 0) {
+            document.getElementById('num-items').style.display = "inline-block";
+            document.getElementById('num-items').innerHTML = num_items;
+        } else {
+            document.getElementById('num-items').style.display = "none";
+        }
+        
     } else {
         $('#small-cart-icon').attr('src', 'img/cart_open.png');
         small_cart = true;
+        document.getElementById('num-items').style.display = "none";
     }
     
     if ($(window).height() < 700) {
