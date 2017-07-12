@@ -83,16 +83,6 @@ function select(ch,verse) {
 }
 
 
-function show_taken(verse) {
-    document.getElementById("div-taken-"+verse).style.display = 'block';
-}
-
-
-function hide_taken(verse) {
-    document.getElementById("div-taken-"+verse).style.display = 'none';
-}
-
-
 function select_all(checked) {
     if (checked) {
         selected[chapter] = [];
@@ -198,12 +188,12 @@ function add_cart() {
     
     if (count == 1) {
         document.getElementById('div-cart-label').className = '';
-        document.getElementById('div-cart-label').innerHTML = "<span class='highlight'>" + count + "</span> verse selected";
+        document.getElementById('div-cart-label').innerHTML = "<span class='highlight'>" + count + "</span> verse selected <div id='empty-cart' onclick='empty_cart()'>Empty Cart</div>";
         
         document.getElementById('cart-label').innerHTML = "<span class='label-title'>CART</span><br><span class='highlight'>" + count + "</span> verse selected";
         
         document.getElementById('small-div-cart-label').className = '';
-        document.getElementById('small-div-cart-label').innerHTML = "<span class='highlight'>" + count + "</span> verse selected";
+        document.getElementById('small-div-cart-label').innerHTML = "<span class='highlight'>" + count + "</span> verse selected <div id='empty-cart' onclick='empty_cart()'>Empty Cart</div>";
         
         if (small_cart == false) {
             toggle_small_cart();
@@ -214,12 +204,12 @@ function add_cart() {
         
     } else if (count != 0) {
         document.getElementById('div-cart-label').className = '';
-        document.getElementById('div-cart-label').innerHTML = "<span class='highlight'>" + count + "</span> verses selected";
+        document.getElementById('div-cart-label').innerHTML = "<span class='highlight'>" + count + "</span> verses selected <div id='empty-cart' onclick='empty_cart()'>Empty Cart</div>";
         
         document.getElementById('cart-label').innerHTML = "<span class='label-title'>CART</span><br><span class='highlight'>" + count + "</span> verses selected";
         
         document.getElementById('small-div-cart-label').className = '';
-        document.getElementById('small-div-cart-label').innerHTML = "<span class='highlight'>" + count + "</span> verses selected";
+        document.getElementById('small-div-cart-label').innerHTML = "<span class='highlight'>" + count + "</span> verses selected <div id='empty-cart' onclick='empty_cart()'>Empty Cart</div>";
         
         document.getElementById('mobile-cart').style.display = "block";
 
@@ -243,17 +233,35 @@ function add_cart() {
     cart.price = total;
     cart.total = count;
     
-    console.log(cart);
+    //console.log(cart);
     
 }
 
 
 function show_unselect(ch,v) {
+    
+    // display unselect button when hovered over
     document.getElementById('unselect-'+ch+'-'+v).style.display = "block";
     document.getElementById('small-unselect-'+ch+'-'+v).style.display = "block";
 }
 
 function hide_unselect(ch,v) {
+    
+    // hide unselect button when mouse is out
     document.getElementById('unselect-'+ch+'-'+v).style.display = "none";
     document.getElementById('small-unselect-'+ch+'-'+v).style.display = "none";
+}
+
+function empty_cart() {
+    
+    // reset everything
+    selected = {};
+    num_items = 0;
+    cart = {};
+    
+    // unselect everything
+    select_all(false);
+    
+    // uncheck select-all checkbox
+    document.getElementById('div-select-all').innerHTML = '<span class="desktop">Click the verse number you want to adopt or </span><input id="select-all" class="checkbox-custom" name="select-all" type="checkbox" onclick="select_all(this.checked)"><label for="select-all" class="checkbox-custom-label">Select All</label>';
 }

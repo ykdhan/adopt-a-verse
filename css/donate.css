@@ -709,8 +709,16 @@
     margin-left: 0.5em;
     margin-right: 0.5em;
 }
-
-
+#empty-cart {
+    color: #039da6;
+    display: inline-block;
+    float: right;
+    vertical-align: middle;
+    font-size: 0.9em;
+    line-height: 1.4;
+    font-family: "Gotham-Book" !important;
+    cursor: pointer;
+}
 
 
 
@@ -1041,7 +1049,7 @@
         top: 0;
         left: 0;
         width: 100%;
-        height: 100%;
+        height: 100vh;
         padding-bottom: 1em;
         margin: 0;
         margin-left: 0;

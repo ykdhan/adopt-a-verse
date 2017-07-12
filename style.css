@@ -1,5 +1,5 @@
-@import url("css/top-bar.css?ver=2.2");
-@import url("css/donate.css?ver=2.2");
+@import url("css/top-bar.css?ver=2.4");
+@import url("css/donate.css?ver=2.4");
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 
@@ -262,11 +262,12 @@ a {
 #footer {
     display: inline-block;
     color: #fff;
-    text-align: left;
+    text-align: center;
+    font-size: 0.8em;
     margin-top: 1em;
-    float: left;
     font-family: "Gotham-Book" !important;
     line-height: 1.5;
+    margin-top: 2em;
 }
 
 
@@ -287,15 +288,17 @@ a {
         padding-top: 0.5em;
         padding-bottom: 0;
     }
+    
     #content {
-        flex: 0.72;
+        width: 68%;
         padding: 0;
-        padding-right: 0.5em;
+        padding-bottom: 3em;
+        padding-right: 0.6em;
     }
     #side-bar {
-        flex: 0.28;
+        width: 32%;
         padding: 0;
-        padding-left: 0.5em;
+        padding-left: 0.6em;
     }
     .sides {
         display: none;
