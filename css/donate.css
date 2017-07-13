@@ -467,49 +467,49 @@
     background: none !important;
 }
 .total-percent-span {
-    z-index: 2;
+    z-index: 5 !important;
     position: relative;
-    text-align: center;
+    text-align: center !important;
     width: 100%;
     margin: 0;
     padding: 0;
-    top: -107px;
-    font-size: 1em;
+    top: -50px;
+    font-size: 0.8em;
+    letter-spacing: 0;
     font-family: "Gotham-Bold" !important;
     color: #444;
-    letter-spacing: -1px;
 }
-#total-percentage {
-    font-size: 2em !important;
+#small-total-percentage {
+    font-size: 1.7em !important;
     letter-spacing: -2px !important;
 }
-#total-adopted {
-    color: #039da6;
-}
 .total-info-1 {
-    margin-top: -2em;
+    margin-top: 1.5em;
     margin-bottom: 0.4em;
+    font-size: 1em;
     color: #444;
-    font-size: 1.2em;
     font-family: "Gotham-Bold" !important;
 }
 .total-info-2 {
-    margin-bottom: 2.5em;
+    margin-bottom: 1.5em;
+    font-size: 0.8em;
     color: #636363;
-    font-size: 0.9em;
     font-family: "Gotham-Bold" !important;
 }
 .total-adopted-verses {
     padding: 1em;
-    font-size: 1em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    font-size: 0.9em;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
     text-align: center;
     background: #eaeaea !important;
     border-radius: 4px;
-    margin-left: 2em;
     color: #444;
-    margin-right: 2em;
     font-family: "Gotham-Bold" !important;
 }
+
 
 
 #mobile-cart {
@@ -677,38 +677,7 @@
 #small-side-cart {
     display: block;
 }
-.total-percent-span {
-    z-index: 5 !important;
-    position: relative;
-    text-align: center !important;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    top: -50px;
-    font-size: 0.8em;
-    letter-spacing: 0;
-}
-#small-total-percentage {
-    font-size: 1.7em !important;
-    letter-spacing: -2px !important;
-}
-.total-info-1 {
-    margin-top: 1.5em;
-    margin-bottom: 0.4em;
-    font-size: 1em;
-}
-.total-info-2 {
-    margin-bottom: 1.5em;
-    font-size: 0.8em;
-}
-.total-adopted-verses {
-    padding: 1em;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-    font-size: 0.9em;
-    margin-left: 0.5em;
-    margin-right: 0.5em;
-}
+
 #empty-cart {
     color: #039da6;
     display: inline-block;

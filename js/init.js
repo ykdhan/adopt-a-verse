@@ -23,14 +23,15 @@ var num_items = 0;              // number of verses in cart
 
 var small_total = true;         // is total raised opened?
 var small_cart = false;         // is cart opened?
-
+var small_language = true;      // is language group details opened?
+var small_photo = false;        // is photo opened?
 
 
 // objects
 
 var church = {};
 var cart = {};
-
+var bible = {};
 
 
 

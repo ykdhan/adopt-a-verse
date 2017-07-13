@@ -21,18 +21,26 @@ function tab(evt, tabName) {
     evt.currentTarget.className += " tabs-now";
 
     
-    sides = document.getElementsByClassName("sides");
+    sides = document.getElementsByClassName("small-sides");
     for (i = 0; i < sides.length; i++) {
-        sides[i].className = "sides border--round";
+        sides[i].className = "small-sides border--round";
     }
     
+    
+    document.getElementById("side-bar").style.display = 'inline-block';
+    document.getElementById("content").style.float = 'left';
     if (tabName == "tab-donate") {
-        document.getElementById("side-language").className += " hide";
-        document.getElementById("side-photo").className += " hide";
+        document.getElementById("small-side-language").className += " hide";
+        document.getElementById("small-side-photo").className += " hide";
+        google.charts.load("current", {packages: ["corechart"]});
+        google.charts.setOnLoadCallback(drawSmallChart);
     } else if (tabName == "tab-about") {
-        document.getElementById("side-total").className += " hide";
-        document.getElementById("side-cart").className += " hide";
+        document.getElementById("small-side-total").className += " hide";
+        document.getElementById("small-side-cart").className += " hide";
     } else {
-        // do nothing
+        document.getElementById("side-bar").style.display = 'none';
+        document.getElementById("content").style.float = 'inherit';
+        google.charts.load("current", {packages: ["corechart"]});
+        google.charts.setOnLoadCallback(drawChart);
     }
 }

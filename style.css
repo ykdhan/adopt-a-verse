@@ -1,5 +1,7 @@
-@import url("css/top-bar.css?ver=2.4");
-@import url("css/donate.css?ver=2.4");
+@import url("css/top-bar.css?ver=2.5");
+@import url("css/donate.css?ver=2.5");
+@import url("css/about.css?ver=2.5");
+@import url("css/goal.css?ver=2.5");
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 
@@ -217,7 +219,7 @@ a {
 
 
 .small-sides {
-    display: none;
+    display: block;
     text-align: left;
     margin: 0;
     margin-bottom: 1.2em;

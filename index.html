@@ -7,11 +7,11 @@
     
     <!-- Links -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="style.css?ver=2.4" />
-    <script type="text/javascript" src="js/init.js?v=2.0"></script>
-    <script type="text/javascript" src="js/select-verse.js?v=2.0"></script>
-    <script type="text/javascript" src="js/navigate-tab.js?v=2.0"></script>
-    <script type="text/javascript" src="js/load-chapter.js?v=2.0"></script>
+    <link rel="stylesheet" type="text/css" href="style.css?ver=2.5" />
+    <script type="text/javascript" src="js/init.js?v=2.1"></script>
+    <script type="text/javascript" src="js/select-verse.js?v=2.1"></script>
+    <script type="text/javascript" src="js/navigate-tab.js?v=2.1"></script>
+    <script type="text/javascript" src="js/load-chapter.js?v=2.1"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/filamentgroup/fixed-sticky/master/fixedsticky.js"></script>
@@ -124,13 +124,53 @@
         
         <!-- About the Language Tab -->
         <div id="tab-about" class="tab-content">
-            <h3>About the Language</h3>
+            <div class="tab-title">About the Language</div>
+            <div id="language-description" class="tab-text">
+                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud </p>
+                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper Lorem ipsum dolor sit amet, cons ectetuer </p>
+            </div>
+            <div class="tab-text">
+                <a href="#"><button class="tab-button" type="button">View PDF</button></a>
+            </div>
         </div>
 
         
         <!-- Our Campaign Goal Tab -->
         <div id="tab-goal" class="tab-content">
-            <h3>Our Campaign Goal</h3>
+            <div class="tab-title">Our Campaign Goal</div>
+            <div id="campaign description" class="tab-text">
+                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud </p>
+            </div>
+            <div class="tab-title">Total Raised</div>
+            <div class="tab-text">
+                
+                
+                <div id="div-chart">
+                    <!-- Donut graph -->
+                </div>
+
+                <!-- Total raised percentage in the donut -->
+                <span class="chart-percent-span" id="total-percentage">70%</span>
+                <br>
+                <span class="chart-percent-span capitalize">Funded</span>
+
+                <!-- Still need -->
+                <div class="goal-total-info-1">
+                    Still Need <span id="total-still-need"></span><br>
+                </div>
+
+                <!-- Total goal -->
+                <div class="goal-total-info-2">
+                    Goal <span id="total-goal"></span>
+                </div>
+
+                <!-- Total verses adopted -->
+                <div class="goal-total-adopted-verses">
+                    <span id="total-adopted"></span> of <span id="total-verses"></span> verses adopted
+                </div>
+                
+                
+            </div>
         </div>
 
         <div id="footer">
@@ -143,36 +183,7 @@
     <div id="side-bar" >
         
         
-        <!-- Total Raised Side Bar -->
-        <div id="side-total" class="sides border--round">
-            <div class="total-top-bar">
-                <div class="total-bar capitalize">Total Raised</div>
-            </div>
-            
-            <div id="total-raised">
-                <!-- Donut graph -->
-            </div>
-            
-            <!-- Total raised percentage in the donut -->
-            <span class="total-percent-span" id="total-percentage">70%</span>
-            <br>
-            <span class="total-percent-span capitalize">Funded</span>
-            
-            <!-- Still need -->
-            <div class="total-info-1">
-                Still Need <span id="total-still-need"></span><br>
-            </div>
-            
-            <!-- Total goal -->
-            <div class="total-info-2">
-                Goal <span id="total-goal"></span>
-            </div>
-            
-            <!-- Total verses adopted -->
-            <div class="total-adopted-verses">
-                <span id="total-adopted"></span> of <span id="total-verses"></span> verses adopted
-            </div>
-        </div>
+
         
         <!-- Cart Side Bar -->
         <div id="side-cart" class="sides border--round">
@@ -261,19 +272,30 @@
         </div>
         
         
-        
-        
-        
-        
         <!-- Language Group Details Side Bar -->
-        <div id="side-language" class="sides border--round hide">
-            <h1>Language Group Details</h1>
+        <div id="small-side-language" class="small-sides border--round hide">
+            <div id="small-language" class="small-side-bar" onclick="toggle_small_language()">
+                <span class="small-title capitalize">Language Group Details</span>
+                <img id="small-language-icon" alt="" src="img/cart_open.png">
+            </div>
+            
+            <div id="small-language-content" class="small-side-content">
+                
+            </div>
         </div>
         
-        <!-- Photo Side Bar -->
-        <div id="side-photo" class="sides border--round hide">
-            <h1>Photo</h1>
+        <!-- Photo Side Bar -->             
+        <div id="small-side-photo" class="small-sides border--round hide">
+            <div id="small-photo" class="small-side-bar" onclick="toggle_small_photo()">
+                <span class="small-title capitalize">Photo</span>
+                <img id="small-photo-icon" alt="" src="img/cart_close.png">
+            </div>
+            
+            <div id="small-photo-content" class="small-side-content">
+                
+            </div>
         </div>
+        
     </div>
     
     
@@ -321,8 +343,9 @@
     
 
 <script>
+
     
-    
+// fixed side bar
 $(function() {
 
     var $sidebar   = $("#side-bar"), 
@@ -340,14 +363,7 @@ $(function() {
     });
     
 });
-    
-$(window).on('resize', function(){
-    google.charts.load("current", {packages: ["corechart"]});
-    google.charts.setOnLoadCallback(drawSmallChart);
 
-});
-    
-    
     
 // church object - data should be retrieved from database
 church = {
@@ -364,6 +380,7 @@ church = {
     
 // initialize all the necessary fields on page
 function init() {
+ 
     // assign global variables
     book = church.book;
     chapter = 1;
@@ -384,6 +401,18 @@ function init() {
         total: 0        // total number of items
     }
     
+    
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(JSON.parse(this.responseText));
+        }
+    };
+    xhttp.open("GET", "/bible.php?book=" + book, true);
+    xhttp.send();
+    
+    
+    
     // load book of the Bible
     load_book(book);
     document.getElementById('book').innerHTML = book;
@@ -398,90 +427,94 @@ function init() {
     
 init();
     
+
     
+    
+    
+// reload total raised chart when screen is resized
+$(window).on('resize', function(){
+    google.charts.load("current", {packages: ["corechart"]});
+    google.charts.setOnLoadCallback(drawSmallChart);
+
+});
+
+
     
 // draw total-raised chart
 
-google.charts.load("current", {packages: ["corechart"]});
-google.charts.setOnLoadCallback(drawChart);
 
 function drawChart() {
-    
-    var data = new google.visualization.DataTable();
-    data.addColumn('string', 'text');
-    data.addColumn('number', 'number');
 
-    data.addRows(2);
-    data.setValue(0, 0, 'Total Raised');
-    data.setValue(0, 1, 0);
-    data.setValue(1, 0, 'Still Needed');
-    data.setValue(1, 1, total_goal);
+     var data = new google.visualization.DataTable();
+     data.addColumn('string', 'text');
+     data.addColumn('number', 'number');
 
-    var options = {
-        backgroundColor: {
-            fill: 'none',
-            
-        },
-        pieHole: 0.6,
-        chartArea: {
-            width: 160,
-            height: 160,
-            backgroundColor: '#dbdbdb'
-        },
-        height: 180,
-        colors: [ '#dbdbdb', '#039da6'],
-        pieSliceBorderColor: '#dbdbdb',
-        legend: 'none',
-        pieSliceText: 'none',
-        pieSliceBorderColor: 'white',
-        reverseCategories: true,
-        tooltip: {
-            textStyle: {
-                fontName: "Gotham-Book",
-                fontSize: 14
-            },
-            text: 'value'
-        },
-        animation: {
-            duration: 1000,
-            easing: 'out',
-            startup: true
-        }
-    };
+     data.addRows(2);
+     data.setValue(0, 0, 'Total Raised');
+     data.setValue(0, 1, 0);
+     data.setValue(1, 0, 'Still Needed');
+     data.setValue(1, 1, total_goal);
 
-    var chart = new google.visualization.PieChart(document.getElementById('total-raised'));
-    chart.draw(data, options);
-    
-    
-    document.getElementById('total-goal').innerHTML = "$" + total_goal.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
-    var total_still_need = total_goal - total_raised;
-    document.getElementById('total-still-need').innerHTML = "$" + total_still_need.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
-    
-    // initial value
-    var percent = 0;
-    // start the animation loop
-    var handler = setInterval(function(){
-        // values increment
-        percent += 1;
-        document.getElementById('total-percentage').innerHTML = percent + "%";
-        // apply new values
-        data.setValue(0, 1, (total_goal * percent / 100));
-        data.setValue(1, 1, total_goal - (total_goal * percent / 100));
-        // update the pie
-        chart.draw(data, options);
-        // check if we have reached the desired value
-        if (percent >= total_percentage)
-            // stop the loop
-            clearInterval(handler);
-    }, 15);
+     var options = {
+         pieHole: 0.6,
+         chartArea: {
+             width: 160,
+             height: 160,
+             backgroundColor: '#dbdbdb'
+         },
+         height: 180,
+         colors: [ '#dbdbdb', '#039da6'],
+         pieSliceBorderColor: '#dbdbdb',
+         legend: 'none',
+         pieSliceText: 'none',
+         pieSliceBorderColor: 'white',
+         reverseCategories: true,
+         tooltip: {
+             textStyle: {
+                 fontName: "Gotham-Book",
+                 fontSize: 14
+             },
+             text: 'value'
+         },
+         animation: {
+             duration: 1000,
+             easing: 'out',
+             startup: true
+         }
+     };
+
+     var chart = new google.visualization.PieChart(document.getElementById('div-chart'));
+     chart.draw(data, options);
+
+
+     document.getElementById('total-goal').innerHTML = "$" + total_goal.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+     var total_still_need = total_goal - total_raised;
+     document.getElementById('total-still-need').innerHTML = "$" + total_still_need.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+
+     // initial value
+     var percent = 0;
+     // start the animation loop
+     var handler = setInterval(function(){
+         // values increment
+         percent += 1;
+         document.getElementById('total-percentage').innerHTML = percent + "%";
+         // apply new values
+         data.setValue(0, 1, (total_goal * percent / 100));
+         data.setValue(1, 1, total_goal - (total_goal * percent / 100));
+         // update the pie
+         chart.draw(data, options);
+         // check if we have reached the desired value
+         if (percent >= total_percentage)
+             // stop the loop
+             clearInterval(handler);
+     }, 15);
 }
 
-
+    
     
     
     
 // draw total-raised chart (tablet)
-
 var initial_chart = true;
     
 google.charts.load("current", {packages: ["corechart"]});
@@ -489,6 +522,7 @@ google.charts.setOnLoadCallback(drawSmallChart);
 
 function drawSmallChart() {
     
+    // animate when load first time
     if (initial_chart) {
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'text');
@@ -554,6 +588,8 @@ function drawSmallChart() {
         
     } else {
         
+        // do not animate chart when resize screen
+        
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'text');
         data.addColumn('number', 'number');
@@ -599,9 +635,6 @@ function drawSmallChart() {
     initial_chart = false;
 }
     
-    
-    
-    
 
     
 // Toggle mobile menu
@@ -628,7 +661,7 @@ function drawSmallChart() {
     }
     
 }
-    
+
 // Toggle mobile cart
 function toggle_cart() {
     
@@ -650,8 +683,7 @@ function toggle_cart() {
     }
 }
     
-    
-    
+     
 // Toggle small sides
 function toggle_small_total() {
 
@@ -700,6 +732,48 @@ function toggle_small_cart() {
             $('#small-total-content').slideToggle('2000', "swing");
             $('#small-total-icon').attr('src', 'img/cart_close.png');
             small_total = false;
+        }
+    }
+} 
+
+function toggle_small_language() {
+
+    $('#small-language-content').slideToggle('2000', "swing");
+    
+    if (small_language) {
+        $('#small-language-icon').attr('src', 'img/cart_close.png');
+        small_language = false;
+    } else {
+        $('#small-language-icon').attr('src', 'img/cart_open.png');
+        small_language = true;
+    }
+    
+    if ($(window).height() < 700) {
+        if (small_photo) {
+            $('#small-photo-content').slideToggle('2000', "swing");
+            $('#small-photo-icon').attr('src', 'img/cart_close.png');
+            small_photo = false;
+        }
+    }
+}
+function toggle_small_photo() {
+
+    $('#small-photo-content').slideToggle('2000', "swing");
+    
+    if (small_photo) {
+        $('#small-photo-icon').attr('src', 'img/cart_close.png');
+        small_photo = false;
+        
+    } else {
+        $('#small-photo-icon').attr('src', 'img/cart_open.png');
+        small_photo = true;
+    }
+    
+    if ($(window).height() < 700) {
+        if (small_language) {
+            $('#small-language-content').slideToggle('2000', "swing");
+            $('#small-language-icon').attr('src', 'img/cart_close.png');
+            small_language = false;
         }
     }
 } 

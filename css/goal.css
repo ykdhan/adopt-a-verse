@@ -1,0 +1,61 @@
+
+#div-chart {
+    margin: 0;
+    text-align: center;
+    padding: 0;
+    background: none !important;
+    width: 40%;
+    text-align: left;
+    height: 12em !important;
+}
+#div-chart div {
+    background: none !important;
+    text-align: left;
+}
+.chart-percent-span {
+    z-index: 5 !important;
+    position: relative;
+    text-align: center !important;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    top: -110px;
+    left: 95px;
+    font-size: 0.8em;
+    font-family: "Gotham-Bold" !important;
+    color: #444;
+}
+#total-adopted {
+    color: #039da6;
+}
+#total-percentage {
+    font-size: 2em !important;
+    letter-spacing: -2px !important;
+}
+.goal-total-info-1 {
+    margin-top: 1.5em;
+    margin-bottom: 0.4em;
+    font-size: 1em;
+    color: #444;
+    font-family: "Gotham-Bold" !important;
+}
+.goal-total-info-2 {
+    margin-bottom: 1.5em;
+    font-size: 0.8em;
+    color: #636363;
+    font-family: "Gotham-Bold" !important;
+}
+.goal-total-adopted-verses {
+    padding: 1em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    font-size: 0.9em;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    text-align: center;
+    background: #eaeaea !important;
+    border-radius: 4px;
+    color: #444;
+    font-family: "Gotham-Bold" !important;
+}
+
