@@ -7,11 +7,11 @@
     
     <!-- Links -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="style.css?ver=2.8" />
-    <script type="text/javascript" src="js/init.js?v=2.4"></script>
-    <script type="text/javascript" src="js/select-verse.js?v=2.4"></script>
-    <script type="text/javascript" src="js/navigate-tab.js?v=2.4"></script>
-    <script type="text/javascript" src="js/load-chapter.js?v=2.4"></script>
+    <link rel="stylesheet" type="text/css" href="style.css?ver=2.9" />
+    <script type="text/javascript" src="js/init.js?v=2.6"></script>
+    <script type="text/javascript" src="js/select-verse.js?v=2.6"></script>
+    <script type="text/javascript" src="js/navigate-tab.js?v=2.6"></script>
+    <script type="text/javascript" src="js/load-chapter.js?v=2.6"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/filamentgroup/fixed-sticky/master/fixedsticky.js"></script>
@@ -19,8 +19,6 @@
     
     
     <!-- Wycliffe links -->
-    <link rel="stylesheet" type="text/css" href="//cloud.typography.com/7939554/692048/css/fonts.css" />
-    <script type="text/javascript" src="https://www.wycliffe.org/tpl/wycliffeOrg/assets/javascript/script.js"></script>
 
     
 </head>
@@ -455,30 +453,21 @@ function init() {
     }
     
     
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            console.log(JSON.parse(this.responseText));
-        }
-    };
-    xhttp.open("GET", "/bible.php?book=" + book, true);
-    xhttp.send();
+    bible = {};
     
-    console.log('bible.php');
-    var bible_data = {};
-    $.getJSON("bible.php?book=Genesis", function(json) {
-        console.log(json);
-        bible_data=json;
+    // retrieve verses data from database
+    $.getJSON("bible.php?book="+book, function(json) {
+        
+        max_chapter = json.size;
+        bible = json.bible;
+        
+        // load book of the Bible
+        load_book(book);
     });
-    console.log(bible_data);
-    console.log('bible.php done');
     
-    
-    // load book of the Bible
-    load_book(book);
-    document.getElementById('book').innerHTML = book;
     
     // fill in the fields on page
+    document.getElementById('book').innerHTML = book;
     document.getElementById('cell-church-name').innerHTML = church.name;
     document.getElementById('total-adopted').innerHTML = total_adopted;
     document.getElementById('total-verses').innerHTML = total_verses;
@@ -487,9 +476,6 @@ function init() {
 }
     
 init();
-    
-
-    
     
     
 // reload total raised chart when screen is resized
@@ -503,8 +489,6 @@ $(window).on('resize', function(){
     google.charts.setOnLoadCallback(drawChart);
 });
 
-
-    
 
 // draw total-raised chart
 var chart_goal = true;
@@ -809,12 +793,16 @@ function toggle_small_total() {
         small_total = true;
     }
     
-    if ($(window).height() < 700) {
+    if ($(window).height() < 900) {
         if (small_cart) {
             $('#small-cart-content').slideToggle('2000', "swing");
             $('#small-cart-icon').attr('src', 'img/cart_close.png');
-            document.getElementById('num-items').style.display = "inline-block";
-            document.getElementById('num-items').innerHTML = num_items;
+            if (num_items != 0) {
+                document.getElementById('num-items').style.display = "inline-block";
+                document.getElementById('num-items').innerHTML = num_items;
+            } else {
+                document.getElementById('num-items').style.display = "none";
+            }
             small_cart = false;
         }
     }
@@ -839,7 +827,7 @@ function toggle_small_cart() {
         document.getElementById('num-items').style.display = "none";
     }
     
-    if ($(window).height() < 700) {
+    if ($(window).height() < 900) {
         if (small_total) {
             $('#small-total-content').slideToggle('2000', "swing");
             $('#small-total-icon').attr('src', 'img/cart_close.png');
@@ -860,7 +848,7 @@ function toggle_small_language() {
         small_language = true;
     }
     
-    if ($(window).height() < 1000) {
+    if ($(window).height() < 900) {
         if (small_photo) {
             $('#small-photo-content').slideToggle('2000', "swing");
             $('#small-photo-icon').attr('src', 'img/cart_close.png');
@@ -881,7 +869,7 @@ function toggle_small_photo() {
         small_photo = true;
     }
     
-    if ($(window).height() < 1000) {
+    if ($(window).height() < 900) {
         if (small_language) {
             $('#small-language-content').slideToggle('2000', "swing");
             $('#small-language-icon').attr('src', 'img/cart_close.png');

@@ -1,16 +1,8 @@
-
 <?php
+
 error_reporting(E_ALL ^ E_DEPRECATED);
 
-include("config.php");
 
-$link = mysql_connect($server, $db_user, $db_pass)
-or die ("MYSQL failed. ".mysql_error());
-
-mysql_query("set names utf8");
-
-mysql_select_db($database)
-or die ("DB failed. ".mysql_error());
 
 $book = $_GET['book'];
 
@@ -18,29 +10,37 @@ $output = array('size');
 $output = array('bible');
 
 
-$sql = "SELECT * FROM bible.nlt WHERE book = '".$book."'";
+DEFINE('DB_USERNAME', 'root');
+DEFINE('DB_PASSWORD', 'root');
+DEFINE('DB_HOST', 'localhost');
+DEFINE('DB_DATABASE', 'bible');
 
-$qry = mysql_query($sql) or die ("SELECT failed. ".mysql_error());
-$num_rows = mysql_num_rows($qry);
+$mysqli = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+
+if ($mysqli->connect_errno) {
+die('Connect Error ('.mysqli_connect_errno().') '.mysqli_connect_error());
+}
+
+$sql = "SELECT * FROM nlt WHERE book = '".$book."' LIMIT 0, 50000";
 
 
-if ($num_rows > 0) {
-    
-    while ($row = mysql_fetch_array($qry)) {
-        $verse = $row['verse'];
-        $chapter = $row['chapter'];
-        $output['bible'][$chapter][$verse] = $row['text'];
+if ($result = $mysqli->query($sql)) {
+     
+    while ($row = $result->fetch_assoc()) {
+        $output['bible'][$row['chapter']][$row['verse']] = $row['text'];
     }
     
-    $output['size'] = sizeof(array_keys($output['bible']));
+    $output['size'] = sizeof($output['bible']);
     
+     
 } else {
-    
-    $output['size'] = 0;
-
+     $output['size'] = 0;
 }
 
 
 echo JSON_encode($output);
+
+$mysqli->close();
+
 
 ?>

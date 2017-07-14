@@ -29,9 +29,9 @@ var small_photo = false;        // is photo opened?
 
 // objects
 
-var church = {};
-var cart = {};
-var bible = {};
+var church = {};                // Church
+var cart = {};                  // Cart 
+var bible = {};                 // Scripture verses
 
 
 

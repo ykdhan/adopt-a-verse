@@ -60,11 +60,15 @@ function select(ch,verse) {
     
     
     
-
+    /*
+    
+    // print out selected list (not ordered)
     console.log("Selected List");
     for (a in selected) {
         console.log("     " + a + ": " + selected[a]);
     }
+    
+    */
     
     
     
@@ -99,10 +103,16 @@ function select_all(checked) {
             box.className = box.className.replace(" verse-selected", "");
         }
     }
+    
+    /*
+    
+    // print out selected list (not ordered)
     console.log("Selected List");
     for (a in selected) {
         console.log("     " + a + ": " + selected[a]);
     }
+    
+    */
     
     add_cart();
 }
