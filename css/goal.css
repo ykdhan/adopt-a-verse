@@ -1,5 +1,13 @@
+.top-gap {
+    margin-top: 4em !important;
+}
+.top-gap-more {
+    margin-top: 25em !important;
+}
 
 #div-chart {
+    display: inline-block;
+    float: left;
     margin: 0;
     text-align: center;
     padding: 0;
@@ -12,21 +20,29 @@
     background: none !important;
     text-align: left;
 }
-.chart-percent-span {
+#div-chart-info {
+    display: inline-block;
+    width: 60%;
+    float: left;
+}
+#div-chart-percentage {
+    display: block;
+    position: absolute;
     z-index: 5 !important;
-    position: relative;
     text-align: center !important;
-    width: 100%;
+    margin-top: 63px;
+    background: none;
+    margin-left: 86px;
+}
+
+
+
+.chart-percent-span {
     margin: 0;
     padding: 0;
-    top: -110px;
-    left: 95px;
     font-size: 0.8em;
     font-family: "Gotham-Bold" !important;
     color: #444;
-}
-#total-adopted {
-    color: #039da6;
 }
 #total-percentage {
     font-size: 2em !important;
@@ -35,27 +51,31 @@
 .goal-total-info-1 {
     margin-top: 1.5em;
     margin-bottom: 0.4em;
-    font-size: 1em;
+    font-size: 1.3em;
     color: #444;
     font-family: "Gotham-Bold" !important;
 }
 .goal-total-info-2 {
     margin-bottom: 1.5em;
-    font-size: 0.8em;
+    font-size: 1.1em;
     color: #636363;
     font-family: "Gotham-Bold" !important;
 }
 .goal-total-adopted-verses {
-    padding: 1em;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-    font-size: 0.9em;
-    margin-left: 0.5em;
-    margin-right: 0.5em;
+    display: inline-block;
+    padding: 0.8em;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+    font-size: 1em;
+    margin: 0;
     text-align: center;
     background: #eaeaea !important;
     border-radius: 4px;
     color: #444;
     font-family: "Gotham-Bold" !important;
 }
+#total-adopted {
+    color: #039da6;
+}
+
 

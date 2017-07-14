@@ -7,11 +7,11 @@
     
     <!-- Links -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="style.css?ver=2.5" />
-    <script type="text/javascript" src="js/init.js?v=2.1"></script>
-    <script type="text/javascript" src="js/select-verse.js?v=2.1"></script>
-    <script type="text/javascript" src="js/navigate-tab.js?v=2.1"></script>
-    <script type="text/javascript" src="js/load-chapter.js?v=2.1"></script>
+    <link rel="stylesheet" type="text/css" href="style.css?ver=2.8" />
+    <script type="text/javascript" src="js/init.js?v=2.4"></script>
+    <script type="text/javascript" src="js/select-verse.js?v=2.4"></script>
+    <script type="text/javascript" src="js/navigate-tab.js?v=2.4"></script>
+    <script type="text/javascript" src="js/load-chapter.js?v=2.4"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/filamentgroup/fixed-sticky/master/fixedsticky.js"></script>
@@ -85,7 +85,6 @@
     <!-- Tab -->
     <div id="content">
         
-        
         <!-- Donate Tab -->
         <div id="tab-donate" class="tab-content tab-content-now">
             <div class="donate-top-bar">
@@ -132,6 +131,52 @@
             <div class="tab-text">
                 <a href="#"><button class="tab-button" type="button">View PDF</button></a>
             </div>
+
+            
+            <!-- Mobile Language Group Details and Photo -->
+            <div class="mobile">
+              
+            <div class="tab-title top-gap">Language Group Details</div>
+            <div class="tab-text">
+                <div class="div-details-img">
+                    <img class="details-img" alt="" src="img/details_region.png">
+                </div>
+                <div class="div-details-content">
+                    <span class="details-title">Region/Country</span><br>
+                    <span class="details-info">Papua New Guinea</span>
+                </div>
+                <div class="div-details-img">
+                    <img class="details-img" alt="" src="img/details_people.png">
+                </div>
+                <div class="div-details-content">
+                    <span class="details-title">People Group(s)</span><br>
+                    <span class="details-info">Kaninuwa</span>
+                </div>
+                <div class="div-details-img">
+                    <img class="details-img" alt="" src="img/details_speaker.png">
+                </div>
+                <div class="div-details-content">
+                    <span class="details-title">Native Speakers</span><br>
+                    <span class="details-info">340</span>
+                </div>
+                <div class="div-details-img">
+                    <img class="details-img" alt="" src="img/details_scripture.png">
+                </div>
+                <div class="div-details-content">
+                    <span class="details-title">Scriptures Published</span><br>
+                    <span class="details-info">None</span>
+                </div>
+            </div>
+                
+            <div class="tab-title top-gap-more">Photo</div>
+            <div id="language-photo" class="tab-text">
+                <img alt="" src="img/example_photo.jpg" id="first-photo">
+                <div id="more-photo"><img alt="" src="img/open_photo.png"></div>
+            </div>
+            
+            </div>
+
+            
         </div>
 
         
@@ -141,74 +186,58 @@
             <div id="campaign description" class="tab-text">
                 <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud </p>
             </div>
-            <div class="tab-title">Total Raised</div>
+            <div class="tab-title top-gap">Total Raised</div>
             <div class="tab-text">
-                
                 
                 <div id="div-chart">
                     <!-- Donut graph -->
                 </div>
 
-                <!-- Total raised percentage in the donut -->
-                <span class="chart-percent-span" id="total-percentage">70%</span>
-                <br>
-                <span class="chart-percent-span capitalize">Funded</span>
-
                 <!-- Still need -->
-                <div class="goal-total-info-1">
-                    Still Need <span id="total-still-need"></span><br>
-                </div>
+                <div id="div-chart-info">
+                    <div class="goal-total-info-1">
+                        Still Need <span id="total-still-need"></span><br>
+                    </div>
 
-                <!-- Total goal -->
-                <div class="goal-total-info-2">
-                    Goal <span id="total-goal"></span>
-                </div>
+                    <!-- Total goal -->
+                    <div class="goal-total-info-2">
+                        Goal <span id="total-goal"></span>
+                    </div>
 
-                <!-- Total verses adopted -->
-                <div class="goal-total-adopted-verses">
-                    <span id="total-adopted"></span> of <span id="total-verses"></span> verses adopted
+                    <!-- Total verses adopted -->
+                    <div class="goal-total-adopted-verses">
+                        <span id="total-adopted"></span> of <span id="total-verses"></span> verses adopted
+                    </div>
                 </div>
                 
+                <!-- Total raised percentage in the donut -->
+                <div id="div-chart-percentage">
+                    <span class="chart-percent-span" id="total-percentage">70%</span>
+                    <br>
+                    <span class="chart-percent-span capitalize">Funded</span>
+                </div>
                 
             </div>
         </div>
 
+        
         <div id="footer">
-    Holy Bible, New Living Translation, copyright © 1996, 2004, 2015 by Tyndale House Foundation.<br>
-    ©2017 Wycliffe Bible Translators. All rights reserved.
-    </div>
+            Holy Bible, New Living Translation, copyright © 1996, 2004, 2015 by Tyndale House Foundation.<br>
+            ©2017 Wycliffe Bible Translators. All rights reserved.
+        </div>
     </div>
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <!-- side bar -->
-    <div id="side-bar" >
-        
-        
-
-        
-        <!-- Cart Side Bar -->
-        <div id="side-cart" class="sides border--round">
-            <div class="cart-top-bar">
-                <div class="cart-bar capitalize">My Cart</div>
-            </div>
-            
-            <div id="div-cart">
-            </div>
-        
-            <div id="div-cart-empty">
-                <img id="img-empty-cart" alt="Empty Cart" src="img/empty-cart.png">
-                <br>
-                Add verses to your cart.
-            </div>
-            
-            <div id="div-cart-label" class="no-label">&nbsp;</div>
-            
-            <div class="div-checkout">
-                <button id="checkout" class="checkout border--round empty">Give $0</button>
-            </div>
-        </div>
-        
-        
-        
+    <div id="side-bar" class="desktop">
         
         <!-- Total Raised Side Bar (Tablet) -->
         <div id="small-side-total" class="small-sides border--round">
@@ -280,7 +309,36 @@
             </div>
             
             <div id="small-language-content" class="small-side-content">
-                
+                <div id="small-div-details">
+                    <div class="div-details-img">
+                        <img class="details-img" alt="" src="img/details_region.png">
+                    </div>
+                    <div class="div-details-content">
+                        <span class="details-title">Region/Country</span><br>
+                        <span class="details-info">Papua New Guinea</span>
+                    </div>
+                    <div class="div-details-img">
+                        <img class="details-img" alt="" src="img/details_people.png">
+                    </div>
+                    <div class="div-details-content">
+                        <span class="details-title">People Group(s)</span><br>
+                        <span class="details-info">Kaninuwa</span>
+                    </div>
+                    <div class="div-details-img">
+                        <img class="details-img" alt="" src="img/details_speaker.png">
+                    </div>
+                    <div class="div-details-content">
+                        <span class="details-title">Native Speakers</span><br>
+                        <span class="details-info">340</span>
+                    </div>
+                    <div class="div-details-img">
+                        <img class="details-img" alt="" src="img/details_scripture.png">
+                    </div>
+                    <div class="div-details-content">
+                        <span class="details-title">Scriptures Published</span><br>
+                        <span class="details-info">None</span>
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -292,7 +350,8 @@
             </div>
             
             <div id="small-photo-content" class="small-side-content">
-                
+                <img alt="" src="img/example_photo.jpg" id="first-photo">
+                <div id="more-photo"><img alt="" src="img/open_photo.png"></div>
             </div>
         </div>
         
@@ -303,7 +362,6 @@
     
     <!-- Mobile Cart -->
     <div id="mobile-cart">
-        
         <div id="cart-1">
             <div id="cart-toggle" onclick="toggle_cart()">
                 <img id="cart-icon" alt="Cart" src="img/cart_open.png">
@@ -323,14 +381,9 @@
             <div id="div-cart-mobile">
                 <!-- cart items -->
             </div>
-            
         </div>
-        
-        
-        
     </div>
-    
-    
+        
     
     
 </div> <!-- wrapper -->
@@ -411,6 +464,14 @@ function init() {
     xhttp.open("GET", "/bible.php?book=" + book, true);
     xhttp.send();
     
+    console.log('bible.php');
+    var bible_data = {};
+    $.getJSON("bible.php?book=Genesis", function(json) {
+        console.log(json);
+        bible_data=json;
+    });
+    console.log(bible_data);
+    console.log('bible.php done');
     
     
     // load book of the Bible
@@ -433,18 +494,25 @@ init();
     
 // reload total raised chart when screen is resized
 $(window).on('resize', function(){
+    // on side bar
     google.charts.load("current", {packages: ["corechart"]});
     google.charts.setOnLoadCallback(drawSmallChart);
-
+    
+    // on campaign goal
+    google.charts.load("current", {packages: ["corechart"]});
+    google.charts.setOnLoadCallback(drawChart);
 });
 
 
     
+
 // draw total-raised chart
-
-
+var chart_goal = true;
+    
 function drawChart() {
 
+    
+    if (chart_goal) {
      var data = new google.visualization.DataTable();
      data.addColumn('string', 'text');
      data.addColumn('number', 'number');
@@ -507,15 +575,59 @@ function drawChart() {
          if (percent >= total_percentage)
              // stop the loop
              clearInterval(handler);
-     }, 15);
-}
+     }, 10);
+        
+    } else {
+        
+        // do not animate chart when resize screen
+        
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'text');
+        data.addColumn('number', 'number');
 
-    
-    
-    
-    
+        data.addRows(2);
+        data.setValue(0, 0, 'Total Raised');
+        data.setValue(0, 1, total_raised);
+        data.setValue(1, 0, 'Still Needed');
+        data.setValue(1, 1, total_goal-total_raised);
+
+        var options = {
+            pieHole: 0.6,
+            chartArea: {
+                width: 160,
+                height: 160,
+                backgroundColor: '#dbdbdb'
+            },
+            height: 180,
+            colors: [ '#dbdbdb', '#039da6'],
+            pieSliceBorderColor: '#dbdbdb',
+            legend: 'none',
+            pieSliceText: 'none',
+            pieSliceBorderColor: 'white',
+            reverseCategories: true,
+            tooltip: {
+                trigger: 'none'
+            },
+            animation: {
+                duration: 1000,
+                easing: 'out',
+                startup: true
+            }
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('div-chart'));
+        chart.draw(data, options);
+
+
+        document.getElementById('total-goal').innerHTML = "$" + total_goal.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+         var total_still_need = total_goal - total_raised;
+         document.getElementById('total-still-need').innerHTML = "$" + total_still_need.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+    }
+    chart_goal = false;
+}
+        
 // draw total-raised chart (tablet)
-var initial_chart = true;
+var chart_sidebar = true;
     
 google.charts.load("current", {packages: ["corechart"]});
 google.charts.setOnLoadCallback(drawSmallChart);
@@ -523,7 +635,7 @@ google.charts.setOnLoadCallback(drawSmallChart);
 function drawSmallChart() {
     
     // animate when load first time
-    if (initial_chart) {
+    if (chart_sidebar) {
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'text');
         data.addColumn('number', 'number');
@@ -583,7 +695,7 @@ function drawSmallChart() {
             if (percent >= total_percentage)
                 // stop the loop
                 clearInterval(handler);
-        }, 15);
+        }, 10);
         
         
     } else {
@@ -632,7 +744,7 @@ function drawSmallChart() {
         var total_still_need = total_goal - total_raised;
         document.getElementById('small-total-still-need').innerHTML = "$" + total_still_need.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
     }
-    initial_chart = false;
+    chart_sidebar = false;
 }
     
 
@@ -748,7 +860,7 @@ function toggle_small_language() {
         small_language = true;
     }
     
-    if ($(window).height() < 700) {
+    if ($(window).height() < 1000) {
         if (small_photo) {
             $('#small-photo-content').slideToggle('2000', "swing");
             $('#small-photo-icon').attr('src', 'img/cart_close.png');
@@ -769,7 +881,7 @@ function toggle_small_photo() {
         small_photo = true;
     }
     
-    if ($(window).height() < 700) {
+    if ($(window).height() < 1000) {
         if (small_language) {
             $('#small-language-content').slideToggle('2000', "swing");
             $('#small-language-icon').attr('src', 'img/cart_close.png');

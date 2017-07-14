@@ -1,8 +1,7 @@
-@import url("css/top-bar.css?ver=2.5");
-@import url("css/donate.css?ver=2.5");
-@import url("css/about.css?ver=2.5");
-@import url("css/goal.css?ver=2.5");
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url("css/top-bar.css?ver=2.8");
+@import url("css/donate.css?ver=2.8");
+@import url("css/about.css?ver=2.8");
+@import url("css/goal.css?ver=2.8");
 
 
 @font-face {
@@ -15,6 +14,13 @@
 @font-face {
     font-family: "Gotham-Bold";
     src: url('font/GothamSSm-Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Gotham-Medium";
+    src: url('font/GothamSSm-Medium.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -88,6 +94,13 @@ button {
 img {
     margin: 0;
     padding: 0;
+    user-drag: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 input[type='text']
@@ -131,7 +144,6 @@ a {
     box-sizing: border-box;
     padding: 0.5em;
     padding-top: 6em;
-    padding-bottom: 6em;
     width: 100%;
     height: 100%;
     background-size: cover;
@@ -266,10 +278,10 @@ a {
     color: #fff;
     text-align: center;
     font-size: 0.8em;
-    margin-top: 1em;
     font-family: "Gotham-Book" !important;
     line-height: 1.5;
     margin-top: 2em;
+    margin-bottom: 3em !important;
 }
 
 

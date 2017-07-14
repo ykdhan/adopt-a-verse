@@ -24,7 +24,7 @@ function load_book (bk) {
     document.getElementById('book').innerHTML = book;
     
     // get the chapters
-    $.getJSON("js/nlt.json?v=1.1", function(json) {
+    $.getJSON("js/nlt.json", function(json) {
         var num = 0;
         for (i in json[bk]) {
             num = i;
@@ -52,7 +52,7 @@ function load_chapter (bk,ch) {
     document.getElementById('button-chapter').innerHTML = book + " " + chapter + "<img alt='' src='img/cart_close.png' />";
     
     // load verses
-    $.getJSON("js/nlt.json?v=1.2", function(json) {
+    $.getJSON("js/nlt.json", function(json) {
         document.getElementById('bible').innerHTML = "";
         for (verse in json[bk][ch]) {
             

@@ -3,6 +3,6 @@
 $server = "localhost";
 $database = "bible";
 $db_user = "root";
-$db_pass = "wycliffe123!";
+$db_pass = "root";
 
 ?>

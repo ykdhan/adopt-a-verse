@@ -33,6 +33,7 @@ function tab(evt, tabName) {
         document.getElementById("small-side-language").className += " hide";
         document.getElementById("small-side-photo").className += " hide";
         google.charts.load("current", {packages: ["corechart"]});
+        initial_chart = true;
         google.charts.setOnLoadCallback(drawSmallChart);
     } else if (tabName == "tab-about") {
         document.getElementById("small-side-total").className += " hide";
