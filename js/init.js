@@ -29,7 +29,7 @@ var small_photo = false;        // is photo opened?
 
 // objects
 
-var church = {};                // Church
+var campaign = {};              // Campaign Information
 var cart = {};                  // Cart 
 var bible = {};                 // Scripture verses
 

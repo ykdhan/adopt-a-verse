@@ -2,18 +2,12 @@
 
 error_reporting(E_ALL ^ E_DEPRECATED);
 
-
+include('config.php');
 
 $book = $_GET['book'];
 
 $output = array('size');
 $output = array('bible');
-
-
-DEFINE('DB_USERNAME', 'root');
-DEFINE('DB_PASSWORD', 'root');
-DEFINE('DB_HOST', 'localhost');
-DEFINE('DB_DATABASE', 'bible');
 
 $mysqli = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 
@@ -36,7 +30,6 @@ if ($result = $mysqli->query($sql)) {
 } else {
      $output['size'] = 0;
 }
-
 
 echo JSON_encode($output);
 

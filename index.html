@@ -8,10 +8,10 @@
     <!-- Links -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style.css?ver=2.9" />
-    <script type="text/javascript" src="js/init.js?v=2.6"></script>
-    <script type="text/javascript" src="js/select-verse.js?v=2.6"></script>
-    <script type="text/javascript" src="js/navigate-tab.js?v=2.6"></script>
-    <script type="text/javascript" src="js/load-chapter.js?v=2.6"></script>
+    <script type="text/javascript" src="js/init.js?v=2.8"></script>
+    <script type="text/javascript" src="js/select-verse.js?v=2.8"></script>
+    <script type="text/javascript" src="js/navigate-tab.js?v=2.8"></script>
+    <script type="text/javascript" src="js/load-chapter.js?v=2.8"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/filamentgroup/fixed-sticky/master/fixedsticky.js"></script>
@@ -90,7 +90,7 @@
                 
                 <div>
                     <span class="title capitalize">Language</span>
-                    <span class="language">Kaninuwa</span><span class="region">Papua New Guinea</span>
+                    <span class="language" id="campaign-language"></span><span class="region" id="campaign-region"></span>
                 </div>
                 <div>
                     <span class="title book-chapter capitalize">Book &amp; Chapter</span>
@@ -250,7 +250,7 @@
                 </div>
             
                 <!-- Total raised percentage in the donut -->
-                <span class="total-percent-span" id="small-total-percentage">70%</span>
+                <span class="total-percent-span" id="small-total-percentage">%</span>
                 <br>
                 <span class="total-percent-span capitalize">Funded</span>
 
@@ -313,28 +313,28 @@
                     </div>
                     <div class="div-details-content">
                         <span class="details-title">Region/Country</span><br>
-                        <span class="details-info">Papua New Guinea</span>
+                        <span class="details-info" id="details-region"></span>
                     </div>
                     <div class="div-details-img">
                         <img class="details-img" alt="" src="img/details_people.png">
                     </div>
                     <div class="div-details-content">
                         <span class="details-title">People Group(s)</span><br>
-                        <span class="details-info">Kaninuwa</span>
+                        <span class="details-info" id="details-people-group"></span>
                     </div>
                     <div class="div-details-img">
                         <img class="details-img" alt="" src="img/details_speaker.png">
                     </div>
                     <div class="div-details-content">
                         <span class="details-title">Native Speakers</span><br>
-                        <span class="details-info">340</span>
+                        <span class="details-info" id="details-native-speakers"></span>
                     </div>
                     <div class="div-details-img">
                         <img class="details-img" alt="" src="img/details_scripture.png">
                     </div>
                     <div class="div-details-content">
                         <span class="details-title">Scriptures Published</span><br>
-                        <span class="details-info">None</span>
+                        <span class="details-info" id="details-scripture-published"></span>
                     </div>
                 </div>
             </div>
@@ -396,6 +396,9 @@
 <script>
 
     
+var code = "aB3cC3";
+    
+
 // fixed side bar
 $(function() {
 
@@ -414,38 +417,87 @@ $(function() {
     });
     
 });
-
-    
-// church object - data should be retrieved from database
-church = {
-    name: "First Baptist Church of Orlando",
-    language: "Kaninuwa",
-    region: "Papua New Guinea",
-    book: "Genesis",
-    proejct_description: "",
-    goal_description: "",
-    goal_amount: 100000,
-    verse_price: 15
-}
-
+  
     
 // initialize all the necessary fields on page
 function init() {
- 
-    // assign global variables
-    book = church.book;
-    chapter = 1;
-    verses = [];
-    selected = {};
-    verse_price = church.verse_price;
     
-    total_adopted = 525;
-    total_verses = 750;
-    total_percentage = 70;
-    total_raised = 70000;
+    campaign = {};
     
-    total_goal = church.goal_amount;
+    var ajaxObj = new XMLHttpRequest();
+	ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+		var resp = JSON.parse(ajaxObj.responseText);
+        if (resp.status == 0) {
+            alert("The campaign does not exist.");
+        }
 
+
+        campaign.book = resp.info.book;
+        campaign.church = resp.info.church;
+        campaign.language = resp.info.language;
+        campaign.project_description = resp.info.project_description;
+        campaign.goal_description = resp.info.goal_description;
+        campaign.goal_amount = parseInt(resp.info.goal_amount);
+        campaign.verse_price = parseInt(resp.info.verse_price);
+        campaign.start_date = resp.info.start_date;
+        campaign.end_date = resp.info.end_date;
+        campaign.region = resp.info.region;
+        campaign.number_of_speakers = parseInt(resp.info.number_of_speakers);
+        campaign.scripture_published = resp.info.scripture_published;
+
+        
+        book = campaign.book;
+        chapter = 1;
+        verses = [];
+        selected = {};
+        verse_price = campaign.verse_price;
+        total_goal = campaign.goal_amount;
+        
+        document.getElementById('book').innerHTML = book;
+        document.getElementById('campaign-language').innerHTML = campaign.language;
+        document.getElementById('campaign-region').innerHTML = campaign.region;
+        document.getElementById('cell-church-name').innerHTML = campaign.church;
+        document.getElementById('language-description').innerHTML = "<p>"+campaign.project_description+"</p>";
+        document.getElementById('details-region').innerHTML = campaign.region;
+        document.getElementById('details-people-group').innerHTML = campaign.language;
+        document.getElementById('details-native-speakers').innerHTML = campaign.number_of_speakers;
+        document.getElementById('details-scripture-published').innerHTML = campaign.scripture_published;
+    
+        bible = {};
+    
+        var ajaxObj2 = new XMLHttpRequest();
+        ajaxObj2.onreadystatechange= function() { if(ajaxObj2.readyState == 4) { if(ajaxObj2.status == 200) {
+            var resp = JSON.parse(ajaxObj2.responseText);
+
+            max_chapter = resp.size;
+            bible = resp.bible;
+
+            // load book of the Bible
+            load_book(book);
+
+        }}}
+        ajaxObj2.open("GET", "bible.php?book="+book);
+        ajaxObj2.send();
+        
+        
+        total_adopted = 525;
+        total_verses = 750;
+        total_raised = 6000;
+        total_percentage = total_raised / total_goal * 100;
+
+
+        // fill in the fields on page
+        document.getElementById('total-adopted').innerHTML = total_adopted;
+        document.getElementById('total-verses').innerHTML = total_verses;
+        document.getElementById('small-total-adopted').innerHTML = total_adopted;
+        document.getElementById('small-total-verses').innerHTML = total_verses;
+        
+	}}}
+	ajaxObj.open("GET", "campaign.php?campaign="+code);
+	ajaxObj.send();
+    
+    
+    
     cart = {
         price: 0,       // total price
         items: {},      // items 
@@ -453,26 +505,6 @@ function init() {
     }
     
     
-    bible = {};
-    
-    // retrieve verses data from database
-    $.getJSON("bible.php?book="+book, function(json) {
-        
-        max_chapter = json.size;
-        bible = json.bible;
-        
-        // load book of the Bible
-        load_book(book);
-    });
-    
-    
-    // fill in the fields on page
-    document.getElementById('book').innerHTML = book;
-    document.getElementById('cell-church-name').innerHTML = church.name;
-    document.getElementById('total-adopted').innerHTML = total_adopted;
-    document.getElementById('total-verses').innerHTML = total_verses;
-    document.getElementById('small-total-adopted').innerHTML = total_adopted;
-    document.getElementById('small-total-verses').innerHTML = total_verses;
 }
     
 init();
@@ -743,7 +775,7 @@ function drawSmallChart() {
         document.getElementById('toggle-menu').style.display = 'block';
         
         $('#menu-icon').attr('src', 'img/menu_close.png');
-        document.getElementById('top-bar-logo').innerHTML = '<div id="mobile-church"><img id="church-logo" alt="Church Logo" align="middle" src="img/church-logo.png"><span id="mobile-church-name" class="capitalize">'+church.name+'</span></div>';
+        document.getElementById('top-bar-logo').innerHTML = '<div id="mobile-church"><img id="church-logo" alt="Church Logo" align="middle" src="img/church-logo.png"><span id="mobile-church-name" class="capitalize">'+campaign.church+'</span></div>';
         menu = true;
     } 
     // close menu

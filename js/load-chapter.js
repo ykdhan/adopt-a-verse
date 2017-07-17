@@ -26,6 +26,7 @@ function load_book (bk) {
     fill_chapters(max_chapter);
     
     chapter = 1;
+    
     load_chapter(book,chapter);
 }
 
@@ -44,6 +45,9 @@ function load_chapter (bk,ch) {
     // load verses
     
     document.getElementById('bible').innerHTML = "";
+    
+    console.log(bible);
+    
     for (verse in bible[ch]) {
 
         var in_cart = false;
@@ -89,6 +93,7 @@ function load_chapter (bk,ch) {
 
     // if all verses have been selected 
     if (all_selected) {
+        document.getElementById('div-select-all').innerHTML = '<span class="desktop">Click the verse number you want to adopt or </span><input id="select-all" class="checkbox-custom" name="select-all" type="checkbox" onclick="select_all(this.checked)"><label for="select-all" class="checkbox-custom-label">Select All</label>';
         document.getElementById('select-all').setAttribute('checked', 'true');
     } else {
         document.getElementById('div-select-all').innerHTML = '<span class="desktop">Click the verse number you want to adopt or </span><input id="select-all" class="checkbox-custom" name="select-all" type="checkbox" onclick="select_all(this.checked)"><label for="select-all" class="checkbox-custom-label">Select All</label>';
