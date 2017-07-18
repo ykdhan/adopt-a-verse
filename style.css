@@ -319,7 +319,7 @@ a {
         display: none;
     }
     .small-sides {
-        display: block !important;
+        display: block;
     }
 }
 

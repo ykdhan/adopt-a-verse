@@ -42,6 +42,7 @@ if ($result = $mysqli->query($sql)) {
         } else {
             $output['info']['scripture_published'] = $row['scripture_published'];
         }
+        $output['info']['pdf_url'] = $row['pdf_url'];
     }
      
 } else {

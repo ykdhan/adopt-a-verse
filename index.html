@@ -123,11 +123,10 @@
         <div id="tab-about" class="tab-content">
             <div class="tab-title">About the Language</div>
             <div id="language-description" class="tab-text">
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud </p>
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper Lorem ipsum dolor sit amet, cons ectetuer </p>
+                
             </div>
-            <div class="tab-text">
-                <a href="#"><button class="tab-button" type="button">View PDF</button></a>
+            <div class="tab-text" id="download-pdf">
+                
             </div>
 
             
@@ -181,8 +180,8 @@
         <!-- Our Campaign Goal Tab -->
         <div id="tab-goal" class="tab-content">
             <div class="tab-title">Our Campaign Goal</div>
-            <div id="campaign description" class="tab-text">
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud </p>
+            <div id="campaign-description" class="tab-text">
+                
             </div>
             <div class="tab-title top-gap">Total Raised</div>
             <div class="tab-text">
@@ -210,7 +209,7 @@
                 
                 <!-- Total raised percentage in the donut -->
                 <div id="div-chart-percentage">
-                    <span class="chart-percent-span" id="total-percentage">70%</span>
+                    <span class="chart-percent-span" id="total-percentage">%</span>
                     <br>
                     <span class="chart-percent-span capitalize">Funded</span>
                 </div>
@@ -444,7 +443,7 @@ function init() {
         campaign.region = resp.info.region;
         campaign.number_of_speakers = parseInt(resp.info.number_of_speakers);
         campaign.scripture_published = resp.info.scripture_published;
-
+        campaign.pdf_url = resp.info.pdf_url;
         
         book = campaign.book;
         chapter = 1;
@@ -458,10 +457,12 @@ function init() {
         document.getElementById('campaign-region').innerHTML = campaign.region;
         document.getElementById('cell-church-name').innerHTML = campaign.church;
         document.getElementById('language-description').innerHTML = "<p>"+campaign.project_description+"</p>";
+        document.getElementById('campaign-description').innerHTML = "<p>"+campaign.goal_description+"</p>";
         document.getElementById('details-region').innerHTML = campaign.region;
         document.getElementById('details-people-group').innerHTML = campaign.language;
         document.getElementById('details-native-speakers').innerHTML = campaign.number_of_speakers;
         document.getElementById('details-scripture-published').innerHTML = campaign.scripture_published;
+        document.getElementById('download-pdf').innerHTML = '<a href="'+campaign.pdf_url+'" target="_blank"><button class="tab-button" type="button">View PDF</button></a>';
     
         bible = {};
     

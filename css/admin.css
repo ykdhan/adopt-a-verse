@@ -1,5 +1,5 @@
-@import url("admin/top-bar.css?ver=1.0");
-@import url("admin/create-campaign.css?ver=1.0");
+@import url("admin/top-bar.css?ver=1.1");
+@import url("admin/create-campaign.css?ver=1.2");
 
 
 
@@ -83,7 +83,8 @@ a,
 input[type='text']
 input[type='submit'],
 textarea,
-button {
+button,
+select {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;

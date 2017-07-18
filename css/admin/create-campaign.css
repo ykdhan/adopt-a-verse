@@ -125,6 +125,122 @@ input[type='date'] {
     margin-left: 0.3em;
 }
 
+.dropdown {
+    width: 16em;
+    border: 1px solid #d1d1d1;
+    border-radius: 4px;
+    background: none;
+    padding: 0.7em;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: 1em;
+    font-family: "Gotham-Book" !important;
+    color: #606060;
+    margin-right: 1em;
+    margin-bottom: 1em;
+    cursor: pointer;
+    text-align: left;
+}
+.dropdown img {
+    float: right;
+    width: 1.5em;
+    margin-top: 0.2em;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.drop {
+    visibility: hidden;
+    position: absolute;
+    width: 16em;
+    max-height: 20em;
+    overflow-y: auto;
+    border: 0;
+    border-radius: 4px;
+    background: #fff;
+    padding: 0.7em;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: 1em;
+    font-family: "Gotham-Book" !important;
+    color: #606060;
+    margin-right: 1em;
+    margin-bottom: 1em;
+    margin-top: -0.5em;
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+}
+.drop div {
+    padding: 0.5em;
+}
+.drop span {
+    float: right;
+    color: #aaa;
+    font-size: 0.9em;
+    vertical-align: middle;
+}
+.drop-item {
+    color: #555;
+    cursor: pointer;
+    padding-left: 2em !important;
+    font-size: 1em;
+    background: none;
+    border: 0;
+    border-radius: 2px;
+}
+.drop-item:hover {
+    background: #e5e5e5;
+}
+.drop-group {
+    color: #aaa;
+    cursor: default;
+    font-size: 0.9em;
+}
+
+
+
+#drop-church {
+    width: 25em;
+}
+.church-item {
+    padding-left: 0.5em !important;
+}
+
+
+
+.error {
+    visibility: hidden;
+    position: absolute;
+    float: right !important;
+    width: 18em;
+    border: 0;
+    border-radius: 4px;
+    background: #555;
+    padding: 0.5em;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: 0.9em;
+    font-family: "Gotham-Book" !important;
+    color: #eee;
+    margin-left: -18.9em;
+    margin-top: 3.2em;
+}
+
+.fa-circle {
+    margin-right: 1em;
+}
+.green {
+    color: #54e55d;
+}
+.red {
+    color: #e55454;
+}
+
 
 
 
