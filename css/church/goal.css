@@ -12,7 +12,7 @@
     text-align: center;
     padding: 0;
     background: none !important;
-    width: 40%;
+    width: 18em;
     text-align: left;
     height: 12em !important;
 }
@@ -22,7 +22,7 @@
 }
 #div-chart-info {
     display: inline-block;
-    width: 60%;
+    width: 18em;
     float: left;
 }
 #div-chart-percentage {
@@ -32,7 +32,7 @@
     text-align: center !important;
     margin-top: 63px;
     background: none;
-    margin-left: 86px;
+    margin-left: 6.7em;
 }
 
 

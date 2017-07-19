@@ -99,7 +99,7 @@
             </div>
             <div class="column-left">Campaign Url</div>
             <div class="column-tip"></div>
-            <div class="column-right">http://adopt-a-verse.wycliffe.org/&nbsp; <input type="text" class="admin-text" id="campaign-url" onkeyup="search_url()" placeholder="church-name"><span class="error" id="error-url"></span>
+            <div class="column-right">adopt.wycliffe.org/&nbsp; <input type="text" class="admin-text" id="campaign-url" onkeyup="search_url()" placeholder="church-name"><span class="error" id="error-url"></span>
             </div>
             <div class="column-left">Campaign Duration</div>
             <div class="column-tip"></div>
@@ -118,7 +118,14 @@
         <section>
             <div class="column-left">Language</div>
             <div class="column-tip"></div>
-            <div class="column-right"><input type="text" class="admin-text" placeholder="Language"></div>
+            <div class="column-right">
+            
+                <input type="text" class="admin-text" id="language-name" onkeyup="search_language()" placeholder="Language">
+                
+                <div class="drop" id="drop-language">
+                </div>
+                
+            </div>
             <div class="column-left">Book</div>
             <div class="column-tip"></div>
             <div class="column-right">
@@ -158,10 +165,10 @@
             <div class="column-right"><textarea rows="4" class="admin-textarea" placeholder="Description"></textarea></div>
             <div class="column-left">Total Goal Amount</div>
             <div class="column-tip"></div>
-            <div class="column-right">&#36;&nbsp; <input type="text" class="admin-text" placeholder="0"></div>
+            <div class="column-right">&#36;&nbsp; <input type="text" id="money-total" class="admin-text" onkeypress="input_fund('total')" placeholder="0"><span class="error" id="error-total"></span></div>
             <div class="column-left">Cost per Verse</div>
             <div class="column-tip"></div>
-            <div class="column-right">&#36;&nbsp; <input type="text" class="admin-text" placeholder="0"></div>
+            <div class="column-right">&#36;&nbsp; <input type="text" id="money-verse" class="admin-text" onkeypress="input_fund('verse')" placeholder="0"><span class="error" id="error-verse"></span></div>
         </section>
         <section id="last-section">
             <button type="button" class="admin-submit">Create Campaign</button>
@@ -188,6 +195,38 @@
 <script>
 var church = "";
 var book = "";
+var language = "";
+    
+var verses = {};
+    
+load_bible_data();
+    
+function load_bible_data() {
+    var ajaxObj = new XMLHttpRequest();
+    ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+
+        document.getElementById('drop-church').innerHTML = "";
+
+        if (ajaxObj.responseText == "no\n") {
+            document.getElementById('drop-church').innerHTML += '<div class="drop-group">No search result.</div>';
+        } else {
+            var resp = JSON.parse(ajaxObj.responseText);
+
+            for (var i = 0; i < Object.keys(resp).length; i++) {
+
+                var bk = Object.keys(resp)[i];
+                var chs = resp[bk]['chapters'];
+                var vs = resp[bk]['verses'];
+                
+                verses[bk] = vs;
+            }
+        }
+
+    }}}
+    ajaxObj.open("GET", "bible-chapters-verses.php");
+    ajaxObj.send();
+}
+    
     
 var drop_book = false;
 function dropdown(title) {
@@ -269,7 +308,7 @@ function search_church() {
                     var state = resp.church[name]['state'];
                     var id = resp.church[name]['id'];
 
-                    document.getElementById('drop-church').innerHTML += '<div class="drop-item church-item" onclick="select_church(\''+id+'\',\''+name+'\')">'+name+'<span>'+state+'</span></div>';
+                    document.getElementById('drop-church').innerHTML += '<div class="drop-item church-item" onclick="select_church(\''+id+'\',\''+name+'\')">'+name+'<span class="church-tag">'+state+'</span></div>';
 
                 }
             }
@@ -296,37 +335,110 @@ function select_church(ch,name) {
     {
        groups[i].style.visibility = "hidden";
     }
+    var tags = document.getElementsByClassName("church-tag");
+    for(var i = 0; i < tags.length; i++)
+    {
+       tags[i].style.visibility = "hidden";
+    }
 
     document.getElementById('drop-church').style.visibility = "hidden";
-    drop_book = false;
+    drop_church = false;
+}
+
+    
+var drop_language = false;
+function search_language() {
+    
+    var word = document.getElementById('language-name').value;
+    
+    document.getElementById('drop-language').style.visibility = "visible";
+    drop_language = true;
+    
+    var ajaxObj = new XMLHttpRequest();
+        ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+            
+            document.getElementById('drop-language').innerHTML = "";
+            
+            if (ajaxObj.responseText == "no\n") {
+                document.getElementById('drop-language').innerHTML += '<div class="drop-group">No search result.</div>';
+            } else {
+                var resp = JSON.parse(ajaxObj.responseText);
+
+                for (var i = 0; i < Object.keys(resp.language).length; i++) {
+
+                    var name = Object.keys(resp.language)[i];
+                    var region = resp.language[name]['region'];
+                    var id = resp.language[name]['id'];
+
+                    document.getElementById('drop-language').innerHTML += '<div class="drop-item language-item" onclick="select_language(\''+id+'\',\''+name+'\')">'+name+'<span class="language-tag">'+region+'</span></div>';
+
+                }
+            }
+            
+        }}}
+        ajaxObj.open("GET", "search-language.php?language="+word);
+        ajaxObj.send();
+        
 }
     
+function select_language(lang,name) {
+    language = lang;
+    document.getElementById('language-name').value = name;
+    
+    var items = document.getElementsByClassName("language-item");
+    for(var i = 0; i < items.length; i++)
+    {
+       items[i].style.visibility = "hidden";
+    }
+    var groups = document.getElementsByClassName("language-group");
+    for(var i = 0; i < groups.length; i++)
+    {
+       groups[i].style.visibility = "hidden";
+    }
+    var tags = document.getElementsByClassName("language-tag");
+    for(var i = 0; i < tags.length; i++)
+    {
+       tags[i].style.visibility = "hidden";
+    }
+
+    document.getElementById('drop-language').style.visibility = "hidden";
+    drop_language = false;
+}
     
     
 function search_url() {
     
     var word = document.getElementById('campaign-url').value;
     
-    document.getElementById('error-url').style.visibility = "visible";
+    
     
     var ajaxObj = new XMLHttpRequest();
     ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
         
         var valid = true;
+        document.getElementById('error-url').style.visibility = "visible";
+        
+        if (word.length < 8) {
+            document.getElementById('error-url').className = "error red";
+            document.getElementById('error-url').innerHTML = '<img class="error-icon" alt="" src="img/error_invalid.png">url is too short';
+            valid = false;
+        }
         
         if (word.length > 25) {
-            valid = false;
-            document.getElementById('error-url').innerHTML = '<i class="fa fa-circle red" aria-hidden="true"></i>Url too long.';
+            document.getElementById('error-url').className = "error red";
+            document.getElementById('error-url').innerHTML = '<img class="error-icon" alt="" src="img/error_invalid.png">url is too long';
             valid = false;
         }
         
         if (ajaxObj.responseText == "exist\n") {
-            document.getElementById('error-url').innerHTML = '<i class="fa fa-circle red" aria-hidden="true"></i>Url already exists.';
+            document.getElementById('error-url').className = "error red";
+            document.getElementById('error-url').innerHTML = '<img class="error-icon" alt="" src="img/error_invalid.png">url already exists';
             valid = false;
         }
 
         if (valid) {
-            document.getElementById('error-url').innerHTML = '<i class="fa fa-circle green" aria-hidden="true"></i>Valid Url.';
+            document.getElementById('error-url').className = "error green";
+            document.getElementById('error-url').innerHTML = '<img class="error-icon" alt="" src="img/error_valid.png">url is valid';
         }
 
     }}}
@@ -335,6 +447,68 @@ function search_url() {
         
 }
     
+
+    
+function input_fund(title) {
+
+    var money_total = document.getElementById('money-total');
+    var money_verse = document.getElementById('money-verse');
+
+    
+    if (title == 'total') {
+        money_total.value = money_total.value.replace(/[^0-9.]+/, '');
+        
+        var valid = true;
+        
+        if (book == "") {
+            document.getElementById('error-total').style.visibility = "visible";
+            document.getElementById('error-total').className = "error red";
+            document.getElementById('error-total').innerHTML = '<img class="error-icon" alt="" src="img/error_invalid.png">Book is not selected';
+            valid = false;
+            money_total.value = "";
+        }
+        
+        if (valid) {
+            document.getElementById('error-total').style.visibility = "hidden";
+            
+            money_verse.value = (money_total.value/parseInt(verses[book])).toFixed(2);
+        }
+        
+    } else if (title == 'verse') {
+        money_verse.value = money_verse.value.replace(/[^0-9.]+/, '');
+        
+        var valid = true;
+        
+        if (book == "") {
+            document.getElementById('error-verse').style.visibility = "visible";
+            document.getElementById('error-verse').className = "error red";
+            document.getElementById('error-verse').innerHTML = '<img class="error-icon" alt="" src="img/error_invalid.png">Book is not selected';
+            valid = false;
+            money_total.value = "";
+        }
+        
+        if (valid) {
+            document.getElementById('error-verse').style.visibility = "hidden";
+            
+            money_total.value = (money_verse.value*parseInt(verses[book])).toFixed(2);
+        }
+    }
+    
+}
+    
+    
+    
+function submit_form() {
+    var ajaxObj = new XMLHttpRequest();
+    ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+
+        console.log(ajaxObj.responseText);
+
+    }}}
+    ajaxObj.open("POST", "insert-campaign.php", true);
+    ajaxObj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    ajaxObj.send();
+}
     
 </script>
     

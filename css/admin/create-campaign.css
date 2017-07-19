@@ -204,10 +204,10 @@ input[type='date'] {
 
 
 
-#drop-church {
+#drop-church, #drop-language {
     width: 25em;
 }
-.church-item {
+.church-item, .language-item {
     padding-left: 0.5em !important;
 }
 
@@ -220,25 +220,28 @@ input[type='date'] {
     width: 18em;
     border: 0;
     border-radius: 4px;
-    background: #555;
+    background: none;
     padding: 0.5em;
     padding-left: 1em;
     padding-right: 1em;
-    font-size: 0.9em;
+    font-size: 1em;
     font-family: "Gotham-Book" !important;
-    color: #eee;
-    margin-left: -18.9em;
-    margin-top: 3.2em;
+    color: #555;
+    margin-left: -1.3em;
+    vertical-align: middle;
 }
 
-.fa-circle {
-    margin-right: 1em;
+.error-icon {
+    margin-right: 0.6em;
+    width: 1.7em;
+    height: auto;
+    vertical-align: middle;
 }
 .green {
-    color: #54e55d;
+    color: #43b471;
 }
 .red {
-    color: #e55454;
+    color: #db5353;
 }
 
 
