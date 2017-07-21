@@ -393,10 +393,9 @@
     
 
 <script>
-
-    
-var code = "aB3cC3";
-    
+var page_param = window.location.search.substring(1);
+var page_url = new URL(window.location.href);
+var code = page_url.searchParams.get("id");
 
 // fixed side bar
 $(function() {
@@ -494,7 +493,7 @@ function init() {
         document.getElementById('small-total-verses').innerHTML = total_verses;
         
 	}}}
-	ajaxObj.open("GET", "campaign.php?campaign="+code);
+	ajaxObj.open("GET", "search-campaign.php?campaign="+code);
 	ajaxObj.send();
     
     

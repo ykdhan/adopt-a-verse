@@ -1,11 +1,11 @@
 
 
-#content-create-campaign {
+#content-create-campaign, #content-create-campaign-result {
     padding: 0;
     padding-top: 4em;
     padding-bottom: 4em;
 }
-#content-create-campaign section {
+#content-create-campaign section, #content-create-campaign-result section {
     padding-top: 4em;
     padding-bottom: 2em;
     border-bottom: 1px solid #d1d1d1;
@@ -13,7 +13,7 @@
 }
 
 
-#title-create-campaign {
+#content-create-campaign div#title, #content-create-campaign-result div#title {
     font-size: 1.5em;
     font-family: "Gotham-Bold" !important;
     color: #444;
@@ -29,7 +29,7 @@
     font-family: "Gotham-Bold" !important;
     display: inline-block;
     margin: 0;
-    width: 28%;
+    width: 25%;
     text-align: right;
     vertical-align: top;
     padding-top: 0.5em;
@@ -46,7 +46,7 @@
     font-size: 1em;
     display: inline-block;
     margin: 0;
-    width: 68%;
+    width: 71%;
     padding-bottom: 1em;
     padding-left: 3em;
     text-align: left;
@@ -82,6 +82,9 @@
     margin-right: 1em;
     margin-bottom: 1em;
 }
+.admin-text.small {
+    width: 9em;
+}
 
 .admin-submit {
     width: 12em;
@@ -95,10 +98,33 @@
     font-family: "Gotham-Book" !important;
     color: #fff;
     cursor: pointer;
+    margin-left: 0.4em;
+    margin-right: 0.4em;
 }
 .admin-submit:hover {
     background: #048484;
 }
+
+
+.admin-button {
+    width: 12em;
+    border: 0;
+    border-radius: 4px;
+    background: #777;
+    padding: 0.7em;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: 1em;
+    font-family: "Gotham-Book" !important;
+    color: #fff;
+    cursor: pointer;
+    margin-left: 0.4em;
+    margin-right: 0.4em;
+}
+.admin-button:hover {
+    background: #666;
+}
+
 
 input[type='date'] {
     margin: 0;
@@ -163,8 +189,8 @@ input[type='date'] {
     border-radius: 4px;
     background: #fff;
     padding: 0.7em;
-    padding-left: 1em;
-    padding-right: 1em;
+    padding-left: 0;
+    padding-right: 0;
     font-size: 1em;
     font-family: "Gotham-Book" !important;
     color: #606060;
@@ -175,19 +201,12 @@ input[type='date'] {
     -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
 }
-.drop div {
-    padding: 0.5em;
-}
-.drop span {
-    float: right;
-    color: #aaa;
-    font-size: 0.9em;
-    vertical-align: middle;
-}
 .drop-item {
     color: #555;
     cursor: pointer;
-    padding-left: 2em !important;
+    padding: 0.5em;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
     font-size: 1em;
     background: none;
     border: 0;
@@ -196,21 +215,27 @@ input[type='date'] {
 .drop-item:hover {
     background: #e5e5e5;
 }
+.drop-item span {
+    float: right;
+    color: #aaa;
+    font-size: 0.9em;
+    vertical-align: middle;
+}
 .drop-group {
     color: #aaa;
     cursor: default;
     font-size: 0.9em;
+    padding: 0.5em;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
 }
 
 
 
-#drop-church, #drop-language {
+#drop-church, #drop-language, #drop-book,
+#campaign-church, #campaign-language, #campaign-book{
     width: 25em;
 }
-.church-item, .language-item {
-    padding-left: 0.5em !important;
-}
-
 
 
 .error {
@@ -224,7 +249,7 @@ input[type='date'] {
     padding: 0.5em;
     padding-left: 1em;
     padding-right: 1em;
-    font-size: 1em;
+    font-size: 0.95em;
     font-family: "Gotham-Book" !important;
     color: #555;
     margin-left: -1.3em;
@@ -232,7 +257,7 @@ input[type='date'] {
 }
 
 .error-icon {
-    margin-right: 0.6em;
+    margin-right: 0.5em;
     width: 1.7em;
     height: auto;
     vertical-align: middle;
@@ -242,6 +267,29 @@ input[type='date'] {
 }
 .red {
     color: #db5353;
+}
+
+
+#num-verses {
+    font-size: 0.9em;
+    color: #999;
+    vertical-align: middle;
+    margin-left: 0.3em;
+}
+
+
+
+#content-create-campaign-result div.column-left {
+
+}
+#content-create-campaign-result div.column-tip {
+
+}
+#content-create-campaign-result div.column-right {
+    padding-top: 0.5em;
+    padding-bottom: 1.5em;
+    padding-left: 3em;
+    vertical-align: top;
 }
 
 

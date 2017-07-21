@@ -4,7 +4,7 @@ error_reporting(E_ALL ^ E_DEPRECATED);
 
 include('config.php');
 
-$church = $_GET['church'];
+$language = $_GET['language'];
 
 $mysqli = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 
@@ -12,7 +12,7 @@ if ($mysqli->connect_errno) {
 die('Connect Error ('.mysqli_connect_errno().') '.mysqli_connect_error());
 }
 
-$sql = "SELECT * FROM church WHERE lower(name) like '%".strtolower($church)."%' ORDER BY name, state";
+$sql = "SELECT * FROM language WHERE lower(people_group) RLIKE '[[:<:]]".strtolower($language)."' OR lower(region) RLIKE '[[:<:]]".strtolower($language)."' ORDER BY people_group, region";
 
 $answer = false;
 
@@ -20,8 +20,8 @@ if ($result = $mysqli->query($sql)) {
     
     while ($row = $result->fetch_assoc()) {
         $answer = true;
-        $output['church'][$row['name']]['state'] = $row['state'];
-        $output['church'][$row['name']]['id'] = $row['id'];
+        $output['language'][$row['people_group']]['region'] = $row['region'];
+        $output['language'][$row['people_group']]['id'] = $row['id'];
     }
 } 
 

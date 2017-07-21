@@ -26,7 +26,6 @@ $first_name = $_GET['first_name'];
 $last_name = $_GET['last_name'];
 $email = $_GET['email'];
 $phone = $_GET['phone'];
-$username = $_GET['username'];
 $password = $_GET['password'];
 $url = $_GET['url'];
 
@@ -51,7 +50,6 @@ $sql = "INSERT INTO campaign (id,
                        last_name,
                            email,
                            phone,
-                        username,
                         password,
                              url)
                VALUES ('".$id."',
@@ -67,14 +65,14 @@ $sql = "INSERT INTO campaign (id,
                 '".$last_name."',
                     '".$email."',
                     '".$phone."',
-                 '".$username."',
                  '".$password."',
                       '".$url."')";
 
 if ($result = $mysqli->query($sql)) {
-    echo "success";
+    $output['id'] = $id;
+    echo JSON_encode($output);
 } else {
-    die('Error : ('. $mysqli->errno .') '. $mysqli->error);
+    echo "no";
 }
 
 
