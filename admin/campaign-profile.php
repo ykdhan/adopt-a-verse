@@ -1,3 +1,10 @@
+<?php 
+session_start();
+if(!isset($_SESSION['aav-admin'])) { 
+    header('Location: login.php');
+} 
+?>
+
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
@@ -32,7 +39,7 @@
     }
 
     
-    $sql = "SELECT *, campaign.id AS cam_id FROM campaign INNER JOIN church ON church_id = church.id INNER JOIN language ON language_id = language.id WHERE campaign.id = '".$_GET['id']."'";
+    $sql = "SELECT *, campaign.id AS cam_id FROM campaign INNER JOIN church ON church_id = church.id INNER JOIN language ON language_id = language.id WHERE campaign.id = '".$_SESSION['aav-admin']."'";
     
     $info_id = "";
     $info_church = "";
@@ -89,7 +96,8 @@
     <th>
     </th>
     <td>
-        <span id="admin-title">Campaign Registration</span>
+        <span id="admin-logout"><a href="logout.php">Logout</a></span>
+        <span id="admin-title">Campaign</span>
     </td>
     </tr></table>
 </div>
@@ -107,62 +115,79 @@
         <section>
             <div class="column-left">Id</div>
             <div class="column-tip"></div>
-            <div class="column-right"><?php echo $info_id; ?>
+            <div class="column-right">
+                <p><?php echo $info_id; ?></p>
             </div>
             
             <div class="column-left">Url</div>
             <div class="column-tip"></div>
-            <div class="column-right">adopt.wycliffe.org/<?php echo $info_url; ?>
+            <div class="column-right">
+                <p>adopt.wycliffe.org/<?php echo $info_url; ?></p>
             </div>
             
             <div class="column-left">Church</div>
             <div class="column-tip"></div>
-            <div class="column-right"><?php echo $info_church; ?>
+            <div class="column-right">
+                <p><?php echo $info_church; ?></p>
             </div>
             
             
             <div class="column-left">Campaign Duration</div>
             <div class="column-tip"></div>
-            <div class="column-right"><?php echo $info_start_date." - ".$info_end_date; ?>
+            <div class="column-right">
+                <p><?php echo date("F j, Y", strtotime($info_start_date))." - ".date("F j, Y", strtotime($info_end_date)); ?></p>
             </div>
         </section>
         <section>
             <div class="column-left">Admin Account</div>
             <div class="column-tip"></div>
-            <div class="column-right"><?php echo $info_email; ?><br><?php echo $info_password; ?>
+            <div class="column-right">
+                <p><?php echo $info_email; ?></p>
+                <p><?php echo $info_password; ?></p>
             </div>
             <div class="column-left">Contact</div>
             <div class="column-tip"></div>
-            <div class="column-right"><?php echo $info_first_name." ".$info_last_name; ?><br><?php echo $info_phone; ?>
+            <div class="column-right">
+                <p><?php echo $info_first_name." ".$info_last_name; ?></p>
+                <p><?php echo $info_phone; ?></p>
             </div>
         </section>
         <section>
             <div class="column-left">Language</div>
             <div class="column-tip"></div>
-            <div class="column-right"><?php echo $info_language; ?>
+            <div class="column-right">
+                <p><?php echo $info_language; ?></p>
             </div>
             <div class="column-left">Book</div>
             <div class="column-tip"></div>
-            <div class="column-right"><?php echo $info_book; ?>
+            <div class="column-right">
+                <p><?php echo $info_book; ?></p>
             </div>
         </section>
         <section>
             <div class="column-left">Goal Description</div>
             <div class="column-tip"><span class="tool-tip">?</span></div>
-            <div class="column-right"><?php echo "<pre>".$info_goal_description."</pre>"; ?>
+            <div class="column-right">
+                <?php echo "<div id='div-description'>".$info_goal_description."</div>"; ?>
             </div>
             <div class="column-left">Total Goal Amount</div>
             <div class="column-tip"></div>
-            <div class="column-right">&#36; <?php echo $info_goal_amount; ?>
+            <div class="column-right">
+                <p>&#36; <?php echo $info_goal_amount; ?></p>
             </div>
             <div class="column-left">Cost per Verse</div>
             <div class="column-tip"></div>
-            <div class="column-right">&#36; <?php echo $info_verse_price; ?>
+            <div class="column-right">
+                <p>&#36; <?php echo $info_verse_price; ?></p>
             </div>
         </section>
         <section id="last-section">
-            <button type="button" class="admin-button">Edit Campaign</button>
-            <a href='<?php echo "../app.php?id=".$info_id; ?>' target="_blank"><button type="button" class="admin-submit">Go to Campaign</button></a>
+            <a href="campaign-edit.php" target="_blank">
+                <button type="button" class="admin-button">Edit Campaign</button>
+            </a>
+            <a href='<?php echo "../app.php?id=".$info_id; ?>' target="_blank">
+                <button type="button" class="admin-submit">Go to Campaign</button>
+            </a>
         </section>
     </div>
 

@@ -1,3 +1,10 @@
+<?php 
+session_start();
+if(!isset($_SESSION['aav-admin'])) { 
+    header('Location: login.php');
+} 
+?>
+
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
@@ -7,14 +14,71 @@
     
     <!-- Links -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../css/admin.css?ver=1.4" />
+    <link rel="stylesheet" type="text/css" href="../css/admin.css?ver=1.5" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/filamentgroup/fixed-sticky/master/fixedsticky.js"></script>
     <script type="text/javascript" src="../js/sidebar.js"></script>
     
     
-    <!-- Wycliffe links -->
+    <link href="https://cdn.quilljs.com/1.3.0/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.quilljs.com/1.3.0/quill.js"></script>
+    
+    
+    
+    <?php 
+    
+    error_reporting(E_ALL ^ E_DEPRECATED);
+
+    include('config.php');
+
+    $mysqli = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+
+    if ($mysqli->connect_errno) {
+        die('Connect Error ('.mysqli_connect_errno().') '.mysqli_connect_error());
+    }
+
+    
+    $sql = "SELECT *, campaign.id AS cam_id FROM campaign INNER JOIN church ON church_id = church.id INNER JOIN language ON language_id = language.id WHERE campaign.id = '".$_SESSION['aav-admin']."'";
+    
+    $info_id = "";
+    $info_church = "";
+    $info_language = "";
+    $info_book = "";
+    $info_goal_description = "";
+    $info_goal_amount = "";
+    $info_verse_price = "";
+    $info_start_date = "";
+    $info_end_date = "";
+    $info_first_name = "";
+    $info_last_name = "";
+    $info_phone = "";
+    $info_email = "";
+    $info_password = "**********";
+    $info_url = "";
+
+    if ($result = $mysqli->query($sql)) {
+
+        while ($row = $result->fetch_assoc()) {
+            $info_id = $row['cam_id'];                          // id
+            $info_church = $row['name'];                        // church name
+            $info_language = $row['people_group'];              // language
+            $info_book = $row['book'];                          // book
+            $info_goal_description = $row['goal_description'];  // goal description
+            $info_goal_amount = $row['goal_amount'];            // total goal
+            $info_verse_price = $row['verse_price'];            // verse price
+            $info_start_date = $row['start_date'];              // start date
+            $info_end_date = $row['end_date'];                  // end date
+            $info_first_name = $row['first_name'];              // first name
+            $info_last_name = $row['last_name'];                // last name
+            $info_phone = $row['phone'];                        // phone
+            $info_email = $row['email'];                        // email
+            $info_url = $row['url'];                            // url
+        } 
+    }
+    
+    
+    ?>
     
     
 </head>
@@ -31,7 +95,8 @@
     <th>
     </th>
     <td>
-        <span id="admin-title">Campaign Registration</span>
+        <span id="admin-logout"><a href="logout.php">Logout</a></span>
+        <span id="admin-title">Campaign</span>
     </td>
     </tr></table>
 </div>
@@ -42,76 +107,81 @@
 <div id="bg" align="center">
 <div id="wrapper">
         
-    <div id="content-create-campaign" class="admin-content">
-        <div id="title">New Campaign</div>
+    <div id="content-edit-campaign" class="admin-content">
+        <div id="title">Edit Campaign</div>
         <section>
             <div class="column-left">Church</div>
             <div class="column-tip"></div>
             <div class="column-right">
                 
-                <input type="text" class="admin-text" id="campaign-church" onkeyup="search_church()" placeholder="Search for church">
-                
-                <div class="drop" id="drop-church"></div>
+                <p><?php echo $info_church; ?></p>
             
             </div>
             <div class="column-left">Campaign Url</div>
             <div class="column-tip"></div>
-            <div class="column-right">adopt.wycliffe.org/ <input type="text" class="admin-text" id="campaign-url" placeholder="church-name"><span class="error" id="error-url"></span>
+            <div class="column-right">
+                <p>adopt.wycliffe.org/<?php echo $info_url; ?></p>
             </div>
             <div class="column-left">Campaign Duration</div>
             <div class="column-tip"></div>
-            <div class="column-right"><input type="date" class="admin-text" id="campaign-start-date" onchange="select_start_date(this)">&nbsp; to &nbsp;<input type="date" class="admin-text" id="campaign-end-date" onchange="select_end_date(this)"></div>
+            <div class="column-right"><input type="date" class="admin-text" id="campaign-start-date" onchange="select_start_date(this)" value="<?php echo $info_end_date; ?>">&nbsp; to &nbsp;<input type="date" class="admin-text" id="campaign-end-date" onchange="select_end_date(this)" value="<?php echo $info_end_date; ?>"></div>
         </section>
         <section>
             <div class="column-left">Admin Account</div>
             <div class="column-tip"></div>
             <div class="column-right">
-                <input type="text" class="admin-text" id="campaign-email" placeholder="Email Address"><span class="error" id="error-email"></span><br>
+                <input type="text" class="admin-text" id="campaign-email" placeholder="Email Address" value="<?php echo $info_email; ?>"><span class="error" id="error-email"></span><br>
                 <input type="password" class="admin-text" id="campaign-password" placeholder="Password">
                 <input type="password" class="admin-text" id="campaign-confirm-password" placeholder="Confirm Password">
                 <span class="error" id="error-password"></span></div>
             <div class="column-left">Contact</div>
             <div class="column-tip"></div>
             <div class="column-right">
-                <input type="text" class="admin-text" id="campaign-first-name" placeholder="First Name" onkeyup="input_form('first-name')">
-                <input type="text" class="admin-text" id="campaign-last-name" placeholder="Last Name" onkeyup="input_form('last-name')">
-                <input type="text" class="admin-text" id="campaign-phone" placeholder="Phone Number" onkeyup="input_form('phone')"></div>
+                <input type="text" class="admin-text" id="campaign-first-name" placeholder="First Name" onkeyup="input_form('first-name')" value="<?php echo $info_first_name; ?>">
+                <input type="text" class="admin-text" id="campaign-last-name" placeholder="Last Name" onkeyup="input_form('last-name')" value="<?php echo $info_last_name; ?>">
+                <input type="text" class="admin-text" id="campaign-phone" placeholder="Phone Number" onkeyup="input_form('phone')" value="<?php echo $info_phone; ?>"></div>
         </section>
         <section>
             <div class="column-left">Language</div>
             <div class="column-tip"></div>
             <div class="column-right">
-            
-                <input type="text" class="admin-text" id="campaign-language" onkeyup="search_language()" placeholder="Search for language">
-                
-                <div class="drop" id="drop-language"></div>
-                
+                <p><?php echo $info_language; ?></p>
             </div>
-            <div class="column-left">Book</div>
+            <div class="column-left">Book</div> 
             <div class="column-tip"></div>
             <div class="column-right">
-            
-                <input type="text" class="admin-text" id="campaign-book" onkeyup="search_book()" placeholder="Search for book of the Bible">
-                
-                <div class="drop" id="drop-book"></div>
-                
-                <span id="num-verses"></span>
-                
+                <p><?php echo $info_book; ?></p>
             </div>
         </section>
         <section>
-            <div class="column-left">Goal Description</div>
-            <div class="column-tip"><span class="tool-tip">?</span></div>
-            <div class="column-right"><textarea rows="4" class="admin-textarea" id="campaign-goal-description" placeholder="Description" onkeyup="input_form('goal-description')"></textarea></div>
+            
             <div class="column-left">Total Goal Amount</div>
             <div class="column-tip"></div>
-            <div class="column-right">&#36;&nbsp; <input type="text" id="campaign-total-goal" class="admin-text small" onkeyup="input_fund('total')" placeholder="0"><span class="error" id="error-total"></span></div>
+            <div class="column-right"><p class="">&#36; <?php echo $info_goal_amount; ?></p>
+            </div>
             <div class="column-left">Cost per Verse</div>
             <div class="column-tip"></div>
-            <div class="column-right">&#36;&nbsp; <input type="text" id="campaign-verse-price" class="admin-text small" onkeyup="input_fund('verse')" placeholder="0"><span class="error" id="error-verse"></span></div>
+            <div class="column-right"><p class="">&#36; <?php echo $info_verse_price; ?></p>
+            </div>
+            
+            
+            <div class="column-left">Goal Description</div>
+            <div class="column-tip"><span class="tool-tip">?</span></div>
+            <div class="column-right">
+            
+            <div id="editor">
+                <?php echo $info_goal_description; ?>
+            </div>
+            
+            </div>
+            
+            
+            
+             
         </section>
         <section id="last-section">
-            <button type="button" class="admin-submit" onclick="submit_form()">Create Campaign</button>
+            <button type="button" class="admin-button">Cancel</button>
+            <button type="button" class="admin-submit" onclick="submit_form()">Edit Campaign</button>
         </section>
     </div>
 
@@ -134,9 +204,11 @@
 
 <script>
     
+      var quill = new Quill('#editor', {
+    theme: 'snow'
+  });
+    
 var form_data = {
-    church: "",
-    url: "",
     start_date: "",
     end_date: "",
     first_name: "",
@@ -144,266 +216,9 @@ var form_data = {
     phone: "",
     email: "",
     password: "",
-    language: "",
-    book: "",
-    goal_description: "",
-    total_goal: "",
-    verse_price: ""
+    goal_description: ""
 }
 
-var verses = {};
-    
-load_bible_data();
-    
-function load_bible_data() {
-    var ajaxObj = new XMLHttpRequest();
-    ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
-
-        document.getElementById('drop-church').innerHTML = "";
-
-        if (ajaxObj.responseText == "no\n") {
-            document.getElementById('drop-church').innerHTML += '<div class="drop-group">No search result.</div>';
-        } else {
-            var resp = JSON.parse(ajaxObj.responseText);
-
-            for (var i = 0; i < Object.keys(resp).length; i++) {
-
-                var bk = Object.keys(resp)[i];
-                var chs = resp[bk]['chapters'];
-                var vs = resp[bk]['verses'];
-                
-                verses[bk] = vs;
-            }
-        }
-
-    }}}
-    ajaxObj.open("GET", "bible-chapters-verses.php");
-    ajaxObj.send();
-}
-    
-    
-
-function search_book() {
-    
-    var word = document.getElementById('campaign-book');
-    word.value = word.value.replace(/[^a-zA-Z0-9\s]+/, '');
-    
-    document.getElementById('drop-book').style.visibility = "visible";
-    
-    var ajaxObj = new XMLHttpRequest();
-        ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
-            
-            document.getElementById('drop-book').innerHTML = "";
-            
-            if (ajaxObj.responseText == "no\n") {
-                document.getElementById('drop-book').innerHTML += '<div class="drop-group book-group">No search result.</div>';
-            } else {
-                var resp = JSON.parse(ajaxObj.responseText);
-
-                for (var i = 0; i < Object.keys(resp).length; i++) {
-
-                    var book = Object.keys(resp)[i];
-                    var verses = resp[book];
-
-                    document.getElementById('drop-book').innerHTML += '<div class="drop-item book-item" onclick="select_book(\''+book+'\')">'+book+'<span class="book-tag">'+verses.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+' verses</span></div>';
-
-                }
-            }
-            
-        }}}
-        ajaxObj.open("GET", "search-book.php?book="+word.value);
-        ajaxObj.send();
-        
-}
-
-function select_book(bk) {
-    form_data.book = bk;
-    document.getElementById('campaign-book').value = bk;
-    
-    if (bk == "") {
-        document.getElementById('num-verses').innerHTML = "";
-    } else {
-        document.getElementById('num-verses').innerHTML = verses[bk].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+" verses";
-    }
-    
-    
-    var items = document.getElementsByClassName("book-item");
-    for(var i = 0; i < items.length; i++)
-    {
-       items[i].style.visibility = "hidden";
-    }
-    var groups = document.getElementsByClassName("book-group");
-    for(var i = 0; i < groups.length; i++)
-    {
-       groups[i].style.visibility = "hidden";
-    }
-    var tags = document.getElementsByClassName("book-tag");
-    for(var i = 0; i < tags.length; i++)
-    {
-       tags[i].style.visibility = "hidden";
-    }
-
-    document.getElementById('drop-book').style.visibility = "hidden";
-}
-
-    
-function search_church() {
-    
-    var word = document.getElementById('campaign-church');
-    word.value = word.value.replace(/[^a-zA-Z0-9\s]+/, '');
-    
-    document.getElementById('drop-church').style.visibility = "visible";
-    
-    var ajaxObj = new XMLHttpRequest();
-        ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
-            
-            document.getElementById('drop-church').innerHTML = "";
-            
-            if (ajaxObj.responseText == "no\n") {
-                document.getElementById('drop-church').innerHTML += '<div class="drop-group church-group">No search result.</div>';
-            } else {
-                var resp = JSON.parse(ajaxObj.responseText);
-
-                for (var i = 0; i < Object.keys(resp.church).length; i++) {
-
-                    var name = Object.keys(resp.church)[i];
-                    var state = resp.church[name]['state'];
-                    var id = resp.church[name]['id'];
-
-                    document.getElementById('drop-church').innerHTML += '<div class="drop-item church-item" onclick="select_church(\''+id+'\',\''+name+'\')">'+name+'<span class="church-tag">'+state+'</span></div>';
-
-                }
-            }
-            
-        }}}
-        ajaxObj.open("GET", "search-church.php?church="+word.value);
-        ajaxObj.send();
-        
-}
-    
-function select_church(ch,name) {
-    form_data.church = ch;
-    document.getElementById('campaign-church').value = name;
-    
-    var items = document.getElementsByClassName("church-item");
-    for(var i = 0; i < items.length; i++)
-    {
-       items[i].style.visibility = "hidden";
-    }
-    var groups = document.getElementsByClassName("church-group");
-    for(var i = 0; i < groups.length; i++)
-    {
-       groups[i].style.visibility = "hidden";
-    }
-    var tags = document.getElementsByClassName("church-tag");
-    for(var i = 0; i < tags.length; i++)
-    {
-       tags[i].style.visibility = "hidden";
-    }
-
-    document.getElementById('drop-church').style.visibility = "hidden";
-}
-
-    
-function search_language() {
-    
-    var word = document.getElementById('campaign-language');
-    word.value = word.value.replace(/[^a-zA-Z0-9\s]+/, '');
-    
-    document.getElementById('drop-language').style.visibility = "visible";
-    
-    var ajaxObj = new XMLHttpRequest();
-    ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
-
-        document.getElementById('drop-language').innerHTML = "";
-
-        if (ajaxObj.responseText == "no\n") {
-            document.getElementById('drop-language').innerHTML += '<div class="drop-group language-group">No search result.</div>';
-        } else {
-            var resp = JSON.parse(ajaxObj.responseText);
-
-            for (var i = 0; i < Object.keys(resp.language).length; i++) {
-
-                var name = Object.keys(resp.language)[i];
-                var region = resp.language[name]['region'];
-                var id = resp.language[name]['id'];
-
-                document.getElementById('drop-language').innerHTML += '<div class="drop-item language-item" onclick="select_language(\''+id+'\',\''+name+'\')">'+name+'<span class="language-tag">'+region+'</span></div>';
-
-            }
-        }
-
-    }}}
-    ajaxObj.open("GET", "search-language.php?language="+word.value);
-    ajaxObj.send();
-        
-}
-    
-function select_language(lang,name) {
-    form_data.language = lang;
-    document.getElementById('campaign-language').value = name;
-    
-    var items = document.getElementsByClassName("language-item");
-    for(var i = 0; i < items.length; i++)
-    {
-       items[i].style.visibility = "hidden";
-    }
-    var groups = document.getElementsByClassName("language-group");
-    for(var i = 0; i < groups.length; i++)
-    {
-       groups[i].style.visibility = "hidden";
-    }
-    var tags = document.getElementsByClassName("language-tag");
-    for(var i = 0; i < tags.length; i++)
-    {
-       tags[i].style.visibility = "hidden";
-    }
-
-    document.getElementById('drop-language').style.visibility = "hidden";
-}
-    
-    
-// length: 6~30   characters: a-z 0-9 _ -   checks if exists in database
-function search_url() {
-    
-    var word = document.getElementById('campaign-url');
-
-    var ajaxObj = new XMLHttpRequest();
-    ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
-        
-        var valid = true;
-        form_data.url = "";
-        document.getElementById('error-url').style.visibility = "visible";
-        
-        if (word.value.length < 6) {
-            document.getElementById('error-url').className = "error red";
-            document.getElementById('error-url').innerHTML = '<img class="error-icon" alt="" src="img/error_invalid.png">URL is too short';
-            valid = false;
-        }
-        
-        if (word.value.length > 30) {
-            document.getElementById('error-url').className = "error red";
-            document.getElementById('error-url').innerHTML = '<img class="error-icon" alt="" src="img/error_invalid.png">URL is too long';
-            valid = false;
-        }
-        
-        if (ajaxObj.responseText == "exist\n") {
-            document.getElementById('error-url').className = "error red";
-            document.getElementById('error-url').innerHTML = '<img class="error-icon" alt="" src="img/error_invalid.png">URL already exists';
-            valid = false;
-        }
-
-        if (valid) {
-            document.getElementById('error-url').className = "error green";
-            document.getElementById('error-url').innerHTML = '<img class="error-icon" alt="" src="img/error_valid.png">URL is valid';
-            form_data.url = word.value;
-        }
-
-    }}}
-    ajaxObj.open("GET", "search-url.php?url="+word.value);
-    ajaxObj.send();
-        
-}
     
 // common email format, checks if exists in database
 function search_email() {

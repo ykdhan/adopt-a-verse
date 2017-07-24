@@ -1,0 +1,68 @@
+
+
+#login-wrapper {
+    position: fixed; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    padding: 4em;
+    background: #fff;
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    text-align: center;
+    border-radius: 4px;
+}
+
+#login-logo {
+    width: 10em;
+    margin-bottom: 2em;
+}
+
+#login-tag {
+    font-size: 0.9em;
+    font-family: "Gotham-Bold" !important;
+    text-transform: uppercase;
+    position: absolute;
+    margin-top: 2em;
+    margin-left: -1.5em;
+}
+#login-more{
+    text-align: left;
+    font-size: 1em;
+    color: #777;
+    margin-top: 1.5em;
+}
+#login-more a {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+#login-submit {
+    width: 16em;
+    border: 1px solid #039da6;
+    margin-bottom: 0.5em;
+}
+.login-text {
+    width: 16em;
+    border: 1px solid #d1d1d1;
+    border-radius: 4px;
+    background: none;
+    padding: 0.7em;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: 1em;
+    font-family: "Gotham-Book" !important;
+    color: #606060;
+    margin-bottom: 0.7em;
+}
+
+
+#login-error {
+    display: none;
+    padding-bottom: 0.5em;
+    font-size: 0.9em;
+    text-align: center;
+    color: #db5353;
+}
