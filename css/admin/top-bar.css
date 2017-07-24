@@ -37,7 +37,14 @@
     font-family: "Gotham-Bold" !important;
     text-transform: uppercase;
 }
-
+#admin-logout {
+    float: right;
+    margin-right: 2em;
+    font-size: 0.9em;
+    font-family: "Gotham-Bold" !important;
+    text-transform: uppercase;
+    color: #039da6;
+}
 
 
 

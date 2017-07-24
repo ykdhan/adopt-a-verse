@@ -1,5 +1,6 @@
-@import url("admin/top-bar.css?ver=1.1");
-@import url("admin/create-campaign.css?ver=1.2");
+@import url("admin/top-bar.css?ver=1.2");
+@import url("admin/campaign.css?ver=1.3");
+@import url("admin/login.css?ver=1.3");
 
 
 
@@ -94,6 +95,8 @@ pre {
     font-size: 1em;
     color: #777;
     font-family: "Gotham-Book" !important;
+    margin: 0;
+    padding: 0;
 }
 
 /*   margin, padding: 0   */
@@ -118,9 +121,9 @@ textarea {
     color: #777;
 }
 
-a {
+a, a:hover, a:visited {
     text-decoration: none;
-    color: inherit !important;
+    color: inherit;
 }
 
 
@@ -218,6 +221,87 @@ a {
     margin-top: 2em;
     margin-bottom: 3em !important;
 }
+
+
+
+#introduction {
+    font-size: 1.1em;
+    text-align: left;
+    padding-left: 2em;
+}
+
+.admin-text {
+    width: 16em;
+    border: 1px solid #d1d1d1;
+    border-radius: 4px;
+    background: none;
+    padding: 0.7em;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: 1em;
+    font-family: "Gotham-Book" !important;
+    color: #606060;
+    margin-right: 1em;
+    margin-bottom: 1em;
+}
+.admin-textarea {
+    width: 33em;
+    border: 1px solid #d1d1d1;
+    border-radius: 4px;
+    background: none;
+    padding: 0.7em;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: 1em;
+    font-family: "Gotham-Book" !important;
+    color: #606060;
+    margin-right: 1em;
+    margin-bottom: 1em;
+}
+.admin-text.small {
+    width: 9em;
+}
+
+.admin-submit {
+    width: 12em;
+    border: 0;
+    border-radius: 4px;
+    background: #039da6;
+    padding: 0.7em;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: 1em;
+    font-family: "Gotham-Book" !important;
+    color: #fff;
+    cursor: pointer;
+    margin-left: 0.4em;
+    margin-right: 0.4em;
+}
+.admin-submit:hover {
+    background: #048484;
+}
+
+
+.admin-button {
+    width: 12em;
+    border: 0;
+    border-radius: 4px;
+    background: #777;
+    padding: 0.7em;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: 1em;
+    font-family: "Gotham-Book" !important;
+    color: #fff;
+    cursor: pointer;
+    margin-left: 0.4em;
+    margin-right: 0.4em;
+}
+.admin-button:hover {
+    background: #666;
+}
+
+
 
 
 
