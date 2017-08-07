@@ -1,27 +1,28 @@
 <?php
-
+session_start();
 error_reporting(E_ALL ^ E_DEPRECATED);
 
 include('config.php');
 
-$church = $_GET['church'];
+$id = $_GET['id'];
 
 $mysqli = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 
 if ($mysqli->connect_errno) {
-die('Connect Error ('.mysqli_connect_errno().') '.mysqli_connect_error());
+    die('Connect Error ('.mysqli_connect_errno().') '.mysqli_connect_error());
 }
 
-$sql = "SELECT * FROM church WHERE lower(name) RLIKE '[[:<:]]".strtolower($church)."' OR lower(state) RLIKE '[[:<:]]".strtolower($church)."' ORDER BY name, state";
+$sql = "SELECT * FROM church WHERE id = '".$id."'";
 
 $answer = false;
 
 if ($result = $mysqli->query($sql)) {
     
+    $num = 0;
     while ($row = $result->fetch_assoc()) {
         $answer = true;
-        $output['church'][$row['name']]['state'] = $row['state'];
-        $output['church'][$row['name']]['id'] = $row['id'];
+        $output['profile'] = $row['profile_picture'];
+        $num ++;
     }
 } 
 

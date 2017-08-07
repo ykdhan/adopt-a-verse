@@ -1,0 +1,597 @@
+
+#church-wrapper {
+    max-width: 1100px;
+    padding: 2em;
+    padding-top: 0;
+    margin: 0;
+    text-align: center;
+    -moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.church-section {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    vertical-align: top;
+}
+#section-profile {
+    width: 35%;
+    height: 30em;
+}
+#section-campaigns {
+    width: 100%;
+}
+#section-admins {
+    width: 65%;
+}
+.church-content {
+    padding: 1em;
+    margin: 1em;
+    min-height: 30em;
+    text-align: center;
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    border-radius: 4px;
+    background: #fff;
+}
+
+.church-title {
+    font-size: 1.1em;
+    font-family: "Gotham-Bold" !important;
+    color: #606060;
+    text-align: left;
+    padding: 1em;
+    padding-top: 0.5em;
+    text-transform: uppercase;
+    border-bottom: 1px solid #d1d1d1;
+}
+
+
+
+#church-profile-picture {
+    display: inline-block;
+    width: 12em;
+    height: 12em;
+    border: 0.5px solid #d1d1d1;
+    border-radius: 50%;
+    margin: 0;
+    margin-top: 3em;
+    margin-bottom: 2em;
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: multiply;
+    background-image: url('../../img/choose_image.png');
+    vertical-align: middle;
+    text-align: center;
+    color: transparent;
+}
+#church-profile-picture:hover {
+    background-color: rgba(50,50,50,.5);
+    z-index: 20;
+    color: #fff;
+    transition: all .3s ease;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#church-profile-picture span {
+    display: inline-block;
+    padding-top: 5.5em;
+}
+#select-profile-picture {
+    width: 12em;
+    border: 1px solid #d1d1d1;
+    border-radius: 4px;
+    background: none;
+    padding: 0.7em;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: 1em;
+    font-family: "Gotham-Book" !important;
+    color: #606060;
+    margin-bottom: 1em;
+    z-index: 10;
+    cursor: pointer;
+}
+#select-profile-picture:hover {
+    background: #efefef;
+}
+#input-profile-picture {
+    position: absolute;
+    margin-top: 0.3em;
+    margin-left: -15.5em;
+    width: 15.2em;
+    height: 3em;
+    cursor: pointer;
+    opacity: 0;
+}
+#preview-profile-picture {
+    width: 9em;
+    height: 9em;
+    border-radius: 50%;
+    border: 1px solid #d1d1d1;
+    margin-bottom: 1em;
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: multiply;
+    background-image: url('../../img/choose_image.png');
+}
+#error-profile-picture {
+    margin-top: -3.9em !important;
+    margin-left: 13em !important;
+}
+
+
+#church-name {
+    font-size: 1.2em;
+    font-family: "Gotham-Bold" !important;
+    color: #666;
+    text-transform: uppercase;
+}
+#church-state {
+    margin-top: 0.6em;
+    font-size: 1em;
+    color: #aaa;
+}
+
+
+#church-admins {
+    padding: 1em;
+    max-height: 23.5em;
+    overflow-y: auto;
+}
+.church-admin {
+    border: 0;
+    padding: 1em;
+    text-align: left;
+}
+.church-admin-name {
+    font-size: 1em;
+    color: #666;
+    vertical-align: middle;
+    display: inline-block;
+    width: 14em;
+}
+.church-admin-email {
+    font-size: 0.9em;
+    color: #999;
+    vertical-align: middle;
+    display: inline-block;
+    margin-left: 2em;
+}
+.church-admin-delete {
+    vertical-align: middle;
+    display: inline-block;
+    float: right;
+    text-align: right;
+}
+.church-admin-delete img {
+    width: 1.3em;
+    height: auto;
+    margin: 0;
+    cursor: pointer;
+    visibility: hidden;
+    margin-top: 0.06em;
+}
+.church-admin-pending {
+    vertical-align: middle;
+    display: inline-block;
+    float: right;
+    text-align: right;
+    font-size: 0.8em;
+    padding-top: 0.25em;
+    border-radius: 2px;
+    color: #FD9A00;
+    margin-right: 2em;
+}
+
+
+.button-admin-add {
+    vertical-align: middle;
+    float: right;
+    width: 2em;
+    height: 2em;
+    cursor: pointer;
+    margin-top: -0.25em;
+}
+
+
+#church-campaigns {
+    padding: 1em;
+    text-align: left;
+}
+.church-campaign-div {
+    width: 33.33%;
+    display: inline-block;
+    padding: 1.3em;
+    text-align: center;
+}
+.church-campaign {
+    padding: 1.3em;
+    border: 2px solid #039da6;
+    border-radius: 4px;
+    color: #666;
+    cursor: pointer;
+}
+.church-campaign:hover {
+    -webkit-box-shadow: 0px 0px 30px 0px rgba(40,40,40,0.4);
+    -moz-box-shadow: 0px 0px 30px 0px rgba(40,40,40,0.4);
+    box-shadow: 0px 0px 30px 0px rgba(40,40,40,0.4);
+}
+.church-campaign-top {
+    font-size: 1em;
+    text-align: left;
+    color: #666;
+}
+.church-campaign-book {
+    padding: 0.4em;
+    font-size: 1.3em;
+    margin-top: 2em;
+    text-align: center;
+    color: #666;
+}
+.church-campaign-language {
+    font-size: 1em;
+    color: #999;
+    text-align: center;
+    border-bottom: 0.5px solid #d1d1d1;
+    padding-bottom: 1.5em;
+}
+.church-campaign-raised {
+    padding: 0.4em;
+    font-size: 1.5em;
+    margin-top: 0.7em;
+    text-align: center;
+    color: #666;
+    font-family: "Gotham-Bold" !important;
+}
+.church-campaign-goal {
+    font-size: 0.85em;
+    text-align: center;
+    color: #666;
+}
+.church-campaign-bottom {
+    font-size: 0.9em;
+    margin-top: 2.5em;
+}
+
+.church-campaign-bar {
+    width: 80%;
+    display: inline-block;
+    border-radius: 100px;
+    background: #eee;
+    vertical-align: middle;
+}
+.church-campaign-progress {
+    height: 0.5em;
+    width: 0%;
+    background: #039da6;
+    border-radius: 100px;
+}
+.church-campaign-percent {
+    width: 20%;
+    display: inline-block;
+    text-align: right;
+    font-family: "Gotham-Bold" !important;
+    font-size: 0.9em;
+    color: #039da6;
+    vertical-align: middle;
+}
+
+
+.church-campaign-status {
+    font-family: "Gotham-Bold" !important;
+    font-size: 0.9em;
+    color: #039da6;
+    float: right;
+    text-transform: uppercase;
+}
+.church-campaign-status.active {
+    color: #039da6;
+}
+.church-campaign-status.coming {
+    color: #FD9A00;
+}
+.church-campaign-status.complete {
+    color: #bbb;
+}
+.church-campaign.complete {
+    border: 2px solid #bbb;
+    color: #bbb !important;
+}
+.church-campaign.complete:hover {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+.church-campaign-progress.complete {
+    background: #bbb;
+}
+.church-campaign-percent.complete {
+    color: #bbb;
+}
+
+
+
+
+.church-campaign.coming {
+    border: 2px solid #FD9A00;
+    color: #FD9A00 !important;
+}
+.church-campaign-progress.coming {
+    background: #FD9A00;
+}
+.church-campaign-percent.coming {
+    color: #FD9A00;
+}
+
+
+
+
+
+
+
+.index-content {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 3em;
+    margin: 0;
+    text-align: center;
+}
+.campaign-list {
+    width: 30em;
+    border: 0;
+    padding: 0.7em;
+    padding-left: 0;
+    padding-right: 0;
+    font-size: 1em;
+    font-family: "Gotham-Book" !important;
+    color: #606060;
+    margin: 0;
+    margin-bottom: 3em;
+}
+.campaign-item {
+    color: #555;
+    cursor: pointer;
+    padding: 0.9em;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+    font-size: 1em;
+    background: none;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
+}
+.campaign-item:hover {
+    background: #f2f2f2;
+}
+.campaign-item span {
+    float: right;
+    color: #aaa;
+    font-size: 0.9em;
+    vertical-align: middle;
+}
+.campaign-group {
+    color: #aaa;
+    cursor: default;
+    font-size: 0.9em;
+    padding: 0.5em;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+}
+
+
+
+#campaign-goal-description {
+    min-height: 8em;
+}
+
+
+
+.landing-title {
+    font-family: "Gotham-Bold" !important;
+    font-size: 1em;
+    margin-bottom: 1em;
+    color: #777;
+}
+
+
+
+.landing-content-now {
+    display: block;
+}
+
+
+.landing-tabs {
+    font-size: 0.9em;
+    background: none;
+    border: none;
+    outline: none;
+    color: #606060;
+    font-family: "Gotham-Bold" !important;
+    cursor: pointer;
+    padding: 1em;
+    border-bottom: 4px solid #fff;
+    margin-left: 1em;
+    margin-right: 1em;
+}
+.landing-tabs-now {
+    border-bottom: 6px solid #039da6;
+}
+
+
+
+.landing-text {
+    width: 28em;
+    border: 1px solid #d1d1d1;
+    border-radius: 4px;
+    background: none;
+    padding: 0.7em;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: 1em;
+    font-family: "Gotham-Book" !important;
+    color: #606060;
+}
+
+.list {
+    width: 30em;
+    border: 0;
+    padding: 0.7em;
+    padding-left: 0;
+    padding-right: 0;
+    font-size: 1em;
+    font-family: "Gotham-Book" !important;
+    color: #606060;
+    margin: 0;
+}
+.list-item:last-child {
+    border-bottom: 0 !important;
+}
+.list-item {
+    color: #555;
+    cursor: pointer;
+    padding: 0.9em;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+    font-size: 1em;
+    background: none;
+    border: 0;
+    border-bottom: 1px solid #ddd;
+    border-radius: 2px;
+}
+.list-item:hover {
+    background: #f2f2f2;
+}
+.list-item span {
+    float: right;
+    color: #aaa;
+    font-size: 0.9em;
+    vertical-align: middle;
+}
+.list-group {
+    color: #aaa;
+    cursor: default;
+    font-size: 0.9em;
+    padding: 0.5em;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+}
+.row-1 {
+    display: block;
+    text-align: left;
+}
+.row-2 {
+    display: block;
+    text-align: left;
+    color: #aaa;
+}
+
+
+.landing-add {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+
+
+.landing-button {
+    width: 31em;
+    border: 1.99px dashed #ccc;
+    border-radius: 4px;
+    background: #fff;
+    padding: 1em;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: 0.9em;
+    font-family: "Gotham-Book" !important;
+    color: #c1c1c1;
+    cursor: pointer;
+    margin-top: 1em;
+}
+.landing-button:hover {
+    background: #f2f2f2;
+}
+
+.landing-button img {
+    margin-right: 1em;
+    width: 1.6em;
+    height: 1.6em;
+    vertical-align: middle;
+}
+
+
+
+/* Lightbox CSS */
+
+.lightbox {
+    padding-top: 3em;
+    padding-bottom: 3em;
+}
+.lightbox #title {
+    font-size: 1.5em;
+    font-family: "Gotham-Bold" !important;
+    color: #444;
+    text-transform: uppercase;
+    margin-bottom: 1.5em;
+}
+.lightbox .col-left {
+    font-family: "Gotham-Bold" !important;
+    color: #444;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    display: inline-block;
+    text-align: right;
+    vertical-align: top;
+    padding-top: 1em;
+    padding-bottom: 0.5em;
+    width: 23%;
+}
+.lightbox .col-tip {
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;
+    width: 4%;
+}
+.lightbox .col-right {
+    display: inline-block;
+    text-align: left;
+    vertical-align: top;
+    color: #777;
+    width: 71%;
+    font-size: 1em;
+}
+.lightbox p {
+    padding: 0;
+    margin: 0;
+    padding-top: 1em;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+}
+.lightbox section {
+    padding-top: 3em;
+    padding-bottom: 2em;
+    margin-left: 2em;
+    margin-right: 2em;
+    text-align: center;
+    border-bottom: 0.5px solid #d1d1d1;
+}
+
+.lightbox .last-section {
+    border: 0 !important;
+    margin-bottom: 2em;
+    padding-bottom: 0;
+    padding-top: 3em;
+}
+
+.lightbox .message {
+    color: #aaa;
+    font-size: 0.9em;
+    padding: 0;
+    padding-bottom: 1em;
+}

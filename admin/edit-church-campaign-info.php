@@ -1,8 +1,11 @@
 <?php 
 session_start();
-if(!isset($_SESSION['aav-admin'])) { 
+$id = "";
+if(isset($_SESSION['aav-admin']) || isset($_SESSION['aav-super-admin'])) { 
+    $id = $_GET['id'];
+} else {
     header('Location: login.php');
-} 
+}
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +25,7 @@ if(!isset($_SESSION['aav-admin'])) {
     
     
     <link href="https://cdn.quilljs.com/1.3.0/quill.snow.css" rel="stylesheet">
-<script src="https://cdn.quilljs.com/1.3.0/quill.js"></script>
+    <script src="https://cdn.quilljs.com/1.3.0/quill.js"></script>
     
     
     
@@ -39,7 +42,7 @@ if(!isset($_SESSION['aav-admin'])) {
     }
 
     
-    $sql = "SELECT *, campaign.id AS cam_id FROM campaign INNER JOIN church ON church_id = church.id INNER JOIN language ON language_id = language.id WHERE campaign.id = '".$_SESSION['aav-admin']."'";
+    $sql = "SELECT *, campaign.id AS cam_id FROM campaign INNER JOIN church ON church_id = church.id INNER JOIN language ON language_id = language.id INNER JOIN user ON user_id = user.id WHERE campaign.id = '".$id."'";
     
     $info_id = "";
     $info_church = "";
@@ -54,7 +57,6 @@ if(!isset($_SESSION['aav-admin'])) {
     $info_last_name = "";
     $info_phone = "";
     $info_email = "";
-    $info_password = "**********";
     $info_url = "";
 
     if ($result = $mysqli->query($sql)) {
@@ -90,13 +92,13 @@ if(!isset($_SESSION['aav-admin'])) {
 <div class="top-bar desktop">
     <table><tr>
     <td>
-        <img id="adopt-logo" alt="Adopt-a-Verse Logo" align="middle" src="../img/wycliffe-logo.png"><span id="tag-admin">Admin</span>
+        <a href="index.php"><img id="adopt-logo" alt="Adopt-a-Verse Logo" align="middle" src="../img/wycliffe-logo.png"><span id="tag-admin">Admin</span></a>
     </td>
     <th>
     </th>
     <td>
         <span id="admin-logout"><a href="logout.php">Logout</a></span>
-        <span id="admin-title">Campaign</span>
+        <span id="admin-title">Church Campaign</span>
     </td>
     </tr></table>
 </div>
@@ -125,21 +127,6 @@ if(!isset($_SESSION['aav-admin'])) {
             <div class="column-left">Campaign Duration</div>
             <div class="column-tip"></div>
             <div class="column-right"><input type="date" class="admin-text" id="campaign-start-date" onchange="select_start_date(this)" value="<?php echo $info_end_date; ?>">&nbsp; to &nbsp;<input type="date" class="admin-text" id="campaign-end-date" onchange="select_end_date(this)" value="<?php echo $info_end_date; ?>"></div>
-        </section>
-        <section>
-            <div class="column-left">Admin Account</div>
-            <div class="column-tip"></div>
-            <div class="column-right">
-                <input type="text" class="admin-text" id="campaign-email" placeholder="Email Address" value="<?php echo $info_email; ?>"><span class="error" id="error-email"></span><br>
-                <input type="password" class="admin-text" id="campaign-password" placeholder="Password">
-                <input type="password" class="admin-text" id="campaign-confirm-password" placeholder="Confirm Password">
-                <span class="error" id="error-password"></span></div>
-            <div class="column-left">Contact</div>
-            <div class="column-tip"></div>
-            <div class="column-right">
-                <input type="text" class="admin-text" id="campaign-first-name" placeholder="First Name" onkeyup="input_form('first-name')" value="<?php echo $info_first_name; ?>">
-                <input type="text" class="admin-text" id="campaign-last-name" placeholder="Last Name" onkeyup="input_form('last-name')" value="<?php echo $info_last_name; ?>">
-                <input type="text" class="admin-text" id="campaign-phone" placeholder="Phone Number" onkeyup="input_form('phone')" value="<?php echo $info_phone; ?>"></div>
         </section>
         <section>
             <div class="column-left">Language</div>
@@ -204,9 +191,9 @@ if(!isset($_SESSION['aav-admin'])) {
 
 <script>
     
-      var quill = new Quill('#editor', {
+var quill = new Quill('#editor', {
     theme: 'snow'
-  });
+});
     
 var form_data = {
     start_date: "",

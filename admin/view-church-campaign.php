@@ -1,8 +1,11 @@
 <?php 
 session_start();
-if(!isset($_SESSION['aav-admin'])) { 
+$id = "";
+if(isset($_SESSION['aav-admin']) || isset($_SESSION['aav-super-admin'])) { 
+    $id = $_GET['id'];
+} else {
     header('Location: login.php');
-} 
+}
 ?>
 
 <!DOCTYPE html>
@@ -39,7 +42,7 @@ if(!isset($_SESSION['aav-admin'])) {
     }
 
     
-    $sql = "SELECT *, campaign.id AS cam_id FROM campaign INNER JOIN church ON church_id = church.id INNER JOIN language ON language_id = language.id WHERE campaign.id = '".$_SESSION['aav-admin']."'";
+    $sql = "SELECT *, campaign.id AS cam_id FROM campaign INNER JOIN church ON church_id = church.id INNER JOIN language ON language_id = language.id INNER JOIN user ON user_id = user.id WHERE campaign.id = '".$id."'";
     
     $info_id = "";
     $info_church = "";
@@ -54,7 +57,6 @@ if(!isset($_SESSION['aav-admin'])) {
     $info_last_name = "";
     $info_phone = "";
     $info_email = "";
-    $info_password = "**********";
     $info_url = "";
 
     if ($result = $mysqli->query($sql)) {
@@ -91,13 +93,13 @@ if(!isset($_SESSION['aav-admin'])) {
 <div class="top-bar desktop">
     <table><tr>
     <td>
-        <img id="adopt-logo" alt="Adopt-a-Verse Logo" align="middle" src="../img/wycliffe-logo.png"><span id="tag-admin">Admin</span>
+        <a href="index.php"><img id="adopt-logo" alt="Adopt-a-Verse Logo" align="middle" src="../img/wycliffe-logo.png"><span id="tag-admin">Admin</span></a>
     </td>
     <th>
     </th>
     <td>
         <span id="admin-logout"><a href="logout.php">Logout</a></span>
-        <span id="admin-title">Campaign</span>
+        <span id="admin-title">Church Campaign</span>
     </td>
     </tr></table>
 </div>
@@ -113,17 +115,7 @@ if(!isset($_SESSION['aav-admin'])) {
         <div id="title">Campaign Profile</div>
             
         <section>
-            <div class="column-left">Id</div>
-            <div class="column-tip"></div>
-            <div class="column-right">
-                <p><?php echo $info_id; ?></p>
-            </div>
             
-            <div class="column-left">Url</div>
-            <div class="column-tip"></div>
-            <div class="column-right">
-                <p>adopt.wycliffe.org/<?php echo $info_url; ?></p>
-            </div>
             
             <div class="column-left">Church</div>
             <div class="column-tip"></div>
@@ -131,6 +123,11 @@ if(!isset($_SESSION['aav-admin'])) {
                 <p><?php echo $info_church; ?></p>
             </div>
             
+            <div class="column-left">Url</div>
+            <div class="column-tip"></div>
+            <div class="column-right">
+                <p>adopt.wycliffe.org/<?php echo $info_url; ?></p>
+            </div>
             
             <div class="column-left">Campaign Duration</div>
             <div class="column-tip"></div>
@@ -143,7 +140,6 @@ if(!isset($_SESSION['aav-admin'])) {
             <div class="column-tip"></div>
             <div class="column-right">
                 <p><?php echo $info_email; ?></p>
-                <p><?php echo $info_password; ?></p>
             </div>
             <div class="column-left">Contact</div>
             <div class="column-tip"></div>
@@ -182,7 +178,7 @@ if(!isset($_SESSION['aav-admin'])) {
             </div>
         </section>
         <section id="last-section">
-            <a href="campaign-edit.php" target="_blank">
+            <a href='<?php echo "edit-church-campaign.php?id=".$info_id; ?>'>
                 <button type="button" class="admin-button">Edit Campaign</button>
             </a>
             <a href='<?php echo "../app.php?id=".$info_id; ?>' target="_blank">

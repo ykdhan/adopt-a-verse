@@ -2,6 +2,8 @@
 session_start();
 if(isset($_SESSION['aav-admin'])) { 
     header('Location: index.php');
+} else if(isset($_SESSION['aav-super-admin'])) { 
+    header('Location: admin.php');
 } 
 ?>
 
@@ -25,38 +27,6 @@ if(isset($_SESSION['aav-admin'])) {
     
     <!-- Wycliffe links -->
 
-    
-    
-    
-    <?php 
-    
-    error_reporting(E_ALL ^ E_DEPRECATED);
-
-    include('config.php');
-
-    $mysqli = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
-
-    if ($mysqli->connect_errno) {
-        die('Connect Error ('.mysqli_connect_errno().') '.mysqli_connect_error());
-    }
-
-    
-    $sql = "SELECT * FROM campaign WHERE email = '".$email."' AND password = '".$password."'";
-    
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    
-
-    if ($result = $mysqli->query($sql)) {
-        header("Location: index.php");
-    }
-    else {
-        
-    }
-    
-    ?>
-    
-    
     
 </head>
     
@@ -116,8 +86,7 @@ function login() {
     
 $('#login-password').keypress(function (e) {
     if (e.which == 13) {
-        console.log("enter");
-        $('#login-submit').submit();
+        login();
         return false;
     }
 });

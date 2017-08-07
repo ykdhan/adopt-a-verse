@@ -1,8 +1,12 @@
 <?php 
 session_start();
-if(!isset($_SESSION['aav-admin'])) { 
+if (isset($_SESSION['aav-super-admin'])) { 
+    header('Location: admin.php');
+} else if (isset($_SESSION['aav-admin'])) { 
+    header('Location: church.php?id='.$_SESSION['aav-church']);
+} else {
     header('Location: login.php');
-} 
+}
 ?>
 
 <!DOCTYPE html>
@@ -23,54 +27,6 @@ if(!isset($_SESSION['aav-admin'])) {
     
     <!-- Wycliffe links -->
 
-    
-    
-    
-    <?php 
-    
-    error_reporting(E_ALL ^ E_DEPRECATED);
-
-    include('config.php');
-
-    $mysqli = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
-
-    if ($mysqli->connect_errno) {
-        die('Connect Error ('.mysqli_connect_errno().') '.mysqli_connect_error());
-    }
-
-    
-    $sql = "SELECT *, campaign.id AS cam_id FROM campaign INNER JOIN church ON church_id = church.id INNER JOIN language ON language_id = language.id WHERE campaign.id = '".$_SESSION['aav-admin']."'";
-    
-    $info_id = "";
-    $info_church = "";
-    $info_language = "";
-    $info_book = "";
-    $info_start_date = "";
-    $info_end_date = "";
-    $info_first_name = "";
-    $info_last_name = "";
-    $info_url = "";
-
-    if ($result = $mysqli->query($sql)) {
-
-        while ($row = $result->fetch_assoc()) {
-            $info_id = $row['cam_id'];                          // id
-            $info_church = $row['name'];                        // church name
-            $info_language = $row['people_group'];              // language
-            $info_book = $row['book'];                          // book
-            $info_start_date = $row['start_date'];              // start date
-            $info_end_date = $row['end_date'];                  // end date
-            $info_first_name = $row['first_name'];              // first name
-            $info_last_name = $row['last_name'];                // last name
-            $info_url = $row['url'];                            // url
-        } 
-    }
-    
-    
-    ?>
-    
-    
-    
 </head>
     
 <body>
@@ -79,7 +35,7 @@ if(!isset($_SESSION['aav-admin'])) {
 <div class="top-bar desktop">
     <table><tr>
     <td>
-        <img id="adopt-logo" alt="Adopt-a-Verse Logo" align="middle" src="../img/wycliffe-logo.png"><span id="tag-admin">Admin</span>
+        <a href="index.php"><img id="adopt-logo" alt="Adopt-a-Verse Logo" align="middle" src="../img/wycliffe-logo.png"><span id="tag-admin">Admin</span></a>
     </td>
     <th>
     </th>
@@ -93,39 +49,23 @@ if(!isset($_SESSION['aav-admin'])) {
     
 <!-- Body -->
 <div id="bg" align="center">
-<div id="wrapper">
+<div id="landing-wrapper">
+    
+    
+    <div class="index-content">
         
-    <div id="content-index" class="admin-content">
-        <div id="title">Welcome</div>
+        <div class="landing-title">
+            Church
+        </div>
+
+        <div class="campaign-list" id="list-church"></div>
         
-        <section>
-            <div id="introduction">Hello, <?php echo $info_first_name." ".$info_last_name; ?>.
-            </div>    
-        </section>
+        <div class="landing-title">
+            Individual
+        </div>
         
-        <section>
-            <div class="column-left">Church</div>
-            <div class="column-tip"></div>
-            <div class="column-right">
-                <p><?php echo $info_church; ?></p>
-            </div>
-            <div class="column-left">Campaign Url</div>
-            <div class="column-tip"></div>
-            <div class="column-right">
-                <p>adopt.wycliffe.org/<?php echo $info_url; ?></p>
-            </div>
-            <div class="column-left">Campaign Duration</div>
-            <div class="column-tip"></div>
-            <div class="column-right">
-                <p><?php echo date("F j, Y", strtotime($info_start_date))." - ".date("F j, Y", strtotime($info_end_date)); ?></p>
-            </div>
-            
-            <div class="column-left"></div>
-            <div class="column-tip"></div>
-            <div class="column-right">
-                <a href="campaign-profile.php"><button type="button" class="admin-button">View Details</button></a>
-            </div>
-        </section> 
+        <div class="campaign-list" id="list-individual">No campaign</div>
+        
     </div>
       
     
@@ -138,6 +78,65 @@ if(!isset($_SESSION['aav-admin'])) {
 
 <script>
     
+search_church();
+    
+function search_church() {
+    
+    var ajaxObj = new XMLHttpRequest();
+        ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+            
+            document.getElementById('list-church').innerHTML = "";
+            
+            if (ajaxObj.responseText == "no\n") {
+                document.getElementById('list-church').innerHTML += '<div class="campaign-group church-group">No search result.</div>';
+            } else {
+                var resp = JSON.parse(ajaxObj.responseText);
+
+                for (var i = 0; i < Object.keys(resp.campaign).length; i++) {
+
+                    var num = Object.keys(resp.campaign)[i];
+                    var state = resp.campaign[num]['state'];
+                    var church = resp.campaign[num]['church'];
+                    var id = resp.campaign[num]['id'];
+                    var langauge = resp.campaign[num]['langauge'];
+                    var book = resp.campaign[num]['book'];
+
+                    document.getElementById('list-church').innerHTML += '<div class="campaign-item church-item" onclick="select_church(\''+id+'\')"><div class="row-1">'+church+'<span class="church-tag">'+state+'</span></div><div class="row-2">'+langauge+'<span class="church-tag">'+book+'</span></div></div>';
+
+                }
+            }
+            
+        }}}
+        ajaxObj.open("GET", "search-campaign-church.php?church=");
+        ajaxObj.send();
+        
+}
+    
+function select_church(ch) {
+    
+    if (ch == "") {
+    
+        var items = document.getElementsByClassName("church-item");
+        for(var i = 0; i < items.length; i++)
+        {
+           items[i].style.visibility = "hidden";
+        }
+        var groups = document.getElementsByClassName("church-group");
+        for(var i = 0; i < groups.length; i++)
+        {
+           groups[i].style.visibility = "hidden";
+        }
+        var tags = document.getElementsByClassName("church-tag");
+        for(var i = 0; i < tags.length; i++)
+        {
+           tags[i].style.visibility = "hidden";
+        }
+
+    } else {
+        window.location.href = "view-church-campaign.php?id="+ch;
+    }
+    
+}
 
     
 </script>

@@ -4,23 +4,19 @@ error_reporting(E_ALL ^ E_DEPRECATED);
 
 include('config.php');
 
+$id = $_GET['id'];
+
 $mysqli = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 
 if ($mysqli->connect_errno) {
 die('Connect Error ('.mysqli_connect_errno().') '.mysqli_connect_error());
 }
 
-$sql = "SELECT * FROM bible_contents";
+$sql = "DELETE FROM user WHERE id = {$id} AND campaign_admin = 1";
 
 if ($result = $mysqli->query($sql)) {
-    
-    while ($row = $result->fetch_assoc()) {
-        $output[$row['book']]['chapters'] = $row['chapters'];
-        $output[$row['book']]['verses'] = $row['verses'];
-    }
-} 
-
-echo JSON_encode($output);
+    echo "yes";
+}
 
 $mysqli->close();
 

@@ -1,11 +1,10 @@
 
-
-#content-create-campaign, #content-create-campaign-result, #content-edit-campaign, #content-index {
+#content-create-campaign, #content-create-campaign-result, #content-index {
     padding: 0;
     padding-top: 4em;
     padding-bottom: 4em;
 }
-#content-create-campaign section, #content-create-campaign-result section, #content-edit-campaign section, #content-index section {
+#content-create-campaign section, #content-create-campaign-result section, #content-index section {
     padding-top: 4em;
     padding-bottom: 2em;
     border-bottom: 1px solid #d1d1d1;
@@ -13,7 +12,7 @@
 }
 
 
-#content-create-campaign div#title, #content-create-campaign-result div#title, #content-edit-campaign div#title, #content-index div#title {
+#content-create-campaign div#title, #content-create-campaign-result div#title, #content-index div#title {
     font-size: 1.5em;
     font-family: "Gotham-Bold" !important;
     color: #444;
@@ -22,13 +21,19 @@
     margin-top: 1em;
 }
 
-#content-index p, #content-edit-campaign p, #content-create-campaign-result p, #div-description {
+#content-index p, #content-create-campaign-result p, #div-description {
     font-size: 1.1em;
     margin: 0;
     padding: 0;
     padding-top: 0.5em;
     padding-bottom: 1.5em;
     vertical-align: top;
+}
+
+#div-description p, #div-description h1, #div-description h2, #div-description h3 {
+    padding: 0;
+    margin: 0;
+    margin-bottom: 0.3em;
 }
 
 .column-left {
@@ -61,14 +66,6 @@
     vertical-align: top;
 }
 
-
-
-
-input[type='date'] {
-    margin: 0;
-    margin-bottom: 1em;
-}
-
 #last-section {
     border: 0 !important;
     padding-bottom: 4em !important;
@@ -87,125 +84,51 @@ input[type='date'] {
     position: absolute;
     float: right !important;
     margin-left: 0.3em;
+    margin-top: 0.7em;
+    cursor: default !important;
 }
-
-.dropdown {
-    width: 16em;
-    border: 1px solid #d1d1d1;
-    border-radius: 4px;
-    background: none;
-    padding: 0.7em;
-    padding-left: 1em;
-    padding-right: 1em;
-    font-size: 1em;
-    font-family: "Gotham-Book" !important;
-    color: #606060;
-    margin-right: 1em;
-    margin-bottom: 1em;
-    cursor: pointer;
+.tool-tip .tooltip {
+    opacity: 0;
+    width: 15em;
+    background-color: #444;
+    color: #fff;
     text-align: left;
-}
-.dropdown img {
-    float: right;
-    width: 1.5em;
-    margin-top: 0.2em;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-.drop {
-    visibility: hidden;
-    position: absolute;
-    width: 16em;
-    max-height: 20em;
-    overflow-y: auto;
-    border: 0;
     border-radius: 4px;
-    background: #fff;
-    padding: 0.7em;
-    padding-left: 0;
-    padding-right: 0;
-    font-size: 1em;
-    font-family: "Gotham-Book" !important;
-    color: #606060;
-    margin-right: 1em;
-    margin-bottom: 1em;
-    margin-top: -0.5em;
-    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
-    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
-}
-.drop-item {
-    color: #555;
-    cursor: pointer;
-    padding: 0.5em;
-    padding-left: 1.5em;
-    padding-right: 1.5em;
-    font-size: 1em;
-    background: none;
-    border: 0;
-    border-radius: 2px;
-}
-.drop-item:hover {
-    background: #e5e5e5;
-}
-.drop-item span {
-    float: right;
-    color: #aaa;
+    padding: 1em;
     font-size: 0.9em;
-    vertical-align: middle;
+    font-family: "Gotham-Book";
+    line-height: 1.5;
+    position: absolute;
+    z-index: 10;
+    margin-left: -13em;
+    margin-top: 1.5em;
+    transition: opacity 0.3s;
 }
-.drop-group {
-    color: #aaa;
-    cursor: default;
-    font-size: 0.9em;
-    padding: 0.5em;
-    padding-left: 1.5em;
-    padding-right: 1.5em;
+.tool-tip .tooltip::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: 5.9em;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #444 transparent;
+}
+.tool-tip:hover .tooltip {
+    opacity: 1;
 }
 
 
 
-#drop-church, #drop-language, #drop-book,
-#campaign-church, #campaign-language, #campaign-book{
+#campaign-church {
+    margin-top: 0.5em;
+}
+
+
+#drop-church, #drop-language, #drop-book, #campaign-language, #campaign-book{
     width: 25em;
 }
 
-
-.error {
-    visibility: hidden;
-    position: absolute;
-    float: right !important;
-    width: 18em;
-    border: 0;
-    border-radius: 4px;
-    background: none;
-    padding: 0.5em;
-    padding-left: 1em;
-    padding-right: 1em;
-    font-size: 0.95em;
-    font-family: "Gotham-Book" !important;
-    color: #555;
-    margin-left: -1.3em;
-    vertical-align: middle;
-}
-
-.error-icon {
-    margin-right: 0.5em;
-    width: 1.7em;
-    height: auto;
-    vertical-align: middle;
-}
-.green {
-    color: #43b471;
-}
-.red {
-    color: #db5353;
-}
 
 
 #num-verses {
@@ -217,28 +140,7 @@ input[type='date'] {
 
 
 
-#editor {
-    width: 40em;
-    color: #777;
-    font-size: 1em;
-    min-height: 8em;
-    font-family: "Gotham-Book" !important;
-    border-radius: 0 0 4px 4px;
-    margin-bottom: 1em;
-}
-.ql-toolbar.ql-snow {
-    width: 40em;
-    border: 1px solid #d1d1d1;
-    border-radius: 4px 4px 0 0;
-}
-#editor p {
-    margin: 0;
-    padding: 0;
-    font-size: 1em;
-}
-.ql-container.ql-snow, .ql-toolbar.ql-snow {
-    border-color: #d1d1d1;
-}
+
 
 .money {
     font-size: 1.4em !important;
@@ -247,23 +149,48 @@ input[type='date'] {
 }
 
 
+#profile-preview {
+    display: none;
+    width: 4em;
+    height: 4em;
+    margin: 0;
+    padding: 0;
+    border-radius: 50%;
+    border: 0.5px solid #d1d1d1;
+    vertical-align: middle;
+    margin-bottom: 0.5em;
+    position: absolute;
+    margin-top: -0.7em;
+}
 
+#campaign-profile-picture {
+    padding: 0.5em;
+    width: 15em;
+    font-size: 1em;
+    vertical-align: middle;
+    opacity: 0;
+    z-index: 3;
+    margin-top: 1.5em;
+    position: absolute;
+    cursor: pointer;
+}
+#campaign-profile-picture::before, #campaign-profile-picture::after {
+    cursor: pointer;
+}
 
-
-::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-    color: #bbb;
-}
-:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-    color: #bbb;
-    opacity: 1;
-}
-::-moz-placeholder { /* Mozilla Firefox 19+ */
-    color: #bbb;
-    opacity: 1;
-}
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
-    color: #aaa;
-}
-::-ms-input-placeholder { /* Microsoft Edge */
-    color: #aaa;
+#profile-button {
+    padding: 0.5em;
+    width: auto;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: 0.8em;
+    vertical-align: middle;
+    margin-bottom: 1em;
+    margin-right: 2em;
+    cursor: pointer;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    background: none;
+    font-family: "Gotham-Book" !important;
+    color: #777;
 }

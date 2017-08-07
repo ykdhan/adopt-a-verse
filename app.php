@@ -30,7 +30,7 @@
 <div class="top-bar desktop">
     <table><tr>
     <td>
-        <img id="adopt-logo" alt="Adopt-a-Verse Logo" align="middle" src="img/wycliffe-logo.png">
+        <a href="index.php"><img id="adopt-logo" alt="Adopt-a-Verse Logo" align="middle" src="img/wycliffe-logo.png"></a>
     </td>
     <th>
         <div class="div-tab font--bold">
@@ -62,7 +62,7 @@
         <img id="menu-icon" alt="Menu" align="middle"  src="img/menu_open.png">
     </div>
     <div id="top-bar-logo">
-        <img id="adopt-logo" alt="Adopt-a-Verse Logo" align="middle" src="img/wycliffe-logo.png">
+        <a href="index.php"><img id="adopt-logo" alt="Adopt-a-Verse Logo" align="middle" src="img/wycliffe-logo.png"></a>
     </div>
     <div id="toggle-menu">
         <div class="div-tab font--bold">
@@ -79,6 +79,7 @@
 <!-- Body -->
 <div id="bg" align="center">
 <div id="wrapper">
+    
     
     <!-- Tab -->
     <div id="content">
@@ -225,12 +226,7 @@
     </div>
     
     
-    
-    
-    
-    
-    
-    
+
     
     
     <!-- side bar -->
@@ -382,10 +378,14 @@
     </div>
         
     
+    <!-- Hidden Data 
+    <input type="hidden" id="data-verse-price" value="">
+    <input type="hidden" id="data-total-goal" value="">
+
+    -->
+    
     
 </div> <!-- wrapper -->
-    
-    
 </div> <!-- bg -->
     
     
@@ -421,6 +421,9 @@ $(function() {
 function init() {
     
     campaign = {};
+    chapter = 1;
+    verses = [];
+    selected = {};
     
     var ajaxObj = new XMLHttpRequest();
 	ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
@@ -435,8 +438,8 @@ function init() {
         campaign.language = resp.info.language;
         campaign.project_description = resp.info.project_description;
         campaign.goal_description = resp.info.goal_description;
-        campaign.goal_amount = parseInt(resp.info.goal_amount);
-        campaign.verse_price = parseInt(resp.info.verse_price);
+        campaign.goal_amount = parseFloat(resp.info.goal_amount).toFixed(2);
+        campaign.verse_price = parseFloat(resp.info.verse_price).toFixed(2);
         campaign.start_date = resp.info.start_date;
         campaign.end_date = resp.info.end_date;
         campaign.region = resp.info.region;
@@ -445,11 +448,10 @@ function init() {
         campaign.pdf_url = resp.info.pdf_url;
         
         book = campaign.book;
-        chapter = 1;
-        verses = [];
-        selected = {};
-        verse_price = campaign.verse_price;
-        total_goal = campaign.goal_amount;
+        //document.getElementById('data-verse-price').value = campaign.verse_price;
+        //document.getElementById('data-total-goal').value = campaign.goal_amount;
+        verse_price = parseFloat(campaign.verse_price).toFixed(2);
+        total_goal = parseFloat(campaign.goal_amount).toFixed(2);
         
         document.getElementById('book').innerHTML = book;
         document.getElementById('campaign-language').innerHTML = campaign.language;
@@ -480,9 +482,9 @@ function init() {
         ajaxObj2.send();
         
         
-        total_adopted = 525;
+        total_adopted = 10;
         total_verses = 750;
-        total_raised = 6000;
+        total_raised = 100;
         total_percentage = total_raised / total_goal * 100;
 
 
