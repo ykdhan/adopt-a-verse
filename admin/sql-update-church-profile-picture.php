@@ -4,6 +4,7 @@ error_reporting(E_ALL ^ E_DEPRECATED);
 
 $id = $_GET['id'];
 
+<<<<<<< HEAD
 
 $seed = str_split('abcdefghijklmnopqrstuvwxyz'
                  .'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -41,6 +42,22 @@ if (move_uploaded_file($_FILES['input_profile_picture']['tmp_name'], $uploadfile
 } else {
     echo "upload_error";
 }
+=======
+$temporary = explode(".", $_FILES["input_profile_picture"]["name"]);
+$file_extension = end($temporary);
+$attach = $id.".".$file_extension;
+$uploaddir = '../img/profile/';
+$uploadfile = $uploaddir.$attach;
+
+echo $uploadfile;
+
+if (move_uploaded_file($_FILES['input_profile_picture']['tmp_name'], $uploadfile)) {
+    echo "yes";
+} else {
+    echo "no";
+}
+
+>>>>>>> 330947e15412e45c91c28dc2680d90223c10a9d1
 ?>
 
 

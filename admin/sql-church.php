@@ -22,7 +22,11 @@ if ($result = $mysqli->query($sql)) {
         $answer = true;
         $output['state'] = $row['state'];
         $output['name'] = $row['name'];
+<<<<<<< HEAD
         $output['profile_picture'] = $row['profile_picture'];
+=======
+        $output['church'] = $row['profile_picture'];
+>>>>>>> 330947e15412e45c91c28dc2680d90223c10a9d1
     }
 } 
 

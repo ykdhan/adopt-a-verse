@@ -120,10 +120,13 @@
     background-blend-mode: multiply;
     background-image: url('../../img/choose_image.png');
 }
+<<<<<<< HEAD
 #error-profile-picture {
     margin-top: -3.9em !important;
     margin-left: 13em !important;
 }
+=======
+>>>>>>> 330947e15412e45c91c28dc2680d90223c10a9d1
 
 
 #church-name {
