@@ -121,7 +121,7 @@ if (isset($_SESSION['aav-super-admin'])) {
                 <button type="button" id="select-profile-picture">Choose Image</button>
                 <div class="error" id="error-profile-picture"></div>
                 
-                <input type="file" id="input-profile-picture" name="input-profile-picture" hidden onchange="select_profile_picture(this)">
+                <input type="file" id="input-profile-picture" name="input-profile-picture" hidden onchange="select_profile_picture(this)" accept="image/*">
                 
             </div>
             <div class="col-left">Preview</div>
@@ -363,7 +363,7 @@ function search_church() {
     
 search_admins();
 function search_admins() {
-    console.log("admins");
+    
     var ajaxObj = new XMLHttpRequest();
     ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
 
