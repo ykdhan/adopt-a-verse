@@ -1,3 +1,18 @@
+<?php 
+session_start();
+
+if (isset($_SESSION['aav-super-admin'])) { 
+} else if (isset($_SESSION['aav-admin'])) { 
+    
+    if ($_GET['id'] != $_SESSION['aav-church']) {
+        header("Location: login.php");
+    }
+    
+} else {
+    header("Location: login.php");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
@@ -14,6 +29,10 @@
     <script type="text/javascript" src="../js/sidebar.js"></script>
     
     
+    <link href="https://cdn.quilljs.com/1.3.0/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.0/quill.js"></script>
+    
+    
     <!-- Wycliffe links -->
     
     
@@ -26,13 +45,13 @@
 <div class="top-bar desktop">
     <table><tr>
     <td>
-        <img id="adopt-logo" alt="Adopt-a-Verse Logo" align="middle" src="../img/wycliffe-logo.png"><span id="tag-admin">Admin</span>
+        <a href="index.php"><img id="adopt-logo" alt="Adopt-a-Verse Logo" align="middle" src="../img/wycliffe-logo.png"><span id="tag-admin">Admin</span></a>
     </td>
     <th>
     </th>
     <td>
         <span id="admin-logout"><a href="logout.php">Logout</a></span>
-        <span id="admin-title">Campaign</span>
+        <span id="admin-title">Church Campaign</span>
     </td>
     </tr></table>
 </div>
@@ -46,31 +65,56 @@
     <div id="content-create-campaign" class="admin-content">
         <div id="title">New Campaign</div>
         <section>
+            
+            
             <div class="column-left">Church</div>
             <div class="column-tip"></div>
             <div class="column-right">
                 
+                <p id="campaign-church"></p>
+                <!--
                 <input type="text" class="admin-text" id="campaign-church" onkeyup="search_church()" placeholder="Search for church">
                 
                 <div class="drop" id="drop-church"></div>
-            
+                
+                <img alt="" src="../img/choose_image.png" id="profile-preview">
+
+                -->
+                
             </div>
+            
+            
             <div class="column-left">Campaign Url</div>
             <div class="column-tip"></div>
             <div class="column-right">adopt.wycliffe.org/ <input type="text" class="admin-text" id="campaign-url" placeholder="church-name"><span class="error" id="error-url"></span>
             </div>
+            
+            <!--
+            <div class="column-left">Campaign Profile</div>
+            <div class="column-tip"></div>
+            <div class="column-right">
+                
+                <form id="upload-form" action="" method="post" enctype="multipart/form-data">
+                    
+                    <input type="file" class="admin-file" id="campaign-profile-picture" onchange="select_profile(this)" accept="image/*">
+                    <button id="profile-button" type="button" class="admin-button">Choose Image</button>
+                    <span class="error" id="error-profile"></span>
+                </form>
+            </div>
+            -->
+            
             <div class="column-left">Campaign Duration</div>
             <div class="column-tip"></div>
             <div class="column-right"><input type="date" class="admin-text" id="campaign-start-date" onchange="select_start_date(this)">&nbsp; to &nbsp;<input type="date" class="admin-text" id="campaign-end-date" onchange="select_end_date(this)"></div>
         </section>
+        
+        <!--
         <section>
             <div class="column-left">Admin Account</div>
             <div class="column-tip"></div>
             <div class="column-right">
                 <input type="text" class="admin-text" id="campaign-email" placeholder="Email Address"><span class="error" id="error-email"></span><br>
-                <input type="password" class="admin-text" id="campaign-password" placeholder="Password">
-                <input type="password" class="admin-text" id="campaign-confirm-password" placeholder="Confirm Password">
-                <span class="error" id="error-password"></span></div>
+            </div>
             <div class="column-left">Contact</div>
             <div class="column-tip"></div>
             <div class="column-right">
@@ -78,6 +122,9 @@
                 <input type="text" class="admin-text" id="campaign-last-name" placeholder="Last Name" onkeyup="input_form('last-name')">
                 <input type="text" class="admin-text" id="campaign-phone" placeholder="Phone Number" onkeyup="input_form('phone')"></div>
         </section>
+        -->
+        
+        
         <section>
             <div class="column-left">Language</div>
             <div class="column-tip"></div>
@@ -108,10 +155,13 @@
             <div class="column-left">Cost per Verse</div>
             <div class="column-tip"></div>
             <div class="column-right">&#36;&nbsp; <input type="text" id="campaign-verse-price" class="admin-text small" onkeyup="input_fund('verse')" placeholder="0"><span class="error" id="error-verse"></span></div>
-            
             <div class="column-left">Goal Description</div>
             <div class="column-tip"><span class="tool-tip">?</span></div>
-            <div class="column-right"><textarea rows="4" class="admin-textarea" id="campaign-goal-description" placeholder="Description" onkeyup="input_form('goal-description')"></textarea></div>
+            <div class="column-right">
+                <div id="editor">
+                    <?php echo $info_goal_description; ?>
+                </div>
+            </div>
             
         </section>
         <section id="last-section">
@@ -138,8 +188,19 @@
 
 <script>
     
+var page_param = window.location.search.substring(1);
+var page_url = new URL(window.location.href);
+var church = page_url.searchParams.get("id");
+get_church_name(church);
+
+
+// text editor
+var quill = new Quill('#editor', {
+    theme: 'snow'
+});
+
+var form_description = "";
 var form_data = {
-    church: "",
     url: "",
     start_date: "",
     end_date: "",
@@ -147,13 +208,45 @@ var form_data = {
     last_name: "",
     phone: "",
     email: "",
-    password: "",
     language: "",
     book: "",
-    goal_description: "",
     total_goal: "",
     verse_price: ""
+    
+    // goal description = form_description
 }
+
+
+function get_church_name(ch) {
+    var ajaxObj = new XMLHttpRequest();
+    ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+
+        document.getElementById('campaign-church').innerHTML = "";
+
+        if (ajaxObj.responseText == "no\n") {
+            document.getElementById('campaign-church').innerHTML += 'INVALID CHURCH';
+        } else {
+            var resp = JSON.parse(ajaxObj.responseText);
+            var name = resp['name'];
+            var state = resp['state'];
+            var picture = resp['profile_picture'];
+            
+            document.getElementById('campaign-church').innerHTML = name;
+        }
+
+    }}}
+    ajaxObj.open("GET", "sql-church.php?id="+ch);
+    ajaxObj.send();
+}
+
+
+
+
+
+
+
+
+
 
 var verses = {};
     
@@ -185,71 +278,7 @@ function load_bible_data() {
     ajaxObj.send();
 }
     
-    
-
-function search_book() {
-    
-    var word = document.getElementById('campaign-book');
-    word.value = word.value.replace(/[^a-zA-Z0-9\s]+/, '');
-    
-    document.getElementById('drop-book').style.visibility = "visible";
-    
-    var ajaxObj = new XMLHttpRequest();
-        ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
-            
-            document.getElementById('drop-book').innerHTML = "";
-            
-            if (ajaxObj.responseText == "no\n") {
-                document.getElementById('drop-book').innerHTML += '<div class="drop-group book-group">No search result.</div>';
-            } else {
-                var resp = JSON.parse(ajaxObj.responseText);
-
-                for (var i = 0; i < Object.keys(resp).length; i++) {
-
-                    var book = Object.keys(resp)[i];
-                    var verses = resp[book];
-
-                    document.getElementById('drop-book').innerHTML += '<div class="drop-item book-item" onclick="select_book(\''+book+'\')">'+book+'<span class="book-tag">'+verses.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+' verses</span></div>';
-
-                }
-            }
-            
-        }}}
-        ajaxObj.open("GET", "search-book.php?book="+word.value);
-        ajaxObj.send();
-        
-}
-
-function select_book(bk) {
-    form_data.book = bk;
-    document.getElementById('campaign-book').value = bk;
-    
-    if (bk == "") {
-        document.getElementById('num-verses').innerHTML = "";
-    } else {
-        document.getElementById('num-verses').innerHTML = verses[bk].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+" verses";
-    }
-    
-    
-    var items = document.getElementsByClassName("book-item");
-    for(var i = 0; i < items.length; i++)
-    {
-       items[i].style.visibility = "hidden";
-    }
-    var groups = document.getElementsByClassName("book-group");
-    for(var i = 0; i < groups.length; i++)
-    {
-       groups[i].style.visibility = "hidden";
-    }
-    var tags = document.getElementsByClassName("book-tag");
-    for(var i = 0; i < tags.length; i++)
-    {
-       tags[i].style.visibility = "hidden";
-    }
-
-    document.getElementById('drop-book').style.visibility = "hidden";
-}
-
+ 
     
 function search_church() {
     
@@ -259,35 +288,46 @@ function search_church() {
     document.getElementById('drop-church').style.visibility = "visible";
     
     var ajaxObj = new XMLHttpRequest();
-        ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
-            
-            document.getElementById('drop-church').innerHTML = "";
-            
-            if (ajaxObj.responseText == "no\n") {
-                document.getElementById('drop-church').innerHTML += '<div class="drop-group church-group">No search result.</div>';
-            } else {
-                var resp = JSON.parse(ajaxObj.responseText);
+    ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
 
-                for (var i = 0; i < Object.keys(resp.church).length; i++) {
+        document.getElementById('drop-church').innerHTML = "";
 
-                    var name = Object.keys(resp.church)[i];
-                    var state = resp.church[name]['state'];
-                    var id = resp.church[name]['id'];
+        if (ajaxObj.responseText == "no\n") {
+            document.getElementById('drop-church').innerHTML += '<div class="drop-group church-group">No search result.</div>';
+        } else {
+            var resp = JSON.parse(ajaxObj.responseText);
 
-                    document.getElementById('drop-church').innerHTML += '<div class="drop-item church-item" onclick="select_church(\''+id+'\',\''+name+'\')">'+name+'<span class="church-tag">'+state+'</span></div>';
+            for (var i = 0; i < Object.keys(resp.church).length; i++) {
 
-                }
+                var name = Object.keys(resp.church)[i];
+                var state = resp.church[name]['state'];
+                var id = resp.church[name]['id'];
+                var picture = resp.church[name]['profile_picture'];
+
+                document.getElementById('drop-church').innerHTML += '<div class="drop-item church-item" onclick="select_church(\''+id+'\',\''+name+'\',\''+picture+'\')">'+name+'<span class="church-tag">'+state+'</span></div>';
+
             }
-            
-        }}}
-        ajaxObj.open("GET", "search-church.php?church="+word.value);
-        ajaxObj.send();
+        }
+
+    }}}
+    ajaxObj.open("GET", "search-church.php?church="+word.value);
+    ajaxObj.send();
         
 }
     
-function select_church(ch,name) {
+function select_church(ch,name,profile) {
     form_data.church = ch;
     document.getElementById('campaign-church').value = name;
+    if (ch == "") {
+        $('#profile-preview').attr('src', '../img/choose_image.png');
+        $('#profile-preview').hide();
+    } else if (profile == "null") {
+        $('#profile-preview').show();
+        $('#profile-preview').attr('src', '../img/choose_image.png');
+    } else {
+        $('#profile-preview').show();
+        $('#profile-preview').attr('src', '../img/profile/'+profile);
+    }
     
     var items = document.getElementsByClassName("church-item");
     for(var i = 0; i < items.length; i++)
@@ -309,106 +349,10 @@ function select_church(ch,name) {
 }
 
     
-function search_language() {
-    
-    var word = document.getElementById('campaign-language');
-    word.value = word.value.replace(/[^a-zA-Z0-9\s]+/, '');
-    
-    document.getElementById('drop-language').style.visibility = "visible";
-    
-    var ajaxObj = new XMLHttpRequest();
-    ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
 
-        document.getElementById('drop-language').innerHTML = "";
-
-        if (ajaxObj.responseText == "no\n") {
-            document.getElementById('drop-language').innerHTML += '<div class="drop-group language-group">No search result.</div>';
-        } else {
-            var resp = JSON.parse(ajaxObj.responseText);
-
-            for (var i = 0; i < Object.keys(resp.language).length; i++) {
-
-                var name = Object.keys(resp.language)[i];
-                var region = resp.language[name]['region'];
-                var id = resp.language[name]['id'];
-
-                document.getElementById('drop-language').innerHTML += '<div class="drop-item language-item" onclick="select_language(\''+id+'\',\''+name+'\')">'+name+'<span class="language-tag">'+region+'</span></div>';
-
-            }
-        }
-
-    }}}
-    ajaxObj.open("GET", "search-language.php?language="+word.value);
-    ajaxObj.send();
-        
-}
-    
-function select_language(lang,name) {
-    form_data.language = lang;
-    document.getElementById('campaign-language').value = name;
-    
-    var items = document.getElementsByClassName("language-item");
-    for(var i = 0; i < items.length; i++)
-    {
-       items[i].style.visibility = "hidden";
-    }
-    var groups = document.getElementsByClassName("language-group");
-    for(var i = 0; i < groups.length; i++)
-    {
-       groups[i].style.visibility = "hidden";
-    }
-    var tags = document.getElementsByClassName("language-tag");
-    for(var i = 0; i < tags.length; i++)
-    {
-       tags[i].style.visibility = "hidden";
-    }
-
-    document.getElementById('drop-language').style.visibility = "hidden";
-}
     
     
-// length: 6~30   characters: a-z 0-9 _ -   checks if exists in database
-function search_url() {
-    
-    var word = document.getElementById('campaign-url');
 
-    var ajaxObj = new XMLHttpRequest();
-    ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
-        
-        var valid = true;
-        form_data.url = "";
-        document.getElementById('error-url').style.visibility = "visible";
-        
-        if (word.value.length < 6) {
-            document.getElementById('error-url').className = "error red";
-            document.getElementById('error-url').innerHTML = '<img class="error-icon" alt="" src="img/error_invalid.png">URL is too short';
-            valid = false;
-        }
-        
-        if (word.value.length > 30) {
-            document.getElementById('error-url').className = "error red";
-            document.getElementById('error-url').innerHTML = '<img class="error-icon" alt="" src="img/error_invalid.png">URL is too long';
-            valid = false;
-        }
-        
-        if (ajaxObj.responseText == "exist\n") {
-            document.getElementById('error-url').className = "error red";
-            document.getElementById('error-url').innerHTML = '<img class="error-icon" alt="" src="img/error_invalid.png">URL already exists';
-            valid = false;
-        }
-
-        if (valid) {
-            document.getElementById('error-url').className = "error green";
-            document.getElementById('error-url').innerHTML = '<img class="error-icon" alt="" src="img/error_valid.png">URL is valid';
-            form_data.url = word.value;
-        }
-
-    }}}
-    ajaxObj.open("GET", "search-url.php?url="+word.value);
-    ajaxObj.send();
-        
-}
-    
 // common email format, checks if exists in database
 function search_email() {
     
@@ -416,6 +360,21 @@ function search_email() {
     
     document.getElementById('error-email').style.visibility = "visible";
     
+
+    if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.value))) {
+            document.getElementById('error-email').className = "error red";
+            document.getElementById('error-email').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">Email is invalid';
+            valid = false;
+    }
+        
+    if (valid) {
+        form_data.email = email.value;
+        document.getElementById('error-email').className = "error green";
+        document.getElementById('error-email').innerHTML = '<img class="error-icon" alt="" src="../img/error_valid.png">Email is valid';
+    }
+    
+    
+    /*
     var ajaxObj = new XMLHttpRequest();
     ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
         
@@ -425,25 +384,27 @@ function search_email() {
         
         if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.value))) {
             document.getElementById('error-email').className = "error red";
-            document.getElementById('error-email').innerHTML = '<img class="error-icon" alt="" src="img/error_invalid.png">Email is invalid';
+            document.getElementById('error-email').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">Email is invalid';
             valid = false;
         }
         
         if (ajaxObj.responseText == "yes\n") {
             document.getElementById('error-email').className = "error red";
-            document.getElementById('error-email').innerHTML = '<img class="error-icon" alt="" src="img/error_invalid.png">Email already exists';
+            document.getElementById('error-email').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">Email already exists';
             valid = false;
         } 
         
         if (valid) {
             form_data.email = email.value;
             document.getElementById('error-email').className = "error green";
-            document.getElementById('error-email').innerHTML = '<img class="error-icon" alt="" src="img/error_valid.png">Email is valid';
+            document.getElementById('error-email').innerHTML = '<img class="error-icon" alt="" src="../img/error_valid.png">Email is valid';
         }
 
     }}}
     ajaxObj.open("GET", "search-email.php?email="+email.value);
     ajaxObj.send();
+    
+    */
 }
     
     
@@ -470,78 +431,7 @@ $( "#campaign-confirm-password" ).focusout(function() {
     input_confirm_password();
 });
     
-function input_fund(title) {
 
-    var money_total = document.getElementById('campaign-total-goal');
-    var money_verse = document.getElementById('campaign-verse-price');
-
-    
-    if (title == 'total') {
-        money_total.value = money_total.value.replace(/[^0-9\.,]+/, '');
-        var before = parseFloat(money_total.value.toString().replace(/,/g,''));
-        money_total.value = before.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        
-        var valid = true;
-        form_data.total_goal = "";
-        
-        if (form_data.book == "") {
-            document.getElementById('error-total').style.visibility = "visible";
-            document.getElementById('error-total').className = "error red";
-            document.getElementById('error-total').innerHTML = '<img class="error-icon" alt="" src="img/error_invalid.png">Book is not selected';
-            valid = false;
-            money_total.value = "";
-        }
-        
-        if (valid) {
-            document.getElementById('error-total').style.visibility = "hidden";
-            
-            var pure = parseFloat(money_total.value.toString().replace(/,/g,''));
-            form_data.total_goal = pure;
-            
-            money_verse.value = (pure/parseFloat(verses[form_data.book])).toFixed(2);
-            
-            form_data.verse_price = money_verse.value;
-            
-            money_verse.value = money_verse.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }
-        
-    } else if (title == 'verse') {
-        money_verse.value = money_verse.value.replace(/[^0-9\.,]+/, '');
-        var before = parseFloat(money_verse.value.toString().replace(/,/g,''));
-        money_verse.value = before.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        
-        var valid = true;
-        form_data.verse_price = "";
-        
-        if (form_data.book == "") {
-            document.getElementById('error-verse').style.visibility = "visible";
-            document.getElementById('error-verse').className = "error red";
-            document.getElementById('error-verse').innerHTML = '<img class="error-icon" alt="" src="img/error_invalid.png">Book is not selected';
-            valid = false;
-            money_verse.value = "";
-        }
-        
-        if (valid) {
-            document.getElementById('error-verse').style.visibility = "hidden";
-            
-            var pure = parseFloat(money_verse.value.toString().replace(/,/g,''));
-            form_data.verse_price = pure;
-            
-            money_total.value = (pure*parseFloat(verses[form_data.book])).toFixed(2);
-            
-            form_data.total_goal = money_total.value;
-            
-            money_total.value = money_total.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }
-    }
-    
-}
-    
-function input_url() {
-    var word = document.getElementById('campaign-url');
-    word.value = word.value.replace(/[^a-z0-9_-]+/, '');
-}
-    
 function input_password() {
     var pass = document.getElementById('campaign-password');
     var valid = true;
@@ -551,12 +441,12 @@ function input_password() {
     if (pass.value.length < 6) {
         
         document.getElementById('error-password').className = "error red";
-        document.getElementById('error-password').innerHTML = '<img class="error-icon" alt="" src="img/error_invalid.png">Password is too short';
+        document.getElementById('error-password').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">Password is too short';
         valid = false;
     } 
     if (pass.value.length > 35) {
         document.getElementById('error-password').className = "error red";
-        document.getElementById('error-password').innerHTML = '<img class="error-icon" alt="" src="img/error_invalid.png">Password is too long';
+        document.getElementById('error-password').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">Password is too long';
         valid = false;
     } 
     
@@ -574,12 +464,12 @@ function input_confirm_password() {
     if (pass.value == confirm.value) {
         form_data.password = confirm.value;
         document.getElementById('error-password').className = "error green";
-        document.getElementById('error-password').innerHTML = '<img class="error-icon" alt="" src="img/error_valid.png">Password is valid';
+        document.getElementById('error-password').innerHTML = '<img class="error-icon" alt="" src="../img/error_valid.png">Password is valid';
     } else {
         form_data.password = "";
         document.getElementById('error-password').style.visibility = "visible";
         document.getElementById('error-password').className = "error red";
-        document.getElementById('error-password').innerHTML = '<img class="error-icon" alt="" src="img/error_invalid.png">Passwords must match';
+        document.getElementById('error-password').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">Passwords must match';
     } 
 }
     
@@ -600,8 +490,6 @@ function input_form(title) {
             word.value = word.value.replace(/[^0-9\)-\.\+\s]+/, '');
             form_data.phone = document.getElementById('campaign-phone').value;
             break;
-        case 'goal-description':
-            form_data.goal_description = document.getElementById('campaign-goal-description').value;
         default:
             break;
     }
@@ -609,23 +497,68 @@ function input_form(title) {
 
     
     
+
     
-function select_start_date(e) {
-    form_data.start_date = e.value;
+    
+var form_profile = false;
+var profile_type = "";
+function select_profile(prof) {
+    
+    document.getElementById('error-profile').style.visibility = "visible";
+            
+    var file = prof.files[0];
+    var imagefile = file.type;
+    profile_type = file.type.split("/")[1];
+        
+    var match = ["image/jpeg","image/png","image/jpg","image/gif"];
+    
+    if(!((imagefile==match[0]) || (imagefile==match[1]) || (imagefile==match[2]) || (imagefile==match[3]))) {
+        form_profile = false;
+        imageNotLoaded();
+        $('#campaign-profile-picture').val('');
+        document.getElementById('error-profile').className = "error red";
+        document.getElementById('error-profile').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">Invalid file type (jpg, gif, png)';
+    } else {
+        if (file.size > 500000) {
+            form_profile = false;
+            imageNotLoaded();
+            $('#campaign-profile-picture').val('');
+            document.getElementById('error-profile').className = "error red";
+            document.getElementById('error-profile').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">Invalid file size. (Max: 500 KB)';
+        } else {
+            form_profile = true;
+            var reader = new FileReader();
+            reader.onload = imageIsLoaded;
+            reader.readAsDataURL(file);
+            document.getElementById('error-profile').className = "error green";
+            document.getElementById('error-profile').innerHTML = '<img class="error-icon" alt="" src="../img/error_valid.png">Valid image.';
+        }
+    }
+    
 }
-function select_end_date(e) {
-    form_data.end_date = e.value;
+function imageIsLoaded(e) {
+    $('#profile-preview').attr('src', e.target.result);
+}  
+function imageNotLoaded() {
+    $('#profile-preview').attr('src', '../img/choose_image.png');
 }
     
     
-    
+
 function submit_form() {
     
     console.log(form_data);
+    console.log(quill.getLength());
+    
+    var edits = document.getElementsByClassName("ql-editor");
+    for(var i = 0; i < edits.length; i++) {
+        form_description = edits[i].innerHTML;
+        console.log(form_description);
+    }
     
     var valid = true;
     
-    document.getElementById('campaign-church').style.border = "1px solid #d1d1d1";
+
     document.getElementById('campaign-url').style.border = "1px solid #d1d1d1";
     document.getElementById('campaign-start-date').style.border = "1px solid #d1d1d1";
     document.getElementById('campaign-end-date').style.border = "1px solid #d1d1d1";
@@ -633,20 +566,23 @@ function submit_form() {
     document.getElementById('campaign-last-name').style.border = "1px solid #d1d1d1";
     document.getElementById('campaign-email').style.border = "1px solid #d1d1d1";
     document.getElementById('campaign-phone').style.border = "1px solid #d1d1d1";
-    document.getElementById('campaign-password').style.border = "1px solid #d1d1d1";
     document.getElementById('campaign-language').style.border = "1px solid #d1d1d1";
     document.getElementById('campaign-book').style.border = "1px solid #d1d1d1";
-    document.getElementById('campaign-goal-description').style.border = "1px solid #d1d1d1";
+    var editors = document.getElementsByClassName("ql-container");
+    for(var i = 0; i < editors.length; i++)
+    {
+        editors[i].style.borderColor = "#d1d1d1";
+    }
     document.getElementById('campaign-total-goal').style.border = "1px solid #d1d1d1";
     document.getElementById('campaign-verse-price').style.border = "1px solid #d1d1d1";
     
-    if (form_data.church == "") {
-        document.getElementById('campaign-church').style.border = "1px solid #db5353";
-        document.getElementById('campaign-church').focus();
-        valid = false;
-    } else if (form_data.url == "") {
+    if (form_data.url == "") {
         document.getElementById('campaign-url').style.border = "1px solid #db5353";
         document.getElementById('campaign-url').focus();
+        valid = false;
+    } else if (form_profile == false) {
+        document.getElementById('profile-preview').style.border = "1px solid #db5353";
+        document.getElementById('profile-button').focus();
         valid = false;
     } else if (form_data.start_date == "") {
         document.getElementById('campaign-start-date').style.border = "1px solid #db5353";
@@ -672,10 +608,6 @@ function submit_form() {
         document.getElementById('campaign-phone').style.border = "1px solid #db5353";
         document.getElementById('campaign-phone').focus();
         valid = false;
-    } else if (form_data.password == "") {
-        document.getElementById('campaign-password').style.border = "1px solid #db5353";
-        document.getElementById('campaign-password').focus();
-        valid = false;
     } else if (form_data.language == "") {
         document.getElementById('campaign-language').style.border = "1px solid #db5353";
         document.getElementById('campaign-language').focus();
@@ -684,9 +616,13 @@ function submit_form() {
         document.getElementById('campaign-book').style.border = "1px solid #db5353";
         document.getElementById('campaign-book').focus();
         valid = false;
-    } else if (form_data.goal_description == "") {
-        document.getElementById('campaign-goal-description').style.border = "1px solid #db5353";
-        document.getElementById('campaign-goal-description').focus();
+    } else if (quill.getLength() <= 1) {
+        var editors = document.getElementsByClassName("ql-container");
+        for(var i = 0; i < editors.length; i++)
+        {
+            editors[i].style.borderColor = "#db5353";
+        }
+        quill.focus();
         valid = false;
     } else if (form_data.total_goal == "") {
         document.getElementById('campaign-total-goal').style.border = "1px solid #db5353";
@@ -699,7 +635,8 @@ function submit_form() {
     }
     
     if (valid) {
-        var params = 'church='+form_data.church+'&language='+form_data.language+'&book='+form_data.book+'&goal_description='+form_data.goal_description+'&goal_amount='+form_data.total_goal+'&verse_price='+form_data.verse_price+'&start_date='+form_data.start_date+'&end_date='+form_data.end_date+'&first_name='+form_data.first_name+'&last_name='+form_data.last_name+'&email='+form_data.email+'&phone='+form_data.phone+'&password='+form_data.password+'&url='+form_data.url;
+        
+        var params = 'church='+church+'&language='+form_data.language+'&book='+form_data.book+'&goal_description='+form_description+'&goal_amount='+form_data.total_goal+'&verse_price='+form_data.verse_price+'&start_date='+form_data.start_date+'&end_date='+form_data.end_date+'&first_name='+form_data.first_name+'&last_name='+form_data.last_name+'&email='+form_data.email+'&phone='+form_data.phone+'&url='+form_data.url+'&profile_type='+profile_type;
         
         console.log(params);
         
@@ -708,14 +645,29 @@ function submit_form() {
 
             if (ajaxObj.responseText != "no\n") {
                 var resp = JSON.parse(ajaxObj.responseText);
-                window.location.href = "campaign-profile.php?id="+resp['id'];
+                $.ajax({
+                    url: "insert-campaign-profile.php?id="+resp['id'],
+                    type: "POST",
+                    data:  new FormData($('#campaign-profile-picture')),
+                    contentType: false,
+                    processData:false,
+                    success: function(data) {
+                        window.location.href = "admin.php";
+                    },
+                    error: function() {
+                        alert("Profile upload error");
+                    } 	        
+                });
             } else {
-                alert("Error occurred.");
+                alert("Error occurred");
             }
             
         }}}
         ajaxObj.open("GET", "insert-campaign.php?"+params);
         ajaxObj.send();
+        
+        
+        
     }
     
 }

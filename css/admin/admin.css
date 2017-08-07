@@ -1,0 +1,93 @@
+#content-create-admin {
+    padding: 0;
+    padding-top: 4em;
+    padding-bottom: 4em;
+}
+#content-create-admin section {
+    padding-top: 4em;
+    padding-bottom: 2em;
+    border-bottom: 1px solid #d1d1d1;
+    width: 90%;
+}
+
+
+#content-create-admin div#title {
+    font-size: 1.5em;
+    font-family: "Gotham-Bold" !important;
+    color: #444;
+    text-transform: uppercase;
+    margin-bottom: 1em;
+    margin-top: 1em;
+}
+
+#content-create-admin p {
+    font-size: 1.1em;
+    margin: 0;
+    padding: 0;
+    padding-top: 0.5em;
+    padding-bottom: 1.5em;
+    vertical-align: top;
+}
+
+
+#campaign-church {
+    margin-top: 0.5em;
+}
+
+
+
+.col-church-profile-picture {
+    vertical-align: middle;
+    width: 3.5em;
+    height: 3.5em;
+    border: 1px solid #d1d1d1;
+    border-radius: 50%;
+    display: inline-block;
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: multiply;
+}
+.col-church-name {
+    width: 80%;
+    text-align: left;
+    padding-left: 1em;
+    display: inline-block;
+}
+.col-church-state {
+    display: inline-block;
+    text-align: right;
+    color: #aaa;
+}
+
+.col-campaign-book {
+    width: 50%;
+    text-align: left;
+    display: inline-block;
+    vertical-align: middle;
+}
+.col-campaign-church {
+    width: 50%;
+    text-align: right;
+    display: inline-block;
+    vertical-align: middle;
+}
+.col-campaign-language {
+    color: #aaa;
+    padding-top: 0.6em;
+}
+
+.col-user-name {
+    width: 95%;
+    text-align: left;
+    display: inline-block;
+    vertical-align: middle;
+    padding-top: 0.3em;
+    padding-bottom: 0.3em;
+}
+.col-user-role {
+    display: inline-block;
+    text-align: right;
+    color: #aaa;
+    vertical-align: middle;
+}
+

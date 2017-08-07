@@ -2,6 +2,7 @@
 @import url("css/church/donate.css?ver=2.9");
 @import url("css/church/about.css?ver=2.9");
 @import url("css/church/goal.css?ver=2.9");
+@import url("css/church/landing.css?ver=2.9");
 
 
 @font-face {
@@ -88,6 +89,7 @@ button {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+    outline: none;
 }
 
 /*   margin, padding: 0   */
@@ -285,6 +287,30 @@ a {
     margin-bottom: 3em !important;
 }
 
+
+
+
+
+
+
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color: #bbb;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #bbb;
+    opacity: 1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #bbb;
+    opacity: 1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #bbb;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: #bbb;
+}
 
 
 

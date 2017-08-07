@@ -174,7 +174,7 @@ function add_cart() {
             //document.getElementById('checkout').className = //document.getElementById('checkout').className.replace(" empty", "");
             //document.getElementById('div-cart-empty').style.display = 'none';
             //document.getElementById('div-cart').innerHTML += "<div class='item border--round' onmouseover='show_unselect("+b+","+items[b][c]+")' onmouseout='hide_unselect("+b+","+items[b][c]+")'>"+ book + " " + b + ":" + items[b][c] + "<img alt='' src='img/item_close.png' class='unselect' id='unselect-"+b+"-"+items[b][c]+"' onclick='select("+b+","+items[b][c]+")' /></div>";
-            count ++;
+            
             
             document.getElementById('mobile-cart').style.display = "block";
             document.getElementById('div-cart-mobile').innerHTML += "<div class='div-item'><div class='item border--round'>"+ book + " " + b + ":" + items[b][c] + "<img alt='' src='img/item_close.png' class='unselect-mobile' onclick='select("+b+","+items[b][c]+")' /></div></div>";
@@ -184,13 +184,16 @@ function add_cart() {
             document.getElementById('small-checkout').className = document.getElementById('small-checkout').className.replace(" empty", "");
             document.getElementById('small-div-cart-empty').style.display = 'none';
             document.getElementById('small-div-cart').innerHTML += "<div class='div-item'><div class='item border--round' onmouseover='show_unselect("+b+","+items[b][c]+")' onmouseout='hide_unselect("+b+","+items[b][c]+")'>"+ book[0] + book[1] + book[2] + ". " + b + ":" + items[b][c] + "<img alt='' src='img/item_close.png' class='small-unselect' id='small-unselect-"+b+"-"+items[b][c]+"' onclick='select("+b+","+items[b][c]+")' /></div></div>";
+            
+            
+            count ++;
         }
     }
     
     
     
     // calculate the total price
-    var total = count * verse_price;
+    var total = (count * verse_price).toFixed(2);
     //document.getElementById('checkout').innerHTML = "Give $"+total;
     document.getElementById('checkout-mobile').innerHTML = "Give $"+total;
     document.getElementById('small-checkout').innerHTML = "Give $"+total;
