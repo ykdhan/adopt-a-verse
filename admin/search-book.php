@@ -9,10 +9,10 @@ $book = $_GET['book'];
 $mysqli = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 
 if ($mysqli->connect_errno) {
-die('Connect Error ('.mysqli_connect_errno().') '.mysqli_connect_error());
+    die('Connect Error ('.mysqli_connect_errno().') '.mysqli_connect_error());
 }
 
-$sql = "SELECT * FROM bible_contents WHERE lower(book) RLIKE '[[:<:]]".strtolower($book)."'";
+$sql = "SELECT * FROM bible_content WHERE lower(book) RLIKE '[[:<:]]".strtolower($book)."'";
 
 $answer = false;
 

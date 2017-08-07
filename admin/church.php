@@ -405,38 +405,6 @@ function search_admins() {
     
 }
 
-/*
-search_admins_pending();
-function search_admins_pending() {
-    console.log("admins_pending");
-    var ajaxObj2 = new XMLHttpRequest();
-    ajaxObj2.onreadystatechange= function() { if(ajaxObj2.readyState == 4) { if(ajaxObj2.status == 200) {
-
-        if (ajaxObj2.responseText == "no\n") {
-            console.log("no pending admins");
-            if (document.getElementById('church-admins').innerHTML == "") {
-                document.getElementById('church-admins').innerHTML = "<span style='float: left; text-align: left;'>Please add church admins</span>";
-            }
-        } else {
-            var resp = JSON.parse(ajaxObj2.responseText);
-
-            for (var i = 0; i < Object.keys(resp).length; i++) {
-
-                var num = Object.keys(resp)[i];
-                var first_name = resp[num]['first_name'];
-                var last_name = resp[num]['last_name'];
-                var email = resp[num]['email'];
-                var verified = resp[num]['verified'];
-
-                document.getElementById('church-admins').innerHTML += '<div class="church-admin" onmouseover="show_delete('+num+')" onmouseout="hide_delete('+num+')"><div class="church-admin-name">'+first_name+' '+last_name+'</div><div class="church-admin-email">'+email+'</div><div class="church-admin-delete"><img alt="" src="../img/delete.svg" id="delete-'+num+'" onclick="delete_admin('+num+')"></div><div class="church-admin-pending">Pending</div></div>';
-            }
-        }
-
-    }}}
-    ajaxObj2.open("GET", "sql-church-admins-pending.php?id="+church_id);
-    ajaxObj2.send();
-}
-*/
     
 search_campaigns();
 function search_campaigns() {
@@ -1184,7 +1152,7 @@ function input_fund(title) {
         if (campaign_data.book == "") {
             document.getElementById('error-total').style.visibility = "visible";
             document.getElementById('error-total').className = "error red";
-            document.getElementById('error-total').innerHTML = '<img class="error-icon" alt="" src="img/error_invalid.png">Book is not selected';
+            document.getElementById('error-total').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">Book is not selected';
             valid = false;
             money_total.value = "";
         }
@@ -1213,7 +1181,7 @@ function input_fund(title) {
         if (campaign_data.book == "") {
             document.getElementById('error-verse').style.visibility = "visible";
             document.getElementById('error-verse').className = "error red";
-            document.getElementById('error-verse').innerHTML = '<img class="error-icon" alt="" src="img/error_invalid.png">Book is not selected';
+            document.getElementById('error-verse').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">Book is not selected';
             valid = false;
             money_verse.value = "";
         }
