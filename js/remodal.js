@@ -606,7 +606,7 @@
       
       
       // for each button
-<<<<<<< HEAD
+
       if (id == "edit-profile-picture") {
           
           document.getElementById('input-profile-picture').value = "";
@@ -618,10 +618,6 @@
           
           
       } else if ( id == 'add-admin' ) {
-=======
-      
-      if ( id == 'add-admin' ) {
->>>>>>> 330947e15412e45c91c28dc2680d90223c10a9d1
           
           document.getElementById('admin-email').value = "";
           document.getElementById('admin-first-name').value = "";
