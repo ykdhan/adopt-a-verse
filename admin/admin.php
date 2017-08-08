@@ -208,7 +208,7 @@ if (isset($_SESSION['aav-admin'])) {
 </div>
 
     
-<div class="remodal" data-remodal-id="user-profile" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+<div class="remodal" data-remodal-id="user-details" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
     <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
 
     <div class="lightbox">
@@ -230,9 +230,19 @@ if (isset($_SESSION['aav-admin'])) {
             <div class="col-right">
                 
                 <input type="text" class="admin-text" id="user-email" onkeyup="input_form('email')" placeholder="Email">
-                <div class="error" id="error-email"></div>
+                <span class="error" id="error-email"></span>
                 <br>
                 <button type="button" class="outline-button" id="reset-password">Reset Password</button>
+                
+            </div>
+        </section>
+        <section>
+            <div class="col-left">Role</div>
+            <div class="col-tip"></div>
+            <div class="col-right">
+                
+                <p id="user-role"></p>
+                <p id="register-date"></p>
                 
             </div>
         </section>
@@ -386,6 +396,7 @@ function select_campaign(id) {
     
     
 var user_id = "";
+var users = {};
     
 search_user();
     
@@ -411,7 +422,18 @@ function search_user() {
                     var id = resp[num]['id'];
                     var first_name = resp[num]['first_name'];
                     var last_name = resp[num]['last_name'];
+                    var phone = resp[num]['phone'];
+                    var email = resp[num]['email'];
                     var role = resp[num]['role'];
+                    var register_date = resp[num]['register_date'];
+                    
+                    users[id] = {};
+                    users[id]['first_name'] = first_name;
+                    users[id]['last_name'] = last_name;
+                    users[id]['email'] = email;
+                    users[id]['phone'] = phone;
+                    users[id]['role'] = role;
+                    users[id]['register_date'] = register_date;
                     
                     var admin = "";
                     
@@ -437,7 +459,7 @@ function select_user(id) {
 
     } else {
         user_id = id;
-        window.location.href = "admin.php#user-profile";
+        window.location.href = "admin.php#user-details";
     }
     
 }
@@ -758,6 +780,135 @@ function edit_campaign(campaign) {
         
     
     
+    
+// EDIT USER
+    
+var user_data = {
+    first_name: "",
+    last_name: "",
+    phone: "",
+    email: "",
+    initial_email: ""
+}
+
+function search_email() {
+    
+    var email = document.getElementById('user-email');
+    
+    document.getElementById('error-email').style.visibility = "visible";
+
+    var ajaxObj = new XMLHttpRequest();
+    ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+        
+        
+        var valid = true;
+        user_data.email = email.value;
+        
+        if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.value))) {
+            document.getElementById('error-email').className = "error red";
+            document.getElementById('error-email').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">Email is invalid';
+            valid = false;
+        }
+        
+        console.log(user_data.email+" --- "+user_data.initial_email);
+        if (user_data.email != user_data.initial_email && ajaxObj.responseText == "yes\n") {
+            document.getElementById('error-email').className = "error red";
+            document.getElementById('error-email').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">Email already exists';
+            valid = false;
+        } 
+        
+        if (valid) {
+            user_data.email = email.value;
+            document.getElementById('error-email').className = "error green";
+            document.getElementById('error-email').innerHTML = '<img class="error-icon" alt="" src="../img/error_valid.png">Email is valid';
+        } else {
+            user_data.email = "";
+        }
+
+    }}}
+    ajaxObj.open("GET", "sql-check-email.php?email="+email.value);
+    ajaxObj.send();
+}
+
+$( "#user-email" ).focusout(function() {
+    search_email();
+});
+    
+function input_form(title) {
+    
+    var word = document.getElementById('user-'+title);
+    
+    switch(title) {
+        case 'first-name':
+            word.value = word.value.replace(/[^a-zA-Z\.\s]+/, '');
+            user_data.first_name = document.getElementById('user-first-name').value;
+            break;
+        case 'last-name':
+            word.value = word.value.replace(/[^a-zA-Z\.\s]+/, '');
+            user_data.last_name = document.getElementById('user-last-name').value;
+            break;
+        case 'phone':
+            word.value = word.value.replace(/[^0-9\)-\.\+\s]+/, '');
+            user_data.phone = document.getElementById('user-phone').value;
+            break;
+        default:
+            break;
+    }
+}
+    
+function edit_user() {
+    
+    document.getElementById('user-first-name').style.border = "1px solid #d1d1d1";
+    document.getElementById('user-last-name').style.border = "1px solid #d1d1d1";
+    document.getElementById('user-phone').style.border = "1px solid #d1d1d1";
+    document.getElementById('user-email').style.border = "1px solid #d1d1d1";
+    
+    var valid = true;
+    
+    if (user_data.first_name == "") {
+        document.getElementById('user-first-name').style.border = "1px solid #db5353";
+        document.getElementById('user-first-name').focus();
+        valid = false;
+    } else if (user_data.last_name == "") {
+        document.getElementById('user-last-name').style.border = "1px solid #db5353";
+        document.getElementById('user-last-name').focus();
+        valid = false;
+    } else if (user_data.phone == "") {
+        document.getElementById('user-phone').style.border = "1px solid #db5353";
+        document.getElementById('user-phone').focus();
+        valid = false;
+    } else if (user_data.email == "") {
+        document.getElementById('user-email').style.border = "1px solid #db5353";
+        document.getElementById('user-email').focus();
+        valid = false;
+    } 
+    
+    
+    if (valid) {
+        
+        var params = 'id='+user_id+'&first_name='+user_data.first_name+'&last_name='+user_data.last_name+'&phone='+user_data.phone+'&email='+user_data.email;
+        
+        console.log(params);
+        
+        var ajaxObj = new XMLHttpRequest();
+        ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+
+            if (ajaxObj.responseText == "no\n") {
+                
+                alert("Error occurred");
+                
+            } else {
+                
+                window.location.href = "admin.php#";
+                search_user();
+            }
+            
+        }}}
+        ajaxObj.open("GET", "sql-update-user.php?"+params);
+        ajaxObj.send();
+    }
+    
+}
     
     
     

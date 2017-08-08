@@ -28,6 +28,9 @@ if ($result = $mysqli->query($sql)) {
         $output[$num]['id'] = $row['id'];
         $output[$num]['first_name'] = $row['first_name'];
         $output[$num]['last_name'] = $row['last_name'];
+        $output[$num]['phone'] = $row['phone'];
+        $output[$num]['email'] = $row['email'];
+        $output[$num]['register_date'] = $row['register_date'];
         if ($row['campaign_admin'] == 1) {
             $output[$num]['role'] = "campaign_admin";
         } else if ($row['wycliffe_admin'] == 1) {

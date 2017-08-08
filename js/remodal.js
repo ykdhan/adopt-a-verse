@@ -757,10 +757,12 @@
           
       
       } else if (id == "add-church") {
+          
           document.getElementById('add-church').value = "";
           document.getElementById('input-profile-picture').value = "";
           document.getElementById('preview-profile-picture').style.backgroundImage = "url('../img/choose_image.png')";
           document.getElementById('error-profile-picture').style.visibility = "hidden";
+          
       } else if (id == "view-campaign") {
           
           if (campaign_id == '') {
@@ -838,7 +840,54 @@
               }
           }
           
+      } else if (id == "user-details") {
           
+          if (user_id == '') {
+              window.location.href = "admin.php";
+          } else {
+              
+              
+              document.getElementById('user-first-name').style.border = "1px solid #d1d1d1";
+              document.getElementById('user-last-name').style.border = "1px solid #d1d1d1";
+              document.getElementById('user-phone').style.border = "1px solid #d1d1d1";
+              document.getElementById('user-email').style.border = "1px solid #d1d1d1";
+              
+              document.getElementById('error-email').style.visibility = "hidden";
+              
+              
+              switch(users[user_id]['role']) {
+                  case "user":
+                      document.getElementById('user-role').innerHTML = "User";
+                      break;
+                  case "campaign_admin":
+                      document.getElementById('user-role').innerHTML = "Church Administrator";
+                      break;
+                  case "wycliffe_admin":
+                      document.getElementById('user-role').innerHTML = "Wycliffe Administrator";
+                      break;
+                  default:
+                      break;
+              }
+              
+              var r_date = new Date(users[user_id]['register_date']);
+              var r_year = (""+r_date.getFullYear()).slice(-2);
+              var r_month = r_date.getMonth() + 1;
+              var register_date = r_month+"/"+r_date.getDate()+"/"+r_year;
+              
+              document.getElementById('register-date').innerHTML = register_date;
+              
+              document.getElementById('user-first-name').value = users[user_id]['first_name'];
+              document.getElementById('user-last-name').value = users[user_id]['last_name'];
+              document.getElementById('user-phone').value = users[user_id]['phone'];
+              document.getElementById('user-email').value = users[user_id]['email'];
+    
+              
+              user_data['first_name'] = users[user_id]['first_name'];
+              user_data['last_name'] = users[user_id]['last_name'];
+              user_data['phone'] = users[user_id]['phone'];
+              user_data['email'] = users[user_id]['email'];
+              user_data['initial_email'] = users[user_id]['email'];
+          }
           
       }
       
