@@ -748,9 +748,9 @@
                   var today = new Date();
                   
                   if (start_now > today) {
-                      document.getElementById('details-buttons').innerHTML = '<button type="button" class="admin-button-delete" onclick="delete_campaign(\''+campaign_id+'\')">Delete</button><button type="button" class="admin-button" onclick="edit_campaign(\''+campaign_id+'\')">Edit Campaign</button><a href="../app.php?id='+campaign_id+'" target="_blank"><button type="button" class="admin-submit">Go to Campaign</button></a>';
+                      document.getElementById('details-buttons').innerHTML = '<button type="button" class="admin-button-delete" onclick="delete_campaign(\''+campaign_id+'\')">Delete</button><button type="button" class="admin-button" onclick="edit_campaign(\''+campaign_id+'\')">Save Changes</button><a href="../app.php?id='+campaign_id+'" target="_blank"><button type="button" class="admin-submit">Go to Campaign</button></a>';
                   } else {
-                      document.getElementById('details-buttons').innerHTML = '<button type="button" class="admin-button" onclick="edit_campaign(\''+campaign_id+'\')">Edit Campaign</button><a href="../app.php?id='+campaign_id+'" target="_blank"><button type="button" class="admin-submit">Go to Campaign</button></a>';
+                      document.getElementById('details-buttons').innerHTML = '<button type="button" class="admin-button" onclick="edit_campaign(\''+campaign_id+'\')">Save Changes</button><a href="../app.php?id='+campaign_id+'" target="_blank"><button type="button" class="admin-submit">Go to Campaign</button></a>';
                   }
               }
           }
@@ -831,9 +831,9 @@
                   var today = new Date();
                   
                   if (start_now > today) {
-                      document.getElementById('details-buttons').innerHTML = '<button type="button" class="admin-button-delete" onclick="delete_campaign(\''+campaign_id+'\')">Delete</button><button type="button" class="admin-button" onclick="edit_campaign(\''+campaign_id+'\')">Edit Campaign</button><a href="../app.php?id='+campaign_id+'" target="_blank"><button type="button" class="admin-submit">Go to Campaign</button></a>';
+                      document.getElementById('details-buttons').innerHTML = '<button type="button" class="admin-button-delete" onclick="delete_campaign(\''+campaign_id+'\')">Delete</button><button type="button" class="admin-button" onclick="edit_campaign(\''+campaign_id+'\')">Save Changes</button><a href="../app.php?id='+campaign_id+'" target="_blank"><button type="button" class="admin-submit">Go to Campaign</button></a>';
                   } else {
-                      document.getElementById('details-buttons').innerHTML = '<button type="button" class="admin-button" onclick="edit_campaign(\''+campaign_id+'\')">Edit Campaign</button><a href="../app.php?id='+campaign_id+'" target="_blank"><button type="button" class="admin-submit">Go to Campaign</button></a>';
+                      document.getElementById('details-buttons').innerHTML = '<button type="button" class="admin-button" onclick="edit_campaign(\''+campaign_id+'\')">Save Changes</button><a href="../app.php?id='+campaign_id+'" target="_blank"><button type="button" class="admin-submit">Go to Campaign</button></a>';
                   }
               }
           }

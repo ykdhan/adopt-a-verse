@@ -82,24 +82,6 @@
     display: inline-block;
     padding-top: 5.5em;
 }
-#select-profile-picture {
-    width: 12em;
-    border: 1px solid #d1d1d1;
-    border-radius: 4px;
-    background: none;
-    padding: 0.7em;
-    padding-left: 1em;
-    padding-right: 1em;
-    font-size: 1em;
-    font-family: "Gotham-Book" !important;
-    color: #606060;
-    margin-bottom: 1em;
-    z-index: 10;
-    cursor: pointer;
-}
-#select-profile-picture:hover {
-    background: #efefef;
-}
 #input-profile-picture {
     position: absolute;
     margin-top: 0.3em;

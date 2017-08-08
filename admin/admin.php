@@ -127,7 +127,7 @@ if (isset($_SESSION['aav-admin'])) {
                 
                 <form method="post" enctype="multipart/form-data">
                 
-                <button type="button" id="select-profile-picture">Choose Image</button>
+                <button type="button" class="outline-button" id="select-profile-picture">Choose Image</button>
                 <div class="error" id="error-profile-picture"></div>
                 
                 <input type="file" id="input-profile-picture" hidden onchange="select_profile_picture(this)">
@@ -208,7 +208,40 @@ if (isset($_SESSION['aav-admin'])) {
 </div>
 
     
-    
+<div class="remodal" data-remodal-id="user-profile" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+    <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+
+    <div class="lightbox">
+        <div id="title">User Details</div>
+        <section>
+            <div class="col-left">Contact</div>
+            <div class="col-tip"></div>
+            <div class="col-right">
+                
+                <input type="text" class="admin-text" id="user-first-name" onkeyup="input_form('first-name')" placeholder="First Name">
+                <input type="text" class="admin-text" id="user-last-name" onkeyup="input_form('last-name')" placeholder="Last Name"><br>
+                <input type="text" class="admin-text" id="user-phone" onkeyup="input_form('phone')" placeholder="Phone">
+                
+            </div>
+        </section>
+        <section>
+            <div class="col-left">Account</div>
+            <div class="col-tip"></div>
+            <div class="col-right">
+                
+                <input type="text" class="admin-text" id="user-email" onkeyup="input_form('email')" placeholder="Email">
+                <div class="error" id="error-email"></div>
+                <br>
+                <button type="button" class="outline-button" id="reset-password">Reset Password</button>
+                
+            </div>
+        </section>
+        <section class="last-section">
+            <button type="button" class="admin-submit" onclick="edit_user()">Save Changes</button>
+        </section>
+    </div>
+</div>
+ 
     
     
 
@@ -237,6 +270,7 @@ function search_church() {
                 for (var i = 0; i < Object.keys(resp).length; i++) {
 
                     var num = Object.keys(resp)[i];
+                    var id = resp[num]['id'];
                     var state = resp[num]['state'];
                     var church = resp[num]['name'];
                     var profile_picture = resp[num]['profile_picture'];
@@ -249,7 +283,7 @@ function search_church() {
                         image = '../img/choose_image.png';
                     }
 
-                    document.getElementById('list-church').innerHTML += '<div class="list-item" onclick="select_church(\''+num+'\')"><div class="col-church-profile-picture" style="background-image: url(\''+image+'\')"></div><div class="col-church-name">'+church+'</div><div class="col-church-state">'+state+'</div></div>';
+                    document.getElementById('list-church').innerHTML += '<div class="list-item" onclick="select_church(\''+id+'\')"><div class="col-church-profile-picture" style="background-image: url(\''+image+'\')"></div><div class="col-church-name">'+church+'</div><div class="col-church-state">'+state+'</div></div>';
                 }
             }
             
@@ -295,7 +329,7 @@ function search_campaign() {
                 for (var i = 0; i < Object.keys(resp).length; i++) {
 
                     var num = Object.keys(resp)[i];
-                    
+                    var id = resp[num]['id'];
                     var book = resp[num]['book'];
                     var language = resp[num]['language'];
                     var goal_description = resp[num]['goal_description'];
@@ -308,18 +342,18 @@ function search_campaign() {
                     var church = resp[num]['church'];
                     var church_id = resp[num]['church_id'];
                     
-                    campaigns[num] = {};
-                    campaigns[num]['book'] = book;
-                    campaigns[num]['language'] = language;
-                    campaigns[num]['goal_description'] = goal_description;
-                    campaigns[num]['goal_amount'] = goal_amount;
-                    campaigns[num]['verse_price'] = verse_price;
-                    campaigns[num]['start_date'] = start_date;
-                    campaigns[num]['end_date'] = end_date;
-                    campaigns[num]['url'] = url;
-                    campaigns[num]['status'] = status;
-                    campaigns[num]['church'] = church;
-                    campaigns[num]['church_id'] = church_id;
+                    campaigns[id] = {};
+                    campaigns[id]['book'] = book;
+                    campaigns[id]['language'] = language;
+                    campaigns[id]['goal_description'] = goal_description;
+                    campaigns[id]['goal_amount'] = goal_amount;
+                    campaigns[id]['verse_price'] = verse_price;
+                    campaigns[id]['start_date'] = start_date;
+                    campaigns[id]['end_date'] = end_date;
+                    campaigns[id]['url'] = url;
+                    campaigns[id]['status'] = status;
+                    campaigns[id]['church'] = church;
+                    campaigns[id]['church_id'] = church_id;
                     
                     var goal = parseFloat(goal_amount.toString().replace(/,/g,''));
                     goal_amount = goal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -327,7 +361,7 @@ function search_campaign() {
                     var verse = parseFloat(verse_price.toString().replace(/,/g,''));
                     verse_price = verse.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-                    document.getElementById('list-campaign').innerHTML += '<div class="list-item" onclick="select_campaign(\''+num+'\')"><div class="col-campaign-book">'+book+'<br><div class="col-campaign-language">'+language+'</div></div><div class="col-campaign-church">'+church+'</div></div>';
+                    document.getElementById('list-campaign').innerHTML += '<div class="list-item" onclick="select_campaign(\''+id+'\')"><div class="col-campaign-book">'+book+'<br><div class="col-campaign-language">'+language+'</div></div><div class="col-campaign-church">'+church+'</div></div>';
 
                 }
             }
@@ -351,7 +385,7 @@ function select_campaign(id) {
 
     
     
-    
+var user_id = "";
     
 search_user();
     
@@ -374,6 +408,7 @@ function search_user() {
                 for (var i = 0; i < Object.keys(resp).length; i++) {
 
                     var num = Object.keys(resp)[i];
+                    var id = resp[num]['id'];
                     var first_name = resp[num]['first_name'];
                     var last_name = resp[num]['last_name'];
                     var role = resp[num]['role'];
@@ -381,12 +416,12 @@ function search_user() {
                     var admin = "";
                     
                     if (role == "campaign_admin") {
-                        admin = "A";
+                        admin = "<img alt='' src='../img/church_admin.svg'>";
                     } else if (role == "wycliffe_admin") {
-                        admin = "W";
+                        admin = "<img alt='' src='../img/wycliffe_admin.svg'>";
                     }
 
-                    document.getElementById('list-user').innerHTML += '<div class="list-item" onclick="select_user(\''+num+'\')"><div class="col-user-name">'+first_name+' '+last_name+'</div><div class="col-user-role">'+admin+'</div></div>';
+                    document.getElementById('list-user').innerHTML += '<div class="list-item" onclick="select_user(\''+id+'\')"><div class="col-user-name">'+first_name+' '+last_name+'</div><div class="col-user-role">'+admin+'</div></div>';
                 }
             }
             
@@ -401,7 +436,8 @@ function select_user(id) {
     if (id == "") {
 
     } else {
-        window.location.href = "church.php?id="+id;
+        user_id = id;
+        window.location.href = "admin.php#user-profile";
     }
     
 }

@@ -22,30 +22,35 @@ $answer = false;
 
 if ($result = $mysqli->query($sql)) {
     
+    $num = 0;
+    
     while ($row = $result->fetch_assoc()) {
         $answer = true;
-        $output[$row['camp_id']]['book'] = $row['book'];
-        $output[$row['camp_id']]['language'] = $row['people_group'];
-        $output[$row['camp_id']]['goal_description'] = $row['goal_description'];
-        $output[$row['camp_id']]['goal_amount'] = $row['goal_amount'];
-        $output[$row['camp_id']]['verse_price'] = $row['verse_price'];
-        $output[$row['camp_id']]['start_date'] = date('n/j/y', strtotime($row['start_date']));
-        $output[$row['camp_id']]['end_date'] = date('n/j/y', strtotime($row['end_date']));
-        $output[$row['camp_id']]['url'] = $row['url'];
+        $output[$num]['id'] = $row['camp_id'];
+        $output[$num]['book'] = $row['book'];
+        $output[$num]['language'] = $row['people_group'];
+        $output[$num]['goal_description'] = $row['goal_description'];
+        $output[$num]['goal_amount'] = $row['goal_amount'];
+        $output[$num]['verse_price'] = $row['verse_price'];
+        $output[$num]['start_date'] = date('n/j/y', strtotime($row['start_date']));
+        $output[$num]['end_date'] = date('n/j/y', strtotime($row['end_date']));
+        $output[$num]['url'] = $row['url'];
 
         $date_start = date('Y-m-d', strtotime($row['start_date']));
         $date_end = date('Y-m-d', strtotime($row['end_date']));
         
         if (($today >= $date_start) && ($today <= $date_end)) {
-            $output[$row['camp_id']]['status'] = "inprogress";
+            $output[$num]['status'] = "inprogress";
         } else if (($today > $date_start) && ($today > $date_end)) {
-            $output[$row['camp_id']]['status'] = "complete";
+            $output[$num]['status'] = "complete";
         } else if (($today < $date_start)) {
-            $output[$row['camp_id']]['status'] = "coming";
+            $output[$num]['status'] = "coming";
         }
         
-        $output[$row['camp_id']]['church'] = $row['name'];
-        $output[$row['camp_id']]['church_id'] = $row['church_id'];
+        $output[$num]['church'] = $row['name'];
+        $output[$num]['church_id'] = $row['church_id'];
+        
+        $num ++;
     }
 } 
 

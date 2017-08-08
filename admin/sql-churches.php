@@ -18,11 +18,17 @@ $answer = false;
 
 if ($result = $mysqli->query($sql)) {
     
+    $num = 0;
+    
     while ($row = $result->fetch_assoc()) {
         $answer = true;
-        $output[$row['id']]['state'] = $row['state'];
-        $output[$row['id']]['name'] = $row['name'];
-        $output[$row['id']]['profile_picture'] = $row['profile_picture'];
+        
+        $output[$num]['id'] = $row['id'];
+        $output[$num]['state'] = $row['state'];
+        $output[$num]['name'] = $row['name'];
+        $output[$num]['profile_picture'] = $row['profile_picture'];
+        
+        $num ++;
     }
 } 
 

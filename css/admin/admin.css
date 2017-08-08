@@ -77,7 +77,7 @@
 }
 
 .col-user-name {
-    width: 95%;
+    width: 24.5em;
     text-align: left;
     display: inline-block;
     vertical-align: middle;
@@ -85,9 +85,15 @@
     padding-bottom: 0.3em;
 }
 .col-user-role {
+    width: 2.5em;
     display: inline-block;
     text-align: right;
     color: #aaa;
+    vertical-align: middle;
+}
+.col-user-role img {
+    width: 2.25em;
+    height: auto;
     vertical-align: middle;
 }
 
@@ -100,4 +106,27 @@
 }
 .church-item.added .church-tag {
     color: #ccc !important;
+}
+
+
+
+
+.outline-button {
+    width: 16em;
+    border: 1px solid #039da6;
+    border-radius: 4px;
+    background: none;
+    padding: 0.7em;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: 1em;
+    font-family: "Gotham-Book" !important;
+    color: #039da6;
+    margin-bottom: 1em;
+    z-index: 10;
+    cursor: pointer;
+}
+.outline-button:hover {
+    background: #039da6;
+    color: #fff;
 }

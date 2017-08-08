@@ -6,6 +6,8 @@ include('config.php');
 
 $keyword = $_GET['keyword'];
 
+$output = [];
+
 $mysqli = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 
 if ($mysqli->connect_errno) {
@@ -18,17 +20,23 @@ $answer = false;
 
 if ($result = $mysqli->query($sql)) {
     
+    $num = 0;
+    
     while ($row = $result->fetch_assoc()) {
         $answer = true;
-        $output[$row['id']]['first_name'] = $row['first_name'];
-        $output[$row['id']]['last_name'] = $row['last_name'];
+        
+        $output[$num]['id'] = $row['id'];
+        $output[$num]['first_name'] = $row['first_name'];
+        $output[$num]['last_name'] = $row['last_name'];
         if ($row['campaign_admin'] == 1) {
-            $output[$row['id']]['role'] = "campaign_admin";
+            $output[$num]['role'] = "campaign_admin";
         } else if ($row['wycliffe_admin'] == 1) {
-            $output[$row['id']]['role'] = "wycliffe_admin";
+            $output[$num]['role'] = "wycliffe_admin";
         } else {
-            $output[$row['id']]['role'] = "user";
+            $output[$num]['role'] = "user";
         }
+        
+        $num ++;
     }
 } 
 

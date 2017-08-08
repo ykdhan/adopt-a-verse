@@ -118,7 +118,7 @@ if (isset($_SESSION['aav-super-admin'])) {
             <div class="col-tip"></div>
             <div class="col-right">
                 
-                <button type="button" id="select-profile-picture">Choose Image</button>
+                <button type="button" class="outline-button" id="select-profile-picture">Choose Image</button>
                 <div class="error" id="error-profile-picture"></div>
                 
                 <input type="file" id="input-profile-picture" name="input-profile-picture" hidden onchange="select_profile_picture(this)" accept="image/*">
