@@ -375,6 +375,7 @@ function search_admins() {
         } else {
             var resp = JSON.parse(ajaxObj.responseText);
 
+            if (resp.verified != null) {
             for (var i = 0; i < Object.keys(resp.verified).length; i++) {
 
                 var num = Object.keys(resp.verified)[i];
@@ -384,7 +385,8 @@ function search_admins() {
                 
                 document.getElementById('church-admins').innerHTML += '<div class="church-admin" onmouseover="show_delete('+num+')" onmouseout="hide_delete('+num+')"><div class="church-admin-name">'+first_name+' '+last_name+'</div><div class="church-admin-email">'+email+'</div><div class="church-admin-delete"><img alt="" src="../img/delete.svg" id="delete-'+num+'" onclick="delete_admin('+num+')"></div></div>';
             }
-            
+            }
+            if (resp.pending != null) {
             for (var i = 0; i < Object.keys(resp.pending).length; i++) {
 
                 var num = Object.keys(resp.pending)[i];
@@ -394,7 +396,7 @@ function search_admins() {
 
                 document.getElementById('church-admins').innerHTML += '<div class="church-admin" onmouseover="show_delete('+num+')" onmouseout="hide_delete('+num+')"><div class="church-admin-name">'+first_name+' '+last_name+'</div><div class="church-admin-email">'+email+'</div><div class="church-admin-delete"><img alt="" src="../img/delete.svg" id="delete-'+num+'" onclick="delete_admin('+num+')"></div><div class="church-admin-pending">Pending</div></div>';
             }
-            
+            }
             
             
         }

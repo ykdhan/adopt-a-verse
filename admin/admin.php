@@ -67,7 +67,7 @@ if (isset($_SESSION['aav-admin'])) {
     
     <div id="tab-church" class="landing-content landing-content-now">
         
-        <input type="text" class="landing-text" id="search-church" onkeyup="search_church()" placeholder="Search">
+        <input type="text" class="landing-text" id="search-church" onkeyup="search_church()" placeholder="Search by church name, account number or state">
         
         <div class="landing-add">
             <a href="#add-church"><button type="button" class="landing-button"><img alt="" src="../img/add_new.png">Add Church</button></a>
@@ -79,14 +79,14 @@ if (isset($_SESSION['aav-admin'])) {
     
     
     <div id="tab-campaign" class="landing-content">
-        <input type="text" class="landing-text" id="search-campaign" onkeyup="search_campaign()" placeholder="Search">
+        <input type="text" class="landing-text" id="search-campaign" onkeyup="search_campaign()" placeholder="Search by a book of the Bible, language or church name">
         
         <div class="list" id="list-campaign">Not Available</div>
     </div>
     
     
     <div id="tab-user" class="landing-content">
-        <input type="text" class="landing-text" id="search-user" onkeyup="search_user()" placeholder="Search">
+        <input type="text" class="landing-text" id="search-user" onkeyup="search_user()" placeholder="Search by name or email">
         
         <div class="list" id="list-user">Not Available</div>
     </div>

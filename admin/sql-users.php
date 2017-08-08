@@ -14,7 +14,7 @@ if ($mysqli->connect_errno) {
 die('Connect Error ('.mysqli_connect_errno().') '.mysqli_connect_error());
 }
 
-$sql = "SELECT * FROM user WHERE lower(first_name) RLIKE '[[:<:]]".strtolower($keyword)."' OR lower(last_name) RLIKE '[[:<:]]".strtolower($keyword)."' ORDER BY first_name, last_name";
+$sql = "SELECT * FROM user WHERE lower(first_name) RLIKE '[[:<:]]".strtolower($keyword)."' OR lower(last_name) RLIKE '[[:<:]]".strtolower($keyword)."' OR lower(email) RLIKE '[[:<:]]".strtolower($keyword)."' ORDER BY first_name, last_name";
 
 $answer = false;
 

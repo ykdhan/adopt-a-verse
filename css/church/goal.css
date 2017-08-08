@@ -79,9 +79,8 @@
 }
 
 
-#campaign-description p, #campaign-description h1, #campaign-description h2, #campaign-description h3 {
+#campaign-description p, #campaign-description h1, #campaign-description h2, #campaign-description h3, #campaign-description h4, #campaign-description h5, #campaign-description h6, #campaign-description ol, #campaign-description ul, #campaign-description pre, #campaign-description blockquote {
     padding: 0;
     margin: 0;
-    margin-bottom: 0.5em;
+    margin-bottom: 1em !important;
 }
-

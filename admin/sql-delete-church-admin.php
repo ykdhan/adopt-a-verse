@@ -12,7 +12,7 @@ if ($mysqli->connect_errno) {
 die('Connect Error ('.mysqli_connect_errno().') '.mysqli_connect_error());
 }
 
-$sql = "DELETE FROM user WHERE id = {$id} AND campaign_admin = 1";
+$sql = "UPDATE user SET campaign_admin = 0, church_id = NULL WHERE id = {$id} AND campaign_admin = 1";
 
 if ($result = $mysqli->query($sql)) {
     echo "yes";

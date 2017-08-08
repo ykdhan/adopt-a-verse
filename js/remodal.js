@@ -612,7 +612,7 @@
           document.getElementById('input-profile-picture').value = "";
           document.getElementById('preview-profile-picture').style.backgroundImage = 'url("../img/choose_image.png")';
           
-          document.getElementById('select-profile-picture').style.borderColor = "#d1d1d1";
+          document.getElementById('select-profile-picture').style.borderColor = "#039da6";
           document.getElementById('error-profile-picture').style.visibility = "hidden";
           
           
@@ -761,6 +761,7 @@
           document.getElementById('add-church').value = "";
           document.getElementById('input-profile-picture').value = "";
           document.getElementById('preview-profile-picture').style.backgroundImage = "url('../img/choose_image.png')";
+          document.getElementById('select-profile-picture').style.borderColor = "#039da6";
           document.getElementById('error-profile-picture').style.visibility = "hidden";
           
       } else if (id == "view-campaign") {
