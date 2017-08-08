@@ -91,3 +91,13 @@
     vertical-align: middle;
 }
 
+.church-item.added {
+    color: #ccc !important;
+    cursor: default !important;
+}
+.church-item.added:hover {
+    background: none !important;
+}
+.church-item.added .church-tag {
+    color: #ccc !important;
+}

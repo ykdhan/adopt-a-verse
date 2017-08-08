@@ -26,6 +26,8 @@ if (isset($_SESSION['aav-admin'])) {
     <script type="text/javascript" src="../js/remodal.js"></script>
     <link rel="stylesheet" type="text/css" href="../css/remodal-default-theme.css" />
     <link rel="stylesheet" type="text/css" href="../css/remodal.css" />
+    <link href="https://cdn.quilljs.com/1.3.0/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.0/quill.js"></script>
     
     
     <!-- Wycliffe links -->
@@ -117,6 +119,8 @@ if (isset($_SESSION['aav-admin'])) {
                 <div class="drop" id="drop-add-church"></div>
                 
             </div>
+        </section>
+        <section>
             <div class="col-left">Profile Picture</div>
             <div class="col-tip"></div>
             <div class="col-right">
@@ -141,6 +145,64 @@ if (isset($_SESSION['aav-admin'])) {
         </section>
         <section class="last-section">
             <button type="button" class="admin-submit" onclick="add_church()">Add Church</button>
+        </section>
+    </div>
+</div>
+
+
+<div class="remodal" data-remodal-id="view-campaign" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+    <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+
+    <div class="lightbox">
+        <div id="title">Campaign Details</div>
+        <section>
+            <div class="col-left">Church</div>
+            <div class="col-tip"></div>
+            <div class="col-right">
+                <p id="details-church"></p>
+            </div>
+            <div class="col-left">Campaign Url</div>
+            <div class="col-tip"></div>
+            <div class="col-right">
+                <p id="details-url">adopt.wycliffe.org</p>
+            </div>
+            <div class="col-left">Campaign Duration</div>
+            <div class="col-tip"></div>
+            <div class="col-right" id="campaign-duration">
+                <input type="date" class="admin-text" id="details-start-date" onchange="edit_start_date(this)">&nbsp; to &nbsp;<input type="date" class="admin-text" id="details-end-date" onchange="edit_end_date(this)">
+            </div>
+        </section>
+        <section>
+            <div class="col-left">Language</div>
+            <div class="col-tip"></div>
+            <div class="col-right">
+                <p id="details-language"></p>
+            </div>
+            <div class="col-left">Book</div> 
+            <div class="col-tip"></div>
+            <div class="col-right">
+                <p id="details-book"></p>
+            </div>
+        </section>
+        <section>
+            <div class="col-left">Total Goal Amount</div>
+            <div class="col-tip"></div>
+            <div class="col-right"><p id="details-goal-amount">&#36; 100,000</p>
+            </div>
+            <div class="col-left">Cost per Verse</div>
+            <div class="col-tip"></div>
+            <div class="col-right"><p id="details-verse-price">&#36; 1.50</p>
+            </div>
+            <div class="col-left">Goal Description</div>
+            <div class="col-tip"><span class="tool-tip">?<div class="tooltip">This message will appear on the "Our Campaign Goal" tab of your campaign.</div></span></div>
+            <div class="col-right" id="campaign-goal-description">
+                <div id="details-goal-description" class="text-editor">
+
+                </div>
+            </div>
+        </section>
+        <section class="last-section" id="details-buttons">
+            
         </section>
     </div>
 </div>
@@ -209,8 +271,8 @@ function select_church(id) {
     
     
     
-
-var view_campaign = "";
+var campaign_id = "";
+var campaigns = {};
     
 search_campaign();
     
@@ -233,10 +295,37 @@ function search_campaign() {
                 for (var i = 0; i < Object.keys(resp).length; i++) {
 
                     var num = Object.keys(resp)[i];
-                    var state = resp[num]['state'];
-                    var church = resp[num]['name'];
-                    var language = resp[num]['people_group'];
+                    
                     var book = resp[num]['book'];
+                    var language = resp[num]['language'];
+                    var goal_description = resp[num]['goal_description'];
+                    var goal_amount = resp[num]['goal_amount'];
+                    var verse_price = resp[num]['verse_price'];
+                    var start_date = resp[num]['start_date'];
+                    var end_date = resp[num]['end_date'];
+                    var url = resp[num]['url'];
+                    var status = resp[num]['status'];
+                    var church = resp[num]['church'];
+                    var church_id = resp[num]['church_id'];
+                    
+                    campaigns[num] = {};
+                    campaigns[num]['book'] = book;
+                    campaigns[num]['language'] = language;
+                    campaigns[num]['goal_description'] = goal_description;
+                    campaigns[num]['goal_amount'] = goal_amount;
+                    campaigns[num]['verse_price'] = verse_price;
+                    campaigns[num]['start_date'] = start_date;
+                    campaigns[num]['end_date'] = end_date;
+                    campaigns[num]['url'] = url;
+                    campaigns[num]['status'] = status;
+                    campaigns[num]['church'] = church;
+                    campaigns[num]['church_id'] = church_id;
+                    
+                    var goal = parseFloat(goal_amount.toString().replace(/,/g,''));
+                    goal_amount = goal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    
+                    var verse = parseFloat(verse_price.toString().replace(/,/g,''));
+                    verse_price = verse.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
                     document.getElementById('list-campaign').innerHTML += '<div class="list-item" onclick="select_campaign(\''+num+'\')"><div class="col-campaign-book">'+book+'<br><div class="col-campaign-language">'+language+'</div></div><div class="col-campaign-church">'+church+'</div></div>';
 
@@ -254,7 +343,7 @@ function select_campaign(id) {
     if (id == "") {
 
     } else {
-        view_campaign = id;
+        campaign_id = id;
         window.location.href = "admin.php#view-campaign";
     }
     
@@ -349,9 +438,84 @@ function landing_tab(evt, tabName) {
     
     
 // ADD CHURCH
+    
+var church_data = "";
+    
+function search_add_church() {
+    
+    var word = document.getElementById('add-church');
+    word.value = word.value.replace(/[^a-zA-Z0-9\s]+/, '');
+    
+    document.getElementById('drop-add-church').style.visibility = "visible";
+    
+    var ajaxObj = new XMLHttpRequest();
+    ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
 
+        document.getElementById('drop-add-church').innerHTML = "";
+
+        if (ajaxObj.responseText == "no\n") {
+            document.getElementById('drop-add-church').innerHTML += '<div class="drop-group church-group">No search result.</div>';
+        } else {
+            var resp = JSON.parse(ajaxObj.responseText);
+
+            for (var i = 0; i < Object.keys(resp).length; i++) {
+
+                var num = Object.keys(resp)[i];
+                var state = resp[num]['state'];
+                var name = resp[num]['name'];
+                var status = resp[num]['status'];
+
+                if (status == "added") {
+                    document.getElementById('drop-add-church').innerHTML += '<div class="drop-item church-item added">'+name+'<span class="church-tag">'+state+'</span></div>';
+                } else {
+                    var pass_name = name.replace(/'/g, "\\'");
+                    document.getElementById('drop-add-church').innerHTML += '<div class="drop-item church-item" onclick="select_add_church(\''+num+'\',\''+pass_name+'\')">'+name+'<span class="church-tag">'+state+'</span></div>';
+                }
+
+            }
+        }
+
+    }}}
+    ajaxObj.open("GET", "sql-sf-churches.php?keyword="+word.value);
+    ajaxObj.send();
+        
+}
+    
+function select_add_church(id,name) {
+    church_data = id;
+    document.getElementById('add-church').value = name;
+    
+    var items = document.getElementsByClassName("church-item");
+    for(var i = 0; i < items.length; i++)
+    {
+       items[i].style.visibility = "hidden";
+    }
+    var groups = document.getElementsByClassName("church-group");
+    for(var i = 0; i < groups.length; i++)
+    {
+       groups[i].style.visibility = "hidden";
+    }
+    var tags = document.getElementsByClassName("church-tag");
+    for(var i = 0; i < tags.length; i++)
+    {
+       tags[i].style.visibility = "hidden";
+    }
+
+    document.getElementById('drop-add-church').style.visibility = "hidden";
+}
+
+$( "#add-church" ).focusout(function() {
+    select_add_church("","");
+});  
+    
+$("#select-profile-picture").click(function(){
+    $("#input-profile-picture").click();
+});
+    
+var formdata = new FormData();
 var form_profile = false;
 var profile_type = "";
+    
 function select_profile_picture(prof) {
     
     document.getElementById('error-profile-picture').style.visibility = "visible";
@@ -382,6 +546,8 @@ function select_profile_picture(prof) {
             reader.readAsDataURL(file);
             document.getElementById('error-profile-picture').className = "error green";
             document.getElementById('error-profile-picture').innerHTML = '<img class="error-icon" alt="" src="../img/error_valid.png">Valid image';
+            
+            formdata.append("input_profile_picture", file);
         }
     }
     
@@ -398,25 +564,32 @@ function add_church () {
     
     var valid = true;
     
-    document.getElementById('select-profile-picture').style.borderColor = "#d1d1d1";
+    document.getElementById('add-church').style.borderColor = "#d1d1d1";
     
-    if (document.getElementById('input-profile-picture').value == '') {
-        document.getElementById('select-profile-picture').style.borderColor = "#db5353";
-        document.getElementById('select-profile-picture').focus();
+    if (church_data == '') {
+        document.getElementById('add-church').style.borderColor = "#db5353";
+        document.getElementById('add-church').focus();
         valid = false;
     }
     
     if (valid) {
         
+        console.log(church_data);
+        
         $.ajax({
-            url: "sql-update-church-profile-picture.php?id="+church_id,
+            url: "sql-add-church.php?id="+church_data,
             type: "POST",
-            data:  new FormData($('#input-profile-picture')),
+            data:  formdata,
             contentType: false,
             processData:false,
             success: function(data) {
                 console.log(data);
-                window.location.href = "church.php?id="+church_id+"#";
+                if (data == "yes") {
+                    window.location.href = "admin.php#";
+                    search_church();
+                } else {
+                    alert("Error: "+data);
+                }
             },
             error: function(data) {
                 console.log(data);
@@ -428,6 +601,128 @@ function add_church () {
     
 }
 
+    
+    
+    
+    
+// VIEW CAMPAIGN
+
+var details_goal_description = "";     // text editor
+    
+var details_description = "";
+var details_data = {
+    start_date: "",
+    end_date: ""
+    
+    // goal description = form_description
+}
+
+function edit_start_date(e) {
+    var start_now = new Date(e.value);
+    var start_day = ("0" + start_now.getDate()).slice(-2);
+    var start_month = ("0" + (start_now.getMonth() + 1)).slice(-2);
+    var start_date = start_now.getFullYear()+"-"+(start_month)+"-"+(start_day);
+    
+    var today = new Date();
+    if (start_now < today) {
+        e.style.borderColor = "#db5353";
+        details_data.start_date = "";
+        alert("Invalid duration");
+    } else {
+        e.style.borderColor = "#d1d1d1";
+        details_data.start_date = e.value;
+        document.getElementById('details-end-date').focus();
+    }
+    
+}
+function edit_end_date(e) {
+    
+    var start_now = new Date(details_data.start_date);
+    var start_day = ("0" + start_now.getDate()).slice(-2);
+    var start_month = ("0" + (start_now.getMonth() + 1)).slice(-2);
+
+    var end_now = new Date(e.value);
+    var end_day = ("0" + end_now.getDate()).slice(-2);
+    var end_month = ("0" + (end_now.getMonth() + 1)).slice(-2);
+
+    var start_date = start_now.getFullYear()+"-"+(start_month)+"-"+(start_day);
+    var end_date = end_now.getFullYear()+"-"+(end_month)+"-"+(end_day);
+
+    var today = new Date();
+    if (start_date >= end_date || today > end_date) {
+        e.style.borderColor = "#db5353";
+        details_data.end_date = "";
+        alert("Invalid duration");
+    } else {
+        e.style.borderColor = "#d1d1d1";
+        details_data.end_date = e.value;
+    }
+    
+}
+    
+function edit_campaign(campaign) {
+    
+    var edits = document.getElementById('details-goal-description').getElementsByClassName("ql-editor");
+    for(var i = 0; i < edits.length; i++) {
+        details_description = edits[i].innerHTML;
+        console.log(details_description);
+    }
+    
+    var valid = true;
+    
+    if ( $( "#details-start-date" ).length ) {
+        document.getElementById('details-start-date').style.border = "1px solid #d1d1d1";
+    }
+    document.getElementById('details-end-date').style.border = "1px solid #d1d1d1";
+    $( "#details-goal-description.ql-container" ).css( "border", "1px solid #d1d1d1" );
+    
+
+    if (details_data.start_date == "") {
+        document.getElementById('details-start-date').style.border = "1px solid #db5353";
+        document.getElementById('details-start-date').focus();
+        valid = false;
+    } else if (details_data.end_date == "") {
+        document.getElementById('details-end-date').style.border = "1px solid #db5353";
+        document.getElementById('details-end-date').focus();
+        valid = false;
+    } else if (details_goal_description.getLength() <= 1) {
+        $( "#details-goal-description.ql-container" ).css( "border", "1px solid #db5353" );
+        details_goal_description.focus();
+        valid = false;
+    } 
+    
+    
+    if (valid) {
+        
+        var params = 'id='+campaign+'&goal_description='+details_description+'&start_date='+details_data.start_date+'&end_date='+details_data.end_date;
+        
+        console.log(params);
+        
+        var ajaxObj = new XMLHttpRequest();
+        ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+
+            if (ajaxObj.responseText == "no\n") {
+                
+                alert("Error occurred");
+                
+            } else {
+                
+                window.location.href = "admin.php#";
+                search_campaign();
+            }
+            
+        }}}
+        ajaxObj.open("GET", "sql-update-church-campaign.php?"+params);
+        ajaxObj.send();
+        
+        
+        
+    }
+}
+        
+    
+    
+    
     
     
 </script>

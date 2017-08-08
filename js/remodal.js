@@ -755,8 +755,91 @@
               }
           }
           
-          
       
+      } else if (id == "add-church") {
+          document.getElementById('add-church').value = "";
+          document.getElementById('input-profile-picture').value = "";
+          document.getElementById('preview-profile-picture').style.backgroundImage = "url('../img/choose_image.png')";
+          document.getElementById('error-profile-picture').style.visibility = "hidden";
+      } else if (id == "view-campaign") {
+          
+          if (campaign_id == '') {
+              window.location.href = "admin.php";
+          } else {
+              
+              document.getElementById('campaign-goal-description').innerHTML = '<div id="details-goal-description" class="text-editor"></div>';
+              document.getElementById('campaign-duration').innerHTML = '<input type="date" class="admin-text" id="details-start-date" onchange="edit_start_date(this)">&nbsp; to &nbsp;<input type="date" class="admin-text" id="details-end-date" onchange="edit_end_date(this)">';
+              
+              details_goal_description = new Quill('#details-goal-description', { theme: 'snow' });
+              
+              var goal = parseFloat(campaigns[campaign_id]['goal_amount'].toString().replace(/,/g,''));
+
+              var verse = parseFloat(campaigns[campaign_id]['verse_price'].toString().replace(/,/g,''));
+
+              // figure out dates
+              var start_now = new Date(campaigns[campaign_id]['start_date']);
+              var start_day = ("0" + start_now.getDate()).slice(-2);
+              var start_month = ("0" + (start_now.getMonth() + 1)).slice(-2);
+
+              var end_now = new Date(campaigns[campaign_id]['end_date']);
+              var end_day = ("0" + end_now.getDate()).slice(-2);
+              var end_month = ("0" + (end_now.getMonth() + 1)).slice(-2);
+
+              var start_date = start_now.getFullYear()+"-"+(start_month)+"-"+(start_day);
+              var end_date = end_now.getFullYear()+"-"+(end_month)+"-"+(end_day);
+              
+              document.getElementById('details-church').innerHTML = campaigns[campaign_id]['church'];
+              document.getElementById('details-url').innerHTML = "adopt-wycliffe.org/"+campaigns[campaign_id]['url'];
+              document.getElementById('details-language').innerHTML = campaigns[campaign_id]['language'];
+              document.getElementById('details-book').innerHTML = campaigns[campaign_id]['book'];
+              document.getElementById('details-goal-amount').innerHTML = goal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+              document.getElementById('details-verse-price').innerHTML = verse.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+              
+              details_description = campaigns[campaign_id]['goal_description'];
+              details_data = {
+                start_date: start_date,
+                end_date: end_date
+              }
+              
+              if (campaigns[campaign_id]['status'] == "complete") {
+                  var start_year = (""+start_now.getFullYear()).slice(-2);
+                  var start_month = start_now.getMonth() + 1;
+                  var end_year = (""+end_now.getFullYear()).slice(-2);
+                  var end_month = end_now.getMonth() + 1;
+                  var start = start_month+"/"+start_now.getDate()+"/"+start_year;
+                  var end = end_month+"/"+end_now.getDate()+"/"+end_year;
+                  document.getElementById('details-buttons').innerHTML = '';
+                  document.getElementById('campaign-duration').innerHTML = "<p>"+start+"&nbsp; to &nbsp;"+end+"</p>";
+                  document.getElementById('campaign-goal-description').innerHTML = campaigns[campaign_id]['goal_description'];
+              } else {
+                  
+                  var edits = document.getElementById('details-goal-description').getElementsByClassName("ql-editor");
+                  for(var i = 0; i < edits.length; i++) {
+                      edits[i].innerHTML = campaigns[campaign_id]['goal_description'];
+                  }
+                  
+                  if (campaigns[campaign_id]['status'] == "inprogress") {
+                      var start_year = (""+start_now.getFullYear()).slice(-2);
+                      var start_month = start_now.getMonth() + 1;
+                      var start = start_month+"/"+start_now.getDate()+"/"+start_year;
+                      document.getElementById('campaign-duration').innerHTML = start+'&nbsp; to &nbsp;<input type="date" class="admin-text" id="details-end-date" onchange="edit_end_date(this)">';
+                  } else {
+                      document.getElementById('details-start-date').value = start_date;
+                  }
+                  document.getElementById('details-end-date').value = end_date;
+                  
+                  var today = new Date();
+                  
+                  if (start_now > today) {
+                      document.getElementById('details-buttons').innerHTML = '<button type="button" class="admin-button-delete" onclick="delete_campaign(\''+campaign_id+'\')">Delete</button><button type="button" class="admin-button" onclick="edit_campaign(\''+campaign_id+'\')">Edit Campaign</button><a href="../app.php?id='+campaign_id+'" target="_blank"><button type="button" class="admin-submit">Go to Campaign</button></a>';
+                  } else {
+                      document.getElementById('details-buttons').innerHTML = '<button type="button" class="admin-button" onclick="edit_campaign(\''+campaign_id+'\')">Edit Campaign</button><a href="../app.php?id='+campaign_id+'" target="_blank"><button type="button" class="admin-submit">Go to Campaign</button></a>';
+                  }
+              }
+          }
+          
+          
+          
       }
       
 

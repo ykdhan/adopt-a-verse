@@ -9,7 +9,7 @@ $seed = str_split('abcdefghijklmnopqrstuvwxyz'
                  .'0123456789');
 shuffle($seed);
 $name = '';
-foreach (array_rand($seed, 6) as $k) $id .= $seed[$k];  // 6-char random id
+foreach (array_rand($seed, 6) as $k) $name .= $seed[$k];  // 6-char random id
 
 
 $temporary = explode(".", $_FILES["input_profile_picture"]["name"]);
