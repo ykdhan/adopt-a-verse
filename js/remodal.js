@@ -627,10 +627,10 @@
           document.getElementById('error-email').innerHTML = "";
           document.getElementById('error-email').style.visibility = "hidden";
           
-          document.getElementById('admin-first-name').style.border = "1px solid #d1d1d1";
-          document.getElementById('admin-last-name').style.border = "1px solid #d1d1d1";
-          document.getElementById('admin-email').style.border = "1px solid #d1d1d1";
-          document.getElementById('admin-phone').style.border = "1px solid #d1d1d1";
+          document.getElementById('admin-first-name').style.borderColor = "#d1d1d1";
+          document.getElementById('admin-last-name').style.borderColor = "#d1d1d1";
+          document.getElementById('admin-email').style.borderColor = "#d1d1d1";
+          document.getElementById('admin-phone').style.borderColor = "#d1d1d1";
           
           admin_data = {
             first_name: "",
@@ -652,15 +652,15 @@
           document.getElementById('error-url').innerHTML = "";
           document.getElementById('error-url').style.visibility = "hidden";
           
-          document.getElementById('new-url').style.border = "1px solid #d1d1d1";
-          document.getElementById('new-start-date').style.border = "1px solid #d1d1d1";
-          document.getElementById('new-end-date').style.border = "1px solid #d1d1d1";
-          document.getElementById('new-language').style.border = "1px solid #d1d1d1";
-          document.getElementById('new-book').style.border = "1px solid #d1d1d1";
-          document.getElementById('new-total-goal').style.border = "1px solid #d1d1d1";
-          document.getElementById('new-verse-price').style.border = "1px solid #d1d1d1";
+          document.getElementById('new-url').style.borderColor = "#d1d1d1";
+          document.getElementById('new-start-date').style.borderColor = "#d1d1d1";
+          document.getElementById('new-end-date').style.borderColor = "#d1d1d1";
+          document.getElementById('new-language').style.borderColor = "#d1d1d1";
+          document.getElementById('new-book').style.borderColor = "#d1d1d1";
+          document.getElementById('new-total-goal').style.borderColor = "#d1d1d1";
+          document.getElementById('new-verse-price').style.borderColor = "#d1d1d1";
           
-          $( "#new-goal-description.ql-container" ).css( "border", "1px solid #d1d1d1" );
+          $( "#new-goal-description.ql-container" ).css( "border-color", "#d1d1d1" );
           var edits = document.getElementById('new-goal-description').getElementsByClassName("ql-editor");
           for(var i = 0; i < edits.length; i++) {
                 edits[i].innerHTML = "<p><br></p>";
@@ -764,7 +764,63 @@
           document.getElementById('select-profile-picture').style.borderColor = "#039da6";
           document.getElementById('error-profile-picture').style.visibility = "hidden";
           
-      } else if (id == "view-campaign") {
+      } else if ( id == 'add-language' ) {
+          
+          document.getElementById('add-language').value = "";
+          document.getElementById('add-pdf-url').value = "";
+          
+          document.getElementById('language-info').style.display = "none";
+          document.getElementById('add-language').style.borderColor = "#d1d1d1";
+          document.getElementById('add-pdf-url').style.borderColor = "#d1d1d1";
+          $( "#add-project-description.ql-container" ).css( "border-color", "#d1d1d1" );
+          
+          document.getElementById('project-description').innerHTML = '<div id="add-project-description" class="text-editor"></div>';
+          
+          add_project_description = new Quill('#add-project-description', { theme: 'snow' });
+          
+          language_add_description = "";
+          language_add_data = {
+            language: "",
+            pdf_url: ""
+          }
+          
+      } else if (id == "language-info") {
+          
+          
+          if (language_id == '') {
+              window.location.href = "admin.php";
+          } else {
+          
+              document.getElementById('language-people-group').innerHTML = languages[language_id]['people_group'];
+              document.getElementById('language-id').innerHTML = language_id;
+              document.getElementById('language-region').innerHTML = languages[language_id]['region'];
+              document.getElementById('language-number-speakers').innerHTML = languages[language_id]['num_speakers'];
+              document.getElementById('language-publish-date').innerHTML = languages[language_id]['publish_date'];
+              document.getElementById('language-pdf-url').value = languages[language_id]['pdf_url'];;
+
+              document.getElementById('language-pdf-url').style.borderColor = "#d1d1d1";
+              $( "#language-project-description.ql-container" ).css( "border-color", "#d1d1d1" );
+              
+              document.getElementById('language-description').innerHTML = '<div id="language-project-description" class="text-editor"></div>';
+          
+
+              details_project_description = new Quill('#language-project-description', { theme: 'snow' });
+              
+              var edits = document.getElementById('language-project-description').getElementsByClassName("ql-editor");
+              for(var i = 0; i < edits.length; i++) {
+                  edits[i].innerHTML = languages[language_id]['project_description'];
+              }
+
+              language_details_description = languages[language_id]['project_description'];
+              language_details_data = {
+                language: language_id,
+                pdf_url: languages[language_id]['pdf_url']
+              }
+              
+          }
+          
+          
+      } else if (id == "campaign-info") {
           
           if (campaign_id == '') {
               window.location.href = "admin.php";
@@ -797,6 +853,7 @@
               document.getElementById('details-book').innerHTML = campaigns[campaign_id]['book'];
               document.getElementById('details-goal-amount').innerHTML = goal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
               document.getElementById('details-verse-price').innerHTML = verse.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+              document.getElementById('details-church').innerHTML = campaigns[campaign_id]['church'];
               
               details_description = campaigns[campaign_id]['goal_description'];
               details_data = {
@@ -839,19 +896,20 @@
                       document.getElementById('details-buttons').innerHTML = '<button type="button" class="admin-button" onclick="edit_campaign(\''+campaign_id+'\')">Save Changes</button><a href="../app.php?id='+campaign_id+'" target="_blank"><button type="button" class="admin-submit">Go to Campaign</button></a>';
                   }
               }
+              
           }
           
-      } else if (id == "user-details") {
+      } else if (id == "user-info") {
           
           if (user_id == '') {
               window.location.href = "admin.php";
           } else {
               
               
-              document.getElementById('user-first-name').style.border = "1px solid #d1d1d1";
-              document.getElementById('user-last-name').style.border = "1px solid #d1d1d1";
-              document.getElementById('user-phone').style.border = "1px solid #d1d1d1";
-              document.getElementById('user-email').style.border = "1px solid #d1d1d1";
+              document.getElementById('user-first-name').style.borderColor = "#d1d1d1";
+              document.getElementById('user-last-name').style.borderColor = "#d1d1d1";
+              document.getElementById('user-phone').style.borderColor = "#d1d1d1";
+              document.getElementById('user-email').style.borderColor = "#d1d1d1";
               
               document.getElementById('error-email').style.visibility = "hidden";
               

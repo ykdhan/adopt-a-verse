@@ -58,36 +58,65 @@ if (isset($_SESSION['aav-admin'])) {
         
     <div class="landing-tab-div">
         <div class="landing-tab">
-            <button class="capitalize landing-tabs landing-tabs-now" onclick="landing_tab(event, 'tab-church')">Church</button>
-            <button class="capitalize landing-tabs" onclick="landing_tab(event, 'tab-campaign')">Campaign</button>
+            <button class="capitalize landing-tabs landing-tabs-now" onclick="landing_tab(event, 'tab-campaign')">Campaign</button>
+            <button class="capitalize landing-tabs" onclick="landing_tab(event, 'tab-church')">Church</button>
+            <button class="capitalize landing-tabs" onclick="landing_tab(event, 'tab-language')">Language</button>
             <button class="capitalize landing-tabs" onclick="landing_tab(event, 'tab-user')">User</button>
         </div>
     </div>
     
     
-    <div id="tab-church" class="landing-content landing-content-now">
+    <div id="tab-campaign" class="landing-content landing-content-now">
+        <input type="text" class="landing-text" id="search-campaign" onkeyup="search_campaign()" placeholder="Search by a book of the Bible, language or church name">
+        <div class="list-columns">
+            <div class="list-column" id="column-campaign-book">Book</div>
+            <div class="list-column" id="column-campaign-language">Language</div>
+            <div class="list-column" id="column-campaign-church">Church</div>
+        </div>
+        <div class="list" id="list-campaign">Not Available</div>
+    </div>
+    
+    <div id="tab-church" class="landing-content">
         
         <input type="text" class="landing-text" id="search-church" onkeyup="search_church()" placeholder="Search by church name, account number or state">
-        
+    
         <div class="landing-add">
             <a href="#add-church"><button type="button" class="landing-button"><img alt="" src="../img/add_new.png">Add Church</button></a>
         </div>
-
+        
+        <div class="list-columns">
+            <div class="list-column" id="column-church-profile-picture"></div>
+            <div class="list-column" id="column-church-name">Name</div>
+            <div class="list-column" id="column-church-state">State</div>
+        </div>
         <div class="list" id="list-church">Not Available</div>
         
     </div>
     
-    
-    <div id="tab-campaign" class="landing-content">
-        <input type="text" class="landing-text" id="search-campaign" onkeyup="search_campaign()" placeholder="Search by a book of the Bible, language or church name">
+    <div id="tab-language" class="landing-content">
         
-        <div class="list" id="list-campaign">Not Available</div>
+        <input type="text" class="landing-text" id="search-language" onkeyup="search_language()" placeholder="Search by ID, people group or region">
+        
+        <div class="landing-add">
+            <a href="#add-language"><button type="button" class="landing-button"><img alt="" src="../img/add_new.png">Add Language</button></a>
+        </div>
+        
+        <div class="list-columns">
+            <div class="list-column" id="column-language-id">ID</div>
+            <div class="list-column" id="column-language-people-group">People Group</div>
+            <div class="list-column" id="column-language-region">Region</div>
+        </div>
+        <div class="list" id="list-language">Not Available</div>
+        
     </div>
-    
     
     <div id="tab-user" class="landing-content">
         <input type="text" class="landing-text" id="search-user" onkeyup="search_user()" placeholder="Search by name or email">
         
+        <div class="list-columns">
+            <div class="list-column" id="column-user-name">Name</div>
+            <div class="list-column" id="column-user-role">Role</div>
+        </div>
         <div class="list" id="list-user">Not Available</div>
     </div>
       
@@ -149,8 +178,79 @@ if (isset($_SESSION['aav-admin'])) {
     </div>
 </div>
 
+    
+<div class="remodal" data-remodal-id="add-language" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+    <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
 
-<div class="remodal" data-remodal-id="view-campaign" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+    <div class="lightbox">
+        <div id="title">Add Language</div>
+        <section>
+            <div class="col-left">Language</div>
+            <div class="col-tip"></div>
+            <div class="col-right">
+                
+                <input type="text" class="admin-text-long" id="add-language" onkeyup="search_add_language()" placeholder="Search for language">
+                
+                <div class="drop" id="drop-add-language"></div>
+                
+            </div>
+        </section>
+        <section id="language-info">
+            <div class="col-left">ID</div>
+            <div class="col-tip"></div>
+            <div class="col-right">
+                
+                <p id="add-id"> </p>
+                
+            </div>
+            <div class="col-left">Region</div>
+            <div class="col-tip"></div>
+            <div class="col-right">
+                
+                <p id="add-region"> </p>
+                
+            </div>
+            <div class="col-left">Number of Speakers</div>
+            <div class="col-tip"></div>
+            <div class="col-right">
+                
+                <p id="add-number-speakers"> </p>
+                
+            </div>
+            <div class="col-left">Scripture Published</div>
+            <div class="col-tip"></div>
+            <div class="col-right">
+                
+                <p id="add-publish-date"> </p>
+                
+            </div>
+        </section>
+        <section>
+            <div class="col-left">Project Description</div>
+            <div class="col-tip"></div>
+            <div class="col-right" id="project-description">
+                
+                <div id="add-project-description" class="text-editor">
+
+                </div>
+                
+            </div>
+            <div class="col-left">PDF URL</div>
+            <div class="col-tip"></div>
+            <div class="col-right">
+                
+                <input type="text" class="admin-text-long" id="add-pdf-url" placeholder="http://">
+                
+            </div>
+        </section>
+        <section class="last-section">
+            <button type="button" class="admin-submit" onclick="add_language()">Add Language</button>
+        </section>
+    </div>
+</div>
+
+
+<div class="remodal" data-remodal-id="campaign-info" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
     <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
 
     <div class="lightbox">
@@ -206,9 +306,78 @@ if (isset($_SESSION['aav-admin'])) {
         </section>
     </div>
 </div>
+    
+    
+<div class="remodal" data-remodal-id="language-info" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+    <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+
+    <div class="lightbox">
+        <div id="title">Language Details</div>
+        <section>
+            <div class="col-left">Language</div>
+            <div class="col-tip"></div>
+            <div class="col-right">
+                
+                 <p id="language-people-group"> </p>
+                
+            </div>
+        </section>
+        <section>
+            <div class="col-left">ID</div>
+            <div class="col-tip"></div>
+            <div class="col-right">
+                
+                <p id="language-id"> </p>
+                
+            </div>
+            <div class="col-left">Region</div>
+            <div class="col-tip"></div>
+            <div class="col-right">
+                
+                <p id="language-region"> </p>
+                
+            </div>
+            <div class="col-left">Number of Speakers</div>
+            <div class="col-tip"></div>
+            <div class="col-right">
+                
+                <p id="language-number-speakers"> </p>
+                
+            </div>
+            <div class="col-left">Scripture Published</div>
+            <div class="col-tip"></div>
+            <div class="col-right">
+                
+                <p id="language-publish-date"> </p>
+                
+            </div>
+        </section>
+        <section>
+            <div class="col-left">Project Description</div>
+            <div class="col-tip"></div>
+            <div class="col-right" id="language-description">
+                
+                <div id="language-project-description" class="text-editor">
+
+                </div>
+                
+            </div>
+            <div class="col-left">PDF URL</div>
+            <div class="col-tip"></div>
+            <div class="col-right">
+                
+                <input type="text" class="admin-text-long" id="language-pdf-url" placeholder="http://">
+                
+            </div>
+        </section>
+        <section class="last-section">
+            <button type="button" class="admin-submit" onclick="edit_language()">Save Changes</button>
+        </section>
+    </div>
+</div>
 
     
-<div class="remodal" data-remodal-id="user-details" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+<div class="remodal" data-remodal-id="user-info" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
     <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
 
     <div class="lightbox">
@@ -258,6 +427,86 @@ if (isset($_SESSION['aav-admin'])) {
     
 
 <script>
+        
+var campaign_id = "";
+var campaigns = {};
+    
+search_campaign();
+    
+function search_campaign() {
+    
+    var word = document.getElementById('search-campaign');
+    word.value = word.value.replace(/[^a-zA-Z0-9\s]+/, '');
+    
+    
+    var ajaxObj = new XMLHttpRequest();
+        ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+            
+            document.getElementById('list-campaign').innerHTML = "";
+            
+            if (ajaxObj.responseText == "no\n") {
+                document.getElementById('list-campaign').innerHTML += '<div class="list-group">No search result.</div>';
+            } else {
+                var resp = JSON.parse(ajaxObj.responseText);
+
+                for (var i = 0; i < Object.keys(resp).length; i++) {
+
+                    var num = Object.keys(resp)[i];
+                    var id = resp[num]['id'];
+                    var book = resp[num]['book'];
+                    var language = resp[num]['language'];
+                    var goal_description = resp[num]['goal_description'];
+                    var goal_amount = resp[num]['goal_amount'];
+                    var verse_price = resp[num]['verse_price'];
+                    var start_date = resp[num]['start_date'];
+                    var end_date = resp[num]['end_date'];
+                    var url = resp[num]['url'];
+                    var status = resp[num]['status'];
+                    var church = resp[num]['church'];
+                    var church_id = resp[num]['church_id'];
+                    
+                    campaigns[id] = {};
+                    campaigns[id]['book'] = book;
+                    campaigns[id]['language'] = language;
+                    campaigns[id]['goal_description'] = goal_description;
+                    campaigns[id]['goal_amount'] = goal_amount;
+                    campaigns[id]['verse_price'] = verse_price;
+                    campaigns[id]['start_date'] = start_date;
+                    campaigns[id]['end_date'] = end_date;
+                    campaigns[id]['url'] = url;
+                    campaigns[id]['status'] = status;
+                    campaigns[id]['church'] = church;
+                    campaigns[id]['church_id'] = church_id;
+                    
+                    var goal = parseFloat(goal_amount.toString().replace(/,/g,''));
+                    goal_amount = goal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    
+                    var verse = parseFloat(verse_price.toString().replace(/,/g,''));
+                    verse_price = verse.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+                    document.getElementById('list-campaign').innerHTML += '<div class="list-item" onclick="select_campaign(\''+id+'\')"><div class="col-campaign-book">'+book+'</div><div class="col-campaign-language">'+language+'</div><div class="col-campaign-church">'+church+'</div></div>';
+
+                }
+            }
+            
+        }}}
+        ajaxObj.open("GET", "sql-campaigns.php?keyword="+word.value);
+        ajaxObj.send();
+        
+}
+    
+function select_campaign(id) {
+    
+    if (id == "") {
+
+    } else {
+        campaign_id = id;
+        window.location.href = "admin.php#campaign-info";
+    }
+    
+}
+
+    
     
 search_church();
     
@@ -315,24 +564,24 @@ function select_church(id) {
     
     
     
-var campaign_id = "";
-var campaigns = {};
+var language_id = "";
+var languages = {};
     
-search_campaign();
+search_language();
     
-function search_campaign() {
+function search_language() {
     
-    var word = document.getElementById('search-campaign');
+    var word = document.getElementById('search-language');
     word.value = word.value.replace(/[^a-zA-Z0-9\s]+/, '');
     
     
     var ajaxObj = new XMLHttpRequest();
         ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
             
-            document.getElementById('list-campaign').innerHTML = "";
+            document.getElementById('list-language').innerHTML = "";
             
             if (ajaxObj.responseText == "no\n") {
-                document.getElementById('list-campaign').innerHTML += '<div class="list-group">No search result.</div>';
+                document.getElementById('list-language').innerHTML += '<div class="list-group">No search result.</div>';
             } else {
                 var resp = JSON.parse(ajaxObj.responseText);
 
@@ -340,59 +589,42 @@ function search_campaign() {
 
                     var num = Object.keys(resp)[i];
                     var id = resp[num]['id'];
-                    var book = resp[num]['book'];
-                    var language = resp[num]['language'];
-                    var goal_description = resp[num]['goal_description'];
-                    var goal_amount = resp[num]['goal_amount'];
-                    var verse_price = resp[num]['verse_price'];
-                    var start_date = resp[num]['start_date'];
-                    var end_date = resp[num]['end_date'];
-                    var url = resp[num]['url'];
-                    var status = resp[num]['status'];
-                    var church = resp[num]['church'];
-                    var church_id = resp[num]['church_id'];
+                    var people_group = resp[num]['people_group'];
+                    var region = resp[num]['region'];
+                    var num_speakers = resp[num]['number_of_speakers'];
+                    var publish_date = resp[num]['publish_date'];
+                    var project_description = resp[num]['project_description'];
+                    var pdf_url = resp[num]['pdf_url'];
                     
-                    campaigns[id] = {};
-                    campaigns[id]['book'] = book;
-                    campaigns[id]['language'] = language;
-                    campaigns[id]['goal_description'] = goal_description;
-                    campaigns[id]['goal_amount'] = goal_amount;
-                    campaigns[id]['verse_price'] = verse_price;
-                    campaigns[id]['start_date'] = start_date;
-                    campaigns[id]['end_date'] = end_date;
-                    campaigns[id]['url'] = url;
-                    campaigns[id]['status'] = status;
-                    campaigns[id]['church'] = church;
-                    campaigns[id]['church_id'] = church_id;
-                    
-                    var goal = parseFloat(goal_amount.toString().replace(/,/g,''));
-                    goal_amount = goal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                    
-                    var verse = parseFloat(verse_price.toString().replace(/,/g,''));
-                    verse_price = verse.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    languages[id] = {};
+                    languages[id]['people_group'] = people_group;
+                    languages[id]['region'] = region;
+                    languages[id]['num_speakers'] = num_speakers;
+                    languages[id]['publish_date'] = publish_date;
+                    languages[id]['project_description'] = project_description;
+                    languages[id]['pdf_url'] = pdf_url;
 
-                    document.getElementById('list-campaign').innerHTML += '<div class="list-item" onclick="select_campaign(\''+id+'\')"><div class="col-campaign-book">'+book+'<br><div class="col-campaign-language">'+language+'</div></div><div class="col-campaign-church">'+church+'</div></div>';
-
+                    document.getElementById('list-language').innerHTML += '<div class="list-item" onclick="select_language(\''+id+'\')"><div class="col-language-id">'+id+'</div><div class="col-language-name">'+people_group+'</div><div class="col-language-region">'+region+'</div></div>';
                 }
             }
             
         }}}
-        ajaxObj.open("GET", "sql-campaigns.php?keyword="+word.value);
+        ajaxObj.open("GET", "sql-languages.php?keyword="+word.value);
         ajaxObj.send();
         
 }
     
-function select_campaign(id) {
+function select_language(id) {
     
     if (id == "") {
-
+        
     } else {
-        campaign_id = id;
-        window.location.href = "admin.php#view-campaign";
+        language_id = id;
+        window.location.href = "admin.php#language-info";
     }
     
 }
-
+    
     
     
 var user_id = "";
@@ -459,7 +691,7 @@ function select_user(id) {
 
     } else {
         user_id = id;
-        window.location.href = "admin.php#user-details";
+        window.location.href = "admin.php#user-info";
     }
     
 }
@@ -519,6 +751,7 @@ function search_add_church() {
             for (var i = 0; i < Object.keys(resp).length; i++) {
 
                 var num = Object.keys(resp)[i];
+                var id = resp[num]['id'];
                 var state = resp[num]['state'];
                 var name = resp[num]['name'];
                 var status = resp[num]['status'];
@@ -527,7 +760,7 @@ function search_add_church() {
                     document.getElementById('drop-add-church').innerHTML += '<div class="drop-item church-item added">'+name+'<span class="church-tag">'+state+'</span></div>';
                 } else {
                     var pass_name = name.replace(/'/g, "\\'");
-                    document.getElementById('drop-add-church').innerHTML += '<div class="drop-item church-item" onclick="select_add_church(\''+num+'\',\''+pass_name+'\')">'+name+'<span class="church-tag">'+state+'</span></div>';
+                    document.getElementById('drop-add-church').innerHTML += '<div class="drop-item church-item" onclick="select_add_church(\''+id+'\',\''+pass_name+'\')">'+name+'<span class="church-tag">'+state+'</span></div>';
                 }
 
             }
@@ -663,7 +896,257 @@ function add_church () {
     
     
     
-// VIEW CAMPAIGN
+    
+    
+// ADD LANGUAGE
+    
+var add_project_description = "";
+var language_add_description = "";
+var language_add_data = {
+    language: "",
+    pdf_url: ""
+}
+    
+function search_add_language() {
+    
+    var word = document.getElementById('add-language');
+    word.value = word.value.replace(/[^a-zA-Z0-9\s]+/, '');
+    
+    document.getElementById('drop-add-language').style.visibility = "visible";
+    
+    var ajaxObj = new XMLHttpRequest();
+    ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+
+        document.getElementById('drop-add-language').innerHTML = "";
+
+        if (ajaxObj.responseText == "no\n") {
+            document.getElementById('drop-add-language').innerHTML += '<div class="drop-group language-group">No search result.</div>';
+        } else {
+            var resp = JSON.parse(ajaxObj.responseText);
+
+            for (var i = 0; i < Object.keys(resp).length; i++) {
+
+                var num = Object.keys(resp)[i];
+                var id = resp[num]['id'];
+                var language = resp[num]['people_group'];
+                var region = resp[num]['region'];
+                var publish_date = resp[num]['publish_date'];
+                var num_speakers = resp[num]['number_of_speakers'];
+                var status = resp[num]['status'];
+
+                if (status == "added") {
+                    document.getElementById('drop-add-language').innerHTML += '<div class="drop-item language-item added"><span class="language-tag tag-id">'+id+'</span>'+language+'<span class="language-tag">'+region+'</span></div>';
+                } else {
+                    var pass_language = language.replace(/'/g, "\\'");
+                    var pass_region = region.replace(/'/g, "\\'");
+                    document.getElementById('drop-add-language').innerHTML += '<div class="drop-item language-item" onclick="select_add_language(\''+id+'\',\''+pass_language+'\',\''+pass_region+'\',\''+num_speakers+'\',\''+publish_date+'\')"><span class="language-tag tag-id">'+id+'</span>'+language+'<span class="language-tag">'+region+'</span></div>';
+                }
+
+            }
+        }
+
+    }}}
+    ajaxObj.open("GET", "sql-sf-languages.php?keyword="+word.value);
+    ajaxObj.send();
+        
+}
+    
+function select_add_language(id,name,region,speakers,publish) {
+    language_add_data['language'] = id;
+    document.getElementById('add-language').value = name;
+    
+    if (id == "") {
+        $('#language-info').slideUp();
+    } else {
+        $('#language-info').slideDown();
+        document.getElementById('add-id').innerHTML = id;
+        document.getElementById('add-region').innerHTML = region;
+        var num_speakers = speakers.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        document.getElementById('add-number-speakers').innerHTML = num_speakers;
+        var p_date = new Date(publish);
+        var p_month = p_date.getMonth() + 1;
+        var publish_date = p_month+"/"+p_date.getDate()+"/"+p_date.getFullYear();
+        document.getElementById('add-publish-date').innerHTML = publish_date;
+    }
+    
+    
+    var items = document.getElementsByClassName("language-item");
+    for(var i = 0; i < items.length; i++)
+    {
+       items[i].style.visibility = "hidden";
+    }
+    var groups = document.getElementsByClassName("language-group");
+    for(var i = 0; i < groups.length; i++)
+    {
+       groups[i].style.visibility = "hidden";
+    }
+    var tags = document.getElementsByClassName("language-tag");
+    for(var i = 0; i < tags.length; i++)
+    {
+       tags[i].style.visibility = "hidden";
+    }
+
+    document.getElementById('drop-add-language').style.visibility = "hidden";
+}
+
+$( "#add-language" ).focusout(function() {
+    select_add_language("","","");
+});  
+
+$( "#add-pdf-url" ).focusout(function() {
+    input_url();
+});
+    
+function input_url() {
+    var word = document.getElementById('add-pdf-url');
+    language_add_data.pdf_url = word.value;
+}
+
+function add_language () {
+    
+    console.log(language_add_data);
+    
+    var edits = document.getElementById('add-project-description').getElementsByClassName("ql-editor");
+    for(var i = 0; i < edits.length; i++) {
+        language_add_description = edits[i].innerHTML;
+        console.log(language_add_description);
+    }
+    
+    var valid = true;
+    
+    document.getElementById('add-language').style.borderColor = "#d1d1d1";
+    document.getElementById('add-pdf-url').style.borderColor = "#d1d1d1";
+    $( "#add-project-description.ql-container" ).css( "border-color", "#d1d1d1" );
+    
+    if (language_add_data.language == '') {
+        document.getElementById('add-language').style.borderColor = "#db5353";
+        document.getElementById('add-language').focus();
+        valid = false;
+    } else if (add_project_description.getLength() <= 1) {
+        $( "#add-project-description.ql-container" ).css( "border-color", "#db5353" );
+        add_project_description.focus();
+        valid = false;
+    } else if (language_add_data.pdf_url == '') {
+        document.getElementById('add-pdf-url').style.borderColor = "#db5353";
+        document.getElementById('add-pdf-url').focus();
+        valid = false;
+    }
+    
+    
+    
+    if (valid) {
+        
+        var params = 'id='+language_add_data.language+'&project_description='+language_add_description+'&pdf_url='+language_add_data.pdf_url;
+        
+        console.log(params);
+        
+        var ajaxObj = new XMLHttpRequest();
+        ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+
+            if (ajaxObj.responseText == "no\n") {
+                
+                alert("Error occurred");
+                
+            } else {
+                
+                window.location.href = "admin.php#";
+                search_language();
+            }
+            
+        }}}
+        ajaxObj.open("GET", "sql-add-language.php?"+params);
+        ajaxObj.send();
+        
+        
+    }
+    
+}
+
+    
+    
+    
+    
+// VIEW/EDIT LANGUAGE
+    
+var details_project_description = "";
+var language_details_description = "";
+var language_details_data = {
+    language: "",
+    pdf_url: ""
+}
+
+
+$( "#language-pdf-url" ).focusout(function() {
+    input_url_2();
+});
+    
+function input_url_2() {
+    var word = document.getElementById('language-pdf-url');
+    language_details_data.pdf_url = word.value;
+}
+
+function edit_language () {
+    
+    console.log(language_details_data);
+    
+    var edits = document.getElementById('language-project-description').getElementsByClassName("ql-editor");
+    for(var i = 0; i < edits.length; i++) {
+        language_details_description = edits[i].innerHTML;
+        console.log(language_details_description);
+    }
+    
+    var valid = true;
+    
+    document.getElementById('language-pdf-url').style.borderColor = "#d1d1d1";
+    $( "#language-project-description.ql-container" ).css( "border-color", "#d1d1d1" );
+    
+    if (details_project_description.getLength() <= 1) {
+        $( "#language-project-description.ql-container" ).css( "border-color", "#db5353" );
+        details_project_description.focus();
+        valid = false;
+    } else if (language_details_data.pdf_url == '') {
+        document.getElementById('language-pdf-url').style.borderColor = "#db5353";
+        document.getElementById('language-pdf-url').focus();
+        valid = false;
+    }
+    
+    
+    
+    if (valid) {
+        
+        var params = 'id='+language_details_data.language+'&project_description='+language_details_description+'&pdf_url='+language_details_data.pdf_url;
+        
+        console.log(params);
+        
+        var ajaxObj = new XMLHttpRequest();
+        ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+
+            if (ajaxObj.responseText == "no\n") {
+                
+                alert("Error occurred");
+                
+            } else {
+                
+                window.location.href = "admin.php#";
+                search_language();
+            }
+            
+        }}}
+        ajaxObj.open("GET", "sql-update-language.php?"+params);
+        ajaxObj.send();
+        
+        
+    }
+    
+}
+
+
+
+
+
+    
+    
+// VIEW/EDIT CAMPAIGN
 
 var details_goal_description = "";     // text editor
     
@@ -729,22 +1212,22 @@ function edit_campaign(campaign) {
     var valid = true;
     
     if ( $( "#details-start-date" ).length ) {
-        document.getElementById('details-start-date').style.border = "1px solid #d1d1d1";
+        document.getElementById('details-start-date').style.borderColor = "#d1d1d1";
     }
-    document.getElementById('details-end-date').style.border = "1px solid #d1d1d1";
-    $( "#details-goal-description.ql-container" ).css( "border", "1px solid #d1d1d1" );
+    document.getElementById('details-end-date').style.borderColor = "#d1d1d1";
+    $( "#details-goal-description.ql-container" ).css( "border-color", "#d1d1d1" );
     
 
     if (details_data.start_date == "") {
-        document.getElementById('details-start-date').style.border = "1px solid #db5353";
+        document.getElementById('details-start-date').style.borderColor = "#db5353";
         document.getElementById('details-start-date').focus();
         valid = false;
     } else if (details_data.end_date == "") {
-        document.getElementById('details-end-date').style.border = "1px solid #db5353";
+        document.getElementById('details-end-date').style.borderColor = "#db5353";
         document.getElementById('details-end-date').focus();
         valid = false;
     } else if (details_goal_description.getLength() <= 1) {
-        $( "#details-goal-description.ql-container" ).css( "border", "1px solid #db5353" );
+        $( "#details-goal-description.ql-container" ).css( "border-color", "#db5353" );
         details_goal_description.focus();
         valid = false;
     } 
@@ -858,27 +1341,27 @@ function input_form(title) {
     
 function edit_user() {
     
-    document.getElementById('user-first-name').style.border = "1px solid #d1d1d1";
-    document.getElementById('user-last-name').style.border = "1px solid #d1d1d1";
-    document.getElementById('user-phone').style.border = "1px solid #d1d1d1";
-    document.getElementById('user-email').style.border = "1px solid #d1d1d1";
+    document.getElementById('user-first-name').style.borderColor = "#d1d1d1";
+    document.getElementById('user-last-name').style.borderColor = "#d1d1d1";
+    document.getElementById('user-phone').style.borderColor = "#d1d1d1";
+    document.getElementById('user-email').style.borderColor = "#d1d1d1";
     
     var valid = true;
     
     if (user_data.first_name == "") {
-        document.getElementById('user-first-name').style.border = "1px solid #db5353";
+        document.getElementById('user-first-name').style.borderColor = "#db5353";
         document.getElementById('user-first-name').focus();
         valid = false;
     } else if (user_data.last_name == "") {
-        document.getElementById('user-last-name').style.border = "1px solid #db5353";
+        document.getElementById('user-last-name').style.borderColor = "#db5353";
         document.getElementById('user-last-name').focus();
         valid = false;
     } else if (user_data.phone == "") {
-        document.getElementById('user-phone').style.border = "1px solid #db5353";
+        document.getElementById('user-phone').style.borderColor = "#db5353";
         document.getElementById('user-phone').focus();
         valid = false;
     } else if (user_data.email == "") {
-        document.getElementById('user-email').style.border = "1px solid #db5353";
+        document.getElementById('user-email').style.borderColor = "#db5353";
         document.getElementById('user-email').focus();
         valid = false;
     } 

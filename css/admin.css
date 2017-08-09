@@ -1,7 +1,6 @@
 @import url("admin/top-bar.css?ver=1.2");
 @import url("admin/campaign.css?ver=1.3");
 @import url("admin/login.css?ver=1.3");
-@import url("admin/landing.css?ver=1.3");
 @import url("admin/church.css?ver=1.3");
 @import url("admin/admin.css?ver=1.3");
 
@@ -268,6 +267,24 @@ input[type='date'] {
     border-radius: 0 0 4px 4px;
     margin-bottom: 1em;
 }
+#add-project-description {
+    width: 38em !important;
+    color: #777;
+    font-size: 1em;
+    min-height: 8em;
+    font-family: "Gotham-Book" !important;
+    border-radius: 0 0 4px 4px;
+    margin-bottom: 1.5em;
+}
+#language-project-description {
+    width: 38em !important;
+    color: #777;
+    font-size: 1em;
+    min-height: 8em;
+    font-family: "Gotham-Book" !important;
+    border-radius: 0 0 4px 4px;
+    margin-bottom: 1.5em;
+}
 .ql-toolbar {
     width: 38em !important;
     border: 1px solid #d1d1d1;
@@ -488,6 +505,163 @@ input[type='date'] {
 
 
 
+/* List  */
+
+.list {
+    width: 40em;
+    border: 0;
+    padding: 0.7em;
+    padding-left: 0;
+    padding-right: 0;
+    font-size: 1em;
+    font-family: "Gotham-Book" !important;
+    color: #606060;
+    margin: 0;
+}
+.list-item:last-child {
+    border-bottom: 0 !important;
+}
+.list-item {
+    color: #555;
+    text-align: left;
+    cursor: pointer;
+    padding: 0.9em;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+    font-size: 1em;
+    background: none;
+    border: 0;
+    border-bottom: 1px solid #ddd;
+    border-radius: 2px;
+}
+.list-item:hover {
+    background: #f2f2f2;
+}
+.list-item span {
+    float: right;
+    color: #aaa;
+    font-size: 0.9em;
+    vertical-align: middle;
+}
+.list-group {
+    color: #aaa;
+    cursor: default;
+    font-size: 0.9em;
+    padding: 0.5em;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+}
+.row-1 {
+    display: block;
+    text-align: left;
+}
+.row-2 {
+    display: block;
+    text-align: left;
+    color: #aaa;
+}
+
+
+
+
+.list-columns {
+    width: 40em;
+    border: 0;
+    border-bottom: 2px solid #555;
+    padding: 0.7em;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+    font-size: 1em;
+    font-family: "Gotham-Bold" !important;
+    color: #555;
+    text-align: left;
+    margin: 0;
+    margin-top: 2.5em;
+}
+.list-column {
+    display: inline-block;
+    background: none;
+    border: 0;
+    vertical-align: middle;
+}
+
+
+
+
+
+
+/* Lightbox CSS */
+
+.lightbox {
+    padding-top: 3em;
+    padding-bottom: 3em;
+}
+.lightbox #title {
+    font-size: 1.5em;
+    font-family: "Gotham-Bold" !important;
+    color: #444;
+    text-transform: uppercase;
+    margin-bottom: 1.5em;
+}
+.lightbox .col-left {
+    font-family: "Gotham-Bold" !important;
+    color: #444;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    display: inline-block;
+    text-align: right;
+    vertical-align: top;
+    padding-top: 1em;
+    padding-bottom: 0.5em;
+    width: 23%;
+}
+.lightbox .col-tip {
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;
+    width: 4%;
+}
+.lightbox .col-right {
+    display: inline-block;
+    text-align: left;
+    vertical-align: top;
+    color: #777;
+    width: 71%;
+    font-size: 1em;
+}
+.lightbox p {
+    padding: 0;
+    margin: 0;
+    padding-top: 0.75em;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+}
+.lightbox section {
+    padding-top: 3em;
+    padding-bottom: 2em;
+    margin-left: 2em;
+    margin-right: 2em;
+    text-align: center;
+    border-bottom: 0.5px solid #d1d1d1;
+}
+
+.lightbox .last-section {
+    border: 0 !important;
+    margin-bottom: 2em;
+    padding-bottom: 0;
+    padding-top: 3em;
+}
+
+.lightbox .message {
+    color: #aaa;
+    font-size: 0.9em;
+    padding: 0;
+    padding-bottom: 1em;
+}
+
+
+
+
 
 
 
@@ -501,8 +675,6 @@ input[type='date'] {
 .red {
     color: #db5353 !important;
 }
-
-
 
 
 .error {

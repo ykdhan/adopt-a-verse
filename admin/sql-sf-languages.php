@@ -12,21 +12,24 @@ if ($mysqli->connect_errno) {
 die('Connect Error ('.mysqli_connect_errno().') '.mysqli_connect_error());
 }
 
-$sql = "SELECT * FROM sf_church WHERE id RLIKE '[[:<:]]".strtolower($keyword)."' OR lower(name) RLIKE '[[:<:]]".strtolower($keyword)."' OR lower(state) RLIKE '[[:<:]]".strtolower($keyword)."' ORDER BY name, state";
+$sql = "SELECT * FROM sf_language WHERE id RLIKE '[[:<:]]".strtolower($keyword)."' OR lower(people_group) RLIKE '[[:<:]]".strtolower($keyword)."' OR lower(region) RLIKE '[[:<:]]".strtolower($keyword)."' ORDER BY id, people_group, region";
 
 $answer = false;
 
 if ($result = $mysqli->query($sql)) {
     
     $num = 0;
+    
     while ($row = $result->fetch_assoc()) {
         $answer = true;
-        $church_id = $row['id'];
+        $language_id = $row['id'];
         $output[$num]['id'] = $row['id'];
-        $output[$num]['state'] = $row['state'];
-        $output[$num]['name'] = $row['name'];
+        $output[$num]['people_group'] = $row['people_group'];
+        $output[$num]['region'] = $row['region'];
+        $output[$num]['number_of_speakers'] = $row['number_of_speakers'];
+        $output[$num]['publish_date'] = $row['scripture_published'];
         
-        $select = "SELECT * FROM church WHERE id='{$church_id}'";
+        $select = "SELECT * FROM language WHERE id='{$language_id}'";
         $exist = false;
 
         if ($res = $mysqli->query($select)) {

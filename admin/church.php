@@ -686,22 +686,22 @@ function edit_campaign(campaign) {
     var valid = true;
     
     if ( $( "#details-start-date" ).length ) {
-        document.getElementById('details-start-date').style.border = "1px solid #d1d1d1";
+        document.getElementById('details-start-date').style.borderColor = "#d1d1d1";
     }
-    document.getElementById('details-end-date').style.border = "1px solid #d1d1d1";
-    $( "#details-goal-description.ql-container" ).css( "border", "1px solid #d1d1d1" );
+    document.getElementById('details-end-date').style.borderColor = "#d1d1d1";
+    $( "#details-goal-description.ql-container" ).css( "border-color", "#d1d1d1" );
     
 
     if (details_data.start_date == "") {
-        document.getElementById('details-start-date').style.border = "1px solid #db5353";
+        document.getElementById('details-start-date').style.borderColor = "#db5353";
         document.getElementById('details-start-date').focus();
         valid = false;
     } else if (details_data.end_date == "") {
-        document.getElementById('details-end-date').style.border = "1px solid #db5353";
+        document.getElementById('details-end-date').style.borderColor = "#db5353";
         document.getElementById('details-end-date').focus();
         valid = false;
     } else if (details_goal_description.getLength() <= 1) {
-        $( "#details-goal-description.ql-container" ).css( "border", "1px solid #db5353" );
+        $( "#details-goal-description.ql-container" ).css( "border-color", "#db5353" );
         details_goal_description.focus();
         valid = false;
     } 
@@ -817,25 +817,25 @@ function add_admin() {
     
     var valid = true;
     
-    document.getElementById('admin-first-name').style.border = "1px solid #d1d1d1";
-    document.getElementById('admin-last-name').style.border = "1px solid #d1d1d1";
-    document.getElementById('admin-email').style.border = "1px solid #d1d1d1";
-    document.getElementById('admin-phone').style.border = "1px solid #d1d1d1";
+    document.getElementById('admin-first-name').style.borderColor = "#d1d1d1";
+    document.getElementById('admin-last-name').style.borderColor = "#d1d1d1";
+    document.getElementById('admin-email').style.borderColor = "#d1d1d1";
+    document.getElementById('admin-phone').style.borderColor = "#d1d1d1";
     
     if (admin_data.first_name == "") {
-        document.getElementById('admin-first-name').style.border = "1px solid #db5353";
+        document.getElementById('admin-first-name').style.borderColor = "#db5353";
         document.getElementById('admin-first-name').focus();
         valid = false;
     } else if (admin_data.last_name == "") {
-        document.getElementById('admin-last-name').style.border = "1px solid #db5353";
+        document.getElementById('admin-last-name').style.borderColor = "#db5353";
         document.getElementById('admin-last-name').focus();
         valid = false;
     } else if (admin_data.email == "") {
-        document.getElementById('admin-email').style.border = "1px solid #db5353";
+        document.getElementById('admin-email').style.borderColor = "#db5353";
         document.getElementById('admin-email').focus();
         valid = false;
     } else if (admin_data.phone == "") {
-        document.getElementById('admin-phone').style.border = "1px solid #db5353";
+        document.getElementById('admin-phone').style.borderColor = "#db5353";
         document.getElementById('admin-phone').focus();
         valid = false;
     }
@@ -866,6 +866,9 @@ function add_admin() {
         
     }
 }
+    
+    
+    
     
     
     
@@ -1224,46 +1227,46 @@ function add_campaign() {
     var valid = true;
     
 
-    document.getElementById('new-url').style.border = "1px solid #d1d1d1";
-    document.getElementById('new-start-date').style.border = "1px solid #d1d1d1";
-    document.getElementById('new-end-date').style.border = "1px solid #d1d1d1";
-    document.getElementById('new-language').style.border = "1px solid #d1d1d1";
-    document.getElementById('new-book').style.border = "1px solid #d1d1d1";
-    document.getElementById('new-total-goal').style.border = "1px solid #d1d1d1";
-    document.getElementById('new-verse-price').style.border = "1px solid #d1d1d1";
-    $( "#new-goal-description.ql-container" ).css( "border", "1px solid #d1d1d1" );
+    document.getElementById('new-url').style.borderColor = "#d1d1d1";
+    document.getElementById('new-start-date').style.borderColor = "#d1d1d1";
+    document.getElementById('new-end-date').style.borderColor = "#d1d1d1";
+    document.getElementById('new-language').style.borderColor = "#d1d1d1";
+    document.getElementById('new-book').style.borderColor = "#d1d1d1";
+    document.getElementById('new-total-goal').style.borderColor = "#d1d1d1";
+    document.getElementById('new-verse-price').style.borderColor = "#d1d1d1";
+    $( "#new-goal-description.ql-container" ).css( "border-color", "#d1d1d1" );
     
     
     if (campaign_data.url == "") {
-        document.getElementById('new-url').style.border = "1px solid #db5353";
+        document.getElementById('new-url').style.borderColor = "#db5353";
         document.getElementById('new-url').focus();
         valid = false;
     } else if (campaign_data.start_date == "") {
-        document.getElementById('new-start-date').style.border = "1px solid #db5353";
+        document.getElementById('new-start-date').style.borderColor = "#db5353";
         document.getElementById('new-start-date').focus();
         valid = false;
     } else if (campaign_data.end_date == "") {
-        document.getElementById('new-end-date').style.border = "1px solid #db5353";
+        document.getElementById('new-end-date').style.borderColor = "#db5353";
         document.getElementById('new-end-date').focus();
         valid = false;
     } else if (campaign_data.language == "") {
-        document.getElementById('new-language').style.border = "1px solid #db5353";
+        document.getElementById('new-language').style.borderColor = "#db5353";
         document.getElementById('new-language').focus();
         valid = false;
     } else if (campaign_data.book == "") {
-        document.getElementById('new-book').style.border = "1px solid #db5353";
+        document.getElementById('new-book').style.borderColor = "#db5353";
         document.getElementById('new-book').focus();
         valid = false;
     } else if (campaign_data.total_goal == "") {
-        document.getElementById('new-total-goal').style.border = "1px solid #db5353";
+        document.getElementById('new-total-goal').style.borderColor = "#db5353";
         document.getElementById('new-total-goal').focus();
         valid = false;
     } else if (campaign_data.verse_price == "") {
-        document.getElementById('new-verse-price').style.border = "1px solid #db5353";
+        document.getElementById('new-verse-price').style.borderColor = "#db5353";
         document.getElementById('new-verse-price').focus();
         valid = false;
     } else if (new_goal_description.getLength() <= 1) {
-        $( "#new-goal-description.ql-container" ).css( "border", "1px solid #db5353" );
+        $( "#new-goal-description.ql-container" ).css( "border-color", "#db5353" );
         new_goal_description.focus();
         valid = false;
     } 
