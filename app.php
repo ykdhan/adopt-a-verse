@@ -16,7 +16,11 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/filamentgroup/fixed-sticky/master/fixedsticky.js"></script>
     <script type="text/javascript" src="js/sidebar.js"></script>
+    <script type="text/javascript" src="js/countdown.js"></script>
     
+    <script type="text/javascript" src="js/remodal-app.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/remodal-default-theme-app.css" />
+    <link rel="stylesheet" type="text/css" href="css/remodal.css" />
     
     <!-- Wycliffe links -->
 
@@ -35,21 +39,13 @@
     <th>
         <div class="div-tab font--bold">
         <button class="tabs capitalize tabs-now" onclick="tab(event, 'tab-donate')">Donate</button>
-        <button class="tabs capitalize" onclick="tab(event, 'tab-about')">About the Language</button>
+        <button class="tabs capitalize" onclick="tab(event, 'tab-about')" id="language-tab">About the Language</button>
         <button class="tabs capitalize" onclick="tab(event, 'tab-goal')">Our Campaign Goal</button>
         </div>
     </th>
-    <td>
-        <table class="top-bar-church">
-        <tr>
-        <td id="cell-church-logo">
-            <img id="church-logo" alt="Church Logo" align="middle" src="img/church-logo.png">
-        </td>    
-        <td id="cell-church-name" class="capitalize">
-            
-        </td>
-        </tr>
-        </table>
+    <td id="cell-church">
+        <div id="church-logo"></div>
+        <div id="church-name"></div>
     </td>
     </tr></table>
 </div>
@@ -67,7 +63,7 @@
     <div id="toggle-menu">
         <div class="div-tab font--bold">
             <button class="capitalize tabs tabs-now" onclick="tab(event, 'tab-donate')">Donate</button>
-            <button class="capitalize tabs" onclick="tab(event, 'tab-about')">About the Language</button>
+            <button class="capitalize tabs" onclick="tab(event, 'tab-about')" id="language-tab">About the Language</button>
             <button class="capitalize tabs" onclick="tab(event, 'tab-goal')">Our Campaign Goal</button>
         </div>
     </div>
@@ -122,7 +118,7 @@
         
         <!-- About the Language Tab -->
         <div id="tab-about" class="tab-content">
-            <div class="tab-title">About the Language</div>
+            <div class="tab-title" id="language-name">About the Language</div>
             <div id="language-description" class="tab-text">
                 
             </div>
@@ -180,9 +176,30 @@
         
         <!-- Our Campaign Goal Tab -->
         <div id="tab-goal" class="tab-content">
-            <div class="tab-title">Our Campaign Goal</div>
+            <div class="tab-title" id="campaign-goal">Our Campaign Goal</div>
             <div id="campaign-description" class="tab-text">
-                
+            </div>
+            <div id="campaign-duration">
+                <div id="count-number">
+                    <div class="count-days">
+                        <span class="countdown-days"></span><br>
+                        days
+                    </div>
+                    <div class="count-hours">
+                        <span class="countdown-hours"></span><br>
+                        hrs
+                    </div>
+                    <div class="count-minutes">
+                        <span class="countdown-minutes"></span><br>
+                        min
+                    </div>
+                    <div class="count-seconds">
+                        <span class="countdown-seconds"></span><br>
+                        sec
+                    </div>
+                </div>
+                <div id="count-range">
+                </div>
             </div>
             <div class="tab-title top-gap">Total Raised</div>
             <div class="tab-text">
@@ -194,12 +211,12 @@
                 <!-- Still need -->
                 <div id="div-chart-info">
                     <div class="goal-total-info-1">
-                        Still Need <span id="total-still-need"></span><br>
+                        Still Need: <span id="total-still-need"></span><br>
                     </div>
 
                     <!-- Total goal -->
                     <div class="goal-total-info-2">
-                        Goal <span id="total-goal"></span>
+                        Goal: <span id="total-goal"></span>
                     </div>
 
                     <!-- Total verses adopted -->
@@ -251,12 +268,12 @@
 
                 <!-- Still need -->
                 <div class="total-info-1">
-                    Still Need <span id="small-total-still-need"></span><br>
+                    Still Need: <span id="small-total-still-need"></span><br>
                 </div>
 
                 <!-- Total goal -->
                 <div class="total-info-2">
-                    Goal <span id="small-total-goal"></span>
+                    Goal: <span id="small-total-goal"></span>
                 </div>
 
                 <!-- Total verses adopted -->
@@ -288,7 +305,7 @@
                 <div id="small-div-cart-label" class="no-label">&nbsp;</div>
 
                 <div class="div-checkout">
-                    <button id="small-checkout" class="checkout border--round empty">Give $0</button>
+                    <button id="small-checkout" class="checkout border--round empty" onclick="give()">Give $0</button>
                 </div>
             </div>
         </div>
@@ -297,7 +314,7 @@
         <!-- Language Group Details Side Bar -->
         <div id="small-side-language" class="small-sides border--round hide">
             <div id="small-language" class="small-side-bar" onclick="toggle_small_language()">
-                <span class="small-title capitalize">Language Group Details</span>
+                <span class="small-title capitalize">Project Details</span>
                 <img id="small-language-icon" alt="" src="img/cart_open.png">
             </div>
             
@@ -314,8 +331,8 @@
                         <img class="details-img" alt="" src="img/details_people.png">
                     </div>
                     <div class="div-details-content">
-                        <span class="details-title">People Group(s)</span><br>
-                        <span class="details-info" id="details-people-group"></span>
+                        <span class="details-title" id="title-language">Language</span><br>
+                        <span class="details-info" id="details-language"></span>
                     </div>
                     <div class="div-details-img">
                         <img class="details-img" alt="" src="img/details_speaker.png">
@@ -390,6 +407,63 @@
     
     
 
+<div class="remodal" data-remodal-id="give" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+    <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+
+    <div class="lightbox">
+        <form method="post" enctype="multipart/form-data">
+        
+        <div id="title">Give</div>
+        <section>
+            <div class="col-left">Verses Selected</div>
+            <div class="col-tip"></div>
+            <div class="col-right" id="give-verses-selected">
+                
+            </div>
+            <div class="col-left">Total Amount</div>
+            <div class="col-tip"></div>
+            <div class="col-right" id="give-total-amount">
+                
+            </div>
+        </section>
+        <section>
+            <div class="col-left">Contact</div>
+            <div class="col-tip"></div>
+            <div class="col-right">
+                
+                <input type="text" class="form-text" id="give-first-name" onkeyup="input_form('first-name')" placeholder="First Name">
+                <input type="text" class="form-text" id="give-last-name" onkeyup="input_form('last-name')" placeholder="Last Name"><br>
+                <input type="text" class="form-text" id="give-email" onkeyup="input_form('email')" placeholder="Email Address">
+                
+            </div>
+        </section>
+        <section>
+            <div class="col-left">Gift</div>
+            <div class="col-tip">
+                <span class="tool-tip">?<div class="tooltip">This is the name that will be displayed with your adopted verse(s).</div></span>
+            </div>
+            <div class="col-right">
+                <input type="text" class="form-text" id="give-honor-name" onkeyup="input_form('honor-name')" placeholder="Honoree's Name">
+                <input type="text" class="form-text" id="give-display-name" onkeyup="input_form('display-name')" placeholder="Display Name"><br>
+                
+                <div id="give-options">
+                    <input id="give-anonymous" class="checkbox-custom" name="give-anonymous" type="checkbox" onclick="give_anonymous()"><label for="give-anonymous" class="checkbox-custom-label">Give anonymously</label><br>
+                    <input id="give-honor" class="checkbox-custom" name="give-honor" type="checkbox" onclick="give_honor()"><label for="give-honor" class="checkbox-custom-label">Give in honor of</label>
+                </div>
+                
+            </div>
+        </section>
+        <section class="last-section">
+            <button type="button" class="form-button" onclick="edit_profile_picture()">Go Back</button>
+            <button type="button" class="form-submit long" onclick="edit_profile_picture()">Proceed to Checkout</button>
+        </section>
+        
+        </form>
+    </div>
+</div>
+
+    
+    
     
 
 <script>
@@ -424,88 +498,123 @@ function init() {
     chapter = 1;
     verses = [];
     selected = {};
+    abbreviation = "";
     
     var ajaxObj = new XMLHttpRequest();
 	ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
-		var resp = JSON.parse(ajaxObj.responseText);
-        if (resp.status == 0) {
+		
+        if (ajaxObj.responseText == "no\n") {
             alert("The campaign does not exist.");
+            window.location.href = "index.php";
+        } else {
+            var resp = JSON.parse(ajaxObj.responseText);
+
+            campaign.book = resp.book;
+            campaign.church = resp.church;
+            campaign.profile_picture = resp.profile_picture;
+            campaign.language = resp.language;
+            campaign.project_description = resp.project_description;
+            campaign.goal_description = resp.goal_description;
+            campaign.goal_amount = parseFloat(resp.goal_amount).toFixed(2);
+            campaign.verse_price = parseFloat(resp.verse_price).toFixed(2);
+            campaign.start_date = resp.start_date;
+            campaign.end_date = resp.end_date;
+            campaign.region = resp.region;
+            campaign.number_of_speakers = parseInt(resp.number_of_speakers);
+            campaign.scripture_published = resp.scripture_published;
+            campaign.pdf_url = resp.pdf_url;
+            
+            countdownDate(campaign.end_date);
+            var start_date = new Date(campaign.start_date);
+            var start_year = (""+start_date.getFullYear()).slice(-2);
+            var start_month = start_date.getMonth() + 1;
+            //var start_month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][start_date.getMonth()];
+            var start = start_month+"/"+start_date.getDate()+"/"+start_year;
+            var end_date = new Date(campaign.end_date);
+            var end_year = (""+end_date.getFullYear()).slice(-2);
+            var end_month = end_date.getMonth() + 1;
+            //var end_month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][end_date.getMonth()];
+            var end = end_month+"/"+end_date.getDate()+"/"+end_year;
+            document.getElementById('count-range').innerHTML = start+" - "+end;
+            
+            
+            book = campaign.book;
+            //document.getElementById('data-verse-price').value = campaign.verse_price;
+            //document.getElementById('data-total-goal').value = campaign.goal_amount;
+            verse_price = parseFloat(campaign.verse_price).toFixed(2);
+            total_goal = parseFloat(campaign.goal_amount).toFixed(2);
+            
+            if (campaign.profile_picture != null) {
+                document.getElementById('church-logo').style.backgroundImage = 'url("img/profile/'+campaign.profile_picture+'")';
+            }
+
+            document.getElementById('book').innerHTML = book;
+            document.getElementById('campaign-language').innerHTML = campaign.language;
+            document.getElementById('campaign-region').innerHTML = campaign.region;
+            document.getElementById('church-name').innerHTML = campaign.church;
+            document.getElementById('language-name').innerHTML = campaign.language;
+            document.getElementById('language-tab').innerHTML = "About the "+campaign.language;
+            document.getElementById('language-description').innerHTML = "<p>"+campaign.project_description+"</p>";
+            document.getElementById('campaign-description').innerHTML = "<p>"+campaign.goal_description+"</p>";
+            document.getElementById('details-region').innerHTML = campaign.region;
+            document.getElementById('details-language').innerHTML = campaign.language;
+            var num_speakers = campaign.number_of_speakers.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            document.getElementById('details-native-speakers').innerHTML = num_speakers;
+            document.getElementById('details-scripture-published').innerHTML = campaign.scripture_published;
+            document.getElementById('download-pdf').innerHTML = '<a href="'+campaign.pdf_url+'" target="_blank"><button class="tab-button" type="button">View PDF</button></a>';
+
+            bible = {};
+
+            var ajaxObj2 = new XMLHttpRequest();
+            ajaxObj2.onreadystatechange= function() { if(ajaxObj2.readyState == 4) { if(ajaxObj2.status == 200) {
+                
+                var resp = JSON.parse(ajaxObj2.responseText);
+
+                max_chapter = resp.size;
+                bible = resp.bible;
+
+                // load book of the Bible
+                load_book(book);
+
+            }}}
+            ajaxObj2.open("GET", "bible.php?book="+book);
+            ajaxObj2.send();
+            
+            
+            var ajaxObj3 = new XMLHttpRequest();
+            ajaxObj3.onreadystatechange= function() { if(ajaxObj3.readyState == 4) { if(ajaxObj3.status == 200) {
+                var resp = JSON.parse(ajaxObj3.responseText);
+
+                abbreviation = resp[book]['abbreviation'];
+                total_verses = resp[book]['verses'];
+                total_adopted = 10;
+                total_raised = 100;
+                total_percentage = total_raised / total_goal * 100;
+
+                document.getElementById('total-adopted').innerHTML = total_adopted;
+                document.getElementById('total-verses').innerHTML = total_verses;
+                document.getElementById('small-total-adopted').innerHTML = total_adopted;
+                document.getElementById('small-total-verses').innerHTML = total_verses;
+
+                
+            }}}
+            ajaxObj3.open("GET", "sql-chapters-verses.php");
+            ajaxObj3.send();
+            
+            
         }
-
-
-        campaign.book = resp.info.book;
-        campaign.church = resp.info.church;
-        campaign.language = resp.info.language;
-        campaign.project_description = resp.info.project_description;
-        campaign.goal_description = resp.info.goal_description;
-        campaign.goal_amount = parseFloat(resp.info.goal_amount).toFixed(2);
-        campaign.verse_price = parseFloat(resp.info.verse_price).toFixed(2);
-        campaign.start_date = resp.info.start_date;
-        campaign.end_date = resp.info.end_date;
-        campaign.region = resp.info.region;
-        campaign.number_of_speakers = parseInt(resp.info.number_of_speakers);
-        campaign.scripture_published = resp.info.scripture_published;
-        campaign.pdf_url = resp.info.pdf_url;
-        
-        book = campaign.book;
-        //document.getElementById('data-verse-price').value = campaign.verse_price;
-        //document.getElementById('data-total-goal').value = campaign.goal_amount;
-        verse_price = parseFloat(campaign.verse_price).toFixed(2);
-        total_goal = parseFloat(campaign.goal_amount).toFixed(2);
-        
-        document.getElementById('book').innerHTML = book;
-        document.getElementById('campaign-language').innerHTML = campaign.language;
-        document.getElementById('campaign-region').innerHTML = campaign.region;
-        document.getElementById('cell-church-name').innerHTML = campaign.church;
-        document.getElementById('language-description').innerHTML = "<p>"+campaign.project_description+"</p>";
-        document.getElementById('campaign-description').innerHTML = "<p>"+campaign.goal_description+"</p>";
-        document.getElementById('details-region').innerHTML = campaign.region;
-        document.getElementById('details-people-group').innerHTML = campaign.language;
-        document.getElementById('details-native-speakers').innerHTML = campaign.number_of_speakers;
-        document.getElementById('details-scripture-published').innerHTML = campaign.scripture_published;
-        document.getElementById('download-pdf').innerHTML = '<a href="'+campaign.pdf_url+'" target="_blank"><button class="tab-button" type="button">View PDF</button></a>';
-    
-        bible = {};
-    
-        var ajaxObj2 = new XMLHttpRequest();
-        ajaxObj2.onreadystatechange= function() { if(ajaxObj2.readyState == 4) { if(ajaxObj2.status == 200) {
-            var resp = JSON.parse(ajaxObj2.responseText);
-
-            max_chapter = resp.size;
-            bible = resp.bible;
-
-            // load book of the Bible
-            load_book(book);
-
-        }}}
-        ajaxObj2.open("GET", "bible.php?book="+book);
-        ajaxObj2.send();
         
         
-        total_adopted = 10;
-        total_verses = 750;
-        total_raised = 100;
-        total_percentage = total_raised / total_goal * 100;
+    }}}
+    ajaxObj.open("GET", "search-campaign.php?id="+code);
+    ajaxObj.send();
 
-
-        // fill in the fields on page
-        document.getElementById('total-adopted').innerHTML = total_adopted;
-        document.getElementById('total-verses').innerHTML = total_verses;
-        document.getElementById('small-total-adopted').innerHTML = total_adopted;
-        document.getElementById('small-total-verses').innerHTML = total_verses;
-        
-	}}}
-	ajaxObj.open("GET", "search-campaign.php?campaign="+code);
-	ajaxObj.send();
-    
-    
     
     cart = {
         price: 0,       // total price
         items: {},      // items 
         total: 0        // total number of items
     }
-    
     
 }
     
@@ -912,6 +1021,53 @@ function toggle_small_photo() {
     }
 } 
 
+
+    
+    
+    
+var anonymous = false;
+var honor = false;
+    
+function give_anonymous() {
+    if (anonymous) {
+        document.getElementById('give-display-name').style.display = "inline-block";
+        document.getElementById('give-options').style.marginTop = "0";
+        anonymous = false;
+    } else {
+        document.getElementById('give-display-name').style.display = "none";
+        document.getElementById('give-honor-name').style.display = "none";
+        document.getElementById('give-options').style.marginTop = "-0.8em";
+        anonymous = true;
+        honor = false;
+        document.getElementById('give-options').innerHTML = '<input id="give-anonymous" class="checkbox-custom" name="give-anonymous" type="checkbox" onclick="give_anonymous()"><label for="give-anonymous" class="checkbox-custom-label">Give anonymously</label><br><input id="give-honor" class="checkbox-custom" name="give-honor" type="checkbox" onclick="give_honor()"><label for="give-honor" class="checkbox-custom-label">Give in honor of</label>';
+        document.getElementById('give-anonymous').setAttribute('checked','true');
+        document.getElementById('give-display-name').setAttribute('placeholder','Display Name');
+    }
+}
+    
+function give_honor() {
+    if (honor) {
+        document.getElementById('give-honor-name').style.display = "none";
+        document.getElementById('give-display-name').setAttribute('placeholder','Display Name');
+        honor = false;
+    } else {
+        document.getElementById('give-display-name').style.display = "inline-block";
+        document.getElementById('give-honor-name').style.display = "inline-block";
+        document.getElementById('give-display-name').setAttribute('placeholder','From Name');
+        document.getElementById('give-options').style.marginTop = "0";
+        honor = true;
+        anonymous = false;
+        document.getElementById('give-options').innerHTML = '<input id="give-anonymous" class="checkbox-custom" name="give-anonymous" type="checkbox" onclick="give_anonymous()"><label for="give-anonymous" class="checkbox-custom-label">Give anonymously</label><br><input id="give-honor" class="checkbox-custom" name="give-honor" type="checkbox" onclick="give_honor()"><label for="give-honor" class="checkbox-custom-label">Give in honor of</label>';
+        document.getElementById('give-honor').setAttribute('checked','true');
+    }
+}
+    
+    
+function give() {
+    if (cart.total != 0) {
+        window.location.href = "app.php?id="+code+"#give";
+    }
+}
     
     
 </script>

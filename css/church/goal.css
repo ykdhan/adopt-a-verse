@@ -5,6 +5,45 @@
     margin-top: 25em !important;
 }
 
+
+
+#campaign-duration {
+    margin-top: 5em;
+    text-align: center;
+    background: #039da6;
+    color: #fff;
+    border-radius: 2px;
+    padding: 1em;
+    vertical-align: middle;
+    font-size: 1em;
+    font-family: "Gotham-Bold" !important;
+}
+#count-number div {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center !important;
+    text-transform: uppercase;
+    width: 3.5em;
+}
+#campaign-duration span {
+    font-family: "Gotham-Bold" !important;
+    font-size: 2em !important;
+}
+.count-days, .count-hours, .count-minutes {
+    margin-right: 2em;
+}
+#count-range {
+    display: inline-block;
+    width: auto !important;
+    padding-left: 2em;
+    font-size: 1.3em !important;
+}
+#count-number {
+    display: inline-block;
+    padding-right: 2.5em;
+    border-right: 2px solid #fff;
+}
+
 #div-chart {
     display: inline-block;
     float: left;

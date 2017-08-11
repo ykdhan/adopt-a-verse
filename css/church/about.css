@@ -1,19 +1,19 @@
 
 #tab-about, #tab-goal {
     padding-top: 5em;
-    padding-bottom: 10em;
+    padding-bottom: 7em;
     padding-left: 10em;
     padding-right: 10em;
 }
 
-
 .tab-title {
     font-family: "Gotham-Bold" !important;
-    font-size: 1.1em;
+    font-size: 1.5em;
     color: #5d5c5a !important;
     text-align: left;
     text-transform: uppercase;
 }
+
 
 .tab-text {
     margin-top: 2.7em;

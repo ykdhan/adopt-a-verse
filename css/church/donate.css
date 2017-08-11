@@ -410,6 +410,7 @@
 .item:hover {
     background: #ddd;
 }
+
 .unselect-mobile {
     float: right;
     width: 2em;
@@ -695,7 +696,107 @@
 
 
 
+/* Lightbox CSS */
 
+.lightbox {
+    padding-top: 3em;
+    padding-bottom: 3em;
+}
+.lightbox #title {
+    font-size: 1.5em;
+    font-family: "Gotham-Bold" !important;
+    color: #444;
+    text-transform: uppercase;
+    margin-bottom: 1.5em;
+}
+.lightbox .col-left {
+    font-family: "Gotham-Bold" !important;
+    color: #444;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    display: inline-block;
+    text-align: right;
+    vertical-align: top;
+    padding-top: 1em;
+    padding-bottom: 0.5em;
+    width: 23%;
+}
+.lightbox .col-tip {
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;
+    width: 4%;
+}
+.lightbox .col-right {
+    display: inline-block;
+    text-align: left;
+    vertical-align: top;
+    color: #777;
+    width: 71%;
+    font-size: 1em;
+}
+.lightbox p {
+    padding: 0;
+    margin: 0;
+    padding-top: 0.75em;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+}
+.lightbox section {
+    padding-top: 3em;
+    padding-bottom: 2em;
+    margin-left: 2em;
+    margin-right: 2em;
+    text-align: center;
+    border-bottom: 0.5px solid #d1d1d1;
+}
+
+.lightbox .last-section {
+    border: 0 !important;
+    margin-bottom: 2em;
+    padding-bottom: 0;
+    padding-top: 3em;
+}
+
+.lightbox .message {
+    color: #aaa;
+    font-size: 0.9em;
+    padding: 0;
+    padding-bottom: 1em;
+}
+
+
+
+
+
+
+/*  Give Lightbox  */
+
+.div-item-give {
+    width: 25%;
+    display: inline-block;
+    float: left;
+    padding: 0;
+}
+.item-give {
+    padding: 0.7em;
+    padding-left: 0;
+    height: auto;
+    text-align: left;
+    font-size: 0.9em;
+    font-family: "Gotham-Book" !important;
+}
+#give-verses-selected {
+    max-height: 8em;
+    overflow-y: auto;
+    margin-bottom: 0.8em;
+}
+#give-honor-name {
+    display: none;
+}
+#give-options {
+    margin-top: 0;
+}
 
 
 

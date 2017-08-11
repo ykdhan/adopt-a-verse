@@ -183,7 +183,7 @@ function add_cart() {
             document.getElementById('small-div-cart-label').style.display = 'block';
             document.getElementById('small-checkout').className = document.getElementById('small-checkout').className.replace(" empty", "");
             document.getElementById('small-div-cart-empty').style.display = 'none';
-            document.getElementById('small-div-cart').innerHTML += "<div class='div-item'><div class='item border--round' onmouseover='show_unselect("+b+","+items[b][c]+")' onmouseout='hide_unselect("+b+","+items[b][c]+")'>"+ book[0] + book[1] + book[2] + ". " + b + ":" + items[b][c] + "<img alt='' src='img/item_close.png' class='small-unselect' id='small-unselect-"+b+"-"+items[b][c]+"' onclick='select("+b+","+items[b][c]+")' /></div></div>";
+            document.getElementById('small-div-cart').innerHTML += "<div class='div-item'><div class='item border--round' onmouseover='show_unselect("+b+","+items[b][c]+")' onmouseout='hide_unselect("+b+","+items[b][c]+")'>"+ abbreviation + " " + b + ":" + items[b][c] + "<img alt='' src='img/item_close.png' class='small-unselect' id='small-unselect-"+b+"-"+items[b][c]+"' onclick='select("+b+","+items[b][c]+")' /></div></div>";
             
             
             count ++;
