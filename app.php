@@ -305,7 +305,7 @@
                 <div id="small-div-cart-label" class="no-label">&nbsp;</div>
 
                 <div class="div-checkout">
-                    <button id="small-checkout" class="checkout border--round empty" onclick="give()">Give $0</button>
+                    <button id="small-checkout" class="checkout border--round empty" onclick="open_give()">Give $0</button>
                 </div>
             </div>
         </div>
@@ -433,7 +433,7 @@
                 
                 <input type="text" class="form-text" id="give-first-name" onkeyup="input_form('first-name')" placeholder="First Name">
                 <input type="text" class="form-text" id="give-last-name" onkeyup="input_form('last-name')" placeholder="Last Name"><br>
-                <input type="text" class="form-text" id="give-email" onkeyup="input_form('email')" placeholder="Email Address">
+                <input type="text" class="form-text" id="give-email" placeholder="Email Address"><span class="error" id="error-email"></span>
                 
             </div>
         </section>
@@ -448,14 +448,14 @@
                 
                 <div id="give-options">
                     <input id="give-anonymous" class="checkbox-custom" name="give-anonymous" type="checkbox" onclick="give_anonymous()"><label for="give-anonymous" class="checkbox-custom-label">Give anonymously</label><br>
-                    <input id="give-honor" class="checkbox-custom" name="give-honor" type="checkbox" onclick="give_honor()"><label for="give-honor" class="checkbox-custom-label">Give in honor of</label>
+                    <input id="give-honor" class="checkbox-custom" name="give-honor" type="checkbox" onclick="give_honor()"><label for="give-honor" class="checkbox-custom-label">Give in honor of someone else</label>
                 </div>
                 
             </div>
         </section>
         <section class="last-section">
-            <button type="button" class="form-button" onclick="edit_profile_picture()">Go Back</button>
-            <button type="button" class="form-submit long" onclick="edit_profile_picture()">Proceed to Checkout</button>
+            <button type="button" class="form-button" onclick="close_give()">Go Back</button>
+            <button type="button" class="form-submit long" onclick="checkout()">Proceed to Checkout</button>
         </section>
         
         </form>
@@ -467,6 +467,10 @@
     
 
 <script>
+$(document).ready(function () {
+    $("html,body").scrollTop(0);
+});
+    
 var page_param = window.location.search.substring(1);
 var page_url = new URL(window.location.href);
 var code = page_url.searchParams.get("id");
@@ -934,6 +938,9 @@ function toggle_small_total() {
     } else {
         $('#small-total-icon').attr('src', 'img/cart_open.png');
         small_total = true;
+        
+        google.charts.load("current", {packages: ["corechart"]});
+        google.charts.setOnLoadCallback(drawSmallChart);
     }
     
     if ($(window).height() < 900) {
@@ -1025,21 +1032,36 @@ function toggle_small_photo() {
     
     
     
+// GIVE
+    
+var give_data = {
+    first_name: "",
+    last_name: "",
+    email: "",
+    display_name: "",
+    honor_name: ""
+}
+    
 var anonymous = false;
 var honor = false;
-    
+
 function give_anonymous() {
     if (anonymous) {
         document.getElementById('give-display-name').style.display = "inline-block";
+        document.getElementById('give-display-name').value = "";
+        document.getElementById('give-display-name').setAttribute('placeholder','Display Name');
         document.getElementById('give-options').style.marginTop = "0";
+        document.getElementById('give-display-name').style.borderColor = '#d1d1d1';
         anonymous = false;
+        
+        give_data.display_name = "";
     } else {
         document.getElementById('give-display-name').style.display = "none";
         document.getElementById('give-honor-name').style.display = "none";
         document.getElementById('give-options').style.marginTop = "-0.8em";
         anonymous = true;
         honor = false;
-        document.getElementById('give-options').innerHTML = '<input id="give-anonymous" class="checkbox-custom" name="give-anonymous" type="checkbox" onclick="give_anonymous()"><label for="give-anonymous" class="checkbox-custom-label">Give anonymously</label><br><input id="give-honor" class="checkbox-custom" name="give-honor" type="checkbox" onclick="give_honor()"><label for="give-honor" class="checkbox-custom-label">Give in honor of</label>';
+        document.getElementById('give-options').innerHTML = '<input id="give-anonymous" class="checkbox-custom" name="give-anonymous" type="checkbox" onclick="give_anonymous()"><label for="give-anonymous" class="checkbox-custom-label">Give anonymously</label><br><input id="give-honor" class="checkbox-custom" name="give-honor" type="checkbox" onclick="give_honor()"><label for="give-honor" class="checkbox-custom-label">Give in honor of someone else</label>';
         document.getElementById('give-anonymous').setAttribute('checked','true');
         document.getElementById('give-display-name').setAttribute('placeholder','Display Name');
     }
@@ -1054,19 +1076,188 @@ function give_honor() {
         document.getElementById('give-display-name').style.display = "inline-block";
         document.getElementById('give-honor-name').style.display = "inline-block";
         document.getElementById('give-display-name').setAttribute('placeholder','From Name');
+        document.getElementById('give-display-name').style.borderColor = '#d1d1d1';
+        document.getElementById('give-honor-name').style.borderColor = '#d1d1d1';
+        document.getElementById('give-honor-name').value = "";
         document.getElementById('give-options').style.marginTop = "0";
         honor = true;
         anonymous = false;
-        document.getElementById('give-options').innerHTML = '<input id="give-anonymous" class="checkbox-custom" name="give-anonymous" type="checkbox" onclick="give_anonymous()"><label for="give-anonymous" class="checkbox-custom-label">Give anonymously</label><br><input id="give-honor" class="checkbox-custom" name="give-honor" type="checkbox" onclick="give_honor()"><label for="give-honor" class="checkbox-custom-label">Give in honor of</label>';
+        document.getElementById('give-options').innerHTML = '<input id="give-anonymous" class="checkbox-custom" name="give-anonymous" type="checkbox" onclick="give_anonymous()"><label for="give-anonymous" class="checkbox-custom-label">Give anonymously</label><br><input id="give-honor" class="checkbox-custom" name="give-honor" type="checkbox" onclick="give_honor()"><label for="give-honor" class="checkbox-custom-label">Give in honor of someone else</label>';
         document.getElementById('give-honor').setAttribute('checked','true');
+        
+        give_data.honoree_name = "";
     }
 }
     
     
-function give() {
+function open_give() {
     if (cart.total != 0) {
         window.location.href = "app.php?id="+code+"#give";
     }
+}
+    
+function close_give() {
+    window.location.href = "app.php?id="+code+"#";
+}
+ 
+    
+$( "#give-email" ).focusout(function() {
+    input_form('email');
+});
+
+function input_form(title) {
+    
+    var word = document.getElementById('give-'+title);
+    
+    switch(title) {
+        case 'first-name':
+            word.value = word.value.replace(/[^a-zA-Z\.\s]+/, '');
+            give_data.first_name = document.getElementById('give-first-name').value;
+            break;
+        case 'last-name':
+            word.value = word.value.replace(/[^a-zA-Z\.\s]+/, '');
+            give_data.last_name = document.getElementById('give-last-name').value;
+            break;
+        case 'email':
+            document.getElementById('error-email').style.visibility = "visible";
+
+            var valid = true;
+            give_data.email = "";
+
+            if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(word.value))) {
+                document.getElementById('error-email').className = "error red";
+                document.getElementById('error-email').innerHTML = '<img class="error-icon" alt="" src="img/error_invalid.png">Email is invalid';
+                valid = false;
+            }
+
+            if (valid) {
+                give_data.email = word.value;
+                document.getElementById('error-email').className = "error green";
+                document.getElementById('error-email').innerHTML = '<img class="error-icon" alt="" src="img/error_valid.png">Email is valid';
+            }
+
+            break;
+            
+        case "display-name":
+            word.value = word.value.replace(/[^a-zA-Z0-9\.\s]+/, '');
+            give_data.display_name = document.getElementById('give-display-name').value;
+            break;
+        case "honor-name":
+            word.value = word.value.replace(/[^a-zA-Z0-9\.\s]+/, '');
+            give_data.honor_name = document.getElementById('give-honor-name').value;
+            break;
+        default:
+            break;
+    }
+}
+    
+    
+function checkout() {
+    
+    console.log(give_data);
+    
+    var valid = true;
+    
+    document.getElementById('give-first-name').style.borderColor = "#d1d1d1";
+    document.getElementById('give-last-name').style.borderColor = "#d1d1d1";
+    document.getElementById('give-email').style.borderColor = "#d1d1d1";
+    document.getElementById('give-display-name').style.borderColor = "#d1d1d1";
+    document.getElementById('give-honor-name').style.borderColor = "#d1d1d1";
+    
+    
+    if(give_data.first_name == "") {
+        document.getElementById('give-first-name').style.borderColor = "#db5353";
+        document.getElementById('give-first-name').focus();
+        valid = false;
+    } else if(give_data.last_name == "") {
+        document.getElementById('give-last-name').style.borderColor = "#db5353";
+        document.getElementById('give-last-name').focus();
+        valid = false;
+    } else if(give_data.email == "") {
+        document.getElementById('give-email').style.borderColor = "#db5353";
+        document.getElementById('give-email').focus();
+        valid = false;
+    } else if(give_data.display_name == "" && anonymous == false) {
+        document.getElementById('give-display-name').style.borderColor = "#db5353";
+        document.getElementById('give-display-name').focus();
+        valid = false;
+    } else if(give_data.honor_name == "" && honor == true) {
+        document.getElementById('give-honor-name').style.borderColor = "#db5353";
+        document.getElementById('give-honor-name').focus();
+        valid = false;
+    }
+    
+    if (valid) {
+        
+        function sortNumber(a,b) {
+            return a - b;
+        }
+
+        // sort selected items
+        var sorted = [];
+        for(var key in selected) {
+            sorted[sorted.length] = key;
+        }
+        sorted.sort();
+
+        var items = {};
+        for(var i = 0; i < sorted.length; i++) {
+            items[sorted[i]] = selected[sorted[i]].sort(sortNumber);
+        }
+        
+        var param_items = "";
+        var first_item = true;
+        for (b in items) {
+            for (c in items[b]) {
+                
+                if (first_item) {
+                    param_items += b + ":" + items[b][c];
+                    first_item = false;
+                } else {
+                    param_items += "." + b + ":" + items[b][c];
+                }
+
+            }
+        }
+        
+        
+        document.getElementById('give-total-amount').innerHTML = "<p>&#36;"+cart.price+"</p>";
+        document.getElementById('give-verses-selected').innerHTML = "";
+        
+        for (b in items) {
+            for (c in items[b]) {
+                
+               document.getElementById('give-verses-selected').innerHTML += "<div class='div-item-give'><div class='item-give'>"+ book + " " + b + ":" + items[b][c] + "</div></div>";
+
+            }
+        }
+        
+        var params = 'campaign='+code+'&first_name='+give_data.first_name+'&last_name='+give_data.last_name+'&email='+give_data.email+'&book='+book+'&items='+param_items+'&amount='+cart.price;
+        
+        console.log(params);
+        
+        var ajaxObj = new XMLHttpRequest();
+        ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+
+            if (ajaxObj.responseText == "no\n") {
+                
+                alert("Error occurred");
+                
+            } else {
+                
+                alert("Successful");
+                
+            }
+            
+        }}}
+        ajaxObj.open("GET", "sql-give.php?"+params);
+        ajaxObj.send();
+        
+    }
+    
+    
+    
+    
 }
     
     

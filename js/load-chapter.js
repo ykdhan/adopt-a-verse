@@ -46,7 +46,7 @@ function load_chapter (bk,ch) {
     
     document.getElementById('bible').innerHTML = "";
     
-    console.log(bible);
+    //console.log(bible);
     
     for (verse in bible[ch]) {
 
