@@ -413,12 +413,14 @@
     <div class="lightbox">
         <form method="post" enctype="multipart/form-data">
         
-        <div id="title">Give</div>
+        <div id="title">Gift Details</div>
         <section>
             <div class="col-left">Verses Selected</div>
             <div class="col-tip"></div>
-            <div class="col-right" id="give-verses-selected">
+            <div class="col-right">
+                <div id="give-verses-selected">
                 
+                </div>
             </div>
             <div class="col-left">Total Amount</div>
             <div class="col-tip"></div>
@@ -427,7 +429,7 @@
             </div>
         </section>
         <section>
-            <div class="col-left">Contact</div>
+            <div class="col-left">User</div>
             <div class="col-tip"></div>
             <div class="col-right">
                 
@@ -438,13 +440,13 @@
             </div>
         </section>
         <section>
-            <div class="col-left">Gift</div>
+            <div class="col-left">Display Name</div>
             <div class="col-tip">
                 <span class="tool-tip">?<div class="tooltip">This is the name that will be displayed with your adopted verse(s).</div></span>
             </div>
             <div class="col-right">
                 <input type="text" class="form-text" id="give-honor-name" onkeyup="input_form('honor-name')" placeholder="Honoree's Name">
-                <input type="text" class="form-text" id="give-display-name" onkeyup="input_form('display-name')" placeholder="Display Name"><br>
+                <input type="text" class="form-text" id="give-display-name" onkeyup="input_form('display-name')" placeholder="Name"><br>
                 
                 <div id="give-options">
                     <input id="give-anonymous" class="checkbox-custom" name="give-anonymous" type="checkbox" onclick="give_anonymous()"><label for="give-anonymous" class="checkbox-custom-label">Give anonymously</label><br>
@@ -452,9 +454,18 @@
                 </div>
                 
             </div>
+            <div class="col-left">Preview</div>
+            <div class="col-tip">
+            </div>
+            <div class="col-right" id="col-preview">
+                
+                <span id="tooltip-preview" class="tooltip-taken">This verse has been sponsored<span id="give-preview"></span>.
+                </span>
+                
+            </div>
         </section>
         <section class="last-section">
-            <button type="button" class="form-button" onclick="close_give()">Go Back</button>
+            <button type="button" class="form-button" onclick="close_give()">Cancel</button>
             <button type="button" class="form-submit long" onclick="checkout()">Proceed to Checkout</button>
         </section>
         
@@ -543,10 +554,13 @@ function init() {
             
             
             book = campaign.book;
-            //document.getElementById('data-verse-price').value = campaign.verse_price;
-            //document.getElementById('data-total-goal').value = campaign.goal_amount;
+            
             verse_price = parseFloat(campaign.verse_price).toFixed(2);
             total_goal = parseFloat(campaign.goal_amount).toFixed(2);
+            
+            document.getElementById('total-goal').innerHTML = "$" + total_goal.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+            document.getElementById('small-total-goal').innerHTML = "$" + total_goal.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+        
             
             if (campaign.profile_picture != null) {
                 document.getElementById('church-logo').style.backgroundImage = 'url("img/profile/'+campaign.profile_picture+'")';
@@ -566,6 +580,52 @@ function init() {
             document.getElementById('details-native-speakers').innerHTML = num_speakers;
             document.getElementById('details-scripture-published').innerHTML = campaign.scripture_published;
             document.getElementById('download-pdf').innerHTML = '<a href="'+campaign.pdf_url+'" target="_blank"><button class="tab-button" type="button">View PDF</button></a>';
+            
+            
+            taken = {};
+            
+            var ajaxObj1 = new XMLHttpRequest();
+            ajaxObj1.onreadystatechange= function() { if(ajaxObj1.readyState == 4) { if(ajaxObj1.status == 200) {
+                
+                var resp = JSON.parse(ajaxObj1.responseText);
+
+                var count = 0;
+                
+                for (var i = 0; i < Object.keys(resp).length; i++) {
+
+                    var chapter = Object.keys(resp)[i];
+                    taken[chapter] = {};
+                    
+                    for (var j = 0; j < Object.keys(resp[chapter]).length; j++) {
+                    
+                        var verse = Object.keys(resp[chapter])[j];
+                        var sponsor = resp[chapter][verse];
+                        
+                        taken[chapter][verse] = sponsor;
+                        
+                        count++;
+                    }
+                }
+                
+                console.log("Taken Verses:");
+                console.log(taken);
+                
+                total_adopted = count;
+                total_raised = parseFloat(count * campaign.verse_price).toFixed(2);
+                total_percentage = total_raised / total_goal * 100;
+                
+                var total_still_need = parseFloat(total_goal - total_raised).toFixed(2);
+                
+                document.getElementById('total-still-need').innerHTML = "$" + total_still_need.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+                document.getElementById('small-total-still-need').innerHTML = "$" + total_still_need.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+
+                document.getElementById('total-adopted').innerHTML = total_adopted;
+                document.getElementById('small-total-adopted').innerHTML = total_adopted;
+
+            }}}
+            ajaxObj1.open("GET", "sql-taken-verses.php?id="+code);
+            ajaxObj1.send();
+            
 
             bible = {};
 
@@ -591,13 +651,8 @@ function init() {
 
                 abbreviation = resp[book]['abbreviation'];
                 total_verses = resp[book]['verses'];
-                total_adopted = 10;
-                total_raised = 100;
-                total_percentage = total_raised / total_goal * 100;
-
-                document.getElementById('total-adopted').innerHTML = total_adopted;
+                
                 document.getElementById('total-verses').innerHTML = total_verses;
-                document.getElementById('small-total-adopted').innerHTML = total_adopted;
                 document.getElementById('small-total-verses').innerHTML = total_verses;
 
                 
@@ -686,10 +741,6 @@ function drawChart() {
      chart.draw(data, options);
 
 
-     document.getElementById('total-goal').innerHTML = "$" + total_goal.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
-     var total_still_need = total_goal - total_raised;
-     document.getElementById('total-still-need').innerHTML = "$" + total_still_need.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
-
      // initial value
      var percent = 0;
      // start the animation loop
@@ -749,10 +800,6 @@ function drawChart() {
         var chart = new google.visualization.PieChart(document.getElementById('div-chart'));
         chart.draw(data, options);
 
-
-        document.getElementById('total-goal').innerHTML = "$" + total_goal.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
-         var total_still_need = total_goal - total_raised;
-         document.getElementById('total-still-need').innerHTML = "$" + total_still_need.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
     }
     chart_goal = false;
 }
@@ -804,11 +851,6 @@ function drawSmallChart() {
 
         var chart = new google.visualization.PieChart(document.getElementById('small-total-raised'));
         chart.draw(data, options);
-
-
-        document.getElementById('small-total-goal').innerHTML = "$" + total_goal.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
-        var total_still_need = total_goal - total_raised;
-        document.getElementById('small-total-still-need').innerHTML = "$" + total_still_need.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
 
         // initial value
         var percent = 0;
@@ -869,11 +911,6 @@ function drawSmallChart() {
 
         var chart = new google.visualization.PieChart(document.getElementById('small-total-raised'));
         chart.draw(data, options);
-
-
-        document.getElementById('small-total-goal').innerHTML = "$" + total_goal.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
-        var total_still_need = total_goal - total_raised;
-        document.getElementById('small-total-still-need').innerHTML = "$" + total_still_need.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
     }
     chart_sidebar = false;
 }
@@ -1065,12 +1102,36 @@ function give_anonymous() {
         document.getElementById('give-anonymous').setAttribute('checked','true');
         document.getElementById('give-display-name').setAttribute('placeholder','Display Name');
     }
+    
+    
+    if (anonymous) {
+        give_preview(" by Anonymous");
+    } else {
+        if (give_data.first_name == "") {
+
+            if (give_data.last_name == "") {
+                give_preview("");
+            } else {
+                give_preview(" by " + give_data.last_name[0]);
+            }
+
+        } else {
+
+            if (give_data.last_name == "") {
+                give_preview(" by " + give_data.first_name);
+            } else {
+                give_preview(" by " + give_data.first_name + " " + give_data.last_name[0]);
+            }
+        }
+
+    }
+    
 }
     
 function give_honor() {
     if (honor) {
         document.getElementById('give-honor-name').style.display = "none";
-        document.getElementById('give-display-name').setAttribute('placeholder','Display Name');
+        document.getElementById('give-display-name').setAttribute('placeholder','Name');
         honor = false;
     } else {
         document.getElementById('give-display-name').style.display = "inline-block";
@@ -1087,6 +1148,40 @@ function give_honor() {
         
         give_data.honoree_name = "";
     }
+    
+    
+    
+    if (honor) {
+        give_preview(" in honor of "+give_data.honor_name+" by "+give_data.display_name);
+    } else {
+        if (give_data.display_name == "") {
+
+            if (give_data.first_name == "") {
+
+                if (give_data.last_name == "") {
+                    give_preview("");
+                } else {
+                    give_preview(" " + give_data.last_name[0]);
+                }
+
+            } else {
+
+                if (give_data.last_name == "") {
+                    give_preview(" " + give_data.first_name);
+                } else {
+                    give_preview(" " + give_data.first_name + " " + give_data.last_name[0]);
+                }
+            }
+
+        } else {
+
+            if (!anonymous) {
+                give_preview(" " + give_data.display_name);
+            }
+        }
+    }
+    
+    
 }
     
     
@@ -1113,10 +1208,25 @@ function input_form(title) {
         case 'first-name':
             word.value = word.value.replace(/[^a-zA-Z\.\s]+/, '');
             give_data.first_name = document.getElementById('give-first-name').value;
+            if (!honor && !anonymous && give_data.first_name != "" && give_data.display_name == "") {
+                if (give_data.last_name == "") {
+                    give_preview(" by " + give_data.first_name);
+                } else {
+                    give_preview(" by " + give_data.first_name + " " + give_data.last_name[0]);
+                }
+                
+            }
             break;
         case 'last-name':
             word.value = word.value.replace(/[^a-zA-Z\.\s]+/, '');
             give_data.last_name = document.getElementById('give-last-name').value;
+            if (!honor && !anonymous && give_data.last_name != "" && give_data.display_name == "") {
+                if (give_data.first_name == "") {
+                    give_preview(" by " + give_data.last_name[0]);
+                } else {
+                    give_preview(" by " + give_data.first_name + " " + give_data.last_name[0]);
+                }
+            }
             break;
         case 'email':
             document.getElementById('error-email').style.visibility = "visible";
@@ -1141,14 +1251,54 @@ function input_form(title) {
         case "display-name":
             word.value = word.value.replace(/[^a-zA-Z0-9\.\s]+/, '');
             give_data.display_name = document.getElementById('give-display-name').value;
+            
+            if (honor) {
+                give_preview(" in honor of "+give_data.honor_name+" by "+give_data.display_name);
+            } else {
+                if (give_data.display_name == "") {
+                
+                    if (give_data.first_name == "") {
+
+                        if (give_data.last_name == "") {
+                            give_preview("");
+                        } else {
+                            give_preview(" by " + give_data.last_name[0]);
+                        }
+
+                    } else {
+
+                        if (give_data.last_name == "") {
+                            give_preview(" by " + give_data.first_name);
+                        } else {
+                            give_preview(" by " + give_data.first_name + " " + give_data.last_name[0]);
+                        }
+                    }
+
+                } else {
+                    
+                    if (!anonymous) {
+                        give_preview(" by " + give_data.display_name);
+                    }
+                }
+            }
+            
+            
             break;
         case "honor-name":
             word.value = word.value.replace(/[^a-zA-Z0-9\.\s]+/, '');
             give_data.honor_name = document.getElementById('give-honor-name').value;
+            if (honor) {
+                give_preview(" in honor of "+give_data.honor_name+" by "+give_data.display_name);
+            }
             break;
         default:
             break;
     }
+}
+    
+    
+function give_preview(v) {
+    document.getElementById('give-preview').innerHTML = v;
 }
     
     
@@ -1177,15 +1327,31 @@ function checkout() {
         document.getElementById('give-email').style.borderColor = "#db5353";
         document.getElementById('give-email').focus();
         valid = false;
-    } else if(give_data.display_name == "" && anonymous == false) {
-        document.getElementById('give-display-name').style.borderColor = "#db5353";
-        document.getElementById('give-display-name').focus();
-        valid = false;
-    } else if(give_data.honor_name == "" && honor == true) {
-        document.getElementById('give-honor-name').style.borderColor = "#db5353";
-        document.getElementById('give-honor-name').focus();
-        valid = false;
     }
+    
+    
+    if (honor) {
+        
+        if (give_data.display_name == "") {
+            give_data.display_name = give_data.first_name + " " + give_data.last_name[0] + ".";
+        }
+        
+    } else if (anonymous) {
+        
+        if(give_data.honor_name == "") {
+            document.getElementById('give-honor-name').style.borderColor = "#db5353";
+            document.getElementById('give-honor-name').focus();
+            valid = false;
+        }
+        
+    } else {
+        
+        if (give_data.display_name == "") {
+            give_data.display_name = give_data.first_name + " " + give_data.last_name[0] + ".";
+        }
+        
+    }
+    
     
     if (valid) {
         
@@ -1209,43 +1375,29 @@ function checkout() {
         var first_item = true;
         for (b in items) {
             for (c in items[b]) {
-                
                 if (first_item) {
                     param_items += b + ":" + items[b][c];
                     first_item = false;
                 } else {
                     param_items += "." + b + ":" + items[b][c];
                 }
-
             }
         }
         
-        
-        document.getElementById('give-total-amount').innerHTML = "<p>&#36;"+cart.price+"</p>";
-        document.getElementById('give-verses-selected').innerHTML = "";
-        
-        for (b in items) {
-            for (c in items[b]) {
-                
-               document.getElementById('give-verses-selected').innerHTML += "<div class='div-item-give'><div class='item-give'>"+ book + " " + b + ":" + items[b][c] + "</div></div>";
-
-            }
-        }
-        
-        var params = 'campaign='+code+'&first_name='+give_data.first_name+'&last_name='+give_data.last_name+'&email='+give_data.email+'&book='+book+'&items='+param_items+'&amount='+cart.price;
+        var params = 'campaign='+code+'&first_name='+give_data.first_name+'&last_name='+give_data.last_name+'&email='+give_data.email+'&book='+book+'&items='+param_items+'&amount='+cart.price+'&display_name='+give_data.display_name+'&honoree_name='+give_data.honor_name+'&verse_price='+campaign.verse_price;
         
         console.log(params);
         
         var ajaxObj = new XMLHttpRequest();
         ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
 
-            if (ajaxObj.responseText == "no\n") {
+            if (ajaxObj.responseText == "yes\n\n\n") {
                 
-                alert("Error occurred");
+                alert("Successful");
                 
             } else {
                 
-                alert("Successful");
+                alert("Error: "+ajaxObj.responseText);
                 
             }
             

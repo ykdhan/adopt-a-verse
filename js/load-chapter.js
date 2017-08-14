@@ -36,6 +36,7 @@ function load_chapter (bk,ch) {
     verses = [];
     max_verse = 0;
     var all_selected = true;
+    var all_taken = true;
     
     fill_chapters(max_chapter);
     
@@ -66,25 +67,34 @@ function load_chapter (bk,ch) {
 
         // if verse is already selected
         if (in_cart) {
-            build += '<div class="verse verse-selected" id="ch-'+chapter+'-v-'+verse+'" onclick="select('+ch+','+parseInt(verse)+')">';
-            build += '<div class="verse-number" id="number-'+verse+'"><div>'+verse+'</div></div>';
-            build += '<div class="verse-content"><div>'+bible[ch][verse]+'</div></div>';
-            build += "</div>";
+            
+            build = '<div class="verse verse-selected" id="ch-'+chapter+'-v-'+verse+'" onclick="select('+ch+','+parseInt(verse)+')"><div class="verse-number" id="number-'+verse+'"><div>'+verse+'</div></div><div class="verse-content"><div>'+bible[ch][verse]+'</div></div></div>';
+            
+            // add to possible verses in current chapter
+            verses.push(parseInt(verse));
+            
+            all_taken = false;
         }
         // if verse is not selected
         else {
-            build += '<div class="verse" id="ch-'+chapter+'-v-'+verse+'" onclick="select('+ch+','+parseInt(verse)+')">';
-            build += '<div class="verse-number" id="number-'+verse+'"><div>'+verse+'</div></div>';
-            build += '<div class="verse-content"><div>'+bible[ch][verse]+'</div></div>';
-            build += "</div>";
-
-            all_selected = false;
+            if (taken[chapter] != null && taken[chapter][verse] != null) {
+                
+                build = '<div class="verse taken" id="ch-'+chapter+'-v-'+verse+'"><div class="verse-number" id="number-'+verse+'"><div>'+verse+'</div><span id="taken-ch-'+chapter+'-v-'+verse+'" class="tooltip-taken">'+taken[chapter][verse]+'</span></div><div class="verse-content"><div>'+bible[ch][verse]+'</div></div></div>';
+                
+            } else {
+                
+                build = '<div class="verse" id="ch-'+chapter+'-v-'+verse+'" onclick="select('+ch+','+parseInt(verse)+')"><div class="verse-number" id="number-'+verse+'"><div>'+verse+'</div></div><div class="verse-content"><div>'+bible[ch][verse]+'</div></div></div>';
+                
+                // add to possible verses in current chapter
+                verses.push(parseInt(verse));
+                
+                all_selected = false;
+                all_taken = false;
+            }
+            
         }
 
         $('#bible').append(build);
-
-        // add to possible verses in current chapter
-        verses.push(parseInt(verse));
 
         // get the last verse number
         max_verse = parseInt(verse);
@@ -92,15 +102,16 @@ function load_chapter (bk,ch) {
 
 
     // if all verses have been selected 
-    if (all_selected) {
+    if (all_selected && all_taken == false) {
         document.getElementById('div-select-all').innerHTML = '<span class="desktop">Click the verse number you want to adopt or </span><input id="select-all" class="checkbox-custom" name="select-all" type="checkbox" onclick="select_all(this.checked)"><label for="select-all" class="checkbox-custom-label">Select All</label>';
         document.getElementById('select-all').setAttribute('checked', 'true');
+    } else if (all_taken) {
+        document.getElementById('div-select-all').innerHTML = '<span class="desktop">All verses are taken for this chapter.</span><input class="checkbox-empty" name="select-empty" type="checkbox"><label for="select-empty" class="checkbox-empty-label"> </label>';
     } else {
         document.getElementById('div-select-all').innerHTML = '<span class="desktop">Click the verse number you want to adopt or </span><input id="select-all" class="checkbox-custom" name="select-all" type="checkbox" onclick="select_all(this.checked)"><label for="select-all" class="checkbox-custom-label">Select All</label>';
     }
 
-
-    console.log("Status  ---  "+book+"("+max_chapter+")  Ch: "+chapter+"("+max_verse+")");
+    console.log(book+"("+max_chapter+")  Ch: "+chapter+"("+max_verse+")");
    
 }
     

@@ -9,6 +9,7 @@ var verses = [];                // verses of current chapter
 var max_verse = 0;              // the last verse
 
 var selected = {};              // selected verses (not sorted)
+var taken = {};                 // taken verses (from database)
 
 var verse_price = 0;            // price of each verse
 

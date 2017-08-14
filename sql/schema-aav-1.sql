@@ -73,3 +73,23 @@ CREATE TABLE IF NOT EXISTS `aav`.`campaign` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+
+CREATE TABLE IF NOT EXISTS `aav`.`purchase_history` (
+  `num` int(11) NOT NULL AUTO_INCREMENT,
+  `id` varchar(10) NOT NULL,
+  `campaign_id` varchar(10) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `book` varchar(45) DEFAULT NULL,
+  `chapter` int(11) DEFAULT NULL,
+  `verse` int(11) DEFAULT NULL,
+  `display_name` varchar(45) DEFAULT NULL,
+  `honoree_name` varchar(45) DEFAULT NULL,
+  `purchase_date` date DEFAULT NULL,
+  `amount` float DEFAULT NULL,
+  `verse_price` float DEFAULT NULL,
+  PRIMARY KEY (`num`),
+  KEY `campaign_id_idx` (`campaign_id`),
+  KEY `user_id_idx` (`user_id`),
+  CONSTRAINT `campaign_id` FOREIGN KEY (`campaign_id`) REFERENCES `campaign` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;

@@ -52,8 +52,7 @@ $sql = "INSERT INTO campaign (id,
                       '".$url."')";
 
 if ($result = $mysqli->query($sql)) {
-    $output['id'] = $id;
-    echo JSON_encode($output);
+    echo "yes";
 } else {
     echo "no";
 }

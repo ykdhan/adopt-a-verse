@@ -631,7 +631,7 @@
         for (b in items) {
             for (c in items[b]) {
                 
-               document.getElementById('give-verses-selected').innerHTML += "<div class='div-item-give'><div class='item-give'>"+ book + " " + b + ":" + items[b][c] + "</div></div>";
+               document.getElementById('give-verses-selected').innerHTML += "<div class='div-item-give'><div class='item-give'>"+ abbreviation + " " + b + ":" + items[b][c] + "</div></div>";
 
             }
         }

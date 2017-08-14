@@ -1280,15 +1280,12 @@ function add_campaign() {
         
         var ajaxObj = new XMLHttpRequest();
         ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
-
-            if (ajaxObj.responseText == "no\n") {
-                
-                alert("Error occurred");
-                
-            } else {
-                
+            
+            if (ajaxObj.responseText == "yes\n\n\n") {
                 window.location.href = "church.php?id="+church_id+"#";
                 search_campaigns();
+            } else {
+                alert("Error occurred");
             }
             
         }}}
