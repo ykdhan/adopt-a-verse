@@ -87,6 +87,7 @@ CREATE TABLE IF NOT EXISTS `aav`.`purchase_history` (
   `purchase_date` date DEFAULT NULL,
   `amount` float DEFAULT NULL,
   `verse_price` float DEFAULT NULL,
+  `status` varchar(45) DEFAULT 'pending',
   PRIMARY KEY (`num`),
   KEY `campaign_id_idx` (`campaign_id`),
   KEY `user_id_idx` (`user_id`),
