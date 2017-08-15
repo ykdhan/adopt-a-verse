@@ -21,6 +21,7 @@ if (isset($_SESSION['aav-admin'])) {
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/filamentgroup/fixed-sticky/master/fixedsticky.js"></script>
     <script type="text/javascript" src="../js/sidebar.js"></script>
+    <script type="text/javascript" src="../js/countdown.js"></script>
     
     
     <script type="text/javascript" src="../js/remodal.js"></script>
@@ -72,6 +73,7 @@ if (isset($_SESSION['aav-admin'])) {
             <div class="list-column" id="column-campaign-book">Book</div>
             <div class="list-column" id="column-campaign-language">Language</div>
             <div class="list-column" id="column-campaign-church">Church</div>
+            <div class="list-column" id="column-campaign-percentage">Progress</div>
         </div>
         <div class="list" id="list-campaign">Not Available</div>
     </div>
@@ -88,6 +90,7 @@ if (isset($_SESSION['aav-admin'])) {
             <div class="list-column" id="column-church-profile-picture"></div>
             <div class="list-column" id="column-church-name">Name</div>
             <div class="list-column" id="column-church-state">State</div>
+            <div class="list-column" id="column-church-campaign"># of Campaigns</div>
         </div>
         <div class="list" id="list-church">Not Available</div>
         
@@ -112,7 +115,9 @@ if (isset($_SESSION['aav-admin'])) {
     
     <div id="tab-user" class="landing-content">
         <input type="text" class="landing-text" id="search-user" onkeyup="search_user()" placeholder="Search by name or email">
-        
+        <div class="landing-add">
+            <a href="#add-wycliffe-admin"><button type="button" class="landing-button"><img alt="" src="../img/add_new.png">Add Wycliffe Admin</button></a>
+        </div>
         <div class="list-columns">
             <div class="list-column" id="column-user-name">Name</div>
             <div class="list-column" id="column-user-role">Role</div>
@@ -249,6 +254,37 @@ if (isset($_SESSION['aav-admin'])) {
     </div>
 </div>
 
+    
+<div class="remodal" data-remodal-id="add-wycliffe-admin" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+    <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+
+    <div class="lightbox">
+        <div id="title">Add Wycliffe Admin</div>
+        <section>
+            <div class="col-left">Account</div>
+            <div class="col-tip"></div>
+            <div class="col-right">
+                <input type="text" class="admin-text" id="admin-first-name" placeholder="First Name" onkeyup="input_admin_form('first-name')">
+                <input type="text" class="admin-text" id="admin-last-name" placeholder="Last Name" onkeyup="input_admin_form('last-name')">
+            </div>
+            <div class="col-left"></div>
+            <div class="col-tip"></div>
+            <div class="col-right">
+                <input type="text" class="admin-text" id="admin-email" placeholder="Email Address"><span class="error" id="error-email"></span><br>
+            </div>
+            <div class="col-left"></div>
+            <div class="col-tip"></div>
+            <div class="col-right">
+                <input type="text" class="admin-text" id="admin-phone" placeholder="Phone Number" onkeyup="input_admin_form('phone')">
+            </div>
+        </section>
+        <section class="last-section">
+            <p class="message">An email will be sent to the new admin to set up their account password.</p>
+            <button type="button" class="admin-submit" onclick="add_admin()">Create Admin</button>
+        </section>
+    </div>
+</div>
+
 
 <div class="remodal" data-remodal-id="campaign-info" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
     <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
@@ -270,6 +306,28 @@ if (isset($_SESSION['aav-admin'])) {
             <div class="col-tip"></div>
             <div class="col-right" id="campaign-duration">
                 <input type="date" class="admin-text" id="details-start-date" onchange="edit_start_date(this)">&nbsp; to &nbsp;<input type="date" class="admin-text" id="details-end-date" onchange="edit_end_date(this)">
+            </div>
+            <div class="col-left d-day"></div>
+            <div class="col-tip d-day"></div>
+            <div class="col-right d-day">
+                <div id="count-number">
+                    <div class="count-days">
+                        <span class="countdown-days"></span><br>
+                        days
+                    </div>
+                    <div class="count-hours">
+                        <span class="countdown-hours"></span><br>
+                        hrs
+                    </div>
+                    <div class="count-minutes">
+                        <span class="countdown-minutes"></span><br>
+                        min
+                    </div>
+                    <div class="count-seconds">
+                        <span class="countdown-seconds"></span><br>
+                        sec
+                    </div>
+                </div>
             </div>
         </section>
         <section>
@@ -464,6 +522,8 @@ function search_campaign() {
                     var status = resp[num]['status'];
                     var church = resp[num]['church'];
                     var church_id = resp[num]['church_id'];
+                    var raised = resp[num]['raised'];
+                    var percentage = resp[num]['percentage'];
                     
                     campaigns[id] = {};
                     campaigns[id]['book'] = book;
@@ -477,6 +537,8 @@ function search_campaign() {
                     campaigns[id]['status'] = status;
                     campaigns[id]['church'] = church;
                     campaigns[id]['church_id'] = church_id;
+                    campaigns[id]['raised'] = raised;
+                    campaigns[id]['percentage'] = percentage;
                     
                     var goal = parseFloat(goal_amount.toString().replace(/,/g,''));
                     goal_amount = goal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -484,7 +546,7 @@ function search_campaign() {
                     var verse = parseFloat(verse_price.toString().replace(/,/g,''));
                     verse_price = verse.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-                    document.getElementById('list-campaign').innerHTML += '<div class="list-item" onclick="select_campaign(\''+id+'\')"><div class="col-campaign-book">'+book+'</div><div class="col-campaign-language">'+language+'</div><div class="col-campaign-church">'+church+'</div></div>';
+                    document.getElementById('list-campaign').innerHTML += '<div class="list-item" onclick="select_campaign(\''+id+'\')"><div class="col-campaign-book">'+book+'</div><div class="col-campaign-language">'+language+'</div><div class="col-campaign-church">'+church+'</div><div class="col-campaign-percentage">'+percentage+'%</div></div>';
 
                 }
             }
@@ -533,6 +595,7 @@ function search_church() {
                     var state = resp[num]['state'];
                     var church = resp[num]['name'];
                     var profile_picture = resp[num]['profile_picture'];
+                    var num_campaign = resp[num]['num_campaign'];
                     
                     var image = "";
                     
@@ -542,7 +605,7 @@ function search_church() {
                         image = '../img/choose_image.png';
                     }
 
-                    document.getElementById('list-church').innerHTML += '<div class="list-item" onclick="select_church(\''+id+'\')"><div class="col-church-profile-picture" style="background-image: url(\''+image+'\')"></div><div class="col-church-name">'+church+'</div><div class="col-church-state">'+state+'</div></div>';
+                    document.getElementById('list-church').innerHTML += '<div class="list-item" onclick="select_church(\''+id+'\')"><div class="col-church-profile-picture" style="background-image: url(\''+image+'\')"></div><div class="col-church-name">'+church+'</div><div class="col-church-state">'+state+'</div><div class="col-church-campaign">'+num_campaign+'</div></div>';
                 }
             }
             
@@ -1061,6 +1124,135 @@ function add_language () {
     }
     
 }
+    
+    
+    
+    
+    
+    
+// ADD WYCLIFFE ADMIN 
+    
+var admin_data = {
+    first_name: "",
+    last_name: "",
+    phone: "",
+    email: ""
+}
+    
+function search_admin_email() {
+    
+    var email = document.getElementById('admin-email');
+    
+    document.getElementById('error-email').style.visibility = "visible";
+
+    var ajaxObj = new XMLHttpRequest();
+    ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+        
+        var valid = true;
+        admin_data.email = "";
+        
+        if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.value))) {
+            document.getElementById('error-email').className = "error red";
+            document.getElementById('error-email').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">Email is invalid';
+            valid = false;
+        }
+        
+        if (ajaxObj.responseText == "yes\n") {
+            document.getElementById('error-email').className = "error red";
+            document.getElementById('error-email').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">Email already exists';
+            valid = false;
+        } 
+        
+        if (valid) {
+            admin_data.email = email.value;
+            document.getElementById('error-email').className = "error green";
+            document.getElementById('error-email').innerHTML = '<img class="error-icon" alt="" src="../img/error_valid.png">Email is valid';
+        }
+
+    }}}
+    ajaxObj.open("GET", "sql-check-new-email.php?email="+email.value);
+    ajaxObj.send();
+}
+    
+$( "#admin-email" ).focusout(function() {
+    search_admin_email();
+});
+
+function input_admin_form(title) {
+    
+    var word = document.getElementById('admin-'+title);
+    
+    switch(title) {
+        case 'first-name':
+            word.value = word.value.replace(/[^a-zA-Z\.\s]+/, '');
+            admin_data.first_name = document.getElementById('admin-first-name').value;
+            break;
+        case 'last-name':
+            word.value = word.value.replace(/[^a-zA-Z\.\s]+/, '');
+            admin_data.last_name = document.getElementById('admin-last-name').value;
+            break;
+        case 'phone':
+            word.value = word.value.replace(/[^0-9\)-\.\+\s]+/, '');
+            admin_data.phone = document.getElementById('admin-phone').value;
+            break;
+        default:
+            break;
+    }
+}
+    
+function add_admin() {
+    
+    var valid = true;
+    
+    document.getElementById('admin-first-name').style.borderColor = "#d1d1d1";
+    document.getElementById('admin-last-name').style.borderColor = "#d1d1d1";
+    document.getElementById('admin-email').style.borderColor = "#d1d1d1";
+    document.getElementById('admin-phone').style.borderColor = "#d1d1d1";
+
+    if (admin_data.first_name == "") {
+        document.getElementById('admin-first-name').style.borderColor = "#db5353";
+        document.getElementById('admin-first-name').focus();
+        valid = false;
+    } else if (admin_data.last_name == "") {
+        document.getElementById('admin-last-name').style.borderColor = "#db5353";
+        document.getElementById('admin-last-name').focus();
+        valid = false;
+    } else if (admin_data.new_email == "") {
+        document.getElementById('admin-email').style.borderColor = "#db5353";
+        document.getElementById('admin-email').focus();
+        valid = false;
+    } else if (admin_data.phone == "") {
+        document.getElementById('admin-phone').style.borderColor = "#db5353";
+        document.getElementById('admin-phone').focus();
+        valid = false;
+    }
+
+    
+    if (valid) {
+        
+        var params = 'first_name='+admin_data.first_name+'&last_name='+admin_data.last_name+'&email='+admin_data.email+'&phone='+admin_data.phone;
+        
+        console.log(params);
+        
+        var ajaxObj = new XMLHttpRequest();
+        ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+            
+            console.log(ajaxObj.responseText);
+
+            if (ajaxObj.responseText == "yes\n\n\n") {
+                window.location.href = "admin.php#";
+                search_user();
+            } else {
+                alert("Error occurred");
+            }
+            
+        }}}
+        ajaxObj.open("GET", "sql-insert-wycliffe-admin.php?"+params);
+        ajaxObj.send();
+        
+    }
+}
+
 
     
     
@@ -1309,7 +1501,7 @@ function search_email() {
         }
 
     }}}
-    ajaxObj.open("GET", "sql-check-email.php?email="+email.value);
+    ajaxObj.open("GET", "sql-check-new-email.php?email="+email.value);
     ajaxObj.send();
 }
 

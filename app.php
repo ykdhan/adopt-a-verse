@@ -442,9 +442,10 @@
         <section>
             <div class="col-left">Display Name</div>
             <div class="col-tip">
-                <span class="tool-tip">?<div class="tooltip">This is the name that will be displayed with your adopted verse(s).</div></span>
+                <span class="tool-tip">?<div class="tooltip">This is the name that will be displayed with your adopted verse(s)<br>(e.g. "the Smith Family").</div></span>
             </div>
             <div class="col-right">
+                
                 <input type="text" class="form-text" id="give-honor-name" onkeyup="input_form('honor-name')" placeholder="Honoree's Name">
                 <input type="text" class="form-text" id="give-display-name" onkeyup="input_form('display-name')" placeholder="Name"><br>
                 
@@ -612,7 +613,7 @@ function init() {
                 
                 total_adopted = count;
                 total_raised = parseFloat(count * campaign.verse_price).toFixed(2);
-                total_percentage = total_raised / total_goal * 100;
+                total_percentage = Math.round(total_raised / total_goal * 100);
                 
                 var total_still_need = parseFloat(total_goal - total_raised).toFixed(2);
                 
@@ -833,7 +834,7 @@ function drawSmallChart() {
                 backgroundColor: '#dbdbdb'
             },
             height: 180,
-            colors: [ '#dbdbdb', '#039da6'],
+            colors: [ '#dbdbdb', '#039da6' ],
             pieSliceBorderColor: '#dbdbdb',
             legend: 'none',
             pieSliceText: 'none',
@@ -1393,7 +1394,7 @@ function checkout() {
 
             if (ajaxObj.responseText == "yes\n\n\n") {
                 
-                alert("Successful");
+                window.location.href = "transaction.php";
                 
             } else {
                 

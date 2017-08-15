@@ -50,6 +50,29 @@ if ($result = $mysqli->query($sql)) {
         $output[$num]['church'] = $row['name'];
         $output[$num]['church_id'] = $row['church_id'];
         
+        
+        
+        $history_sql = "SELECT * FROM purchase_history WHERE campaign_id = '{$row['camp_id']}'";
+
+        $history = false;
+        $raised = 0.0;
+
+        if ($res = $mysqli->query($history_sql)) {
+
+            while ($r = $res->fetch_assoc()) {
+                $history = true;
+                $raised = $raised + floatval($row['verse_price']);
+            }
+        }
+
+        if ($history) {
+            $output[$num]['raised'] = $raised;
+            $output[$num]['percentage'] = intval($raised / $row['goal_amount'] * 100);
+        } else {
+            $output[$num]['raised'] = 0;
+            $output[$num]['percentage'] = 0;
+        }
+        
         $num ++;
     }
 } 

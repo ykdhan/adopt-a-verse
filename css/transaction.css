@@ -1,0 +1,17 @@
+#transaction-wrapper {
+    position: fixed; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    padding: 4em;
+    background: #fff;
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    text-align: center;
+    border-radius: 4px;
+}
+
+#transaction-wrapper input {
+    opacity: 0;
+}

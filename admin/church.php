@@ -26,6 +26,7 @@ if (isset($_SESSION['aav-super-admin'])) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" src="../js/sidebar.js"></script>
+    <script type="text/javascript" src="../js/countdown.js"></script>
     
     
     <script type="text/javascript" src="../js/remodal.js"></script>
@@ -157,26 +158,51 @@ if (isset($_SESSION['aav-super-admin'])) {
             </div>
         </section>
         <section>
-            <div class="col-left">Account</div>
-            <div class="col-tip"></div>
-            <div class="col-right">
-                <input type="text" class="admin-text" id="admin-first-name" placeholder="First Name" onkeyup="input_form('first-name')">
-                <input type="text" class="admin-text" id="admin-last-name" placeholder="Last Name" onkeyup="input_form('last-name')">
+            
+            <div class="admin-tab-div">
+                <div class="admin-tab">
+                    <button class="admin-tabs admin-tabs-now" onclick="admin_tab(event, 'tab-new-user')">Create New Admin</button>
+                    <button class="admin-tabs" id="admin-tab-2" onclick="admin_tab(event, 'tab-existing-user')">Make Existing User an Admin</button>
+                </div>
             </div>
-            <div class="col-left"></div>
-            <div class="col-tip"></div>
-            <div class="col-right">
-                <input type="text" class="admin-text" id="admin-email" placeholder="Email Address"><span class="error" id="error-email"></span><br>
+
+            
+            <div id="tab-new-user" class="admin-tab-content admin-tab-content-now">
+
+                <div class="col-left">Account</div>
+                <div class="col-tip"></div>
+                <div class="col-right">
+                    <input type="text" class="admin-text" id="admin-first-name" placeholder="First Name" onkeyup="input_form('first-name')">
+                    <input type="text" class="admin-text" id="admin-last-name" placeholder="Last Name" onkeyup="input_form('last-name')">
+                </div>
+                <div class="col-left"></div>
+                <div class="col-tip"></div>
+                <div class="col-right">
+                    <input type="text" class="admin-text" id="admin-new-email" placeholder="Email Address"><span class="error" id="error-new-email"></span><br>
+                </div>
+                <div class="col-left"></div>
+                <div class="col-tip"></div>
+                <div class="col-right">
+                    <input type="text" class="admin-text" id="admin-phone" placeholder="Phone Number" onkeyup="input_form('phone')">
+                </div>
+                
             </div>
-            <div class="col-left"></div>
-            <div class="col-tip"></div>
-            <div class="col-right">
-                <input type="text" class="admin-text" id="admin-phone" placeholder="Phone Number" onkeyup="input_form('phone')">
+
+            
+            <div id="tab-existing-user" class="admin-tab-content">
+
+                <div class="col-left">Account</div>
+                <div class="col-tip"></div>
+                <div class="col-right">
+                    <input type="text" class="admin-text" id="admin-existing-email" placeholder="Email Address"><span class="error" id="error-existing-email"></span><br>
+                </div>
+                
             </div>
+            
         </section>
         <section class="last-section">
-            <p class="message">An email will be sent to the new user to set up their account password.</p>
-            <button type="button" class="admin-submit" onclick="add_admin()">Create Admin</button>
+            <p class="message" id="admin-message">An email will be sent to the new admin to set up their account password.</p>
+            <button type="button" id="admin-button" class="admin-submit" onclick="add_admin()">Create Admin</button>
         </section>
     </div>
 </div>
@@ -271,6 +297,28 @@ if (isset($_SESSION['aav-super-admin'])) {
             <div class="col-right" id="campaign-duration">
                 <input type="date" class="admin-text" id="details-start-date" onchange="edit_start_date(this)">&nbsp; to &nbsp;<input type="date" class="admin-text" id="details-end-date" onchange="edit_end_date(this)">
             </div>
+            <div class="col-left d-day"></div>
+            <div class="col-tip d-day"></div>
+            <div class="col-right d-day">
+                <div id="count-number">
+                    <div class="count-days">
+                        <span class="countdown-days"></span><br>
+                        days
+                    </div>
+                    <div class="count-hours">
+                        <span class="countdown-hours"></span><br>
+                        hrs
+                    </div>
+                    <div class="count-minutes">
+                        <span class="countdown-minutes"></span><br>
+                        min
+                    </div>
+                    <div class="count-seconds">
+                        <span class="countdown-seconds"></span><br>
+                        sec
+                    </div>
+                </div>
+            </div>
         </section>
         <section>
             <div class="col-left">Language</div>
@@ -321,7 +369,45 @@ var church_id = page_url.searchParams.get("id");
 $("#select-profile-picture").click(function(){
     $("#input-profile-picture").click();
 });
+    
+    
+var admin_mode = "new";
+function admin_tab(evt, tabName) {
 
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("admin-tab-content");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("admin-tabs");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" admin-tabs-now", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " admin-tabs-now";
+    
+    
+    if (tabName == "tab-new-user") {
+        document.getElementById('admin-message').innerHTML = "An email will be sent to the new admin to set up their account password.";
+        document.getElementById('admin-button').innerHTML = "Create Admin";
+        admin_mode = "new";
+    } else {
+        document.getElementById('admin-message').innerHTML = "A notification email will be sent to this user.";
+        document.getElementById('admin-button').innerHTML = "Make Admin";
+        admin_mode = "existing";
+    }
+    
+}
+
+    
+    
     
 var campaigns = {};
 var campaign_id = "";
@@ -407,9 +493,62 @@ function search_admins() {
     
 }
 
+
+var raised = {};
     
 search_campaigns();
 function search_campaigns() {
+    
+    
+    raised = {};
+
+    var ajaxObj1 = new XMLHttpRequest();
+    ajaxObj1.onreadystatechange= function() { if(ajaxObj1.readyState == 4) { if(ajaxObj1.status == 200) {
+
+        if (ajaxObj1.responseText == "no\n") {
+            
+            console.log('no progress');
+            
+        } else {
+            var response = JSON.parse(ajaxObj1.responseText);
+
+            for (var i = 0; i < Object.keys(response).length; i++) {
+
+                var campaign = Object.keys(response)[i];
+                raised[campaign] = {};
+
+                var num_verses = 0;
+
+                for (var j = 0; j < Object.keys(response[campaign]['book']).length; j++) {
+
+                    var chapter = Object.keys(response[campaign]['book'])[j];
+
+                    for (var k = 0; k < Object.keys(response[campaign]['book']).length; k++) {
+
+                        var verse = Object.keys(response[campaign]['book'][chapter])[k];
+                        num_verses++;
+                    }
+
+                }
+
+                if (num_verses == 0) {
+                    raised[campaign] = 0;
+                } else {
+                    raised[campaign] = (parseFloat(response[campaign]['verse_price']) * num_verses).toFixed(2);
+                }
+
+            }
+
+            console.log(raised);
+        }
+        
+        
+
+    }}}
+    ajaxObj1.open("GET", "sql-progress.php?id="+church_id);
+    ajaxObj1.send();
+
+    
     
     var ajaxObj = new XMLHttpRequest();
         ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
@@ -430,8 +569,8 @@ function search_campaigns() {
                     var book = resp[num]['book'];
                     var language = resp[num]['language'];
                     var goal_description = resp[num]['goal_description'];
-                    var goal_amount = resp[num]['goal_amount'];
-                    var verse_price = resp[num]['verse_price'];
+                    var goal_amount = parseFloat(resp[num]['goal_amount']);
+                    var verse_price = parseFloat(resp[num]['verse_price']);
                     var start_date = resp[num]['start_date'];
                     var end_date = resp[num]['end_date'];
                     var url = resp[num]['url'];
@@ -448,6 +587,15 @@ function search_campaigns() {
                     campaigns[num]['url'] = url;
                     campaigns[num]['status'] = status;
                     
+                    if (raised[num] != null) {
+                        campaigns[num]['still_need'] = raised[num];
+                        campaigns[num]['percentage'] = Math.round(raised[num] / goal_amount * 100);
+                    } else {
+                        campaigns[num]['still_need'] = 0;
+                        campaigns[num]['percentage'] = 0;
+                    }
+                    
+                    
                     var goal = parseFloat(goal_amount.toString().replace(/,/g,''));
                     goal_amount = goal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     
@@ -455,11 +603,11 @@ function search_campaigns() {
                     verse_price = verse.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
                     if (status == "inprogress") {
-                        document.getElementById('church-campaigns').innerHTML += '<div class="church-campaign-div"><a href="#campaign-details"><div class="church-campaign" onclick="select_campaign(\''+num+'\')"><div class="church-campaign-top">'+start_date+' - '+end_date+'<span class="church-campaign-status active">In Progress</span></div><div class="church-campaign-book">'+book+'</div><div class="church-campaign-language">'+language+'</div><div class="church-campaign-raised">$450</div><div class="church-campaign-goal">$'+goal_amount+'</div><div class="church-campaign-bottom"><div class="church-campaign-bar"><div class="church-campaign-progress" style="width: 45%;"></div></div><div class="church-campaign-percent">45%</div></div></div></a></div>';
+                        document.getElementById('church-campaigns').innerHTML += '<div class="church-campaign-div"><a href="#campaign-details"><div class="church-campaign" onclick="select_campaign(\''+num+'\')"><div class="church-campaign-top">'+start_date+' - '+end_date+'<span class="church-campaign-status active">In Progress</span></div><div class="church-campaign-book">'+book+'</div><div class="church-campaign-language">'+language+'</div><div class="church-campaign-raised">$'+campaigns[num]['still_need']+'</div><div class="church-campaign-goal">$'+goal_amount+'</div><div class="church-campaign-bottom"><div class="church-campaign-bar"><div class="church-campaign-progress" style="width: '+campaigns[num]['percentage']+'%;"></div></div><div class="church-campaign-percent">'+campaigns[num]['percentage']+'%</div></div></div></a></div>';
                     } else if (status == "coming") {
-                        document.getElementById('church-campaigns').innerHTML += '<div class="church-campaign-div"><a href="#campaign-details"><div class="church-campaign coming" onclick="select_campaign(\''+num+'\')"><div class="church-campaign-top">'+start_date+' - '+end_date+'<span class="church-campaign-status coming">Scheduled</span></div><div class="church-campaign-book">'+book+'</div><div class="church-campaign-language">'+language+'</div><div class="church-campaign-raised">$0</div><div class="church-campaign-goal">$'+goal_amount+'</div><div class="church-campaign-bottom"><div class="church-campaign-bar"><div class="church-campaign-progress coming"></div></div><div class="church-campaign-percent coming">0%</div></div></div></a></div>';
+                        document.getElementById('church-campaigns').innerHTML += '<div class="church-campaign-div"><a href="#campaign-details"><div class="church-campaign coming" onclick="select_campaign(\''+num+'\')"><div class="church-campaign-top">'+start_date+' - '+end_date+'<span class="church-campaign-status coming">Scheduled</span></div><div class="church-campaign-book">'+book+'</div><div class="church-campaign-language">'+language+'</div><div class="church-campaign-raised">$'+campaigns[num]['still_need']+'</div><div class="church-campaign-goal">$'+goal_amount+'</div><div class="church-campaign-bottom"><div class="church-campaign-bar"><div class="church-campaign-progress coming"></div></div><div class="church-campaign-percent coming">'+campaigns[num]['percentage']+'%</div></div></div></a></div>';
                     } else if (status == "complete") {
-                        document.getElementById('church-campaigns').innerHTML += '<div class="church-campaign-div"><a href="#campaign-details"><div class="church-campaign complete" onclick="select_campaign(\''+num+'\')"><div class="church-campaign-top">'+start_date+' - '+end_date+'<span class="church-campaign-status complete">Complete</span></div><div class="church-campaign-book">'+book+'</div><div class="church-campaign-language">'+language+'</div><div class="church-campaign-raised">$450</div><div class="church-campaign-goal">$'+goal_amount+'</div><div class="church-campaign-bottom"><div class="church-campaign-bar"><div class="church-campaign-progress complete" style="width: 95%;"></div></div><div class="church-campaign-percent complete">95%</div></div></div></a></div>';
+                        document.getElementById('church-campaigns').innerHTML += '<div class="church-campaign-div"><a href="#campaign-details"><div class="church-campaign complete" onclick="select_campaign(\''+num+'\')"><div class="church-campaign-top">'+start_date+' - '+end_date+'<span class="church-campaign-status complete">Complete</span></div><div class="church-campaign-book">'+book+'</div><div class="church-campaign-language">'+language+'</div><div class="church-campaign-raised">$'+campaigns[num]['still_need']+'</div><div class="church-campaign-goal">$'+goal_amount+'</div><div class="church-campaign-bottom"><div class="church-campaign-bar"><div class="church-campaign-progress complete" style="width: '+campaigns[num]['percentage']+'%;"></div></div><div class="church-campaign-percent complete">'+campaigns[num]['percentage']+'%</div></div></div></a></div>';
                     }
                 }
             }
@@ -748,47 +896,100 @@ var admin_data = {
     first_name: "",
     last_name: "",
     phone: "",
-    email: ""
+    new_email: "",
+    existing_email: ""
 }
     
-function search_email() {
+function search_new_email() {
     
-    var email = document.getElementById('admin-email');
+    var email = document.getElementById('admin-new-email');
     
-    document.getElementById('error-email').style.visibility = "visible";
+    document.getElementById('error-new-email').style.visibility = "visible";
 
     var ajaxObj = new XMLHttpRequest();
     ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
         
         
         var valid = true;
-        admin_data.email = "";
+        admin_data.new_email = "";
         
         if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.value))) {
-            document.getElementById('error-email').className = "error red";
-            document.getElementById('error-email').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">Email is invalid';
+            document.getElementById('error-new-email').className = "error red";
+            document.getElementById('error-new-email').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">Email is invalid';
             valid = false;
         }
         
         if (ajaxObj.responseText == "yes\n") {
-            document.getElementById('error-email').className = "error red";
-            document.getElementById('error-email').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">Email already exists';
+            document.getElementById('error-new-email').className = "error red";
+            document.getElementById('error-new-email').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">Email already exists';
             valid = false;
         } 
         
         if (valid) {
-            admin_data.email = email.value;
-            document.getElementById('error-email').className = "error green";
-            document.getElementById('error-email').innerHTML = '<img class="error-icon" alt="" src="../img/error_valid.png">Email is valid';
+            admin_data.new_email = email.value;
+            document.getElementById('error-new-email').className = "error green";
+            document.getElementById('error-new-email').innerHTML = '<img class="error-icon" alt="" src="../img/error_valid.png">Email is valid';
         }
 
     }}}
-    ajaxObj.open("GET", "sql-check-email.php?email="+email.value);
+    ajaxObj.open("GET", "sql-check-new-email.php?email="+email.value);
     ajaxObj.send();
 }
     
-$( "#admin-email" ).focusout(function() {
-    search_email();
+function search_existing_email() {
+    
+    var email = document.getElementById('admin-existing-email');
+    
+    document.getElementById('error-existing-email').style.visibility = "visible";
+
+    var ajaxObj = new XMLHttpRequest();
+    ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+        
+        console.log(ajaxObj.responseText);
+        
+        var valid = true;
+        admin_data.existing_email = "";
+        
+        if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.value))) {
+            document.getElementById('error-existing-email').className = "error red";
+            document.getElementById('error-existing-email').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">Email is invalid';
+            valid = false;
+        }
+        
+        if (ajaxObj.responseText == "no\n") {
+            document.getElementById('error-existing-email').className = "error red";
+            document.getElementById('error-existing-email').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">Email is invalid';
+            valid = false;
+        } 
+        
+        if (ajaxObj.responseText == "already\n") {
+            document.getElementById('error-existing-email').className = "error red";
+            document.getElementById('error-existing-email').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">User is already an admin';
+            valid = false;
+        } 
+        
+        if (ajaxObj.responseText == "verify\n") {
+            document.getElementById('error-existing-email').className = "error red";
+            document.getElementById('error-existing-email').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">User has not verified this email address.<br><span>Please try again later.</span>';
+            valid = false;
+        } 
+        
+        if (valid) {
+            admin_data.existing_email = email.value;
+            document.getElementById('error-existing-email').className = "error green";
+            document.getElementById('error-existing-email').innerHTML = '<img class="error-icon" alt="" src="../img/error_valid.png">Email is valid';
+        }
+
+    }}}
+    ajaxObj.open("GET", "sql-check-existing-email.php?email="+email.value+"&church="+church_id);
+    ajaxObj.send();
+}
+    
+$( "#admin-new-email" ).focusout(function() {
+    search_new_email();
+});
+$( "#admin-existing-email" ).focusout(function() {
+    search_existing_email();
 });
 
 function input_form(title) {
@@ -817,45 +1018,62 @@ function add_admin() {
     
     var valid = true;
     
-    document.getElementById('admin-first-name').style.borderColor = "#d1d1d1";
-    document.getElementById('admin-last-name').style.borderColor = "#d1d1d1";
-    document.getElementById('admin-email').style.borderColor = "#d1d1d1";
-    document.getElementById('admin-phone').style.borderColor = "#d1d1d1";
+    if (admin_mode == "new") {
     
-    if (admin_data.first_name == "") {
-        document.getElementById('admin-first-name').style.borderColor = "#db5353";
-        document.getElementById('admin-first-name').focus();
-        valid = false;
-    } else if (admin_data.last_name == "") {
-        document.getElementById('admin-last-name').style.borderColor = "#db5353";
-        document.getElementById('admin-last-name').focus();
-        valid = false;
-    } else if (admin_data.email == "") {
-        document.getElementById('admin-email').style.borderColor = "#db5353";
-        document.getElementById('admin-email').focus();
-        valid = false;
-    } else if (admin_data.phone == "") {
-        document.getElementById('admin-phone').style.borderColor = "#db5353";
-        document.getElementById('admin-phone').focus();
-        valid = false;
+        document.getElementById('admin-first-name').style.borderColor = "#d1d1d1";
+        document.getElementById('admin-last-name').style.borderColor = "#d1d1d1";
+        document.getElementById('admin-new-email').style.borderColor = "#d1d1d1";
+        document.getElementById('admin-phone').style.borderColor = "#d1d1d1";
+
+        if (admin_data.first_name == "") {
+            document.getElementById('admin-first-name').style.borderColor = "#db5353";
+            document.getElementById('admin-first-name').focus();
+            valid = false;
+        } else if (admin_data.last_name == "") {
+            document.getElementById('admin-last-name').style.borderColor = "#db5353";
+            document.getElementById('admin-last-name').focus();
+            valid = false;
+        } else if (admin_data.new_email == "") {
+            document.getElementById('admin-new-email').style.borderColor = "#db5353";
+            document.getElementById('admin-new-email').focus();
+            valid = false;
+        } else if (admin_data.phone == "") {
+            document.getElementById('admin-phone').style.borderColor = "#db5353";
+            document.getElementById('admin-phone').focus();
+            valid = false;
+        }
+        
+    } else {
+
+        document.getElementById('admin-existing-email').style.borderColor = "#d1d1d1";
+        
+        if (admin_data.existing_email == "") {
+            document.getElementById('admin-existing-email').style.borderColor = "#db5353";
+            document.getElementById('admin-existing-email').focus();
+            valid = false;
+        }
+        
     }
+        
     
     if (valid) {
         
-        var params = 'church='+church_id+'&first_name='+admin_data.first_name+'&last_name='+admin_data.last_name+'&email='+admin_data.email+'&phone='+admin_data.phone;
+        var params = "";
+        
+        if (admin_mode == "new") {
+            params = 'mode=new&church='+church_id+'&first_name='+admin_data.first_name+'&last_name='+admin_data.last_name+'&email='+admin_data.new_email+'&phone='+admin_data.phone;
+        } else {
+            params = 'mode=existing&church='+church_id+'&email='+admin_data.existing_email;
+        }
         
         console.log(params);
         
         var ajaxObj = new XMLHttpRequest();
         ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
-            
 
             if (ajaxObj.responseText == "yes\n\n\n") {
-                
                 window.location.href = "church.php?id="+church_id+"#";
                 search_admins();
-                
-                
             } else {
                 alert("Error occurred");
             }

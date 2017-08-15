@@ -28,6 +28,23 @@ if ($result = $mysqli->query($sql)) {
         $output[$num]['name'] = $row['name'];
         $output[$num]['profile_picture'] = $row['profile_picture'];
         
+        
+        $campaign_sql = "SELECT * FROM campaign WHERE church_id = '{$row['id']}'";
+
+        $campaign = false;
+        $num_camp = 0;
+
+        if ($res = $mysqli->query($campaign_sql)) {
+            while ($r = $res->fetch_assoc()) {
+                $campaign = true;
+                $num_camp ++;
+            }
+        }
+        
+        $output[$num]['num_campaign'] = $num_camp;
+        
+        
+        
         $num ++;
     }
 } 

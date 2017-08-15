@@ -104,7 +104,7 @@
 }
 #error-profile-picture {
     margin-top: -3.9em !important;
-    margin-left: 13em !important;
+    margin-left: 17em !important;
 }
 
 #church-name {
@@ -312,10 +312,6 @@
 
 
 
-
-
-
-
 .index-content {
     box-sizing: border-box;
     width: 100%;
@@ -326,53 +322,83 @@
 
 
 
-/*
-.campaign-list {
-    width: 35em;
-    border: 0;
-    padding: 0.7em;
-    padding-left: 0;
-    padding-right: 0;
-    font-size: 1em;
-    font-family: "Gotham-Book" !important;
-    color: #606060;
+#count-number {
+    color: #444;
+    padding: 0.5em;
+    vertical-align: middle;
+    font-size: 0.8em;
+    font-family: "Gotham-Bold" !important;
+}
+#count-number div {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center !important;
+    text-transform: uppercase;
+    width: 3em;
+}
+#count-number span {
+    font-family: "Gotham-Bold" !important;
+    font-size: 1.7em !important;
+}
+.count-days, .count-hours, .count-minutes {
+    margin-right: 2em;
+}
+
+
+
+
+
+.admin-tab-content {
+    display: none;
+    box-sizing: border-box;
+    width: 100%;
+    padding-top: 3em;
+    padding-bottom: 0.5em;
     margin: 0;
-    margin-bottom: 3em;
+    text-align: center;
 }
-.campaign-item {
-    color: #555;
+
+.admin-tab-content-now {
+    display: block;
+}
+
+
+.admin-tab {
+    padding: 0;
+}
+
+.admin-tabs {
+    font-size: 0.9em;
+    background: #fff;
+    outline: none;
+    color: #606060;
+    font-family: "Gotham-Book" !important;
     cursor: pointer;
-    padding: 0.9em;
-    padding-left: 1.5em;
+    padding: 0.7em;
     padding-right: 1.5em;
-    font-size: 1em;
-    background: none;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-top: 0.3em;
-    margin-bottom: 0.3em;
+    padding-left: 2em;
+    border: 1px solid #d1d1d1;
+    border-radius: 100px 0px 0px 100px;
+    margin: 0;
 }
-.campaign-item:hover {
+.admin-tabs:hover {
     background: #f2f2f2;
 }
-.campaign-item span {
-    float: right;
-    color: #aaa;
-    font-size: 0.9em;
-    vertical-align: middle;
+.admin-tabs-now:hover {
+    background: #048484;
 }
-.campaign-group {
-    color: #aaa;
-    cursor: default;
-    font-size: 0.9em;
-    padding: 0.5em;
+.admin-tabs-now {
+    background: #039da6;
+    color: #fff;
+    border: 1px solid #039da6;
+    //border-bottom: 2px solid #039da6;
+}
+#admin-tab-2 {
+    margin-left: -0.55em;
+    padding: 0.7em;
     padding-left: 1.5em;
-    padding-right: 1.5em;
+    padding-right: 2em;
+    border-radius: none;
+    border-radius: 0px 100px 100px 0px;
 }
-
-#campaign-goal-description {
-    min-height: 8em;
-}
-*/
-
 

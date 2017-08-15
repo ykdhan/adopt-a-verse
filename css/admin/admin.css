@@ -39,7 +39,7 @@
 
 
 #landing-wrapper {
-    max-width: 50em;
+    max-width: 65em;
     min-height: 20em;
     padding: 2em;
     margin-top: 1em;
@@ -167,35 +167,46 @@
     background-blend-mode: multiply;
 }
 .col-church-name {
-    width: 28.7em;
+    width: 25.7em;
     padding-left: 2.2em;
     text-align: left;
     display: inline-block;
 }
 .col-church-state {
+    width: 13.5em;
+    text-align: left;
+    display: inline-block;
+}
+.col-church-campaign {
     display: inline-block;
 }
 
 .col-campaign-book {
-    width: 11.5em;
+    width: 12em;
     text-align: left;
     display: inline-block;
     vertical-align: middle;
 }
 .col-campaign-language {
-    width: 11em;
+    width: 14.5em;
     text-align: left;
     display: inline-block;
     vertical-align: middle;
 }
 .col-campaign-church {
+    width: 20.5em;
+    text-align: left;
+    display: inline-block;
+    vertical-align: middle;
+}
+.col-campaign-percentage {
     text-align: right;
     display: inline-block;
     vertical-align: middle;
 }
 
 .col-language-id {
-    width: 7em;
+    width: 9em;
     text-align: left;
     display: inline-block;
     vertical-align: middle;
@@ -212,7 +223,7 @@
 }
 
 .col-user-name {
-    width: 34em;
+    width: 38em;
     text-align: left;
     display: inline-block;
     vertical-align: middle;
@@ -296,12 +307,13 @@
 /* List Columns  */
 
 #column-campaign-book {
-    width: 11em;
+    width: 11.5em;
 }
 #column-campaign-language {
-    width: 11em;
+    width: 14.5em;
 }
 #column-campaign-church {
+    width: 19.5em;
 }
 
 
@@ -310,16 +322,17 @@
     width: 4em;
 }
 #column-church-name {
-    width: 28em;
+    width: 25em;
     padding-left: 2em;
 }
 #column-church-state {
+    width: 13em;
 }
 
 
 
 #column-language-id {
-    width: 6.6em;
+    width: 8.6em;
 }
 #column-language-people-group {
     width: 18.6em;
@@ -329,7 +342,7 @@
 
 
 #column-user-name {
-    width: 33.6em;
+    width: 37.6em;
 }
 #column-user-role {
 }

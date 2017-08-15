@@ -619,24 +619,30 @@
           
       } else if ( id == 'add-admin' ) {
           
-          document.getElementById('admin-email').value = "";
+          document.getElementById('admin-existing-email').value = "";
+          document.getElementById('admin-new-email').value = "";
           document.getElementById('admin-first-name').value = "";
           document.getElementById('admin-last-name').value = "";
           document.getElementById('admin-phone').value = "";
           
-          document.getElementById('error-email').innerHTML = "";
-          document.getElementById('error-email').style.visibility = "hidden";
+          document.getElementById('error-existing-email').innerHTML = "";
+          document.getElementById('error-existing-email').style.visibility = "hidden";
+          
+          document.getElementById('error-new-email').innerHTML = "";
+          document.getElementById('error-new-email').style.visibility = "hidden";
           
           document.getElementById('admin-first-name').style.borderColor = "#d1d1d1";
           document.getElementById('admin-last-name').style.borderColor = "#d1d1d1";
-          document.getElementById('admin-email').style.borderColor = "#d1d1d1";
+          document.getElementById('admin-new-email').style.borderColor = "#d1d1d1";
+          document.getElementById('admin-existing-email').style.borderColor = "#d1d1d1";
           document.getElementById('admin-phone').style.borderColor = "#d1d1d1";
           
           admin_data = {
             first_name: "",
             last_name: "",
             phone: "",
-            email: ""
+            new_email: "",
+            existing_email: ""
           }
           
       } else if ( id == 'add-campaign' ) {
@@ -684,6 +690,9 @@
               window.location.href = "church.php?id="+church_id;
           } else {
               
+              clearInterval(timeinterval);
+              $('.d-day').css({ display: "none" });
+              
               document.getElementById('campaign-goal-description').innerHTML = '<div id="details-goal-description" class="text-editor"></div>';
               document.getElementById('campaign-duration').innerHTML = '<input type="date" class="admin-text" id="details-start-date" onchange="edit_start_date(this)">&nbsp; to &nbsp;<input type="date" class="admin-text" id="details-end-date" onchange="edit_end_date(this)">';
               
@@ -704,7 +713,6 @@
 
               var start_date = start_now.getFullYear()+"-"+(start_month)+"-"+(start_day);
               var end_date = end_now.getFullYear()+"-"+(end_month)+"-"+(end_day);
-              
               
               document.getElementById('details-url').innerHTML = "adopt-wycliffe.org/"+campaigns[campaign_id]['url'];
               document.getElementById('details-language').innerHTML = campaigns[campaign_id]['language'];
@@ -730,6 +738,9 @@
                   document.getElementById('campaign-goal-description').innerHTML = campaigns[campaign_id]['goal_description'];
               } else {
                   
+                  $('.d-day').css({ display: "inline-block" });
+                  
+                  
                   var edits = document.getElementById('details-goal-description').getElementsByClassName("ql-editor");
                   for(var i = 0; i < edits.length; i++) {
                       edits[i].innerHTML = campaigns[campaign_id]['goal_description'];
@@ -740,8 +751,12 @@
                       var start_month = start_now.getMonth() + 1;
                       var start = start_month+"/"+start_now.getDate()+"/"+start_year;
                       document.getElementById('campaign-duration').innerHTML = start+'&nbsp; to &nbsp;<input type="date" class="admin-text" id="details-end-date" onchange="edit_end_date(this)">';
+                      
+                      countdownDate(campaigns[campaign_id]['end_date']);
                   } else {
                       document.getElementById('details-start-date').value = start_date;
+                      
+                      countdownDate(campaigns[campaign_id]['start_date']);
                   }
                   document.getElementById('details-end-date').value = end_date;
                   
@@ -783,6 +798,29 @@
             language: "",
             pdf_url: ""
           }
+      } else if (id == "add-wycliffe-admin") {
+          
+          document.getElementById('admin-email').value = "";
+          document.getElementById('admin-first-name').value = "";
+          document.getElementById('admin-last-name').value = "";
+          document.getElementById('admin-phone').value = "";
+          
+          document.getElementById('error-email').innerHTML = "";
+          document.getElementById('error-email').style.visibility = "hidden";
+          
+          document.getElementById('admin-first-name').style.borderColor = "#d1d1d1";
+          document.getElementById('admin-last-name').style.borderColor = "#d1d1d1";
+          document.getElementById('admin-email').style.borderColor = "#d1d1d1";
+          document.getElementById('admin-phone').style.borderColor = "#d1d1d1";
+          
+          admin_data = {
+            first_name: "",
+            last_name: "",
+            phone: "",
+            email: ""
+          }
+          
+          
           
       } else if (id == "language-info") {
           
@@ -826,6 +864,10 @@
               window.location.href = "admin.php";
           } else {
               
+              
+              clearInterval(timeinterval);
+              $('.d-day').css({ display: "none" });
+              
               document.getElementById('campaign-goal-description').innerHTML = '<div id="details-goal-description" class="text-editor"></div>';
               document.getElementById('campaign-duration').innerHTML = '<input type="date" class="admin-text" id="details-start-date" onchange="edit_start_date(this)">&nbsp; to &nbsp;<input type="date" class="admin-text" id="details-end-date" onchange="edit_end_date(this)">';
               
@@ -851,8 +893,8 @@
               document.getElementById('details-url').innerHTML = "adopt-wycliffe.org/"+campaigns[campaign_id]['url'];
               document.getElementById('details-language').innerHTML = campaigns[campaign_id]['language'];
               document.getElementById('details-book').innerHTML = campaigns[campaign_id]['book'];
-              document.getElementById('details-goal-amount').innerHTML = goal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-              document.getElementById('details-verse-price').innerHTML = verse.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+              document.getElementById('details-goal-amount').innerHTML = "$"+goal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+              document.getElementById('details-verse-price').innerHTML = "$"+verse.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
               document.getElementById('details-church').innerHTML = campaigns[campaign_id]['church'];
               
               details_description = campaigns[campaign_id]['goal_description'];
@@ -873,6 +915,9 @@
                   document.getElementById('campaign-goal-description').innerHTML = campaigns[campaign_id]['goal_description'];
               } else {
                   
+                  $('.d-day').css({ display: "inline-block" });
+                  
+                  
                   var edits = document.getElementById('details-goal-description').getElementsByClassName("ql-editor");
                   for(var i = 0; i < edits.length; i++) {
                       edits[i].innerHTML = campaigns[campaign_id]['goal_description'];
@@ -883,8 +928,12 @@
                       var start_month = start_now.getMonth() + 1;
                       var start = start_month+"/"+start_now.getDate()+"/"+start_year;
                       document.getElementById('campaign-duration').innerHTML = start+'&nbsp; to &nbsp;<input type="date" class="admin-text" id="details-end-date" onchange="edit_end_date(this)">';
+                      
+                      countdownDate(campaigns[campaign_id]['end_date']);
                   } else {
                       document.getElementById('details-start-date').value = start_date;
+                      
+                      countdownDate(campaigns[campaign_id]['start_date']);
                   }
                   document.getElementById('details-end-date').value = end_date;
                   

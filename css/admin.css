@@ -508,7 +508,7 @@ input[type='date'] {
 /* List  */
 
 .list {
-    width: 40em;
+    width: 55em;
     border: 0;
     padding: 0.7em;
     padding-left: 0;
@@ -561,11 +561,8 @@ input[type='date'] {
     color: #aaa;
 }
 
-
-
-
 .list-columns {
-    width: 40em;
+    width: 55em;
     border: 0;
     border-bottom: 2px solid #555;
     padding: 0.7em;
@@ -681,7 +678,7 @@ input[type='date'] {
     visibility: hidden;
     position: absolute;
     float: right !important;
-    width: 22em;
+    width: 26em;
     border: 0;
     border-radius: 4px;
     background: none;
@@ -694,7 +691,9 @@ input[type='date'] {
     margin-left: -1.3em;
     vertical-align: middle;
 }
-
+.error span {
+    margin-left: 2.2em;
+}
 .error-icon {
     margin-right: 0.5em;
     width: 1.7em;
