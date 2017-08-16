@@ -12,7 +12,7 @@ if ($mysqli->connect_errno) {
     die('Connect Error ('.mysqli_connect_errno().') '.mysqli_connect_error());
 }
 
-$sql = "SELECT * FROM purchase_history INNER JOIN campaign ON campaign.id = campaign_id WHERE church_id = '{$church_id}'";
+$sql = "SELECT * FROM purchase_history INNER JOIN campaign ON campaign.id = campaign_id WHERE church_id = '{$church_id}' AND status != 'denied'";
 
 $answer = false;
 

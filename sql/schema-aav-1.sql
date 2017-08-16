@@ -57,6 +57,7 @@ CREATE TABLE IF NOT EXISTS `aav`.`campaign` (
   `start_date` DATE NULL DEFAULT NULL,
   `end_date` DATE NULL DEFAULT NULL,
   `url` VARCHAR(45) NULL DEFAULT NULL,
+  `verified` INT(11) NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   INDEX `church_id_idx` (`church_id` ASC),
   INDEX `language_id_idx` (`language_id` ASC),

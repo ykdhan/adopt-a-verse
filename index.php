@@ -80,15 +80,7 @@
 <div id="bg" align="center">
 <div id="landing-wrapper">
     
-    
-    
-    <div class="landing-tab-div">
-        <div class="landing-tab">
-            <button class="capitalize landing-tabs landing-tabs-now" onclick="landing_tab(event, 'tab-church')">Church</button>
-            <button class="capitalize landing-tabs" onclick="landing_tab(event, 'tab-individual')">Individual</button>
-        </div>
-    </div>
-    
+    <h1>Campaigns</h1>
     
     <div id="tab-church" class="landing-content landing-content-now">
 
@@ -96,12 +88,6 @@
 
         <div class="list" id="list-church"></div>
         
-    </div>
-    
-    <div id="tab-individual" class="landing-content">
-        <input type="text" class="landing-text" id="search-individual" onkeyup="" placeholder="Search">
-        
-        <div class="list" id="list-individual">Not Available</div>
     </div>
     
     
@@ -133,14 +119,14 @@ function search_church() {
             } else {
                 var resp = JSON.parse(ajaxObj.responseText);
 
-                for (var i = 0; i < Object.keys(resp.campaign).length; i++) {
+                for (var i = 0; i < Object.keys(resp).length; i++) {
 
-                    var num = Object.keys(resp.campaign)[i];
-                    var state = resp.campaign[num]['state'];
-                    var church = resp.campaign[num]['church'];
-                    var id = resp.campaign[num]['id'];
-                    var langauge = resp.campaign[num]['langauge'];
-                    var book = resp.campaign[num]['book'];
+                    var num = Object.keys(resp)[i];
+                    var state = resp[num]['state'];
+                    var church = resp[num]['church'];
+                    var id = resp[num]['id'];
+                    var langauge = resp[num]['langauge'];
+                    var book = resp[num]['book'];
 
                     document.getElementById('list-church').innerHTML += '<div class="list-item church-item" onclick="select_church(\''+id+'\')"><div class="row-1">'+church+'<span class="church-tag">'+state+'</span></div><div class="row-2">'+langauge+'<span class="church-tag">'+book+'</span></div></div>';
 
@@ -177,32 +163,6 @@ function select_church(ch) {
         window.location.href = "app.php?id="+ch;
     }
     
-}
-
-
-    
-function landing_tab(evt, tabName) {
-
-    // Declare all variables
-    var i, tabcontent, tablinks;
-
-    // Get all elements with class="tabcontent" and hide them
-    tabcontent = document.getElementsByClassName("landing-content");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
-
-    // Get all elements with class="tablinks" and remove the class "active"
-    tablinks = document.getElementsByClassName("landing-tabs");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" landing-tabs-now", "");
-    }
-
-    // Show the current tab, and add an "active" class to the button that opened the tab
-    document.getElementById(tabName).style.display = "block";
-    evt.currentTarget.className += " landing-tabs-now";
-    
-
 }
 
 </script>

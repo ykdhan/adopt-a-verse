@@ -63,6 +63,7 @@ if (isset($_SESSION['aav-admin'])) {
             <button class="capitalize landing-tabs" onclick="landing_tab(event, 'tab-church')">Church</button>
             <button class="capitalize landing-tabs" onclick="landing_tab(event, 'tab-language')">Language</button>
             <button class="capitalize landing-tabs" onclick="landing_tab(event, 'tab-user')">User</button>
+            <button id="landing-tab-transaction" class="capitalize landing-tabs" onclick="landing_tab(event, 'tab-transaction')">Purchase History</button>
         </div>
     </div>
     
@@ -70,9 +71,11 @@ if (isset($_SESSION['aav-admin'])) {
     <div id="tab-campaign" class="landing-content landing-content-now">
         <input type="text" class="landing-text" id="search-campaign" onkeyup="search_campaign()" placeholder="Search by a book of the Bible, language or church name">
         <div class="list-columns">
+            <div class="list-column" id="column-campaign-status">Status</div>
+            <div class="list-column" id="column-campaign-church">Church</div>
             <div class="list-column" id="column-campaign-book">Book</div>
             <div class="list-column" id="column-campaign-language">Language</div>
-            <div class="list-column" id="column-campaign-church">Church</div>
+            <div class="list-column" id="column-campaign-duration">Duration</div>
             <div class="list-column" id="column-campaign-percentage">Progress</div>
         </div>
         <div class="list" id="list-campaign">Not Available</div>
@@ -90,7 +93,7 @@ if (isset($_SESSION['aav-admin'])) {
             <div class="list-column" id="column-church-profile-picture"></div>
             <div class="list-column" id="column-church-name">Name</div>
             <div class="list-column" id="column-church-state">State</div>
-            <div class="list-column" id="column-church-campaign"># of Campaigns</div>
+            <div class="list-column" id="column-church-campaign">Campaigns</div>
         </div>
         <div class="list" id="list-church">Not Available</div>
         
@@ -120,9 +123,23 @@ if (isset($_SESSION['aav-admin'])) {
         </div>
         <div class="list-columns">
             <div class="list-column" id="column-user-name">Name</div>
+            <div class="list-column" id="column-user-email">Email Address</div>
             <div class="list-column" id="column-user-role">Role</div>
         </div>
         <div class="list" id="list-user">Not Available</div>
+    </div>
+    
+    <div id="tab-transaction" class="landing-content">
+        <input type="text" class="landing-text" id="search-transaction" onkeyup="search_transaction()" placeholder="Search by transaction ID, campaign ID or user name">
+        <div class="list-columns">
+            <div class="list-column" id="column-transaction-tid">Transaction ID</div>
+            <div class="list-column" id="column-transaction-cid">Campaign ID</div>
+            <div class="list-column" id="column-transaction-name">User Name</div>
+            <div class="list-column" id="column-transaction-verses">Verses</div>
+            <div class="list-column" id="column-transaction-amount">Amount</div>
+            <div class="list-column" id="column-transaction-date">Date</div>
+        </div>
+        <div class="list" id="list-transaction">Not Available</div>
     </div>
       
     
@@ -540,15 +557,130 @@ function search_campaign() {
                     campaigns[id]['raised'] = raised;
                     campaigns[id]['percentage'] = percentage;
                     
+                    /*
+                    
                     var goal = parseFloat(goal_amount.toString().replace(/,/g,''));
                     goal_amount = goal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     
                     var verse = parseFloat(verse_price.toString().replace(/,/g,''));
                     verse_price = verse.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    
+                    var start_now = new Date(start_date);
+                    var start_year = (""+start_now.getFullYear()).slice(-2);
+                    var start_month = start_now.getMonth() + 1;
+                    var start_date = start_month+"/"+start_now.getDate()+"/"+start_year;
 
-                    document.getElementById('list-campaign').innerHTML += '<div class="list-item" onclick="select_campaign(\''+id+'\')"><div class="col-campaign-book">'+book+'</div><div class="col-campaign-language">'+language+'</div><div class="col-campaign-church">'+church+'</div><div class="col-campaign-percentage">'+percentage+'%</div></div>';
+                    var end_now = new Date(end_date);
+                    var end_year = (""+end_now.getFullYear()).slice(-2);
+                    var end_month = end_now.getMonth() + 1;
+                    var end_date = end_month+"/"+end_now.getDate()+"/"+end_year;
+
+                    var duration = start_date+" - "+end_date;
+
+                    document.getElementById('list-campaign').innerHTML += '<div class="list-item" onclick="select_campaign(\''+id+'\')"><div class="col-campaign-status"><div class="status-'+status+'"></div></div><div class="col-campaign-church">'+church+'</div><div class="col-campaign-book">'+book+'</div><div class="col-campaign-language">'+language+'</div><div class="col-campaign-duration">'+duration+'</div><div class="col-campaign-percentage">'+percentage+'%</div></div>';
+                    
+                    */
 
                 }
+                
+                
+                // PRINT IN PROGRESS
+                for (var i = 0; i < Object.keys(campaigns).length; i++) {
+                    var num = Object.keys(campaigns)[i];
+                    
+                    if (campaigns[num]['status'] == "inprogress") {
+                        
+                        var start_now = new Date(campaigns[num]['start_date']);
+                        var start_year = (""+start_now.getFullYear()).slice(-2);
+                        var start_month = start_now.getMonth() + 1;
+                        var start_date = start_month+"/"+start_now.getDate()+"/"+start_year;
+
+                        var end_now = new Date(campaigns[num]['end_date']);
+                        var end_year = (""+end_now.getFullYear()).slice(-2);
+                        var end_month = end_now.getMonth() + 1;
+                        var end_date = end_month+"/"+end_now.getDate()+"/"+end_year;
+
+                        var duration = start_date+" - "+end_date;
+                        
+                        document.getElementById('list-campaign').innerHTML += '<div class="list-item" onclick="select_campaign(\''+num+'\')"><div class="col-campaign-status"><div class="status-inprogress"></div></div><div class="col-campaign-church">'+campaigns[num]['church']+'</div><div class="col-campaign-book">'+campaigns[num]['book']+'</div><div class="col-campaign-language">'+campaigns[num]['language']+'</div><div class="col-campaign-duration">'+duration+'</div><div class="col-campaign-percentage">'+campaigns[num]['percentage']+'%</div></div>';
+                        
+                    }
+                    
+                }
+                
+                // PRINT SCHEDULED
+                for (var i = 0; i < Object.keys(campaigns).length; i++) {
+                    var num = Object.keys(campaigns)[i];
+                    
+                    if (campaigns[num]['status'] == "coming") {
+                        
+                        var start_now = new Date(campaigns[num]['start_date']);
+                        var start_year = (""+start_now.getFullYear()).slice(-2);
+                        var start_month = start_now.getMonth() + 1;
+                        var start_date = start_month+"/"+start_now.getDate()+"/"+start_year;
+
+                        var end_now = new Date(campaigns[num]['end_date']);
+                        var end_year = (""+end_now.getFullYear()).slice(-2);
+                        var end_month = end_now.getMonth() + 1;
+                        var end_date = end_month+"/"+end_now.getDate()+"/"+end_year;
+
+                        var duration = start_date+" - "+end_date;
+                        
+                        document.getElementById('list-campaign').innerHTML += '<div class="list-item" onclick="select_campaign(\''+num+'\')"><div class="col-campaign-status"><div class="status-coming"></div></div><div class="col-campaign-church">'+campaigns[num]['church']+'</div><div class="col-campaign-book">'+campaigns[num]['book']+'</div><div class="col-campaign-language">'+campaigns[num]['language']+'</div><div class="col-campaign-duration">'+duration+'</div><div class="col-campaign-percentage">'+campaigns[num]['percentage']+'%</div></div>';
+                        
+                    }
+                    
+                }
+                
+                // PRINT PENDING
+                for (var i = 0; i < Object.keys(campaigns).length; i++) {
+                    var num = Object.keys(campaigns)[i];
+                    
+                    if (campaigns[num]['status'] == "pending") {
+                        
+                        var start_now = new Date(campaigns[num]['start_date']);
+                        var start_year = (""+start_now.getFullYear()).slice(-2);
+                        var start_month = start_now.getMonth() + 1;
+                        var start_date = start_month+"/"+start_now.getDate()+"/"+start_year;
+
+                        var end_now = new Date(campaigns[num]['end_date']);
+                        var end_year = (""+end_now.getFullYear()).slice(-2);
+                        var end_month = end_now.getMonth() + 1;
+                        var end_date = end_month+"/"+end_now.getDate()+"/"+end_year;
+
+                        var duration = start_date+" - "+end_date;
+                        
+                        document.getElementById('list-campaign').innerHTML += '<div class="list-item" onclick="select_campaign(\''+num+'\')"><div class="col-campaign-status"><div class="status-pending"></div></div><div class="col-campaign-church">'+campaigns[num]['church']+'</div><div class="col-campaign-book">'+campaigns[num]['book']+'</div><div class="col-campaign-language">'+campaigns[num]['language']+'</div><div class="col-campaign-duration">'+duration+'</div><div class="col-campaign-percentage">'+campaigns[num]['percentage']+'%</div></div>';
+                        
+                    }
+                    
+                }
+                
+                // PRINT COMPLETE
+                for (var i = 0; i < Object.keys(campaigns).length; i++) {
+                    var num = Object.keys(campaigns)[i];
+                    
+                    if (campaigns[num]['status'] == "complete") {
+                        
+                        var start_now = new Date(campaigns[num]['start_date']);
+                        var start_year = (""+start_now.getFullYear()).slice(-2);
+                        var start_month = start_now.getMonth() + 1;
+                        var start_date = start_month+"/"+start_now.getDate()+"/"+start_year;
+
+                        var end_now = new Date(campaigns[num]['end_date']);
+                        var end_year = (""+end_now.getFullYear()).slice(-2);
+                        var end_month = end_now.getMonth() + 1;
+                        var end_date = end_month+"/"+end_now.getDate()+"/"+end_year;
+
+                        var duration = start_date+" - "+end_date;
+                        
+                        document.getElementById('list-campaign').innerHTML += '<div class="list-item" onclick="select_campaign(\''+num+'\')"><div class="col-campaign-status"><div class="status-complete"></div></div><div class="col-campaign-church">'+campaigns[num]['church']+'</div><div class="col-campaign-book">'+campaigns[num]['book']+'</div><div class="col-campaign-language">'+campaigns[num]['language']+'</div><div class="col-campaign-duration">'+duration+'</div><div class="col-campaign-percentage">'+campaigns[num]['percentage']+'%</div></div>';
+                        
+                    }
+                    
+                }
+                
+                
             }
             
         }}}
@@ -604,8 +736,10 @@ function search_church() {
                     } else {
                         image = '../img/choose_image.png';
                     }
+                    
+                    var number_of_campaigns = num_campaign.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-                    document.getElementById('list-church').innerHTML += '<div class="list-item" onclick="select_church(\''+id+'\')"><div class="col-church-profile-picture" style="background-image: url(\''+image+'\')"></div><div class="col-church-name">'+church+'</div><div class="col-church-state">'+state+'</div><div class="col-church-campaign">'+num_campaign+'</div></div>';
+                    document.getElementById('list-church').innerHTML += '<div class="list-item" onclick="select_church(\''+id+'\')"><div class="col-church-profile-picture" style="background-image: url(\''+image+'\')"></div><div class="col-church-name">'+church+'</div><div class="col-church-state">'+state+'</div><div class="col-church-campaign">'+number_of_campaigns+'</div></div>';
                 }
             }
             
@@ -738,7 +872,7 @@ function search_user() {
                         admin = "<img alt='' src='../img/wycliffe_admin.svg'>";
                     }
 
-                    document.getElementById('list-user').innerHTML += '<div class="list-item" onclick="select_user(\''+id+'\')"><div class="col-user-name">'+first_name+' '+last_name+'</div><div class="col-user-role">'+admin+'</div></div>';
+                    document.getElementById('list-user').innerHTML += '<div class="list-item" onclick="select_user(\''+id+'\')"><div class="col-user-name">'+first_name+' '+last_name+'</div><div class="col-user-email">'+email+'</div><div class="col-user-role">'+admin+'</div></div>';
                 }
             }
             
@@ -760,6 +894,82 @@ function select_user(id) {
 }
 
 
+    
+var transactions = {};
+    
+search_transaction();
+    
+function search_transaction() {
+    
+    var word = document.getElementById('search-transaction');
+    word.value = word.value.replace(/[^a-zA-Z0-9\s]+/, '');
+    
+    
+    var ajaxObj = new XMLHttpRequest();
+        ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+            
+            document.getElementById('list-transaction').innerHTML = "";
+            
+            if (ajaxObj.responseText == "no\n") {
+                document.getElementById('list-transaction').innerHTML += '<div class="list-group">No search result.</div>';
+            } else {
+                var resp = JSON.parse(ajaxObj.responseText);
+                
+                console.log(resp);
+
+                for (var i = 0; i < Object.keys(resp).length; i++) {
+
+                    var num = Object.keys(resp)[i];
+                    var id = Object.keys(resp[num])[0];
+                    var campaign = resp[num][id]['campaign'];
+                    var name = resp[num][id]['name'];
+                    var verses = resp[num][id]['verses'];
+                    var amount = resp[num][id]['amount'];
+                    var date = resp[num][id]['date'];
+                    var status = resp[num][id]['status'];
+                    
+                    transactions[id] = {};
+                    transactions[id]['campaign'] = campaign;
+                    transactions[id]['name'] = name;
+                    transactions[id]['verses'] = verses;
+                    transactions[id]['amount'] = amount;
+                    transactions[id]['date'] = date;
+                    transactions[id]['status'] = status;
+                    
+                    
+                    var num_amount = amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    var num_verses = verses.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+                    
+                    var p_date = new Date(date);
+                    var year = (""+p_date.getFullYear()).slice(-2);
+                    var month = p_date.getMonth() + 1;
+                    var purchase_date = month+"/"+p_date.getDate()+"/"+year;
+                    
+                    if (status == "pending") {
+                        document.getElementById('list-transaction').innerHTML += '<div class="list-item"><div class="col-transaction-tid">'+id+'</div><div class="col-transaction-cid">'+campaign+'</div><div class="col-transaction-name">'+name+'</div><div class="col-transaction-verses">'+num_verses+'</div><div class="col-transaction-amount">&#36;'+num_amount+'</div><div class="col-transaction-date">'+purchase_date+'</div><div class="col-transaction-buttons"><button type="button" onclick="confirm_transaction(\''+id+'\')"><img alt="Confirm" src="../img/error_valid.png"></button><button type="button" onclick="cancel_transaction(\''+id+'\')"><img alt="Cancel" src="../img/error_invalid.png"></button></div></div>';
+                        
+                    } else if (status == "complete") {
+                        document.getElementById('list-transaction').innerHTML += '<div class="list-item"><div class="col-transaction-tid">'+id+'</div><div class="col-transaction-cid">'+campaign+'</div><div class="col-transaction-name">'+name+'</div><div class="col-transaction-verses">'+num_verses+'</div><div class="col-transaction-amount">&#36;'+num_amount+'</div><div class="col-transaction-date">'+purchase_date+'</div><div class="col-transaction-buttons"></div></div>';
+                    } else if (status == "denied") {
+                        document.getElementById('list-transaction').innerHTML += '<div class="list-item transaction-denied"><div class="col-transaction-tid">'+id+'</div><div class="col-transaction-cid">'+campaign+'</div><div class="col-transaction-name">'+name+'</div><div class="col-transaction-verses">'+num_verses+'</div><div class="col-transaction-amount">&#36;'+num_amount+'</div><div class="col-transaction-date">'+purchase_date+'</div><div class="col-transaction-buttons"></div></div>';
+                    }
+
+                }
+            }
+            
+        }}}
+        ajaxObj.open("GET", "sql-transactions.php?keyword="+word.value);
+        ajaxObj.send();
+        
+}
+    
+    
+    
+    
+    
+    
+    
     
 function landing_tab(evt, tabName) {
 
@@ -1584,6 +1794,51 @@ function edit_user() {
     }
     
 }
+    
+    
+    
+// TRANSACTION
+    
+function confirm_transaction(id) {
+    if (window.confirm("[Confirm Transaction]\r\nAre you sure?")) {
+        var ajaxObj = new XMLHttpRequest();
+        ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+
+            if (ajaxObj.responseText == "no\n") {
+                
+                alert("Error occurred");
+                
+            } else {
+
+                search_transaction();
+            }
+            
+        }}}
+        ajaxObj.open("GET", "sql-confirm-transaction.php?id="+id);
+        ajaxObj.send();
+    }
+}
+    
+function cancel_transaction(id) {
+    if (window.confirm("[Cancel Transaction]\r\nAre you sure?")) {
+        var ajaxObj = new XMLHttpRequest();
+        ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+
+            if (ajaxObj.responseText == "no\n") {
+                
+                alert("Error occurred");
+                
+            } else {
+
+                search_transaction();
+            }
+            
+        }}}
+        ajaxObj.open("GET", "sql-cancel-transaction.php?id="+id);
+        ajaxObj.send();
+    }
+}
+    
     
     
     

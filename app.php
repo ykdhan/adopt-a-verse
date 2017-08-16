@@ -544,12 +544,10 @@ function init() {
             var start_date = new Date(campaign.start_date);
             var start_year = (""+start_date.getFullYear()).slice(-2);
             var start_month = start_date.getMonth() + 1;
-            //var start_month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][start_date.getMonth()];
             var start = start_month+"/"+start_date.getDate()+"/"+start_year;
             var end_date = new Date(campaign.end_date);
             var end_year = (""+end_date.getFullYear()).slice(-2);
             var end_month = end_date.getMonth() + 1;
-            //var end_month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][end_date.getMonth()];
             var end = end_month+"/"+end_date.getDate()+"/"+end_year;
             document.getElementById('count-range').innerHTML = start+" - "+end;
             
@@ -588,34 +586,43 @@ function init() {
             var ajaxObj1 = new XMLHttpRequest();
             ajaxObj1.onreadystatechange= function() { if(ajaxObj1.readyState == 4) { if(ajaxObj1.status == 200) {
                 
-                var resp = JSON.parse(ajaxObj1.responseText);
-
-                var count = 0;
+                var total_still_need = 0;
                 
-                for (var i = 0; i < Object.keys(resp).length; i++) {
+                if (ajaxObj1.responseText == "no\n") {
+                    
+                    total_adopted = 0;
+                    total_raised = 0;
+                    total_percentage = 0;
+                    total_still_need = parseFloat(total_goal).toFixed(2);
+                    
+                } else {
+                    var resp = JSON.parse(ajaxObj1.responseText);
 
-                    var chapter = Object.keys(resp)[i];
-                    taken[chapter] = {};
-                    
-                    for (var j = 0; j < Object.keys(resp[chapter]).length; j++) {
-                    
-                        var verse = Object.keys(resp[chapter])[j];
-                        var sponsor = resp[chapter][verse];
-                        
-                        taken[chapter][verse] = sponsor;
-                        
-                        count++;
+                    var count = 0;
+
+                    for (var i = 0; i < Object.keys(resp).length; i++) {
+
+                        var chapter = Object.keys(resp)[i];
+                        taken[chapter] = {};
+
+                        for (var j = 0; j < Object.keys(resp[chapter]).length; j++) {
+                            var verse = Object.keys(resp[chapter])[j];
+                            var sponsor = resp[chapter][verse];
+
+                            taken[chapter][verse] = sponsor;
+
+                            count++;
+                        }
                     }
+                    
+                    total_adopted = count;
+                    total_raised = parseFloat(count * campaign.verse_price).toFixed(2);
+                    total_percentage = Math.round(total_raised / total_goal * 100);
+                    total_still_need = parseFloat(total_goal - total_raised).toFixed(2);
                 }
                 
                 console.log("Taken Verses:");
                 console.log(taken);
-                
-                total_adopted = count;
-                total_raised = parseFloat(count * campaign.verse_price).toFixed(2);
-                total_percentage = Math.round(total_raised / total_goal * 100);
-                
-                var total_still_need = parseFloat(total_goal - total_raised).toFixed(2);
                 
                 document.getElementById('total-still-need').innerHTML = "$" + total_still_need.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
                 document.getElementById('small-total-still-need').innerHTML = "$" + total_still_need.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
@@ -747,17 +754,27 @@ function drawChart() {
      // start the animation loop
      var handler = setInterval(function(){
          // values increment
-         percent += 1;
-         document.getElementById('total-percentage').innerHTML = percent + "%";
-         // apply new values
-         data.setValue(0, 1, (total_goal * percent / 100));
-         data.setValue(1, 1, total_goal - (total_goal * percent / 100));
-         // update the pie
-         chart.draw(data, options);
-         // check if we have reached the desired value
-         if (percent >= total_percentage)
-             // stop the loop
-             clearInterval(handler);
+         
+         if (total_percentage != 0) {
+             percent += 1;
+             document.getElementById('total-percentage').innerHTML = percent + "%";
+             // apply new values
+             data.setValue(0, 1, (total_goal * percent / 100));
+             data.setValue(1, 1, total_goal - (total_goal * percent / 100));
+             // update the pie
+             chart.draw(data, options);
+             // check if we have reached the desired value
+             if (percent >= total_percentage)
+                 // stop the loop
+                 clearInterval(handler);
+
+         } else {
+                document.getElementById('total-percentage').innerHTML = percent + "%";
+                clearInterval(handler);
+         }
+            
+         
+         
      }, 10);
         
     } else {
@@ -858,17 +875,24 @@ function drawSmallChart() {
         // start the animation loop
         var handler = setInterval(function(){
             // values increment
-            percent += 1;
-            document.getElementById('small-total-percentage').innerHTML = percent + "%";
-            // apply new values
-            data.setValue(0, 1, (total_goal * percent / 100));
-            data.setValue(1, 1, total_goal - (total_goal * percent / 100));
-            // update the pie
-            chart.draw(data, options);
-            // check if we have reached the desired value
-            if (percent >= total_percentage)
-                // stop the loop
+            
+            if (total_percentage != 0) {
+                percent += 1;
+                document.getElementById('small-total-percentage').innerHTML = percent + "%";
+                // apply new values
+                data.setValue(0, 1, (total_goal * percent / 100));
+                data.setValue(1, 1, total_goal - (total_goal * percent / 100));
+                // update the pie
+                chart.draw(data, options);
+                // check if we have reached the desired value
+                if (percent >= total_percentage)
+                    // stop the loop
+                    clearInterval(handler);
+            } else {
+                document.getElementById('small-total-percentage').innerHTML = percent + "%";
                 clearInterval(handler);
+            }
+            
         }, 10);
         
         
@@ -1334,7 +1358,7 @@ function checkout() {
     if (honor) {
         
         if (give_data.display_name == "") {
-            give_data.display_name = give_data.first_name + " " + give_data.last_name[0] + ".";
+            give_data.display_name = give_data.first_name + " " + give_data.last_name[0];
         }
         
     } else if (anonymous) {
@@ -1348,7 +1372,7 @@ function checkout() {
     } else {
         
         if (give_data.display_name == "") {
-            give_data.display_name = give_data.first_name + " " + give_data.last_name[0] + ".";
+            give_data.display_name = give_data.first_name + " " + give_data.last_name[0];
         }
         
     }

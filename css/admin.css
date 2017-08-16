@@ -508,7 +508,7 @@ input[type='date'] {
 /* List  */
 
 .list {
-    width: 55em;
+    width: 65em;
     border: 0;
     padding: 0.7em;
     padding-left: 0;
@@ -562,7 +562,7 @@ input[type='date'] {
 }
 
 .list-columns {
-    width: 55em;
+    width: 65em;
     border: 0;
     border-bottom: 2px solid #555;
     padding: 0.7em;

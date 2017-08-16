@@ -44,6 +44,10 @@ if ($result = $mysqli->query($sql)) {
             $output[$row['camp_id']]['status'] = "coming";
         }
         
+        if ($row['verified'] == 0) {
+            $output[$row['camp_id']]['status'] = "pending";
+        }
+        
     }
 } 
 

@@ -39,7 +39,8 @@ $sql = "INSERT INTO campaign (id,
                      verse_price,
                       start_date,
                         end_date,
-                             url)
+                             url,
+                        verified)
                VALUES ('".$id."',
                      ".$church.",
                  '".$language."',
@@ -49,7 +50,8 @@ $sql = "INSERT INTO campaign (id,
                 ".$verse_price.",
                '".$start_date."',
                  '".$end_date."',
-                      '".$url."')";
+                      '".$url."',
+                               0)";
 
 if ($result = $mysqli->query($sql)) {
     echo "yes";

@@ -39,7 +39,7 @@
 
 
 #landing-wrapper {
-    max-width: 65em;
+    max-width: 75em;
     min-height: 20em;
     padding: 2em;
     margin-top: 1em;
@@ -103,6 +103,12 @@
 .landing-tabs-now {
     border-bottom: 6px solid #039da6;
 }
+
+#landing-tab-transaction {
+    margin-left: 13em;
+}
+
+
 
 .landing-text {
     width: 32em;
@@ -168,52 +174,67 @@
 }
 .col-church-name {
     width: 25.7em;
-    padding-left: 2.2em;
+    padding-left: 3.3em;
     text-align: left;
     display: inline-block;
 }
 .col-church-state {
-    width: 13.5em;
+    width: 22em;
     text-align: left;
     display: inline-block;
 }
 .col-church-campaign {
+    width: 6em;
+    text-align: right;
     display: inline-block;
 }
 
-.col-campaign-book {
-    width: 12em;
-    text-align: left;
-    display: inline-block;
-    vertical-align: middle;
-}
-.col-campaign-language {
-    width: 14.5em;
+.col-campaign-status {
+    width: 5.2em;
     text-align: left;
     display: inline-block;
     vertical-align: middle;
 }
 .col-campaign-church {
-    width: 20.5em;
+    width: 17.3em;
+    text-align: left;
+    display: inline-block;
+    vertical-align: middle;
+}
+.col-campaign-book {
+    width: 11em;
+    text-align: left;
+    display: inline-block;
+    vertical-align: middle;
+}
+.col-campaign-language {
+    width: 12.5em;
+    text-align: left;
+    display: inline-block;
+    vertical-align: middle;
+}
+.col-campaign-duration {
+    width: 11em;
     text-align: left;
     display: inline-block;
     vertical-align: middle;
 }
 .col-campaign-percentage {
+    width: 4.5em;
     text-align: right;
     display: inline-block;
     vertical-align: middle;
 }
 
 .col-language-id {
-    width: 9em;
+    width: 10.5em;
     text-align: left;
     display: inline-block;
     vertical-align: middle;
 }
 .col-language-name {
     text-align: left;
-    width: 19em;
+    width: 23.3em;
     display: inline-block;
     vertical-align: middle;
 }
@@ -223,15 +244,22 @@
 }
 
 .col-user-name {
-    width: 38em;
+    width: 23.5em;
     text-align: left;
     display: inline-block;
     vertical-align: middle;
     padding-top: 0.3em;
     padding-bottom: 0.3em;
 }
+.col-user-email {
+    width: 34.6em;
+    text-align: left;
+    display: inline-block;
+    vertical-align: middle;
+}
 .col-user-role {
-    width: 2.5em;
+    width: 3em;
+    text-align: right;
     display: inline-block;
     vertical-align: middle;
 }
@@ -240,6 +268,75 @@
     height: auto;
     vertical-align: middle;
 }
+
+
+.col-transaction-tid {
+    width: 12.5em;
+    text-align: left;
+    display: inline-block;
+    vertical-align: middle;
+}
+.col-transaction-cid {
+    width: 10.2em;
+    text-align: left;
+    display: inline-block;
+    vertical-align: middle;
+}
+.col-transaction-name {
+    width: 14em;
+    text-align: left;
+    display: inline-block;
+    vertical-align: middle;
+}
+.col-transaction-verses {
+    width: 5em;
+    text-align: right;
+    display: inline-block;
+    vertical-align: middle;
+}
+.col-transaction-amount {
+    width: 9.3em;
+    text-align: right;
+    display: inline-block;
+    vertical-align: middle;
+}
+.col-transaction-date {
+    width: 10em;
+    padding-left: 4.4em;
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+}
+.col-transaction-buttons {
+    width: 6em;
+    text-align: left;
+    display: inline-block;
+    vertical-align: middle;
+}
+.col-transaction-buttons button {
+    background: none;
+    border: none;
+    vertical-align: middle;
+    cursor: pointer;
+    margin-left: 0.2em;
+    margin-right: 0.2em;
+}
+.col-transaction-buttons img {
+    width: 2em;
+    height: 2em;
+    vertical-align: middle;
+}
+
+#list-transaction .list-item {
+    cursor: default;
+}
+#list-transaction .list-item.transaction-denied div {
+    color: #bfbfbf;
+    text-decoration: line-through !important;
+}
+
+
+
 
 .drop-item.added {
     color: #ccc !important;
@@ -302,20 +399,55 @@
 
 
 
+.status-complete {
+    width: 0.9em;
+    height: 0.9em;
+    border-radius: 50%;
+    background: #bbb;
+    margin-left: 1em;
+}
+.status-inprogress {
+    width: 0.9em;
+    height: 0.9em;
+    border-radius: 50%;
+    background: #039da6;
+    margin-left: 1em;
+}
+.status-coming {
+    width: 0.9em;
+    height: 0.9em;
+    border-radius: 50%;
+    background: #FD9A00;
+    margin-left: 1em;
+}
+.status-pending {
+    width: 0.9em;
+    height: 0.9em;
+    border-radius: 50%;
+    border: 1px solid #aaa;
+    margin-left: 1em;
+}
+
+
+
 
 
 /* List Columns  */
-
-#column-campaign-book {
-    width: 11.5em;
-}
-#column-campaign-language {
-    width: 14.5em;
+#column-campaign-status {
+    width: 5em;
 }
 #column-campaign-church {
-    width: 19.5em;
+    width: 17em;
 }
-
+#column-campaign-book {
+    width: 10.5em;
+}
+#column-campaign-language {
+    width: 12em;
+}
+#column-campaign-duration {
+    width: 11em;
+}
 
 
 #column-church-profile-picture {
@@ -323,26 +455,49 @@
 }
 #column-church-name {
     width: 25em;
-    padding-left: 2em;
+    padding-left: 3em;
 }
 #column-church-state {
-    width: 13em;
+    width: 22em;
 }
 
 
 
 #column-language-id {
-    width: 8.6em;
+    width: 10em;
 }
 #column-language-people-group {
-    width: 18.6em;
+    width: 23em;
 }
 #column-language-region {
 }
 
 
 #column-user-name {
-    width: 37.6em;
+    width: 23em;
+}
+#column-user-email {
+    width: 35em;
 }
 #column-user-role {
 }
+
+
+#column-transaction-tid {
+    width: 12em;
+}
+#column-transaction-cid {
+    width: 10em;
+}
+#column-transaction-name {
+    width: 15.5em;
+}
+#column-transaction-verses {
+    width: 8em;
+}
+#column-transaction-amount {
+    width: 9em;
+}
+#column-transaction-date {
+}
+

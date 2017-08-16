@@ -512,6 +512,8 @@ function search_campaigns() {
         } else {
             var response = JSON.parse(ajaxObj1.responseText);
 
+            console.log(response);
+            
             for (var i = 0; i < Object.keys(response).length; i++) {
 
                 var campaign = Object.keys(response)[i];
@@ -523,14 +525,17 @@ function search_campaigns() {
 
                     var chapter = Object.keys(response[campaign]['book'])[j];
 
-                    for (var k = 0; k < Object.keys(response[campaign]['book']).length; k++) {
+                    for (var k = 0; k < Object.keys(response[campaign]['book'][chapter]).length; k++) {
 
                         var verse = Object.keys(response[campaign]['book'][chapter])[k];
                         num_verses++;
+                        
                     }
 
                 }
 
+                console.log(campaign+": "+num_verses);
+                
                 if (num_verses == 0) {
                     raised[campaign] = 0;
                 } else {
@@ -1502,12 +1507,13 @@ function add_campaign() {
             if (ajaxObj.responseText == "yes\n\n\n") {
                 window.location.href = "church.php?id="+church_id+"#";
                 search_campaigns();
+                alert("A new campaign has been created.\r\nPlease wait for its new fund ID to be processed.");
             } else {
                 alert("Error occurred");
             }
             
         }}}
-        ajaxObj.open("GET", "sql-insert-church-campaign.php?"+params);
+        ajaxObj.open("GET", "sql-add-church-campaign.php?"+params);
         ajaxObj.send();
         
         

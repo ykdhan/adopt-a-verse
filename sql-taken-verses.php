@@ -12,28 +12,38 @@ if ($mysqli->connect_errno) {
     die('Connect Error ('.mysqli_connect_errno().') '.mysqli_connect_error());
 }
 
-$sql = "SELECT * FROM purchase_history WHERE campaign_id = '{$id}'";
+$sql = "SELECT * FROM purchase_history WHERE campaign_id = '{$id}' AND status <> 'denied'";
 
-
+$answer = false;
 
 if ($result = $mysqli->query($sql)) {
     
     while ($row = $result->fetch_assoc()) {
         
-        if ($row['honoree_name'] != "") {
-            $output[$row['chapter']][$row['verse']] = "This verse has been sponsored in honor of ".$row['honoree_name']." by ".$row['display_name'].".";
+        if ($row['status'] == "pending") {
+            $output[$row['chapter']][$row['verse']] = "This verse has been reserved.";
+            
         } else {
-            if ($row['display_name'] == "") {
-                $output[$row['chapter']][$row['verse']] = "This verse has been sponsored by Anonymous.";
+            if ($row['honoree_name'] != "") {
+                $output[$row['chapter']][$row['verse']] = "This verse has been sponsored in honor of ".$row['honoree_name']." by ".$row['display_name'].".";
             } else {
-                $output[$row['chapter']][$row['verse']] = "This verse has been sponsored by ".$row['display_name'].".";
+                if ($row['display_name'] == "") {
+                    $output[$row['chapter']][$row['verse']] = "This verse has been sponsored by Anonymous.";
+                } else {
+                    $output[$row['chapter']][$row['verse']] = "This verse has been sponsored by ".$row['display_name'].".";
+                }
             }
         }
         
+        $answer = true;
     }
 }
 
-echo JSON_encode($output);
+if ($answer) {
+    echo JSON_encode($output);
+} else {
+    echo "no";
+}
 
 $mysqli->close();
 

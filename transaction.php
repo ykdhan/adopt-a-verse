@@ -27,10 +27,16 @@
     
 <!-- Body -->
 <div id="bg" align="center">
-
     
     
+    <div id="transaction-wrapper">
+        <div>
+            <img alt="Loading" src="img/loading.svg">
+        </div>
+    </div>
     
+    
+    <!--
     
     <svg class="lds-lava-lamp" width="10em" height="10em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="background: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);"><defs>
   <filter id="lds-lava-lamp-filterid-511f9454a1f3e" filterUnits="userSpaceOnUse" x="0" y="0" width="100" height="100">
@@ -128,7 +134,7 @@
   <animate attributeName="cy" values="113.22656230725987;-3.841053081435245" keyTimes="0;1" dur="10s" repeatCount="indefinite" begin="-5.807725296587369s"></animate>
   <animate attributeName="r" values="13;0;0" keyTimes="0;0.8599684781028499;1" dur="10s" repeatCount="indefinite" begin="-5.807725296587369s"></animate>
 </circle></g></svg>
-    
+    -->
     
     
     
@@ -140,11 +146,6 @@
     
 
 <script>
-    
-    
-$(document).ready(function () {
-    $("html,body").scrollTop(0);
-});
     
 var page_param = window.location.search.substring(1);
 var page_url = new URL(window.location.href);

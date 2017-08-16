@@ -12,14 +12,19 @@ if ($mysqli->connect_errno) {
     die('Connect Error ('.mysqli_connect_errno().') '.mysqli_connect_error());
 }
 
-$sql = "DELETE FROM campaign WHERE id = '{$id}'";
+$sql = "UPDATE purchase_history SET status = 'denied' WHERE id = '{$id}'";
 
 if ($result = $mysqli->query($sql)) {
-    echo "yes";
+    $output['id'] = $id;
+    echo JSON_encode($output);
+} else {
+    echo "no";
 }
 
 $mysqli->close();
 
 
 ?>
+
+
 

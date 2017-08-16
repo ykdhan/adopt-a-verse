@@ -16,7 +16,7 @@ if ($mysqli->connect_errno) {
     die('Connect Error ('.mysqli_connect_errno().') '.mysqli_connect_error());
 }
 
-$sql = "SELECT *, campaign.id AS camp_id, church.id AS church_id FROM campaign INNER JOIN language ON language_id = language.id INNER JOIN church ON church_id = church.id WHERE lower(name) RLIKE '[[:<:]]".strtolower($keyword)."' OR lower(people_group) RLIKE '[[:<:]]".strtolower($keyword)."' OR lower(book) RLIKE '[[:<:]]".strtolower($keyword)."' ORDER BY book, people_group, name";
+$sql = "SELECT *, campaign.id AS camp_id, church.id AS church_id FROM campaign INNER JOIN language ON language_id = language.id INNER JOIN church ON church_id = church.id WHERE lower(name) RLIKE '[[:<:]]".strtolower($keyword)."' OR lower(people_group) RLIKE '[[:<:]]".strtolower($keyword)."' OR lower(book) RLIKE '[[:<:]]".strtolower($keyword)."' ORDER BY start_date DESC, end_date DESC, book, people_group, name";
 
 $answer = false;
 
@@ -45,6 +45,10 @@ if ($result = $mysqli->query($sql)) {
             $output[$num]['status'] = "complete";
         } else if (($today < $date_start)) {
             $output[$num]['status'] = "coming";
+        }
+        
+        if ($row['verified'] == 0) {
+            $output[$num]['status'] = "pending";
         }
         
         $output[$num]['church'] = $row['name'];
