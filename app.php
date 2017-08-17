@@ -447,11 +447,13 @@
             <div class="col-right">
                 
                 <input type="text" class="form-text" id="give-honor-name" onkeyup="input_form('honor-name')" placeholder="Honoree's Name">
+                <input type="text" class="form-text" id="give-memory-name" onkeyup="input_form('memory-name')" placeholder="In Memory of Name">
                 <input type="text" class="form-text" id="give-display-name" onkeyup="input_form('display-name')" placeholder="Name"><br>
                 
                 <div id="give-options">
                     <input id="give-anonymous" class="checkbox-custom" name="give-anonymous" type="checkbox" onclick="give_anonymous()"><label for="give-anonymous" class="checkbox-custom-label">Give anonymously</label><br>
-                    <input id="give-honor" class="checkbox-custom" name="give-honor" type="checkbox" onclick="give_honor()"><label for="give-honor" class="checkbox-custom-label">Give in honor of someone else</label>
+                    <input id="give-honor" class="checkbox-custom" name="give-honor" type="checkbox" onclick="give_honor()"><label for="give-honor" class="checkbox-custom-label">Give in honor of someone else</label><br>
+                    <input id="give-memory" class="checkbox-custom" name="give-memory" type="checkbox" onclick="give_memory()"><label for="give-memory" class="checkbox-custom-label">Give in memory of someone else</label>
                 </div>
                 
             </div>
@@ -1101,11 +1103,13 @@ var give_data = {
     last_name: "",
     email: "",
     display_name: "",
-    honor_name: ""
+    honor_name: "",
+    memory_name: ""
 }
     
 var anonymous = false;
 var honor = false;
+var memory = false;
 
 function give_anonymous() {
     if (anonymous) {
@@ -1117,13 +1121,17 @@ function give_anonymous() {
         anonymous = false;
         
         give_data.display_name = "";
+        give_data.honor_name = "";
+        give_data.memory_name = "";
     } else {
         document.getElementById('give-display-name').style.display = "none";
         document.getElementById('give-honor-name').style.display = "none";
+        document.getElementById('give-memory-name').style.display = "none";
         document.getElementById('give-options').style.marginTop = "-0.8em";
         anonymous = true;
         honor = false;
-        document.getElementById('give-options').innerHTML = '<input id="give-anonymous" class="checkbox-custom" name="give-anonymous" type="checkbox" onclick="give_anonymous()"><label for="give-anonymous" class="checkbox-custom-label">Give anonymously</label><br><input id="give-honor" class="checkbox-custom" name="give-honor" type="checkbox" onclick="give_honor()"><label for="give-honor" class="checkbox-custom-label">Give in honor of someone else</label>';
+        memory = false;
+        document.getElementById('give-options').innerHTML = '<input id="give-anonymous" class="checkbox-custom" name="give-anonymous" type="checkbox" onclick="give_anonymous()"><label for="give-anonymous" class="checkbox-custom-label">Give anonymously</label><br><input id="give-honor" class="checkbox-custom" name="give-honor" type="checkbox" onclick="give_honor()"><label for="give-honor" class="checkbox-custom-label">Give in honor of someone else</label><br><input id="give-memory" class="checkbox-custom" name="give-memory" type="checkbox" onclick="give_memory()"><label for="give-memory" class="checkbox-custom-label">Give in memory of someone else</label>';
         document.getElementById('give-anonymous').setAttribute('checked','true');
         document.getElementById('give-display-name').setAttribute('placeholder','Display Name');
     }
@@ -1158,9 +1166,13 @@ function give_honor() {
         document.getElementById('give-honor-name').style.display = "none";
         document.getElementById('give-display-name').setAttribute('placeholder','Name');
         honor = false;
+        
+        give_data.honor_name = "";
+        give_data.memory_name = "";
     } else {
         document.getElementById('give-display-name').style.display = "inline-block";
         document.getElementById('give-honor-name').style.display = "inline-block";
+        document.getElementById('give-memory-name').style.display = "none";
         document.getElementById('give-display-name').setAttribute('placeholder','From Name');
         document.getElementById('give-display-name').style.borderColor = '#d1d1d1';
         document.getElementById('give-honor-name').style.borderColor = '#d1d1d1';
@@ -1168,10 +1180,12 @@ function give_honor() {
         document.getElementById('give-options').style.marginTop = "0";
         honor = true;
         anonymous = false;
-        document.getElementById('give-options').innerHTML = '<input id="give-anonymous" class="checkbox-custom" name="give-anonymous" type="checkbox" onclick="give_anonymous()"><label for="give-anonymous" class="checkbox-custom-label">Give anonymously</label><br><input id="give-honor" class="checkbox-custom" name="give-honor" type="checkbox" onclick="give_honor()"><label for="give-honor" class="checkbox-custom-label">Give in honor of someone else</label>';
+        memory = false;
+        document.getElementById('give-options').innerHTML = '<input id="give-anonymous" class="checkbox-custom" name="give-anonymous" type="checkbox" onclick="give_anonymous()"><label for="give-anonymous" class="checkbox-custom-label">Give anonymously</label><br><input id="give-honor" class="checkbox-custom" name="give-honor" type="checkbox" onclick="give_honor()"><label for="give-honor" class="checkbox-custom-label">Give in honor of someone else</label><br><input id="give-memory" class="checkbox-custom" name="give-memory" type="checkbox" onclick="give_memory()"><label for="give-memory" class="checkbox-custom-label">Give in memory of someone else</label>';
         document.getElementById('give-honor').setAttribute('checked','true');
         
-        give_data.honoree_name = "";
+        give_data.honor_name = "";
+        give_data.memory_name = "";
     }
     
     
@@ -1208,6 +1222,69 @@ function give_honor() {
     
     
 }
+    
+function give_memory() {
+    if (memory) {
+        document.getElementById('give-memory-name').style.display = "none";
+        document.getElementById('give-display-name').setAttribute('placeholder','Name');
+        memory = false;
+        
+        give_data.honor_name = "";
+        give_data.memory_name = "";
+    } else {
+        document.getElementById('give-display-name').style.display = "inline-block";
+        document.getElementById('give-memory-name').style.display = "inline-block";
+        document.getElementById('give-honor-name').style.display = "none";
+        document.getElementById('give-display-name').setAttribute('placeholder','From Name');
+        document.getElementById('give-display-name').style.borderColor = '#d1d1d1';
+        document.getElementById('give-memory-name').style.borderColor = '#d1d1d1';
+        document.getElementById('give-memory-name').value = "";
+        document.getElementById('give-options').style.marginTop = "0";
+        memory = true;
+        anonymous = false;
+        honor = false;
+        document.getElementById('give-options').innerHTML = '<input id="give-anonymous" class="checkbox-custom" name="give-anonymous" type="checkbox" onclick="give_anonymous()"><label for="give-anonymous" class="checkbox-custom-label">Give anonymously</label><br><input id="give-honor" class="checkbox-custom" name="give-honor" type="checkbox" onclick="give_honor()"><label for="give-honor" class="checkbox-custom-label">Give in honor of someone else</label><br><input id="give-memory" class="checkbox-custom" name="give-memory" type="checkbox" onclick="give_memory()"><label for="give-memory" class="checkbox-custom-label">Give in memory of someone else</label>';
+        document.getElementById('give-memory').setAttribute('checked','true');
+        
+        give_data.memory_name = "";
+        give_data.honor_name = "";
+    }
+    
+    
+    
+    if (memory) {
+        give_preview(" in memory of "+give_data.memory_name+" by "+give_data.display_name);
+    } else {
+        if (give_data.display_name == "") {
+
+            if (give_data.first_name == "") {
+
+                if (give_data.last_name == "") {
+                    give_preview("");
+                } else {
+                    give_preview(" " + give_data.last_name[0]);
+                }
+
+            } else {
+
+                if (give_data.last_name == "") {
+                    give_preview(" " + give_data.first_name);
+                } else {
+                    give_preview(" " + give_data.first_name + " " + give_data.last_name[0]);
+                }
+            }
+
+        } else {
+
+            if (!anonymous) {
+                give_preview(" " + give_data.display_name);
+            }
+        }
+    }
+    
+    
+}
+    
     
     
 function open_give() {
@@ -1277,7 +1354,9 @@ function input_form(title) {
             word.value = word.value.replace(/[^a-zA-Z0-9\.\s]+/, '');
             give_data.display_name = document.getElementById('give-display-name').value;
             
-            if (honor) {
+            if (memory) {
+                give_preview(" in memory of "+give_data.memory_name+" by "+give_data.display_name);
+            } else if (honor) {
                 give_preview(" in honor of "+give_data.honor_name+" by "+give_data.display_name);
             } else {
                 if (give_data.display_name == "") {
@@ -1314,6 +1393,13 @@ function input_form(title) {
             give_data.honor_name = document.getElementById('give-honor-name').value;
             if (honor) {
                 give_preview(" in honor of "+give_data.honor_name+" by "+give_data.display_name);
+            }
+            break;
+        case "memory-name":
+            word.value = word.value.replace(/[^a-zA-Z0-9\.\s]+/, '');
+            give_data.memory_name = document.getElementById('give-memory-name').value;
+            if (honor) {
+                give_preview(" in memory of "+give_data.memory_name+" by "+give_data.display_name);
             }
             break;
         default:
@@ -1355,7 +1441,13 @@ function checkout() {
     }
     
     
-    if (honor) {
+    if (memory) {
+        
+        if (give_data.display_name == "") {
+            give_data.display_name = give_data.first_name + " " + give_data.last_name[0];
+        }
+        
+    } else if (honor) {
         
         if (give_data.display_name == "") {
             give_data.display_name = give_data.first_name + " " + give_data.last_name[0];
@@ -1409,16 +1501,18 @@ function checkout() {
             }
         }
         
-        var params = 'campaign='+code+'&first_name='+give_data.first_name+'&last_name='+give_data.last_name+'&email='+give_data.email+'&book='+book+'&items='+param_items+'&amount='+cart.price+'&display_name='+give_data.display_name+'&honoree_name='+give_data.honor_name+'&verse_price='+campaign.verse_price;
+        var params = 'campaign='+code+'&first_name='+give_data.first_name+'&last_name='+give_data.last_name+'&email='+give_data.email+'&book='+book+'&items='+param_items+'&amount='+cart.price+'&display_name='+give_data.display_name+'&honoree_name='+give_data.honor_name+'&memory_name='+give_data.memory_name+'&verse_price='+campaign.verse_price;
         
         console.log(params);
         
         var ajaxObj = new XMLHttpRequest();
         ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+            
+            console.log(ajaxObj.responseText);
 
-            if (ajaxObj.responseText == "yes\n\n\n") {
+            if (ajaxObj.responseText != "no\n") {
                 
-                window.location.href = "transaction.php";
+                window.location.href = "transaction.php?transaction="+ajaxObj.responseText+"&campaign="+code+"&amount="+cart.price;
                 
             } else {
                 

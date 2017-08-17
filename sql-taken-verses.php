@@ -24,7 +24,9 @@ if ($result = $mysqli->query($sql)) {
             $output[$row['chapter']][$row['verse']] = "This verse has been reserved.";
             
         } else {
-            if ($row['honoree_name'] != "") {
+            if ($row['memory_name'] != "") {
+                $output[$row['chapter']][$row['verse']] = "This verse has been sponsored in memory of ".$row['memory_name']." by ".$row['display_name'].".";
+            } else if ($row['honoree_name'] != "") {
                 $output[$row['chapter']][$row['verse']] = "This verse has been sponsored in honor of ".$row['honoree_name']." by ".$row['display_name'].".";
             } else {
                 if ($row['display_name'] == "") {

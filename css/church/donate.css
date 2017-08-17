@@ -897,7 +897,7 @@
     overflow-y: auto;
     margin-bottom: 0.8em;
 }
-#give-honor-name {
+#give-honor-name, #give-memory-name {
     display: none;
 }
 #give-options {

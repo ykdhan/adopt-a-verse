@@ -105,7 +105,7 @@
 }
 
 #landing-tab-transaction {
-    margin-left: 13em;
+    margin-left: 20em;
 }
 
 
@@ -184,7 +184,7 @@
     display: inline-block;
 }
 .col-church-campaign {
-    width: 6em;
+    width: 9em;
     text-align: right;
     display: inline-block;
 }
@@ -271,45 +271,45 @@
 
 
 .col-transaction-tid {
-    width: 12.5em;
+    width: 11em;
     text-align: left;
     display: inline-block;
     vertical-align: middle;
 }
 .col-transaction-cid {
-    width: 10.2em;
+    width: 9.2em;
     text-align: left;
     display: inline-block;
     vertical-align: middle;
 }
 .col-transaction-name {
-    width: 14em;
+    width: 13.5em;
     text-align: left;
     display: inline-block;
     vertical-align: middle;
 }
 .col-transaction-verses {
-    width: 5em;
+    width: 4em;
     text-align: right;
     display: inline-block;
     vertical-align: middle;
 }
 .col-transaction-amount {
-    width: 9.3em;
+    width: 8.3em;
     text-align: right;
     display: inline-block;
     vertical-align: middle;
 }
 .col-transaction-date {
     width: 10em;
-    padding-left: 4.4em;
+    padding-left: 3em;
     text-align: center;
     display: inline-block;
     vertical-align: middle;
 }
 .col-transaction-buttons {
     width: 6em;
-    text-align: left;
+    text-align: right;
     display: inline-block;
     vertical-align: middle;
 }
@@ -318,8 +318,12 @@
     border: none;
     vertical-align: middle;
     cursor: pointer;
-    margin-left: 0.2em;
-    margin-right: 0.2em;
+    margin-left: 0.7em;
+    padding: 0;
+    border-radius: 50%;
+}
+.col-transaction-buttons button:hover {
+    background: #fff;
 }
 .col-transaction-buttons img {
     width: 2em;
@@ -331,8 +335,8 @@
     cursor: default;
 }
 #list-transaction .list-item.transaction-denied div {
-    color: #bfbfbf;
-    text-decoration: line-through !important;
+    color: #d1d1d1;
+    //text-decoration: line-through !important;
 }
 
 
@@ -458,7 +462,7 @@
     padding-left: 3em;
 }
 #column-church-state {
-    width: 22em;
+    width: 25em;
 }
 
 
@@ -484,19 +488,19 @@
 
 
 #column-transaction-tid {
-    width: 12em;
+    width: 10.5em;
 }
 #column-transaction-cid {
-    width: 10em;
+    width: 9em;
 }
 #column-transaction-name {
-    width: 15.5em;
+    width: 14em;
 }
 #column-transaction-verses {
-    width: 8em;
+    width: 7em;
 }
 #column-transaction-amount {
-    width: 9em;
+    width: 8em;
 }
 #column-transaction-date {
 }

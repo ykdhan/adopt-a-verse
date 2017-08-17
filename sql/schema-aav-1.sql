@@ -85,6 +85,7 @@ CREATE TABLE IF NOT EXISTS `aav`.`purchase_history` (
   `verse` int(11) DEFAULT NULL,
   `display_name` varchar(45) DEFAULT NULL,
   `honoree_name` varchar(45) DEFAULT NULL,
+  `memory_name` varchar(45) DEFAULT NULL,
   `purchase_date` date DEFAULT NULL,
   `amount` float DEFAULT NULL,
   `verse_price` float DEFAULT NULL,

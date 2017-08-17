@@ -4,6 +4,12 @@ error_reporting(E_ALL ^ E_DEPRECATED);
 
 include('config.php');
 
+
+
+$success = true;
+
+
+
 $seed = str_split('abcdefghijklmnopqrstuvwxyz'
                  .'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
                  .'0123456789');
@@ -14,6 +20,7 @@ foreach (array_rand($seed, 10) as $k) $id .= $seed[$k];  // 6-char random id
 $campaign = $_GET['campaign'];
 $display = $_GET['display_name'];
 $honor = $_GET['honoree_name'];
+$memory = $_GET['memory_name'];
 $amount = $_GET['amount'];
 $price = $_GET['verse_price'];
 $date = date('Y-m-d');
@@ -57,7 +64,7 @@ if ($check_user) {
         $chapter = $pair[0];
         $verse = $pair[1];
         
-        $new_purchase_sql = "INSERT INTO purchase_history ( id, campaign_id, user_id, book, chapter, verse, display_name, honoree_name, purchase_date, verse_price, amount) VALUES ( '{$id}', '{$campaign}', {$user_id}, '{$book}', '{$chapter}', '{$verse}', '{$display}', '{$honor}', '{$date}', '{$price}', '{$amount}')";
+        $new_purchase_sql = "INSERT INTO purchase_history ( id, campaign_id, user_id, book, chapter, verse, display_name, honoree_name, memory_name, purchase_date, verse_price, amount) VALUES ( '{$id}', '{$campaign}', {$user_id}, '{$book}', '{$chapter}', '{$verse}', '{$display}', '{$honor}', '{$memory}', '{$date}', '{$price}', '{$amount}')";
 
         if ($mysqli->query($new_purchase_sql)) {
         } else {
@@ -66,9 +73,9 @@ if ($check_user) {
     }
 
     if ($fail) {
-        echo "no";
+        $success = false;
     } else {
-        echo "yes";
+        $success = true;
     }
     
 }
@@ -99,7 +106,7 @@ else {
                 $chapter = $pair[0];
                 $verse = $pair[1];
                 
-                $new_purchase_sql = "INSERT INTO purchase_history ( id, campaign_id, user_id, book, chapter, verse, display_name, honoree_name, purchase_date, verse_price, amount) VALUES ( '{$id}', '{$campaign}', {$last_id}, '{$book}', '{$chapter}', '{$verse}', '{$display}', '{$honor}', '{$date}', '{$price}', '{$amount}')";
+                $new_purchase_sql = "INSERT INTO purchase_history ( id, campaign_id, user_id, book, chapter, verse, display_name, honoree_name, memory_name, purchase_date, verse_price, amount) VALUES ( '{$id}', '{$campaign}', {$last_id}, '{$book}', '{$chapter}', '{$verse}', '{$display}', '{$honor}', '{$memory}', '{$date}', '{$price}', '{$amount}')";
 
                 if ($mysqli->query($new_purchase_sql)) {
                 } else {
@@ -108,20 +115,27 @@ else {
             }
             
             if ($fail) {
-                echo "no";
+                $success = false;
             } else {
-                echo "yes";
+                $success = true;
             }
             
         } else {
-            echo "no-create-user";
+            $success = false;
         }
         
     } else {
-        echo "no-last-id";
+        $success = false;
     }
     
 }
+
+if ($success) {
+    echo $id;
+} else {
+    echo "no";
+}
+
 
 $mysqli->close();
 ?>
