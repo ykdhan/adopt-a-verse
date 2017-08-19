@@ -1184,6 +1184,7 @@ function select_book(bk) {
     if (bk == "") {
         document.getElementById('num-verses').innerHTML = "";
     } else {
+        document.getElementById('error-total').style.visibility = "hidden";
         document.getElementById('num-verses').innerHTML = verses[bk].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+" verses";
     }
     

@@ -32,51 +32,68 @@ if (isset($_SESSION['aav-admin'])) {
     
     
     <!-- Wycliffe links -->
-
+    <style>
+    body {
+        overflow: hidden;
+    }
+    </style>
+    
 </head>
     
 <body>
     
+<div id="admin-layout">
+    
+
+    
+    
 <!-- Top Bar -->
-<div class="top-bar desktop">
-    <table><tr>
-    <td>
-        <a href="index.php"><img id="adopt-logo" alt="Adopt-a-Verse Logo" align="middle" src="../img/wycliffe-logo.png"><span id="tag-admin">Admin</span></a>
-    </td>
-    <th>
-    </th>
-    <td>
-        <span id="admin-logout"><a href="logout.php">Logout</a></span>
-        <span id="admin-title"></span>
-    </td>
-    </tr></table>
+<div id="side">
+    <div id="section-logo">
+        <a href="index.php"><img id="adopt-logo" alt="Adopt-a-Verse Logo" align="middle" src="../img/wycliffe-admin-logo.png"><span id="tag-admin">Admin</span></a>
+    </div>
+    <div id="section-tab">
+            <button class="landing-tabs landing-tabs-now" onclick="landing_tab(event, 'tab-campaign')">Campaigns</button>
+            <button class="landing-tabs" onclick="landing_tab(event, 'tab-church')">Churchs</button>
+            <button class="landing-tabs" onclick="landing_tab(event, 'tab-language')">Languages</button>
+            <button class="landing-tabs" onclick="landing_tab(event, 'tab-user')">Users</button>
+            <button id="landing-tab-transaction" class="landing-tabs" onclick="landing_tab(event, 'tab-transaction')">Transactions</button>
+    </div>
+    <div id="section-setting">
+        <div class="division"></div>
+        <button class="button-setting" onclick="logout()">Logout</button>
+    </div>
 </div>
     
     
 <!-- Body -->
-<div id="bg" align="center">
-<div id="landing-wrapper">
-        
-    <div class="landing-tab-div">
-        <div class="landing-tab">
-            <button class="capitalize landing-tabs landing-tabs-now" onclick="landing_tab(event, 'tab-campaign')">Campaign</button>
-            <button class="capitalize landing-tabs" onclick="landing_tab(event, 'tab-church')">Church</button>
-            <button class="capitalize landing-tabs" onclick="landing_tab(event, 'tab-language')">Language</button>
-            <button class="capitalize landing-tabs" onclick="landing_tab(event, 'tab-user')">User</button>
-            <button id="landing-tab-transaction" class="capitalize landing-tabs" onclick="landing_tab(event, 'tab-transaction')">Purchase History</button>
-        </div>
-    </div>
+<div id="main">
     
+    
+<div id="landing-wrapper">
     
     <div id="tab-campaign" class="landing-content landing-content-now">
-        <input type="text" class="landing-text" id="search-campaign" onkeyup="search_campaign()" placeholder="Search by a book of the Bible, language or church name">
-        <div class="list-columns">
+        <h1>Campaigns</h1>
+        <div class="control-bar">
+            <input type="text" class="landing-text" id="search-campaign" onkeyup="search_campaign()" placeholder="Search by a book of the Bible, language or church name"><span class="search-icon"><i class="fa fa-search" aria-hidden="true"></i></span>
+            <div class="filters">
+            Filter by <input type="text" class="admin-filter" id="filter-status" onclick="" value="Status" readonly="readonly"><span class="filter-icon"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                <div class="filter-dropdown" id="dropdown-status">
+                    <div class="filter-option"><input id="status-inprogress" class="checkbox-custom" name="status-inprogress" type="checkbox" onclick="filter_by('status','inprogress')"><label for="status-inprogress" class="checkbox-custom-label">In Progress</label></div>
+                    <div class="filter-option"><input id="status-scheduled" class="checkbox-custom" name="status-scheduled" type="checkbox" onclick=""><label for="status-scheduled" class="checkbox-custom-label">Scheduled</label></div>
+                    <div class="filter-option"><input id="status-pending" class="checkbox-custom" name="status-pending" type="checkbox" onclick=""><label for="status-pending" class="checkbox-custom-label">Pending</label></div>
+                    <div class="filter-option"><input id="status-complete" class="checkbox-custom" name="status-complete" type="checkbox" onclick=""><label for="status-complete" class="checkbox-custom-label">Complete</label></div>
+                </div>
+            </div>
+        </div>
+        <div class="list-columns"><div class="col-campaign">
             <div class="list-column" id="column-campaign-status">Status</div>
             <div class="list-column" id="column-campaign-church">Church</div>
             <div class="list-column" id="column-campaign-book">Book</div>
             <div class="list-column" id="column-campaign-language">Language</div>
             <div class="list-column" id="column-campaign-duration">Duration</div>
             <div class="list-column" id="column-campaign-percentage">Progress</div>
+            </div>
         </div>
         <div class="list" id="list-campaign">Not Available</div>
     </div>
@@ -147,10 +164,12 @@ if (isset($_SESSION['aav-admin'])) {
     
 </div> <!-- wrapper -->
     
-    <div id="footer">
-        ©2017 Wycliffe Bible Translators. All rights reserved.
-    </div>
-</div> <!-- bg -->
+<div id="footer">©2017 Wycliffe Bible Translators. All rights reserved.</div>
+    
+    
+</div> <!-- main -->
+    
+</div>
     
     
     
@@ -502,6 +521,23 @@ if (isset($_SESSION['aav-admin'])) {
     
 
 <script>
+    
+    
+$( "#filter-status" ).focusin(function() {
+    $( "#dropdown-status" ).css({display: 'block'});
+});  
+$( "#filter-status" ).focusout(function() {
+    if ($( "#dropdown-status" ).focus) {
+        console.log('focus');
+    } else {
+        console.log('no-focus');
+        $( "#dropdown-status" ).css({display: 'none'});
+    }
+});  
+    
+function filter_by(filter,option) {
+    $( "#filter-status" ).focus();
+}
         
 var campaign_id = "";
 var campaigns = {};
@@ -556,31 +592,6 @@ function search_campaign() {
                     campaigns[id]['church_id'] = church_id;
                     campaigns[id]['raised'] = raised;
                     campaigns[id]['percentage'] = percentage;
-                    
-                    /*
-                    
-                    var goal = parseFloat(goal_amount.toString().replace(/,/g,''));
-                    goal_amount = goal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                    
-                    var verse = parseFloat(verse_price.toString().replace(/,/g,''));
-                    verse_price = verse.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                    
-                    var start_now = new Date(start_date);
-                    var start_year = (""+start_now.getFullYear()).slice(-2);
-                    var start_month = start_now.getMonth() + 1;
-                    var start_date = start_month+"/"+start_now.getDate()+"/"+start_year;
-
-                    var end_now = new Date(end_date);
-                    var end_year = (""+end_now.getFullYear()).slice(-2);
-                    var end_month = end_now.getMonth() + 1;
-                    var end_date = end_month+"/"+end_now.getDate()+"/"+end_year;
-
-                    var duration = start_date+" - "+end_date;
-
-                    document.getElementById('list-campaign').innerHTML += '<div class="list-item" onclick="select_campaign(\''+id+'\')"><div class="col-campaign-status"><div class="status-'+status+'"></div></div><div class="col-campaign-church">'+church+'</div><div class="col-campaign-book">'+book+'</div><div class="col-campaign-language">'+language+'</div><div class="col-campaign-duration">'+duration+'</div><div class="col-campaign-percentage">'+percentage+'%</div></div>';
-                    
-                    */
-
                 }
                 
                 
@@ -602,7 +613,7 @@ function search_campaign() {
 
                         var duration = start_date+" - "+end_date;
                         
-                        document.getElementById('list-campaign').innerHTML += '<div class="list-item" onclick="select_campaign(\''+num+'\')"><div class="col-campaign-status"><div class="status-inprogress"></div></div><div class="col-campaign-church">'+campaigns[num]['church']+'</div><div class="col-campaign-book">'+campaigns[num]['book']+'</div><div class="col-campaign-language">'+campaigns[num]['language']+'</div><div class="col-campaign-duration">'+duration+'</div><div class="col-campaign-percentage">'+campaigns[num]['percentage']+'%</div></div>';
+                        document.getElementById('list-campaign').innerHTML += '<div class="list-item col-campaign" onclick="select_campaign(\''+num+'\')"><div class="col-campaign-status"><div class="status-inprogress"></div></div><div class="col-campaign-church">'+campaigns[num]['church']+'</div><div class="col-campaign-book">'+campaigns[num]['book']+'</div><div class="col-campaign-language">'+campaigns[num]['language']+'</div><div class="col-campaign-duration">'+duration+'</div><div class="col-campaign-percentage">'+campaigns[num]['percentage']+'%</div></div>';
                         
                     }
                     
@@ -626,7 +637,7 @@ function search_campaign() {
 
                         var duration = start_date+" - "+end_date;
                         
-                        document.getElementById('list-campaign').innerHTML += '<div class="list-item" onclick="select_campaign(\''+num+'\')"><div class="col-campaign-status"><div class="status-coming"></div></div><div class="col-campaign-church">'+campaigns[num]['church']+'</div><div class="col-campaign-book">'+campaigns[num]['book']+'</div><div class="col-campaign-language">'+campaigns[num]['language']+'</div><div class="col-campaign-duration">'+duration+'</div><div class="col-campaign-percentage">'+campaigns[num]['percentage']+'%</div></div>';
+                        document.getElementById('list-campaign').innerHTML += '<div class="list-item col-campaign" onclick="select_campaign(\''+num+'\')"><div class="col-campaign-status"><div class="status-coming"></div></div><div class="col-campaign-church">'+campaigns[num]['church']+'</div><div class="col-campaign-book">'+campaigns[num]['book']+'</div><div class="col-campaign-language">'+campaigns[num]['language']+'</div><div class="col-campaign-duration">'+duration+'</div><div class="col-campaign-percentage">'+campaigns[num]['percentage']+'%</div></div>';
                         
                     }
                     
@@ -650,7 +661,7 @@ function search_campaign() {
 
                         var duration = start_date+" - "+end_date;
                         
-                        document.getElementById('list-campaign').innerHTML += '<div class="list-item" onclick="select_campaign(\''+num+'\')"><div class="col-campaign-status"><div class="status-pending"></div></div><div class="col-campaign-church">'+campaigns[num]['church']+'</div><div class="col-campaign-book">'+campaigns[num]['book']+'</div><div class="col-campaign-language">'+campaigns[num]['language']+'</div><div class="col-campaign-duration">'+duration+'</div><div class="col-campaign-percentage">'+campaigns[num]['percentage']+'%</div></div>';
+                        document.getElementById('list-campaign').innerHTML += '<div class="list-item col-campaign" onclick="select_campaign(\''+num+'\')"><div class="col-campaign-status"><div class="status-pending"></div></div><div class="col-campaign-church">'+campaigns[num]['church']+'</div><div class="col-campaign-book">'+campaigns[num]['book']+'</div><div class="col-campaign-language">'+campaigns[num]['language']+'</div><div class="col-campaign-duration">'+duration+'</div><div class="col-campaign-percentage">'+campaigns[num]['percentage']+'%</div></div>';
                         
                     }
                     
@@ -674,7 +685,7 @@ function search_campaign() {
 
                         var duration = start_date+" - "+end_date;
                         
-                        document.getElementById('list-campaign').innerHTML += '<div class="list-item" onclick="select_campaign(\''+num+'\')"><div class="col-campaign-status"><div class="status-complete"></div></div><div class="col-campaign-church">'+campaigns[num]['church']+'</div><div class="col-campaign-book">'+campaigns[num]['book']+'</div><div class="col-campaign-language">'+campaigns[num]['language']+'</div><div class="col-campaign-duration">'+duration+'</div><div class="col-campaign-percentage">'+campaigns[num]['percentage']+'%</div></div>';
+                        document.getElementById('list-campaign').innerHTML += '<div class="list-item col-campaign" onclick="select_campaign(\''+num+'\')"><div class="col-campaign-status"><div class="status-complete"></div></div><div class="col-campaign-church">'+campaigns[num]['church']+'</div><div class="col-campaign-book">'+campaigns[num]['book']+'</div><div class="col-campaign-language">'+campaigns[num]['language']+'</div><div class="col-campaign-duration">'+duration+'</div><div class="col-campaign-percentage">'+campaigns[num]['percentage']+'%</div></div>';
                         
                     }
                     
@@ -968,7 +979,11 @@ function search_transaction() {
     
     
     
-    
+function logout() {
+    if (window.confirm("Would you like to log out?")) {
+        window.location.href = "logout.php";
+    }
+}
     
     
 function landing_tab(evt, tabName) {

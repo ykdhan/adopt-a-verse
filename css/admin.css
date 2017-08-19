@@ -1,4 +1,3 @@
-@import url("admin/top-bar.css?ver=1.2");
 @import url("admin/campaign.css?ver=1.3");
 @import url("admin/login.css?ver=1.3");
 @import url("admin/church.css?ver=1.3");
@@ -70,7 +69,12 @@ h1, h2, h3 {
 }
 
 h1 {
-    font-size: 1.2em;
+    font-size: 1.7em;
+    text-align: left;
+    color: #555;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 1em;
 }
 
 table {
@@ -163,19 +167,234 @@ input[type='date'] {
 }
 
 
-/*   orange gradient on top of background   */
-#bg {
-    box-sizing: border-box;
-    padding: 0.5em;
-    padding-top: 6em;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    background: none;
+
+
+#admin-layout {
+    display: grid;
+    grid-template-columns: 13em 1fr;
+    grid-template-rows: 1fr;
+    grid-gap: 0;
+    margin: 0;
+    padding: 0;
 }
+
+#side {
+    z-index: 10;
+    display: grid;
+    grid-template-rows: 8em 1fr 8em;
+    grid-gap: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    max-height: 100vh;
+    background: #283344;
+    color: #eee;
+    -webkit-box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.35);
+    -moz-box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.35);
+    box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.35);
+}
+
+#main {
+    overflow-y: auto;
+    text-align: center;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 2em;
+    height: 100vh;
+    max-height: 100vh;
+}
+
+
+/* Side bar */
+
+#section-logo {
+    padding: 1rem;
+    vertical-align: middle;
+}
+
+#section-setting {
+    vertical-align: middle;
+}
+
+
+.landing-tabs {
+    text-align: left;
+    font-size: 0.9em;
+    background: none;
+    border: none;
+    outline: none;
+    color: #f2f2f2;
+    font-family: "Gotham-Book" !important;
+    cursor: pointer;
+    padding: 1em;
+    border-left: 5px solid #283344;
+    margin: 0;
+    width: 100%;
+    letter-spacing: 1px;
+}
+.landing-tabs:hover {
+    background: #202835;
+    border-left: 5px solid #202835;
+}
+.landing-tabs-now {
+    border-left: 5px solid #039da6;
+    background: #202835;
+}
+.landing-tabs-now:hover {
+    background: #202835;
+    border-left: 5px solid #039da6;
+}
+
+#landing-tab-transaction {
+    margin-top: 2em;
+}
+
+
+.division {
+    height: 1px;
+    margin: 0.6em;
+    margin-top: 0;
+    margin-bottom: 1em;
+    background: #1c222d;
+}
+
+
+.button-setting {
+    width: 100%;
+    padding: 2em;
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.9em;
+    background: none;
+    color: #ddd;
+    border: 0;
+    text-align: left;
+    cursor: pointer;
+}
+.button-setting:hover {
+    background: #202835;
+}
+
+
+
+
+#adopt-logo {
+    width: 7em;
+    height: auto;
+    vertical-align: middle !important;
+}
+#tag-admin {
+    text-transform: uppercase;
+    font-family: "Gotham-Bold" !important;
+    font-size: 0.9em;
+}
+#admin-title {
+    float: right;
+    margin-right: 2em;
+    font-size: 0.9em;
+    font-family: "Gotham-Bold" !important;
+    text-transform: uppercase;
+}
+#admin-logout {
+    float: right;
+    margin-right: 2em;
+    font-size: 0.9em;
+    font-family: "Gotham-Bold" !important;
+    text-transform: uppercase;
+    color: #039da6;
+}
+#menu-icon {
+    width: 2.3em;
+    height: auto;
+    margin: 1.4em;
+}
+#top-bar-menu {
+    position: fixed;
+    cursor: pointer;
+}
+#top-bar-logo {
+    text-align: center;
+    vertical-align: middle;
+}
+#toggle-menu {
+    text-align: center;
+    display: none;
+    //background: #efefef;
+    padding: 1em;
+}
+#mobile-church-name {
+    text-transform: uppercase;
+    font-size: 0.9em;
+    font-family: "Gotham-Bold" !important;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
+
+
+
+/* Main */
+
+.landing-content {
+    display: none;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    text-align: center;
+}
+
+.landing-content-now {
+    display: block;
+}
+
+
+#landing-wrapper {
+    padding: 2.5em;
+    margin: 0;
+    background: #fff;
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    text-align: center;
+    border-radius: 4px;
+}
+
+
+.control-bar {
+    margin-top: 4em;
+    text-align: left;
+}
+.filters {
+    float: right;
+}
+
+.search-icon {
+    position: absolute;
+    margin-left: -34em;
+    margin-top: 0.7em;
+    font-size: 1em;
+    color: #606060;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #wrapper {
     width: 100%;
     max-width: 1300px;
@@ -206,12 +425,6 @@ input[type='date'] {
 }
 
 
-#tag-admin {
-    text-transform: uppercase;
-    font-family: "Gotham-Bold" !important;
-    font-size: 0.9em;
-    margin-left: -1em;
-}
 
 
 
@@ -401,6 +614,124 @@ input[type='date'] {
     background: #666;
 }
 
+.admin-filter {
+    width: 13em;
+    border: 0;
+    border-radius: 4px;
+    background: none;
+    padding: 0.7em;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: 1em;
+    font-family: "Gotham-Book" !important;
+    color: #444;
+    cursor: pointer;
+    border: 1px solid #d1d1d1;
+    margin-left: 0.4em;
+    margin-right: 0.4em;
+    text-align: left;
+}
+.admin-filter:hover, .admin-filter:focus {
+    background: #f2f2f2;
+}
+.filter-icon {
+    position: absolute;
+    margin-left: -2.1em;
+    margin-top: 0.75em;
+    font-size: 1em;
+    color: #606060;
+}
+.filter-dropdown {
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.25);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.25);
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.25);
+    display: none;
+    position: absolute;
+    margin-left: 5.7em;
+    border-radius: 4px;
+    border: 1px solid #d1d1d1;
+    background: #fff;
+    font-size: 0.9em;
+    color: #606060;
+    width: 14.3em;
+    padding-top: 0.3em;
+    padding-bottom: 0.3em;
+    font-family: "Gotham-Book" !important;
+}
+.filter-option {
+    cursor: pointer;
+    text-align: left;
+    padding: 0.5em;
+}
+.filter-option:hover {
+    background: #f2f2f2;
+}
+
+
+
+
+.checkbox-custom {
+    opacity: 0;
+    position: absolute;
+}
+.checkbox-custom, .checkbox-custom-label {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 4px;
+    cursor: pointer;
+}
+.checkbox-custom-label {
+    position: relative;
+    color: #5e5e5e;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.checkbox-custom + .checkbox-custom-label:before {
+    content: '';
+    background: #fff;
+    border: 1px solid #999;
+    display: inline-block;
+    vertical-align: middle;
+    width: 18px;
+    height: 18px;
+    padding: 2px;
+    font-size: 0.9em;
+    margin-top: -3px;
+    margin-left: 2px;
+    margin-right: 10px;
+    line-height: 1;
+    text-align: center;
+    transition: none;
+    border-radius: 4px !important;
+}
+.checkbox-custom:checked + .checkbox-custom-label:before {
+    content: "\f00c";
+    font-family: 'FontAwesome';
+    background: #a5a5a5;
+    font-size: 0.8em;
+    color: #fff;
+    font-weight: 100;
+    transition: none;
+    line-height: 1.17;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .admin-button-delete {
     width: 8em;
     text-align: left;
@@ -508,12 +839,9 @@ input[type='date'] {
 /* List  */
 
 .list {
-    width: 65em;
     border: 0;
-    padding: 0.7em;
-    padding-left: 0;
-    padding-right: 0;
-    font-size: 1em;
+    padding: 0;
+    font-size: 0.9em;
     font-family: "Gotham-Book" !important;
     color: #606060;
     margin: 0;
@@ -525,14 +853,12 @@ input[type='date'] {
     color: #555;
     text-align: left;
     cursor: pointer;
-    padding: 0.9em;
-    padding-left: 1.5em;
-    padding-right: 1.5em;
-    font-size: 1em;
+    padding: 1.2em;
+    padding-left: 1em;
+    padding-right: 1em;
     background: none;
     border: 0;
-    border-bottom: 1px solid #ddd;
-    border-radius: 2px;
+    border-bottom: 1px solid #e1e1e1;
 }
 .list-item:hover {
     background: #f2f2f2;
@@ -562,21 +888,22 @@ input[type='date'] {
 }
 
 .list-columns {
-    width: 65em;
     border: 0;
-    border-bottom: 2px solid #555;
-    padding: 0.7em;
-    padding-left: 1.5em;
-    padding-right: 1.5em;
-    font-size: 1em;
-    font-family: "Gotham-Bold" !important;
-    color: #555;
+    border-top: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
+    padding-top: 0.8em;
+    padding-bottom: 0.7em;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: 0.9em;
+    font-family: "Gotham-Book" !important;
+    color: #aaa;
     text-align: left;
     margin: 0;
     margin-top: 2.5em;
+    text-transform: uppercase;
 }
 .list-column {
-    display: inline-block;
     background: none;
     border: 0;
     vertical-align: middle;
@@ -727,12 +1054,41 @@ input[type='date'] {
 
 
 
-
-/* Large Devices, Wide Screens */
-@media only screen and (max-width : 1200px) {
+/* width 1300+ px */
+@media only screen and (min-width : 1300px) {
     
-    
+    #admin-layout {
+        grid-template-columns: 16em 1fr;
+    }
+    #landing-wrapper {
+        padding: 4em;
+    }
+    #main {
+        padding: 2em;
+        padding-left: 5em;
+        padding-right: 5em;
+    }
 }
+
+/* width 1600+ px */
+@media only screen and (min-width : 1600px) {
+    
+    #landing-wrapper {
+        padding: 4em;
+    }
+    #main {
+        padding: 2em;
+        padding-left: 12em;
+        padding-right: 12em;
+    }
+}
+
+
+
+
+
+
+
 
 /* Medium Devices, Desktops */
 @media only screen and (max-width : 992px) {
