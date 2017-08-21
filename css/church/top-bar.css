@@ -11,16 +11,18 @@
     left; 0;
     background: #fff;
     z-index: 10;
-    margin: 0;
     padding: 0;
     width: 100%;
     -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
     -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    margin: 0 auto;
+    text-align: center;
 }
 .top-bar table {
-    padding: 0;
-    margin: 0;
+    clear: both;
+    margin: auto;
+    max-width: 91em;
 }
 .top-bar td, tr {
     margin: 0 !impotant;
@@ -34,10 +36,42 @@
     vertical-align: bottom !important;
 }
 
-#cell-church {
+#left-cell {
+    text-align: left;
+    padding-left: 1.5em !important;
+}
+
+#right-cell {
     text-align: right;
     padding-right: 1.5em !important;
 }
+
+#button-menu {
+    padding: 0.5em;
+    padding-left: 0;
+    padding-right: 0;
+    text-align: right;
+    min-width: 15em;
+    border: 0;
+    font-family: "Gotham-Book" !important;
+    background: none;
+    cursor: pointer;
+    color: #888;
+    font-size: 1em;
+}
+#button-menu img{
+    width: 1.3em;
+    margin-top: 0.2em;
+    margin-left: 1em;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
 
 #church-name {
     font-size: 0.9em;
@@ -57,7 +91,8 @@
 #adopt-logo {
     width: 7em;
     height: auto;
-    margin: 1.5em !important;
+    margin: 1.5em;
+    margin-left: 0;
 }
 #church-logo {
     display: inline-block;

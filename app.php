@@ -31,9 +31,8 @@
     
     
 <!-- Top Bar -->
-<div class="top-bar desktop">
-    <table><tr>
-    <td>
+<div class="top-bar desktop"><table><tr>
+    <td id="left-cell">
         <a href="index.php"><img id="adopt-logo" alt="Adopt-a-Verse Logo" align="middle" src="img/wycliffe-logo.png"></a>
     </td>
     <th>
@@ -43,12 +42,10 @@
         <button class="tabs capitalize" onclick="tab(event, 'tab-goal')">Our Campaign Goal</button>
         </div>
     </th>
-    <td id="cell-church">
-        <div id="church-logo"></div>
-        <div id="church-name"></div>
+    <td id="right-cell">
+        <button id="button-menu" onclick="open_menu()">Welcome, David<img alt="" src="img/cart_close.png"></button>
     </td>
-    </tr></table>
-</div>
+    </tr></table></div>
     
     
 <!-- Top Bar (mobile) -->
@@ -564,13 +561,13 @@ function init() {
         
             
             if (campaign.profile_picture != null) {
-                document.getElementById('church-logo').style.backgroundImage = 'url("img/profile/'+campaign.profile_picture+'")';
+                //document.getElementById('church-logo').style.backgroundImage = 'url("img/profile/'+campaign.profile_picture+'")';
             }
 
             document.getElementById('book').innerHTML = book;
             document.getElementById('campaign-language').innerHTML = campaign.language;
             document.getElementById('campaign-region').innerHTML = campaign.region;
-            document.getElementById('church-name').innerHTML = campaign.church;
+            //document.getElementById('church-name').innerHTML = campaign.church;
             document.getElementById('language-name').innerHTML = campaign.language;
             document.getElementById('language-tab').innerHTML = "About the "+campaign.language;
             document.getElementById('language-description').innerHTML = "<p>"+campaign.project_description+"</p>";
