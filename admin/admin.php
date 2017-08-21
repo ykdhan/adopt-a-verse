@@ -54,7 +54,7 @@ if (isset($_SESSION['aav-admin'])) {
     </div>
     <div id="section-tab">
             <button class="landing-tabs landing-tabs-now" onclick="landing_tab(event, 'tab-campaign')">Campaigns</button>
-            <button class="landing-tabs" onclick="landing_tab(event, 'tab-church')">Churchs</button>
+            <button class="landing-tabs" onclick="landing_tab(event, 'tab-church')">Churches</button>
             <button class="landing-tabs" onclick="landing_tab(event, 'tab-language')">Languages</button>
             <button class="landing-tabs" onclick="landing_tab(event, 'tab-user')">Users</button>
             <button id="landing-tab-transaction" class="landing-tabs" onclick="landing_tab(event, 'tab-transaction')">Transactions</button>
@@ -75,14 +75,16 @@ if (isset($_SESSION['aav-admin'])) {
     <div id="tab-campaign" class="landing-content landing-content-now">
         <h1>Campaigns</h1>
         <div class="control-bar">
-            <input type="text" class="landing-text" id="search-campaign" onkeyup="search_campaign()" placeholder="Search by a book of the Bible, language or church name"><span class="search-icon"><i class="fa fa-search" aria-hidden="true"></i></span>
+            <span class="search-icon"><i class="fa fa-search" aria-hidden="true"></i></span><input type="text" class="landing-text" id="search-campaign" onkeyup="search_campaign()" placeholder="Search by a book of the Bible, language or church name">
             <div class="filters">
-            Filter by <input type="text" class="admin-filter" id="filter-status" onclick="" value="Status" readonly="readonly"><span class="filter-icon"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+            Filter by <button type="button" class="admin-filter" id="filter-status">Status<span class="filter-icon"><i class="fa fa-caret-down" aria-hidden="true"></i></span></button>
                 <div class="filter-dropdown" id="dropdown-status">
-                    <div class="filter-option"><input id="status-inprogress" class="checkbox-custom" name="status-inprogress" type="checkbox" onclick="filter_by('status','inprogress')"><label for="status-inprogress" class="checkbox-custom-label">In Progress</label></div>
-                    <div class="filter-option"><input id="status-scheduled" class="checkbox-custom" name="status-scheduled" type="checkbox" onclick=""><label for="status-scheduled" class="checkbox-custom-label">Scheduled</label></div>
-                    <div class="filter-option"><input id="status-pending" class="checkbox-custom" name="status-pending" type="checkbox" onclick=""><label for="status-pending" class="checkbox-custom-label">Pending</label></div>
-                    <div class="filter-option"><input id="status-complete" class="checkbox-custom" name="status-complete" type="checkbox" onclick=""><label for="status-complete" class="checkbox-custom-label">Complete</label></div>
+                    <div class="filter-option"><input id="status-inprogress" class="checkbox-custom" name="status-inprogress" type="checkbox" onclick="filter_by('status','inprogress')" checked="true"><label for="status-inprogress" class="checkbox-custom-label">In Progress</label></div>
+                    <div class="filter-option"><input id="status-scheduled" class="checkbox-custom" name="status-scheduled" type="checkbox" onclick="filter_by('status','coming')" checked="true"><label for="status-scheduled" class="checkbox-custom-label">Scheduled</label></div>
+                    <div class="filter-option"><input id="status-pending" class="checkbox-custom" name="status-pending" type="checkbox" onclick="filter_by('status','pending')" checked="true"><label for="status-pending" class="checkbox-custom-label">Pending</label></div>
+                    <div class="filter-option"><input id="status-complete" class="checkbox-custom" name="status-complete" type="checkbox" onclick="filter_by('status','complete')" checked="true"><label for="status-complete" class="checkbox-custom-label">Complete</label></div>
+                    <div class="filter-option-division"></div>
+                    <div class="filter-option"><input id="status-all" class="checkbox-custom" name="status-all" type="checkbox" onclick="filter_by('status','all')" checked="true"><label for="status-all" class="checkbox-custom-label">All</label></div>
                 </div>
             </div>
         </div>
@@ -100,55 +102,84 @@ if (isset($_SESSION['aav-admin'])) {
     
     <div id="tab-church" class="landing-content">
         
-        <input type="text" class="landing-text" id="search-church" onkeyup="search_church()" placeholder="Search by church name, account number or state">
-    
-        <div class="landing-add">
-            <a href="#add-church"><button type="button" class="landing-button"><img alt="" src="../img/add_new.png">Add Church</button></a>
+        <h1>Churches</h1>
+        <div class="control-bar">
+            <span class="search-icon"><i class="fa fa-search" aria-hidden="true"></i></span><input type="text" class="landing-text" id="search-church" onkeyup="search_church()" placeholder="Search by church name, account number or state">
+            <a href="#add-church"><button type="button" class="button-add"><i class="fa fa-plus" aria-hidden="true"></i> Add Church</button></a>
         </div>
-        
-        <div class="list-columns">
+        <div class="list-columns"><div class="col-church">
             <div class="list-column" id="column-church-profile-picture"></div>
             <div class="list-column" id="column-church-name">Name</div>
             <div class="list-column" id="column-church-state">State</div>
             <div class="list-column" id="column-church-campaign">Campaigns</div>
-        </div>
+        </div></div>
         <div class="list" id="list-church">Not Available</div>
         
     </div>
     
     <div id="tab-language" class="landing-content">
         
-        <input type="text" class="landing-text" id="search-language" onkeyup="search_language()" placeholder="Search by ID, people group or region">
-        
-        <div class="landing-add">
-            <a href="#add-language"><button type="button" class="landing-button"><img alt="" src="../img/add_new.png">Add Language</button></a>
+        <h1>Languages</h1>
+        <div class="control-bar">
+            <span class="search-icon"><i class="fa fa-search" aria-hidden="true"></i></span><input type="text" class="landing-text" id="search-language" onkeyup="search_language()" placeholder="Search by ID, people group or region">
+            <a href="#add-language"><button type="button" class="button-add"><i class="fa fa-plus" aria-hidden="true"></i> Add Language</button></a>
+            <div class="filters">
+            Filter by <button type="button" class="admin-filter" id="filter-continent">Continent<span class="filter-icon"><i class="fa fa-caret-down" aria-hidden="true"></i></span></button>
+                <div class="filter-dropdown" id="dropdown-continent">
+                    <div class="filter-option"><input id="continent-asia" class="checkbox-custom" name="continent-asia" type="checkbox" onclick="filter_by('continent','asia')" checked="true"><label for="continent-asia" class="checkbox-custom-label">Asia</label></div>
+                    <div class="filter-option"><input id="continent-africa" class="checkbox-custom" name="continent-africa" type="checkbox" onclick="filter_by('continent','africa')" checked="true"><label for="continent-africa" class="checkbox-custom-label">Africa</label></div>
+                    <div class="filter-option"><input id="continent-europe" class="checkbox-custom" name="continent-europe" type="checkbox" onclick="filter_by('continent','europe')" checked="true"><label for="continent-europe" class="checkbox-custom-label">Europe</label></div>
+                    <div class="filter-option"><input id="continent-north-america" class="checkbox-custom" name="continent-north-america" type="checkbox" onclick="filter_by('continent','north_america')" checked="true"><label for="continent-north-america" class="checkbox-custom-label">North America</label></div>
+                    <div class="filter-option"><input id="continent-south-america" class="checkbox-custom" name="continent-south-america" type="checkbox" onclick="filter_by('continent','south_america')" checked="true"><label for="continent-south-america" class="checkbox-custom-label">South America</label></div>
+                    <div class="filter-option"><input id="continent-australia" class="checkbox-custom" name="continent-australia" type="checkbox" onclick="filter_by('continent','australia')" checked="true"><label for="continent-australia" class="checkbox-custom-label">Australia/Oceania</label></div>
+                    <div class="filter-option"><input id="continent-antarctica" class="checkbox-custom" name="continent-antarctica" type="checkbox" onclick="filter_by('continent','antarctica')" checked="true"><label for="continent-antarctica" class="checkbox-custom-label">Antarctica</label></div>
+                    <div class="filter-option-division"></div>
+                    <div class="filter-option"><input id="continent-all" class="checkbox-custom" name="continent-all" type="checkbox" onclick="filter_by('continent','all')" checked="true"><label for="continent-all" class="checkbox-custom-label">All</label></div>
+                </div>
+            </div>
         </div>
-        
-        <div class="list-columns">
+        <div class="list-columns"><div class="col-language">
             <div class="list-column" id="column-language-id">ID</div>
             <div class="list-column" id="column-language-people-group">People Group</div>
             <div class="list-column" id="column-language-region">Region</div>
-        </div>
+            <div class="list-column" id="column-language-continent">Continent</div>
+        </div></div>
         <div class="list" id="list-language">Not Available</div>
         
     </div>
     
     <div id="tab-user" class="landing-content">
-        <input type="text" class="landing-text" id="search-user" onkeyup="search_user()" placeholder="Search by name or email">
-        <div class="landing-add">
-            <a href="#add-wycliffe-admin"><button type="button" class="landing-button"><img alt="" src="../img/add_new.png">Add Wycliffe Admin</button></a>
+        
+        <h1>Users</h1>
+        <div class="control-bar">
+            <span class="search-icon"><i class="fa fa-search" aria-hidden="true"></i></span><input type="text" class="landing-text" id="search-user" onkeyup="search_user()" placeholder="Search by name or email">
+            <a href="#add-wycliffe-admin"><button type="button" class="button-add"><i class="fa fa-plus" aria-hidden="true"></i> Add Wycliffe Admin</button></a>
+            <div class="filters">
+            Filter by <button type="button" class="admin-filter" id="filter-role">Role<span class="filter-icon"><i class="fa fa-caret-down" aria-hidden="true"></i></span></button>
+                <div class="filter-dropdown" id="dropdown-role">
+                    <div class="filter-option"><input id="role-user" class="checkbox-custom" name="role-user" type="checkbox" onclick="filter_by('role','user')" checked="true"><label for="role-user" class="checkbox-custom-label">User</label></div>
+                    <div class="filter-option"><input id="role-church-admin" class="checkbox-custom" name="role-church-admin" type="checkbox" onclick="filter_by('role','church_admin')" checked="true"><label for="role-church-admin" class="checkbox-custom-label">Church Admin</label></div>
+                    <div class="filter-option"><input id="role-wycliffe-admin" class="checkbox-custom" name="role-wycliffe-admin" type="checkbox" onclick="filter_by('role','wycliffe_admin')" checked="true"><label for="role-wycliffe-admin" class="checkbox-custom-label">Wycliffe Admin</label></div>
+                    <div class="filter-option-division"></div>
+                    <div class="filter-option"><input id="role-all" class="checkbox-custom" name="role-all" type="checkbox" onclick="filter_by('role','all')" checked="true"><label for="role-all" class="checkbox-custom-label">All</label></div>
+                </div>
+            </div>
         </div>
-        <div class="list-columns">
+        <div class="list-columns"><div class="col-user">
             <div class="list-column" id="column-user-name">Name</div>
             <div class="list-column" id="column-user-email">Email Address</div>
             <div class="list-column" id="column-user-role">Role</div>
-        </div>
+        </div></div>
         <div class="list" id="list-user">Not Available</div>
+        
+        
     </div>
     
     <div id="tab-transaction" class="landing-content">
-        <input type="text" class="landing-text" id="search-transaction" onkeyup="search_transaction()" placeholder="Search by transaction ID, campaign ID or user name">
-        <div class="list-columns">
+        <div class="control-bar">
+            <span class="search-icon"><i class="fa fa-search" aria-hidden="true"></i></span><input type="text" class="landing-text" id="search-transaction" onkeyup="search_transaction()" placeholder="Search by transaction ID, campaign ID or user name">
+        </div>
+        <div class="list-columns col-transaction">
             <div class="list-column" id="column-transaction-tid">Transaction ID</div>
             <div class="list-column" id="column-transaction-cid">Campaign ID</div>
             <div class="list-column" id="column-transaction-name">User Name</div>
@@ -524,23 +555,202 @@ if (isset($_SESSION['aav-admin'])) {
     
     
 $( "#filter-status" ).focusin(function() {
+    $( "#dropdown-status" ).focus();
     $( "#dropdown-status" ).css({display: 'block'});
-});  
-$( "#filter-status" ).focusout(function() {
-    if ($( "#dropdown-status" ).focus) {
-        console.log('focus');
-    } else {
-        console.log('no-focus');
-        $( "#dropdown-status" ).css({display: 'none'});
+    $( "#filter-status" ).css({background: '#f2f2f2'});
+});
+$( "#filter-continent" ).focusin(function() {
+    $( "#dropdown-continent" ).focus();
+    $( "#dropdown-continent" ).css({display: 'block'});
+    $( "#filter-continent" ).css({background: '#f2f2f2'});
+});
+$( "#filter-role" ).focusin(function() {
+    $( "#dropdown-role" ).focus();
+    $( "#dropdown-role" ).css({display: 'block'});
+    $( "#filter-role" ).css({background: '#f2f2f2'});
+}); 
+    
+    
+$(document).mouseup(function(e) {
+    var campaign_dropdown = $("#dropdown-status");
+    var campaign_filter = $("#filter-status");
+    if (!campaign_dropdown.is(e.target) && campaign_dropdown.has(e.target).length === 0) {
+        if (!campaign_filter.is(e.target) && campaign_filter.has(e.target).length === 0) {
+            $( "#dropdown-status" ).css({display: 'none'});
+            $( "#filter-status" ).css({background: 'none'});
+        } 
     }
-});  
+    
+    var language_dropdown = $("#dropdown-continent");
+    var language_filter = $("#filter-continent");
+    if (!language_dropdown.is(e.target) && language_dropdown.has(e.target).length === 0) {
+        if (!language_filter.is(e.target) && language_filter.has(e.target).length === 0) {
+            $( "#dropdown-continent" ).css({display: 'none'});
+            $( "#filter-continent" ).css({background: 'none'});
+        } 
+    }
+    
+    var user_dropdown = $("#dropdown-role");
+    var user_filter = $("#filter-role");
+    if (!user_dropdown.is(e.target) && user_dropdown.has(e.target).length === 0) {
+        if (!user_filter.is(e.target) && user_filter.has(e.target).length === 0) {
+            $( "#dropdown-role" ).css({display: 'none'});
+            $( "#filter-role" ).css({background: 'none'});
+        } 
+    }
+});
     
 function filter_by(filter,option) {
-    $( "#filter-status" ).focus();
+    console.log(filter+": "+option);
+    
+    if (filter == "status") {
+        if (option == "all") {
+            var bool = false;
+            document.getElementById('dropdown-status').innerHTML = '<div class="filter-option"><input id="status-inprogress" class="checkbox-custom" name="status-inprogress" type="checkbox" onclick="filter_by(\'status\',\'inprogress\')"><label for="status-inprogress" class="checkbox-custom-label">In Progress</label></div><div class="filter-option"><input id="status-scheduled" class="checkbox-custom" name="status-scheduled" type="checkbox" onclick="filter_by(\'status\',\'coming\')"><label for="status-scheduled" class="checkbox-custom-label">Scheduled</label></div><div class="filter-option"><input id="status-pending" class="checkbox-custom" name="status-pending" type="checkbox" onclick="filter_by(\'status\',\'pending\')"><label for="status-pending" class="checkbox-custom-label">Pending</label></div><div class="filter-option"><input id="status-complete" class="checkbox-custom" name="status-complete" type="checkbox" onclick="filter_by(\'status\',\'complete\')"><label for="status-complete" class="checkbox-custom-label">Complete</label></div><div class="filter-option-division"></div><div class="filter-option"><input id="status-all" class="checkbox-custom" name="status-all" type="checkbox" onclick="filter_by(\'status\',\'all\')"><label for="status-all" class="checkbox-custom-label">All</label>';
+            
+            if (!campaign_status.all) {
+                bool = true;
+                document.getElementById('status-inprogress').setAttribute('checked', 'true');
+                document.getElementById('status-scheduled').setAttribute('checked', 'true');
+                document.getElementById('status-pending').setAttribute('checked', 'true');
+                document.getElementById('status-complete').setAttribute('checked', 'true');
+                document.getElementById('status-all').setAttribute('checked', 'true');
+                
+            }
+            
+            for (var i = 0; i < Object.keys(campaign_status).length; i++) {
+                campaign_status[Object.keys(campaign_status)[i]] = bool;
+            }
+            
+        } else {
+            campaign_status[option] = !campaign_status[option];
+            
+            var all = true;
+            
+            for (var i = 0; i < Object.keys(campaign_status).length; i++) {
+                if (Object.keys(campaign_status)[i] != 'all' && campaign_status[Object.keys(campaign_status)[i]] == false) {
+                    all = false;
+                }
+            }
+            
+            if (all) {
+                document.getElementById('status-all').setAttribute('checked', 'true');
+                campaign_status.all = true;
+            } else {
+                document.getElementById('status-all').removeAttribute('checked');
+                campaign_status.all = false;
+            }
+            
+        }
+        
+        console.log(campaign_status);
+        search_campaign();
+    } 
+    else if (filter == "continent") {
+        if (option == "all") {
+            var bool = false;
+            document.getElementById('dropdown-continent').innerHTML = '<div class="filter-option"><input id="continent-asia" class="checkbox-custom" name="continent-asia" type="checkbox" onclick="filter_by(\'continent\',\'asia\')"><label for="continent-asia" class="checkbox-custom-label">Asia</label></div><div class="filter-option"><input id="continent-africa" class="checkbox-custom" name="continent-africa" type="checkbox" onclick="filter_by(\'continent\',\'africa\')"><label for="continent-africa" class="checkbox-custom-label">Africa</label></div><div class="filter-option"><input id="continent-europe" class="checkbox-custom" name="continent-europe" type="checkbox" onclick="filter_by(\'continent\',\'europe\')"><label for="continent-europe" class="checkbox-custom-label">Europe</label></div><div class="filter-option"><input id="continent-north-america" class="checkbox-custom" name="continent-north-america" type="checkbox" onclick="filter_by(\'continent\',\'north_america\')"><label for="continent-north-america" class="checkbox-custom-label">North America</label></div><div class="filter-option"><input id="continent-south-america" class="checkbox-custom" name="continent-south-america" type="checkbox" onclick="filter_by(\'continent\',\'south_america\')"k><label for="continent-south-america" class="checkbox-custom-label">South America</label></div><div class="filter-option"><input id="continent-australia" class="checkbox-custom" name="continent-australia" type="checkbox" onclick="filter_by(\'continent\',\'australia\')"><label for="continent-australia" class="checkbox-custom-label">Australia/Oceania</label></div><div class="filter-option"><input id="continent-antarctica" class="checkbox-custom" name="continent-antarctica" type="checkbox" onclick="filter_by(\'continent\',\'antarctica\')"><label for="continent-antarctica" class="checkbox-custom-label">Antarctica</label></div><div class="filter-option-division"></div><div class="filter-option"><input id="continent-all" class="checkbox-custom" name="continent-all" type="checkbox" onclick="filter_by(\'continent\',\'all\')"><label for="continent-all" class="checkbox-custom-label">All</label></div>';
+            
+            if (!language_continent.all) {
+                bool = true;
+                
+                document.getElementById('continent-asia').setAttribute('checked', 'true');
+                document.getElementById('continent-africa').setAttribute('checked', 'true');
+                document.getElementById('continent-europe').setAttribute('checked', 'true');
+                document.getElementById('continent-north-america').setAttribute('checked', 'true');
+                document.getElementById('continent-south-america').setAttribute('checked', 'true');
+                document.getElementById('continent-australia').setAttribute('checked', 'true');
+                document.getElementById('continent-antarctica').setAttribute('checked', 'true');
+                document.getElementById('continent-all').setAttribute('checked', 'true');
+                
+            }
+            
+            for (var i = 0; i < Object.keys(language_continent).length; i++) {
+                language_continent[Object.keys(language_continent)[i]] = bool;
+            }
+            
+        } else {
+            language_continent[option] = !language_continent[option];
+            
+            var all = true;
+            
+            for (var i = 0; i < Object.keys(language_continent).length; i++) {
+                if (Object.keys(language_continent)[i] != 'all' && language_continent[Object.keys(language_continent)[i]] == false) {
+                    all = false;
+                }
+            }
+            
+            if (all) {
+                document.getElementById('continent-all').setAttribute('checked', 'true');
+                language_continent.all = true;
+            } else {
+                document.getElementById('continent-all').removeAttribute('checked');
+                language_continent.all = false;
+            }
+            
+        }
+        
+        console.log(language_continent);
+        search_language();
+    }
+    else if (filter == "role") {
+        if (option == "all") {
+            var bool = false;
+            document.getElementById('dropdown-role').innerHTML = '<div class="filter-option"><input id="role-user" class="checkbox-custom" name="role-user" type="checkbox" onclick="filter_by(\'role\',\'user\')"><label for="role-user" class="checkbox-custom-label">User</label></div><div class="filter-option"><input id="role-church-admin" class="checkbox-custom" name="role-church-admin" type="checkbox" onclick="filter_by(\'role\',\'church_admin\')"><label for="role-church-admin" class="checkbox-custom-label">Church Admin</label></div><div class="filter-option"><input id="role-wycliffe-admin" class="checkbox-custom" name="role-wycliffe-admin" type="checkbox" onclick="filter_by(\'role\',\'wycliffe_admin\')"><label for="role-wycliffe-admin" class="checkbox-custom-label">Wycliffe Admin</label></div><div class="filter-option-division"></div><div class="filter-option"><input id="role-all" class="checkbox-custom" name="role-all" type="checkbox" onclick="filter_by(\'role\',\'all\')"><label for="role-all" class="checkbox-custom-label">All</label></div>';
+            
+            if (!user_role.all) {
+                bool = true;
+                
+                document.getElementById('role-user').setAttribute('checked', 'true');
+                document.getElementById('role-church-admin').setAttribute('checked', 'true');
+                document.getElementById('role-wycliffe-admin').setAttribute('checked', 'true');
+                document.getElementById('role-all').setAttribute('checked', 'true');
+                
+            }
+            
+            for (var i = 0; i < Object.keys(user_role).length; i++) {
+                user_role[Object.keys(user_role)[i]] = bool;
+            }
+            
+        } else {
+            user_role[option] = !user_role[option];
+            
+            var all = true;
+            
+            for (var i = 0; i < Object.keys(user_role).length; i++) {
+                if (Object.keys(user_role)[i] != 'all' && user_role[Object.keys(user_role)[i]] == false) {
+                    all = false;
+                }
+            }
+            
+            if (all) {
+                document.getElementById('role-all').setAttribute('checked', 'true');
+                user_role.all = true;
+            } else {
+                document.getElementById('role-all').removeAttribute('checked');
+                user_role.all = false;
+            }
+            
+        }
+        
+        console.log(user_role);
+        search_user();
+    }
+    
 }
         
+    
+    
+    
 var campaign_id = "";
 var campaigns = {};
+var campaign_status = {
+    inprogress: true,
+    coming: true,
+    pending: true,
+    complete: true,
+    all: true
+};
     
 search_campaign();
     
@@ -596,6 +806,7 @@ function search_campaign() {
                 
                 
                 // PRINT IN PROGRESS
+                if (campaign_status.inprogress) {
                 for (var i = 0; i < Object.keys(campaigns).length; i++) {
                     var num = Object.keys(campaigns)[i];
                     
@@ -618,8 +829,10 @@ function search_campaign() {
                     }
                     
                 }
+                }
                 
                 // PRINT SCHEDULED
+                if (campaign_status.coming) {
                 for (var i = 0; i < Object.keys(campaigns).length; i++) {
                     var num = Object.keys(campaigns)[i];
                     
@@ -642,8 +855,10 @@ function search_campaign() {
                     }
                     
                 }
+                }
                 
                 // PRINT PENDING
+                if (campaign_status.pending) {
                 for (var i = 0; i < Object.keys(campaigns).length; i++) {
                     var num = Object.keys(campaigns)[i];
                     
@@ -666,8 +881,10 @@ function search_campaign() {
                     }
                     
                 }
+                }
                 
                 // PRINT COMPLETE
+                if (campaign_status.complete) {
                 for (var i = 0; i < Object.keys(campaigns).length; i++) {
                     var num = Object.keys(campaigns)[i];
                     
@@ -690,7 +907,7 @@ function search_campaign() {
                     }
                     
                 }
-                
+                }
                 
             }
             
@@ -750,7 +967,7 @@ function search_church() {
                     
                     var number_of_campaigns = num_campaign.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-                    document.getElementById('list-church').innerHTML += '<div class="list-item" onclick="select_church(\''+id+'\')"><div class="col-church-profile-picture" style="background-image: url(\''+image+'\')"></div><div class="col-church-name">'+church+'</div><div class="col-church-state">'+state+'</div><div class="col-church-campaign">'+number_of_campaigns+'</div></div>';
+                    document.getElementById('list-church').innerHTML += '<div class="list-item col-church" onclick="select_church(\''+id+'\')"><div class="col-church-profile-picture"><div class="church-profile-picture" style="background-image: url(\''+image+'\')"></div></div><div class="col-church-name">'+church+'</div><div class="col-church-state">'+state+'</div><div class="col-church-campaign">'+number_of_campaigns+'</div></div>';
                 }
             }
             
@@ -774,6 +991,16 @@ function select_church(id) {
     
 var language_id = "";
 var languages = {};
+var language_continent = {
+    asia: true,
+    africa: true,
+    europe: true,
+    north_america: true,
+    south_america: true,
+    australia: true,
+    antarctica: true,
+    all: true
+};
     
 search_language();
     
@@ -803,6 +1030,7 @@ function search_language() {
                     var publish_date = resp[num]['publish_date'];
                     var project_description = resp[num]['project_description'];
                     var pdf_url = resp[num]['pdf_url'];
+                    var continent = "";
                     
                     languages[id] = {};
                     languages[id]['people_group'] = people_group;
@@ -812,7 +1040,7 @@ function search_language() {
                     languages[id]['project_description'] = project_description;
                     languages[id]['pdf_url'] = pdf_url;
 
-                    document.getElementById('list-language').innerHTML += '<div class="list-item" onclick="select_language(\''+id+'\')"><div class="col-language-id">'+id+'</div><div class="col-language-name">'+people_group+'</div><div class="col-language-region">'+region+'</div></div>';
+                    document.getElementById('list-language').innerHTML += '<div class="list-item col-language" onclick="select_language(\''+id+'\')"><div class="col-language-id">'+id+'</div><div class="col-language-name">'+people_group+'</div><div class="col-language-region">'+region+'</div><div class="col-language-continent">'+continent+'</div></div>';
                 }
             }
             
@@ -837,6 +1065,12 @@ function select_language(id) {
     
 var user_id = "";
 var users = {};
+var user_role = {
+    user: true,
+    church_admin: true,
+    wycliffe_admin: true,
+    all: true
+};
     
 search_user();
     
@@ -877,13 +1111,18 @@ function search_user() {
                     
                     var admin = "";
                     
-                    if (role == "campaign_admin") {
+                    if (role == "campaign_admin" && user_role.church_admin) {
                         admin = "<img alt='' src='../img/church_admin.svg'>";
-                    } else if (role == "wycliffe_admin") {
+                        document.getElementById('list-user').innerHTML += '<div class="list-item col-user" onclick="select_user(\''+id+'\')"><div class="col-user-name">'+first_name+' '+last_name+'</div><div class="col-user-email">'+email+'</div><div class="col-user-role">'+admin+'</div></div>';
+                    } else if (role == "wycliffe_admin" && user_role.wycliffe_admin) {
                         admin = "<img alt='' src='../img/wycliffe_admin.svg'>";
+                        document.getElementById('list-user').innerHTML += '<div class="list-item col-user" onclick="select_user(\''+id+'\')"><div class="col-user-name">'+first_name+' '+last_name+'</div><div class="col-user-email">'+email+'</div><div class="col-user-role">'+admin+'</div></div>';
+                    } else if (role == "user" && user_role.user) {
+                        admin = "<img alt='' src='../img/not_admin.png'>";
+                        document.getElementById('list-user').innerHTML += '<div class="list-item col-user" onclick="select_user(\''+id+'\')"><div class="col-user-name">'+first_name+' '+last_name+'</div><div class="col-user-email">'+email+'</div><div class="col-user-role">'+admin+'</div></div>';
                     }
 
-                    document.getElementById('list-user').innerHTML += '<div class="list-item" onclick="select_user(\''+id+'\')"><div class="col-user-name">'+first_name+' '+last_name+'</div><div class="col-user-email">'+email+'</div><div class="col-user-role">'+admin+'</div></div>';
+                    
                 }
             }
             

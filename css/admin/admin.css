@@ -59,38 +59,42 @@
 }
 
 
-.landing-add {
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
-}
 
-.landing-button {
-    width: 35em;
-    border: 1.99px dashed #ccc;
+
+.button-add {
+    width: auto;
     border-radius: 4px;
-    background: #fff;
-    padding: 1.5em;
+    background: #039da6;
+    border: 0;
+    padding: 0.9em;
     padding-left: 1em;
     padding-right: 1em;
     font-size: 0.9em;
     font-family: "Gotham-Book" !important;
-    color: #c1c1c1;
+    color: #fff;
     cursor: pointer;
-    margin-top: -0.5em;
+    margin-left: 0.2em;
+    margin-right: 0.2em;
+    margin-top: -0.2em;
+    vertical-align: middle;
 }
-.landing-button:hover {
-    background: #f2f2f2;
+.button-add:hover {
+    background: #048484;
 }
-
-.landing-button img {
-    margin-right: 1em;
-    width: 1.6em;
-    height: 1.6em;
+.button-add i {
+    margin-right: 0.5em;
     vertical-align: middle;
 }
 
 
-
+#search-campaign, 
+#search-language,
+#search-church,
+#search-user,
+#search-transaction {
+    position: relative;
+    margin-left: -2em;
+}
 
 .col-campaign {
     display: grid;
@@ -99,103 +103,141 @@
     grid-gap: 0;
     text-align: left;
 }
-
-
-
-
-.col-church-profile-picture {
-    vertical-align: middle;
-    width: 4em;
-    height: 4em;
-    border: 1px solid #d1d1d1;
-    border-radius: 50%;
-    display: inline-block;
-    background-size: cover;
-    background-position: center;
-    background-blend-mode: multiply;
-}
-.col-church-name {
-    width: 25.7em;
-    padding-left: 3.3em;
+.col-church {
+    display: grid;
+    grid-template-columns: 6.5em 1fr 9em 7em;
+    grid-template-rows: 1fr;
+    grid-gap: 0;
     text-align: left;
-    display: inline-block;
 }
-.col-church-state {
-    width: 22em;
+.col-language {
+    display: grid;
+    grid-template-columns: 9em 1fr 19em 14em;
+    grid-template-rows: 1fr;
+    grid-gap: 0;
     text-align: left;
-    display: inline-block;
 }
-.col-church-campaign {
-    width: 9em;
-    text-align: right;
-    display: inline-block;
+.col-user {
+    display: grid;
+    grid-template-columns: 1fr 20em 3em;
+    grid-template-rows: 1fr;
+    grid-gap: 0;
+    text-align: left;
 }
+
 
 .col-campaign-status {
     text-align: center;
     overflow-x: hidden;
+    vertical-align: middle;
 }
 .col-campaign-church {
     text-align: left;
     overflow-x: hidden;
+    vertical-align: middle;
 }
 .col-campaign-book {
     text-align: left;
     overflow-x: hidden;
+    vertical-align: middle;
 }
 .col-campaign-language {
     text-align: left;
     overflow-x: hidden;
+    vertical-align: middle;
 }
 .col-campaign-duration {
     text-align: left;
     overflow-x: hidden;
+    vertical-align: middle;
 }
 .col-campaign-percentage {
     text-align: right;
     padding-right: 0.5em;
     overflow-x: hidden;
+    vertical-align: middle;
 }
 
-.col-language-id {
-    width: 10.5em;
+
+.church-profile-picture {
+    vertical-align: middle;
+    width: 4em;
+    height: 4em;
+    border: 1px solid #d1d1d1;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: multiply;
+    margin-left: 0.5em;
+}
+.col-church-profile-picture {
+    text-align: center;
+    overflow-x: hidden;
+    vertical-align: middle;
+}
+.col-church-name {
     text-align: left;
-    display: inline-block;
+    overflow-x: hidden;
+    vertical-align: middle;
+    padding-top: 1.5em;
+}
+.col-church-state {
+    text-align: left;
+    overflow-x: hidden;
+    vertical-align: middle;
+    padding-top: 1.5em;
+}
+.col-church-campaign {
+    text-align: right;
+    padding-right: 0.5em;
+    overflow-x: hidden;
+    vertical-align: middle;
+    padding-top: 1.5em;
+}
+
+
+.col-language-id {
+    text-align: left;
+    overflow-x: hidden;
     vertical-align: middle;
 }
 .col-language-name {
     text-align: left;
-    width: 23.3em;
-    display: inline-block;
+    overflow-x: hidden;
     vertical-align: middle;
 }
 .col-language-region {
-    display: inline-block;
+    text-align: left;
+    overflow-x: hidden;
+    vertical-align: middle;
+}
+.col-language-continent {
+    text-align: left;
+    overflow-x: hidden;
     vertical-align: middle;
 }
 
+
 .col-user-name {
-    width: 23.5em;
     text-align: left;
-    display: inline-block;
+    overflow-x: hidden;
     vertical-align: middle;
-    padding-top: 0.3em;
-    padding-bottom: 0.3em;
+    padding-top: 0.5em;
 }
 .col-user-email {
-    width: 34.6em;
     text-align: left;
-    display: inline-block;
+    overflow-x: hidden;
     vertical-align: middle;
+    padding-top: 0.5em;
 }
 .col-user-role {
-    width: 3em;
     text-align: right;
-    display: inline-block;
+    padding-right: 0.2em;
+    overflow-x: hidden;
     vertical-align: middle;
 }
 .col-user-role img {
-    width: 2.25em;
+    width: 2em;
     height: auto;
     vertical-align: middle;
 }
@@ -360,27 +402,8 @@
 
 
 
-#column-church-profile-picture {
-    width: 4em;
-}
-#column-church-name {
-    width: 25em;
-    padding-left: 3em;
-}
-#column-church-state {
-    width: 25em;
-}
 
 
-
-#column-language-id {
-    width: 10em;
-}
-#column-language-people-group {
-    width: 23em;
-}
-#column-language-region {
-}
 
 
 #column-user-name {
