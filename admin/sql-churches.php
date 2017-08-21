@@ -26,6 +26,7 @@ if ($result = $mysqli->query($sql)) {
         $output[$num]['id'] = $row['id'];
         $output[$num]['state'] = $row['state'];
         $output[$num]['name'] = $row['name'];
+        $output[$num]['contact'] = $row['contact'];
         $output[$num]['profile_picture'] = $row['profile_picture'];
         
         

@@ -832,8 +832,14 @@
               document.getElementById('language-people-group').innerHTML = languages[language_id]['people_group'];
               document.getElementById('language-id').innerHTML = language_id;
               document.getElementById('language-region').innerHTML = languages[language_id]['region'];
-              document.getElementById('language-number-speakers').innerHTML = languages[language_id]['num_speakers'];
-              document.getElementById('language-publish-date').innerHTML = languages[language_id]['publish_date'];
+              document.getElementById('language-continent').innerHTML = languages[language_id]['continent'];
+              var num_speakers = languages[language_id]['num_speakers'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+              document.getElementById('language-number-speakers').innerHTML = num_speakers;
+              var p_date = new Date(languages[language_id]['publish_date']);
+              var p_year = (""+p_date.getFullYear()).slice(-2);
+              var p_month = p_date.getMonth() + 1;
+              var publish_date = p_month+"/"+p_date.getDate()+"/"+p_year;
+              document.getElementById('language-publish-date').innerHTML = publish_date;
               document.getElementById('language-pdf-url').value = languages[language_id]['pdf_url'];;
 
               document.getElementById('language-pdf-url').style.borderColor = "#d1d1d1";

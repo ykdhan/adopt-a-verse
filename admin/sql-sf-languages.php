@@ -26,6 +26,7 @@ if ($result = $mysqli->query($sql)) {
         $output[$num]['id'] = $row['id'];
         $output[$num]['people_group'] = $row['people_group'];
         $output[$num]['region'] = $row['region'];
+        $output[$num]['continent'] = $row['continent'];
         $output[$num]['number_of_speakers'] = $row['number_of_speakers'];
         $output[$num]['publish_date'] = $row['scripture_published'];
         

@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS `aav`.`church` (
   `id` INT(11) NOT NULL,
   `name` VARCHAR(45) NULL DEFAULT NULL,
   `state` VARCHAR(45) NULL DEFAULT NULL,
+  `contact` varchar(45) DEFAULT NULL,
   `profile_picture` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
@@ -17,6 +18,7 @@ CREATE TABLE IF NOT EXISTS `aav`.`language` (
   `id` VARCHAR(10) NOT NULL,
   `people_group` VARCHAR(45) NULL DEFAULT NULL,
   `region` VARCHAR(45) NULL DEFAULT NULL,
+  `continent` varchar(45) DEFAULT NULL,
   `number_of_speakers` INT(11) NULL DEFAULT NULL,
   `scripture_published` DATE NULL DEFAULT NULL,
   `project_description` TEXT NULL DEFAULT NULL,

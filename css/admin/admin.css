@@ -98,14 +98,14 @@
 
 .col-campaign {
     display: grid;
-    grid-template-columns: 5.5em 1fr 11em 1fr 11em 6em;
+    grid-template-columns: 5.5em 1fr 11em 0.7fr 13em 11em 4.8em;
     grid-template-rows: 1fr;
     grid-gap: 0;
     text-align: left;
 }
 .col-church {
     display: grid;
-    grid-template-columns: 6.5em 1fr 9em 7em;
+    grid-template-columns: 6.5em 1fr 9em 11em 7em;
     grid-template-rows: 1fr;
     grid-gap: 0;
     text-align: left;
@@ -120,6 +120,13 @@
 .col-user {
     display: grid;
     grid-template-columns: 1fr 20em 3em;
+    grid-template-rows: 1fr;
+    grid-gap: 0;
+    text-align: left;
+}
+.col-transaction {
+    display: grid;
+    grid-template-columns: 13em 11em 1fr 7em 10em 12em 5em;
     grid-template-rows: 1fr;
     grid-gap: 0;
     text-align: left;
@@ -142,6 +149,11 @@
     vertical-align: middle;
 }
 .col-campaign-language {
+    text-align: left;
+    overflow-x: hidden;
+    vertical-align: middle;
+}
+.col-campaign-url {
     text-align: left;
     overflow-x: hidden;
     vertical-align: middle;
@@ -182,6 +194,12 @@
     padding-top: 1.5em;
 }
 .col-church-state {
+    text-align: left;
+    overflow-x: hidden;
+    vertical-align: middle;
+    padding-top: 1.5em;
+}
+.col-church-contact {
     text-align: left;
     overflow-x: hidden;
     vertical-align: middle;
@@ -244,46 +262,38 @@
 
 
 .col-transaction-tid {
-    width: 11em;
     text-align: left;
-    display: inline-block;
+    overflow-x: hidden;
     vertical-align: middle;
 }
 .col-transaction-cid {
-    width: 9.2em;
     text-align: left;
-    display: inline-block;
+    overflow-x: hidden;
     vertical-align: middle;
 }
 .col-transaction-name {
-    width: 13.5em;
     text-align: left;
-    display: inline-block;
+    overflow-x: hidden;
     vertical-align: middle;
 }
 .col-transaction-verses {
-    width: 4em;
     text-align: right;
-    display: inline-block;
+    overflow-x: hidden;
     vertical-align: middle;
 }
 .col-transaction-amount {
-    width: 8.3em;
     text-align: right;
-    display: inline-block;
+    overflow-x: hidden;
     vertical-align: middle;
 }
 .col-transaction-date {
-    width: 10em;
-    padding-left: 3em;
-    text-align: center;
-    display: inline-block;
+    text-align: left;
+    overflow-x: hidden;
     vertical-align: middle;
+    padding-left: 5em;
 }
 .col-transaction-buttons {
-    width: 6em;
     text-align: right;
-    display: inline-block;
     vertical-align: middle;
 }
 .col-transaction-buttons button {
@@ -309,7 +319,6 @@
 }
 #list-transaction .list-item.transaction-denied div {
     color: #d1d1d1;
-    //text-decoration: line-through !important;
 }
 
 
@@ -397,40 +406,9 @@
 
 
 
-
-/* List Columns  */
-
-
-
-
-
-
-
-#column-user-name {
-    width: 23em;
-}
-#column-user-email {
-    width: 35em;
-}
-#column-user-role {
-}
-
-
-#column-transaction-tid {
-    width: 10.5em;
-}
-#column-transaction-cid {
-    width: 9em;
-}
-#column-transaction-name {
-    width: 14em;
-}
-#column-transaction-verses {
-    width: 7em;
-}
-#column-transaction-amount {
-    width: 8em;
-}
 #column-transaction-date {
+    padding-left: 5em;
 }
-
+#column-transaction-verses, #column-transaction-amount {
+    text-align: right;
+}

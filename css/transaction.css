@@ -37,7 +37,7 @@
 
 
 
-h1 {
+#transaction-title {
   position: absolute;
   font-family: "Gotham-Book" !important;
   color: #fff !important;

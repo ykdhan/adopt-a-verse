@@ -16,6 +16,7 @@ $project_description = $_GET['project_description'];
 $pdf_url = $_GET['pdf_url'];
 
 $region = "";
+$continent = "";
 $people_group = "";
 $num_speakers = "";
 $publish_date = "";
@@ -29,6 +30,7 @@ if ($result = $mysqli->query($sql)) {
     while ($row = $result->fetch_assoc()) {
         $answer = true;
         $region = $row['region'];
+        $continent = $row['continent'];
         $people_group = $row['people_group'];
         $num_speakers = $row['number_of_speakers'];
         $publish_date = $row['scripture_published'];
@@ -37,7 +39,7 @@ if ($result = $mysqli->query($sql)) {
 
 if ($answer) {
         
-    $insert = "INSERT INTO language (id, people_group, region, number_of_speakers, scripture_published, project_description, pdf_url) VALUES ( '{$id}', '{$people_group}', '{$region}', '{$num_speakers}', '{$publish_date}', '{$project_description}', '{$pdf_url}')";
+    $insert = "INSERT INTO language (id, people_group, region, continent, number_of_speakers, scripture_published, project_description, pdf_url) VALUES ( '{$id}', '{$people_group}', '{$region}', '{$continent}', '{$num_speakers}', '{$publish_date}', '{$project_description}', '{$pdf_url}')";
 
     if ($mysqli->query($insert)) {
         echo "yes";

@@ -24,6 +24,7 @@ if ($result = $mysqli->query($sql)) {
         $church_id = $row['id'];
         $output[$num]['id'] = $row['id'];
         $output[$num]['state'] = $row['state'];
+        $output[$num]['contact'] = $row['contact'];
         $output[$num]['name'] = $row['name'];
         
         $select = "SELECT * FROM church WHERE id='{$church_id}'";

@@ -47,7 +47,7 @@
   <span></span>
   <span></span>
 </div>
-<h1>Delivering your verses</h1>
+<h1 id="transaction-title">Delivering your verses</h1>
     
 <form action="https://www.wycliffe.org/p/Contributions/Contributions/addToCart">
     <fieldset id="transaction-form">

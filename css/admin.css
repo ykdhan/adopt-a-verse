@@ -171,7 +171,7 @@ input[type='date'] {
 
 #admin-layout {
     display: grid;
-    grid-template-columns: 13em 1fr;
+    grid-template-columns: 7.8em 1fr;
     grid-template-rows: 1fr;
     grid-gap: 0;
     margin: 0;
@@ -181,7 +181,7 @@ input[type='date'] {
 #side {
     z-index: 10;
     display: grid;
-    grid-template-rows: 8em 1fr 8em;
+    grid-template-rows: 8em 1fr 6em;
     grid-gap: 0;
     box-sizing: border-box;
     margin: 0;
@@ -220,7 +220,7 @@ input[type='date'] {
 
 .landing-tabs {
     text-align: left;
-    font-size: 0.9em;
+    font-size: 0.65em;
     background: none;
     border: none;
     outline: none;
@@ -228,44 +228,50 @@ input[type='date'] {
     font-family: "Gotham-Book" !important;
     cursor: pointer;
     padding: 1em;
-    border-left: 4px solid #283344;
+    padding-left: 0;
+    padding-right: 0;
+    border-left: 3px solid #283344;
     margin: 0;
-    width: 100%;
+    width: 12em;
+    text-align: center;
     letter-spacing: 1px;
+    vertical-align: middle;
+    text-transform: uppercase;
 }
 .landing-tabs:hover {
     background: #202835;
-    border-left: 4px solid #202835;
+    border-left: 3px solid #202835;
 }
 .landing-tabs-now {
-    border-left: 5px solid #039da6;
+    border-left: 3px solid #039da6;
     background: #202835;
 }
 .landing-tabs-now:hover {
     background: #202835;
-    border-left: 4px solid #039da6;
+    border-left: 3px solid #039da6;
 }
 
-#landing-tab-transaction {
-    margin-top: 2em;
+.landing-tabs img {
+    width: 5em;
+    height: 5em;
+    display: inline-block;
 }
 
-
-.division {
+.side-division {
     height: 1px;
-    margin: 0.6em;
-    margin-top: 0;
+    width: 7.05em;
+    margin-left: 0.3em;
     margin-bottom: 1em;
     background: #1c222d;
 }
 
 
 .button-setting {
-    width: 100%;
-    padding: 2em;
+    width: 9.6em;
+    padding: 1em;
     padding-top: 0.8em;
     padding-bottom: 0.8em;
-    font-size: 0.9em;
+    font-size: 0.8em;
     background: none;
     color: #ddd;
     border: 0;
@@ -1063,9 +1069,6 @@ input[type='date'] {
 /* width 1300+ px */
 @media only screen and (min-width : 1300px) {
     
-    #admin-layout {
-        grid-template-columns: 16em 1fr;
-    }
     #landing-wrapper {
         padding: 4em;
     }

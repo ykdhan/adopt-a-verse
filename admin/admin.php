@@ -53,14 +53,14 @@ if (isset($_SESSION['aav-admin'])) {
         <a href="index.php"><img id="adopt-logo" alt="Adopt-a-Verse Logo" align="middle" src="../img/wycliffe-admin-logo.png"><span id="tag-admin">Admin</span></a>
     </div>
     <div id="section-tab">
-            <button class="landing-tabs landing-tabs-now" onclick="landing_tab(event, 'tab-campaign')">Campaigns</button>
-            <button class="landing-tabs" onclick="landing_tab(event, 'tab-church')">Churches</button>
-            <button class="landing-tabs" onclick="landing_tab(event, 'tab-language')">Languages</button>
-            <button class="landing-tabs" onclick="landing_tab(event, 'tab-user')">Users</button>
-            <button id="landing-tab-transaction" class="landing-tabs" onclick="landing_tab(event, 'tab-transaction')">Transactions</button>
+        <button class="landing-tabs landing-tabs-now" onclick="landing_tab(event, 'tab-campaign')"><img alt="" src="../img/icon_campaign.svg"><br>Campaigns</button>
+        <button class="landing-tabs" onclick="landing_tab(event, 'tab-church')"><img alt="" src="../img/icon_church.svg"><br>Churches</button>
+        <button class="landing-tabs" onclick="landing_tab(event, 'tab-language')"><img alt="" src="../img/icon_language.svg"><br>Languages</button>
+        <button class="landing-tabs" onclick="landing_tab(event, 'tab-user')"><img alt="" src="../img/icon_user.svg"><br>Users</button>
+        <button class="landing-tabs" onclick="landing_tab(event, 'tab-transaction')"><img alt="" src="../img/icon_transaction.svg"><br>Transactions</button>
     </div>
     <div id="section-setting">
-        <div class="division"></div>
+        <div class="side-division"></div>
         <button class="button-setting" onclick="logout()">Logout</button>
     </div>
 </div>
@@ -93,8 +93,9 @@ if (isset($_SESSION['aav-admin'])) {
             <div class="list-column" id="column-campaign-church">Church</div>
             <div class="list-column" id="column-campaign-book">Book</div>
             <div class="list-column" id="column-campaign-language">Language</div>
+            <div class="list-column" id="column-campaign-url">URL</div>
             <div class="list-column" id="column-campaign-duration">Duration</div>
-            <div class="list-column" id="column-campaign-percentage">Progress</div>
+            <div class="list-column" id="column-campaign-percentage">Funded</div>
             </div>
         </div>
         <div class="list" id="list-campaign">Not Available</div>
@@ -111,6 +112,7 @@ if (isset($_SESSION['aav-admin'])) {
             <div class="list-column" id="column-church-profile-picture"></div>
             <div class="list-column" id="column-church-name">Name</div>
             <div class="list-column" id="column-church-state">State</div>
+            <div class="list-column" id="column-church-contact">Contact</div>
             <div class="list-column" id="column-church-campaign">Campaigns</div>
         </div></div>
         <div class="list" id="list-church">Not Available</div>
@@ -176,17 +178,29 @@ if (isset($_SESSION['aav-admin'])) {
     </div>
     
     <div id="tab-transaction" class="landing-content">
+        <h1>Transactions</h1>
         <div class="control-bar">
             <span class="search-icon"><i class="fa fa-search" aria-hidden="true"></i></span><input type="text" class="landing-text" id="search-transaction" onkeyup="search_transaction()" placeholder="Search by transaction ID, campaign ID or user name">
+            <div class="filters">
+            Filter by <button type="button" class="admin-filter" id="filter-transaction">Status<span class="filter-icon"><i class="fa fa-caret-down" aria-hidden="true"></i></span></button>
+                <div class="filter-dropdown" id="dropdown-transaction">
+                    <div class="filter-option"><input id="transaction-pending" class="checkbox-custom" name="transaction-pending" type="checkbox" onclick="filter_by('transaction','pending')" checked="true"><label for="transaction-pending" class="checkbox-custom-label">Pending</label></div>
+                    <div class="filter-option"><input id="transaction-completed" class="checkbox-custom" name="transaction-completed" type="checkbox" onclick="filter_by('transaction','completed')" checked="true"><label for="transaction-completed" class="checkbox-custom-label">Completed</label></div>
+                    <div class="filter-option"><input id="transaction-canceled" class="checkbox-custom" name="transaction-canceled" type="checkbox" onclick="filter_by('transaction','canceled')" checked="true"><label for="transaction-canceled" class="checkbox-custom-label">Canceled</label></div>
+                    <div class="filter-option-division"></div>
+                    <div class="filter-option"><input id="transaction-all" class="checkbox-custom" name="transaction-all" type="checkbox" onclick="filter_by('transaction','all')" checked="true"><label for="transaction-all" class="checkbox-custom-label">All</label></div>
+                </div>
+            </div>
         </div>
-        <div class="list-columns col-transaction">
+        <div class="list-columns"><div class="col-transaction">
             <div class="list-column" id="column-transaction-tid">Transaction ID</div>
             <div class="list-column" id="column-transaction-cid">Campaign ID</div>
             <div class="list-column" id="column-transaction-name">User Name</div>
             <div class="list-column" id="column-transaction-verses">Verses</div>
             <div class="list-column" id="column-transaction-amount">Amount</div>
             <div class="list-column" id="column-transaction-date">Date</div>
-        </div>
+            <div class="list-column" id="column-transaction-buttons"></div>
+        </div></div>
         <div class="list" id="list-transaction">Not Available</div>
     </div>
       
@@ -280,6 +294,13 @@ if (isset($_SESSION['aav-admin'])) {
             <div class="col-right">
                 
                 <p id="add-region"> </p>
+                
+            </div>
+            <div class="col-left">Continent</div>
+            <div class="col-tip"></div>
+            <div class="col-right">
+                
+                <p id="add-continent"> </p>
                 
             </div>
             <div class="col-left">Number of Speakers</div>
@@ -462,6 +483,13 @@ if (isset($_SESSION['aav-admin'])) {
                 <p id="language-region"> </p>
                 
             </div>
+            <div class="col-left">Continent</div>
+            <div class="col-tip"></div>
+            <div class="col-right">
+                
+                <p id="language-continent"> </p>
+                
+            </div>
             <div class="col-left">Number of Speakers</div>
             <div class="col-tip"></div>
             <div class="col-right">
@@ -569,6 +597,11 @@ $( "#filter-role" ).focusin(function() {
     $( "#dropdown-role" ).css({display: 'block'});
     $( "#filter-role" ).css({background: '#f2f2f2'});
 }); 
+$( "#filter-transaction" ).focusin(function() {
+    $( "#dropdown-transaction" ).focus();
+    $( "#dropdown-transaction" ).css({display: 'block'});
+    $( "#filter-transaction" ).css({background: '#f2f2f2'});
+}); 
     
     
 $(document).mouseup(function(e) {
@@ -596,6 +629,15 @@ $(document).mouseup(function(e) {
         if (!user_filter.is(e.target) && user_filter.has(e.target).length === 0) {
             $( "#dropdown-role" ).css({display: 'none'});
             $( "#filter-role" ).css({background: 'none'});
+        } 
+    }
+    
+    var transaction_dropdown = $("#dropdown-transaction");
+    var transaction_filter = $("#filter-transaction");
+    if (!transaction_dropdown.is(e.target) && transaction_dropdown.has(e.target).length === 0) {
+        if (!transaction_filter.is(e.target) && transaction_filter.has(e.target).length === 0) {
+            $( "#dropdown-transaction" ).css({display: 'none'});
+            $( "#filter-transaction" ).css({background: 'none'});
         } 
     }
 });
@@ -736,6 +778,49 @@ function filter_by(filter,option) {
         console.log(user_role);
         search_user();
     }
+    else if (filter == "transaction") {
+        if (option == "all") {
+            var bool = false;
+            document.getElementById('dropdown-transaction').innerHTML = '<div class="filter-option"><input id="transaction-pending" class="checkbox-custom" name="transaction-pending" type="checkbox" onclick="filter_by(\'transaction\',\'pending\')"><label for="transaction-pending" class="checkbox-custom-label">Pending</label></div><div class="filter-option"><input id="transaction-completed" class="checkbox-custom" name="transaction-completed" type="checkbox" onclick="filter_by(\'transaction\',\'completed\')"><label for="transaction-completed" class="checkbox-custom-label">Completed</label></div><div class="filter-option"><input id="transaction-canceled" class="checkbox-custom" name="transaction-canceled" type="checkbox" onclick="filter_by(\'transaction\',\'canceled\')"><label for="transaction-canceled" class="checkbox-custom-label">Canceled</label></div><div class="filter-option-division"></div><div class="filter-option"><input id="transaction-all" class="checkbox-custom" name="transaction-all" type="checkbox" onclick="filter_by(\'transaction\',\'all\')"><label for="transaction-all" class="checkbox-custom-label">All</label></div>';
+            
+            if (!transaction_status.all) {
+                bool = true;
+                
+                document.getElementById('transaction-pending').setAttribute('checked', 'true');
+                document.getElementById('transaction-canceled').setAttribute('checked', 'true');
+                document.getElementById('transaction-completed').setAttribute('checked', 'true');
+                document.getElementById('transaction-all').setAttribute('checked', 'true');
+                
+            }
+            
+            for (var i = 0; i < Object.keys(transaction_status).length; i++) {
+                transaction_status[Object.keys(transaction_status)[i]] = bool;
+            }
+            
+        } else {
+            transaction_status[option] = !transaction_status[option];
+            
+            var all = true;
+            
+            for (var i = 0; i < Object.keys(transaction_status).length; i++) {
+                if (Object.keys(transaction_status)[i] != 'all' && transaction_status[Object.keys(transaction_status)[i]] == false) {
+                    all = false;
+                }
+            }
+            
+            if (all) {
+                document.getElementById('transaction-all').setAttribute('checked', 'true');
+                transaction_status.all = true;
+            } else {
+                document.getElementById('transaction-all').removeAttribute('checked');
+                transaction_status.all = false;
+            }
+            
+        }
+        
+        console.log(transaction_status);
+        search_transaction();
+    }
     
 }
         
@@ -824,7 +909,7 @@ function search_campaign() {
 
                         var duration = start_date+" - "+end_date;
                         
-                        document.getElementById('list-campaign').innerHTML += '<div class="list-item col-campaign" onclick="select_campaign(\''+num+'\')"><div class="col-campaign-status"><div class="status-inprogress"></div></div><div class="col-campaign-church">'+campaigns[num]['church']+'</div><div class="col-campaign-book">'+campaigns[num]['book']+'</div><div class="col-campaign-language">'+campaigns[num]['language']+'</div><div class="col-campaign-duration">'+duration+'</div><div class="col-campaign-percentage">'+campaigns[num]['percentage']+'%</div></div>';
+                        document.getElementById('list-campaign').innerHTML += '<div class="list-item col-campaign" onclick="select_campaign(\''+num+'\')"><div class="col-campaign-status"><div class="status-inprogress"></div></div><div class="col-campaign-church">'+campaigns[num]['church']+'</div><div class="col-campaign-book">'+campaigns[num]['book']+'</div><div class="col-campaign-language">'+campaigns[num]['language']+'</div><div class="col-campaign-url">/'+campaigns[num]['url']+'</div><div class="col-campaign-duration">'+duration+'</div><div class="col-campaign-percentage">'+campaigns[num]['percentage']+'%</div></div>';
                         
                     }
                     
@@ -850,7 +935,7 @@ function search_campaign() {
 
                         var duration = start_date+" - "+end_date;
                         
-                        document.getElementById('list-campaign').innerHTML += '<div class="list-item col-campaign" onclick="select_campaign(\''+num+'\')"><div class="col-campaign-status"><div class="status-coming"></div></div><div class="col-campaign-church">'+campaigns[num]['church']+'</div><div class="col-campaign-book">'+campaigns[num]['book']+'</div><div class="col-campaign-language">'+campaigns[num]['language']+'</div><div class="col-campaign-duration">'+duration+'</div><div class="col-campaign-percentage">'+campaigns[num]['percentage']+'%</div></div>';
+                        document.getElementById('list-campaign').innerHTML += '<div class="list-item col-campaign" onclick="select_campaign(\''+num+'\')"><div class="col-campaign-status"><div class="status-coming"></div></div><div class="col-campaign-church">'+campaigns[num]['church']+'</div><div class="col-campaign-book">'+campaigns[num]['book']+'</div><div class="col-campaign-language">'+campaigns[num]['language']+'</div><div class="col-campaign-url">/'+campaigns[num]['url']+'</div><div class="col-campaign-duration">'+duration+'</div><div class="col-campaign-percentage">'+campaigns[num]['percentage']+'%</div></div>';
                         
                     }
                     
@@ -876,7 +961,7 @@ function search_campaign() {
 
                         var duration = start_date+" - "+end_date;
                         
-                        document.getElementById('list-campaign').innerHTML += '<div class="list-item col-campaign" onclick="select_campaign(\''+num+'\')"><div class="col-campaign-status"><div class="status-pending"></div></div><div class="col-campaign-church">'+campaigns[num]['church']+'</div><div class="col-campaign-book">'+campaigns[num]['book']+'</div><div class="col-campaign-language">'+campaigns[num]['language']+'</div><div class="col-campaign-duration">'+duration+'</div><div class="col-campaign-percentage">'+campaigns[num]['percentage']+'%</div></div>';
+                        document.getElementById('list-campaign').innerHTML += '<div class="list-item col-campaign" onclick="select_campaign(\''+num+'\')"><div class="col-campaign-status"><div class="status-pending"></div></div><div class="col-campaign-church">'+campaigns[num]['church']+'</div><div class="col-campaign-book">'+campaigns[num]['book']+'</div><div class="col-campaign-language">'+campaigns[num]['language']+'</div><div class="col-campaign-url">/'+campaigns[num]['url']+'</div><div class="col-campaign-duration">'+duration+'</div><div class="col-campaign-percentage">'+campaigns[num]['percentage']+'%</div></div>';
                         
                     }
                     
@@ -902,7 +987,7 @@ function search_campaign() {
 
                         var duration = start_date+" - "+end_date;
                         
-                        document.getElementById('list-campaign').innerHTML += '<div class="list-item col-campaign" onclick="select_campaign(\''+num+'\')"><div class="col-campaign-status"><div class="status-complete"></div></div><div class="col-campaign-church">'+campaigns[num]['church']+'</div><div class="col-campaign-book">'+campaigns[num]['book']+'</div><div class="col-campaign-language">'+campaigns[num]['language']+'</div><div class="col-campaign-duration">'+duration+'</div><div class="col-campaign-percentage">'+campaigns[num]['percentage']+'%</div></div>';
+                        document.getElementById('list-campaign').innerHTML += '<div class="list-item col-campaign" onclick="select_campaign(\''+num+'\')"><div class="col-campaign-status"><div class="status-complete"></div></div><div class="col-campaign-church">'+campaigns[num]['church']+'</div><div class="col-campaign-book">'+campaigns[num]['book']+'</div><div class="col-campaign-language">'+campaigns[num]['language']+'</div><div class="col-campaign-url">/'+campaigns[num]['url']+'</div><div class="col-campaign-duration">'+duration+'</div><div class="col-campaign-percentage">'+campaigns[num]['percentage']+'%</div></div>';
                         
                     }
                     
@@ -954,6 +1039,7 @@ function search_church() {
                     var id = resp[num]['id'];
                     var state = resp[num]['state'];
                     var church = resp[num]['name'];
+                    var contact = resp[num]['contact'];
                     var profile_picture = resp[num]['profile_picture'];
                     var num_campaign = resp[num]['num_campaign'];
                     
@@ -967,7 +1053,7 @@ function search_church() {
                     
                     var number_of_campaigns = num_campaign.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-                    document.getElementById('list-church').innerHTML += '<div class="list-item col-church" onclick="select_church(\''+id+'\')"><div class="col-church-profile-picture"><div class="church-profile-picture" style="background-image: url(\''+image+'\')"></div></div><div class="col-church-name">'+church+'</div><div class="col-church-state">'+state+'</div><div class="col-church-campaign">'+number_of_campaigns+'</div></div>';
+                    document.getElementById('list-church').innerHTML += '<div class="list-item col-church" onclick="select_church(\''+id+'\')"><div class="col-church-profile-picture"><div class="church-profile-picture" style="background-image: url(\''+image+'\')"></div></div><div class="col-church-name">'+church+'</div><div class="col-church-state">'+state+'</div><div class="col-church-contact">'+contact+'</div><div class="col-church-campaign">'+number_of_campaigns+'</div></div>';
                 }
             }
             
@@ -1026,21 +1112,54 @@ function search_language() {
                     var id = resp[num]['id'];
                     var people_group = resp[num]['people_group'];
                     var region = resp[num]['region'];
+                    var continent = resp[num]['continent'];
                     var num_speakers = resp[num]['number_of_speakers'];
                     var publish_date = resp[num]['publish_date'];
                     var project_description = resp[num]['project_description'];
                     var pdf_url = resp[num]['pdf_url'];
-                    var continent = "";
+                    
+                    var cont = continent;
+                    
+                    switch(cont) {
+                        case "Asia":
+                            cont = "asia";
+                            break;
+                        case "Africa":
+                            cont = "africa";
+                            break;
+                        case "Europe":
+                            cont = "europe";
+                            break;
+                        case "North America":
+                            cont = "north_america";
+                            break;
+                        case "South America":
+                            cont = "south_america";
+                            break;
+                        case "Australia/Oceania":
+                            cont = "australia";
+                            break;
+                        case "Antarctica":
+                            cont = "antarctica";
+                            break;
+                        default:
+                            break;
+                    }
                     
                     languages[id] = {};
                     languages[id]['people_group'] = people_group;
                     languages[id]['region'] = region;
+                    languages[id]['continent'] = continent;
                     languages[id]['num_speakers'] = num_speakers;
                     languages[id]['publish_date'] = publish_date;
                     languages[id]['project_description'] = project_description;
                     languages[id]['pdf_url'] = pdf_url;
+                    
+                    if (language_continent[cont]) {
 
-                    document.getElementById('list-language').innerHTML += '<div class="list-item col-language" onclick="select_language(\''+id+'\')"><div class="col-language-id">'+id+'</div><div class="col-language-name">'+people_group+'</div><div class="col-language-region">'+region+'</div><div class="col-language-continent">'+continent+'</div></div>';
+                        document.getElementById('list-language').innerHTML += '<div class="list-item col-language" onclick="select_language(\''+id+'\')"><div class="col-language-id">'+id+'</div><div class="col-language-name">'+people_group+'</div><div class="col-language-region">'+region+'</div><div class="col-language-continent">'+continent+'</div></div>';
+                        
+                    }
                 }
             }
             
@@ -1146,6 +1265,12 @@ function select_user(id) {
 
     
 var transactions = {};
+var transaction_status = {
+    pending: true,
+    canceled: true,
+    completed: true,
+    all: true
+};
     
 search_transaction();
     
@@ -1196,13 +1321,12 @@ function search_transaction() {
                     var month = p_date.getMonth() + 1;
                     var purchase_date = month+"/"+p_date.getDate()+"/"+year;
                     
-                    if (status == "pending") {
-                        document.getElementById('list-transaction').innerHTML += '<div class="list-item"><div class="col-transaction-tid">'+id+'</div><div class="col-transaction-cid">'+campaign+'</div><div class="col-transaction-name">'+name+'</div><div class="col-transaction-verses">'+num_verses+'</div><div class="col-transaction-amount">&#36;'+num_amount+'</div><div class="col-transaction-date">'+purchase_date+'</div><div class="col-transaction-buttons"><button type="button" onclick="confirm_transaction(\''+id+'\')"><img alt="Confirm" src="../img/error_valid.png"></button><button type="button" onclick="cancel_transaction(\''+id+'\')"><img alt="Cancel" src="../img/error_invalid.png"></button></div></div>';
-                        
-                    } else if (status == "complete") {
-                        document.getElementById('list-transaction').innerHTML += '<div class="list-item"><div class="col-transaction-tid">'+id+'</div><div class="col-transaction-cid">'+campaign+'</div><div class="col-transaction-name">'+name+'</div><div class="col-transaction-verses">'+num_verses+'</div><div class="col-transaction-amount">&#36;'+num_amount+'</div><div class="col-transaction-date">'+purchase_date+'</div><div class="col-transaction-buttons"></div></div>';
-                    } else if (status == "denied") {
-                        document.getElementById('list-transaction').innerHTML += '<div class="list-item transaction-denied"><div class="col-transaction-tid">'+id+'</div><div class="col-transaction-cid">'+campaign+'</div><div class="col-transaction-name">'+name+'</div><div class="col-transaction-verses">'+num_verses+'</div><div class="col-transaction-amount">&#36;'+num_amount+'</div><div class="col-transaction-date">'+purchase_date+'</div><div class="col-transaction-buttons"></div></div>';
+                    if (status == "pending" && transaction_status.pending) {
+                        document.getElementById('list-transaction').innerHTML += '<div class="list-item col-transaction"><div class="col-transaction-tid">'+id+'</div><div class="col-transaction-cid">'+campaign+'</div><div class="col-transaction-name">'+name+'</div><div class="col-transaction-verses">'+num_verses+'</div><div class="col-transaction-amount">&#36;'+num_amount+'</div><div class="col-transaction-date">'+purchase_date+'</div><div class="col-transaction-buttons"><button type="button" onclick="confirm_transaction(\''+id+'\')"><img alt="Confirm" src="../img/error_valid.png"></button><button type="button" onclick="cancel_transaction(\''+id+'\')"><img alt="Cancel" src="../img/error_invalid.png"></button></div></div>';
+                    } else if (status == "complete" && transaction_status.completed) {
+                        document.getElementById('list-transaction').innerHTML += '<div class="list-item col-transaction"><div class="col-transaction-tid">'+id+'</div><div class="col-transaction-cid">'+campaign+'</div><div class="col-transaction-name">'+name+'</div><div class="col-transaction-verses">'+num_verses+'</div><div class="col-transaction-amount">&#36;'+num_amount+'</div><div class="col-transaction-date">'+purchase_date+'</div><div class="col-transaction-buttons"></div></div>';
+                    } else if (status == "denied" && transaction_status.canceled) {
+                        document.getElementById('list-transaction').innerHTML += '<div class="list-item col-transaction transaction-denied"><div class="col-transaction-tid">'+id+'</div><div class="col-transaction-cid">'+campaign+'</div><div class="col-transaction-name">'+name+'</div><div class="col-transaction-verses">'+num_verses+'</div><div class="col-transaction-amount">&#36;'+num_amount+'</div><div class="col-transaction-date">'+purchase_date+'</div><div class="col-transaction-buttons"></div></div>';
                     }
 
                 }
@@ -1281,6 +1405,7 @@ function search_add_church() {
                 var id = resp[num]['id'];
                 var state = resp[num]['state'];
                 var name = resp[num]['name'];
+                var contact = resp[num]['contact'];
                 var status = resp[num]['status'];
 
                 if (status == "added") {
@@ -1457,6 +1582,7 @@ function search_add_language() {
                 var id = resp[num]['id'];
                 var language = resp[num]['people_group'];
                 var region = resp[num]['region'];
+                var continent = resp[num]['continent'];
                 var publish_date = resp[num]['publish_date'];
                 var num_speakers = resp[num]['number_of_speakers'];
                 var status = resp[num]['status'];
@@ -1466,7 +1592,7 @@ function search_add_language() {
                 } else {
                     var pass_language = language.replace(/'/g, "\\'");
                     var pass_region = region.replace(/'/g, "\\'");
-                    document.getElementById('drop-add-language').innerHTML += '<div class="drop-item language-item" onclick="select_add_language(\''+id+'\',\''+pass_language+'\',\''+pass_region+'\',\''+num_speakers+'\',\''+publish_date+'\')"><span class="language-tag tag-id">'+id+'</span>'+language+'<span class="language-tag">'+region+'</span></div>';
+                    document.getElementById('drop-add-language').innerHTML += '<div class="drop-item language-item" onclick="select_add_language(\''+id+'\',\''+pass_language+'\',\''+pass_region+'\',\''+continent+'\',\''+num_speakers+'\',\''+publish_date+'\')"><span class="language-tag tag-id">'+id+'</span>'+language+'<span class="language-tag">'+region+'</span></div>';
                 }
 
             }
@@ -1478,7 +1604,7 @@ function search_add_language() {
         
 }
     
-function select_add_language(id,name,region,speakers,publish) {
+function select_add_language(id,name,region,continent,speakers,publish) {
     language_add_data['language'] = id;
     document.getElementById('add-language').value = name;
     
@@ -1488,6 +1614,7 @@ function select_add_language(id,name,region,speakers,publish) {
         $('#language-info').slideDown();
         document.getElementById('add-id').innerHTML = id;
         document.getElementById('add-region').innerHTML = region;
+        document.getElementById('add-continent').innerHTML = continent;
         var num_speakers = speakers.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         document.getElementById('add-number-speakers').innerHTML = num_speakers;
         var p_date = new Date(publish);

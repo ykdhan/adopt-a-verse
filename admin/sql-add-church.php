@@ -32,6 +32,7 @@ $sql = "SELECT * FROM sf_church WHERE id = {$id}";
 $answer = false;
 $name = "";
 $state = "";
+$contact = "";
 
 if ($result = $mysqli->query($sql)) {
 
@@ -39,6 +40,7 @@ if ($result = $mysqli->query($sql)) {
         $answer = true;
         $name = $row['name'];
         $state = $row['state'];
+        $contact = $row['contact'];
     }
 }
 
@@ -46,7 +48,7 @@ if (move_uploaded_file($_FILES['input_profile_picture']['tmp_name'], $uploadfile
     
     if ($answer) {
         
-        $insert = "INSERT INTO church (id, name, state, profile_picture) VALUES ( {$id}, '{$name}', '{$state}', '{$attach}')";
+        $insert = "INSERT INTO church (id, name, state, contact, profile_picture) VALUES ( {$id}, '{$name}', '{$state}', '{$contact}', '{$attach}')";
 
         if ($mysqli->query($insert)) {
             echo "yes";
@@ -62,7 +64,7 @@ if (move_uploaded_file($_FILES['input_profile_picture']['tmp_name'], $uploadfile
     
     if ($answer) {
         
-        $insert = "INSERT INTO church (id, name, state) VALUES ( {$id}, '{$name}', '{$state}')";
+        $insert = "INSERT INTO church (id, name, state, contact) VALUES ( {$id}, '{$name}', '{$state}', '{$contact}')";
 
         if ($mysqli->query($insert)) {
             echo "yes";
