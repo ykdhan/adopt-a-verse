@@ -1235,13 +1235,13 @@ function logout() {
 }
     
 function my_account() {
-    if (window.confirm("Would you leave this page?\r\nNone of your works will be saved.")) {
+    if (window.confirm("Are you sure you want to leave this page?\r\nYour selections will not be saved.")) {
         window.location.href = "user/";
     }
 }
 
 function gift_history() {
-    if (window.confirm("Would you leave this page?\r\nNone of your works will be saved.")) {
+    if (window.confirm("Are you sure you want to leave this page?\r\nYour selections will not be saved.")) {
         window.location.href = "user/";
     }
 }
