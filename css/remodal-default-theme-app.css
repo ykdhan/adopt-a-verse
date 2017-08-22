@@ -245,3 +245,7 @@
 .lt-ie9 .remodal {
   width: 900px;
 }
+
+#remodal-login {
+    width: 27em;
+}

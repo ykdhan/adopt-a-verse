@@ -30,13 +30,13 @@ DEFAULT CHARACTER SET = utf8;
 
 
 
-INSERT INTO `aav`.`sf_church` (`id`,`name`,`state`,`continent`) VALUES (1,'Wycliffe Church','FL','123-456-4513');
-INSERT INTO `aav`.`sf_church` (`id`,`name`,`state`,`continent`) VALUES (2,'Good Church','IN','156-164-6434');
-INSERT INTO `aav`.`sf_church` (`id`,`name`,`state`,`continent`) VALUES (3,'Best Church','CA','156-116-1566');
-INSERT INTO `aav`.`sf_church` (`id`,`name`,`state`,`continent`) VALUES (4,'God\'s Church','CA','561-953-1651');
-INSERT INTO `aav`.`sf_church` (`id`,`name`,`state`,`continent`) VALUES (5,'Happy Sunday','CO','546-156-1561');
-INSERT INTO `aav`.`sf_church` (`id`,`name`,`state`,`continent`) VALUES (6,'Alpha and Omega','NY','654-135-4564');
-INSERT INTO `aav`.`sf_church` (`id`,`name`,`state`,`continent`) VALUES (7,'Jesus\' Church','ME','123-456-1364');
+INSERT INTO `aav`.`sf_church` (`id`,`name`,`state`,`contact`) VALUES (1,'Wycliffe Church','FL','123-456-4513');
+INSERT INTO `aav`.`sf_church` (`id`,`name`,`state`,`contact`) VALUES (2,'Good Church','IN','156-164-6434');
+INSERT INTO `aav`.`sf_church` (`id`,`name`,`state`,`contact`) VALUES (3,'Best Church','CA','156-116-1566');
+INSERT INTO `aav`.`sf_church` (`id`,`name`,`state`,`contact`) VALUES (4,'God\'s Church','CA','561-953-1651');
+INSERT INTO `aav`.`sf_church` (`id`,`name`,`state`,`contact`) VALUES (5,'Happy Sunday','CO','546-156-1561');
+INSERT INTO `aav`.`sf_church` (`id`,`name`,`state`,`contact`) VALUES (6,'Alpha and Omega','NY','654-135-4564');
+INSERT INTO `aav`.`sf_church` (`id`,`name`,`state`,`contact`) VALUES (7,'Jesus\' Church','ME','123-456-1364');
 
 INSERT INTO `aav`.`sf_language` (`id`,`people_group`,`region`,`continent`,`number_of_speakers`,`scripture_published`) VALUES ('ABC','Thai','Thailand','Asia',505300,'1940-01-05');
 INSERT INTO `aav`.`sf_language` (`id`,`people_group`,`region`,`continent`,`number_of_speakers`,`scripture_published`) VALUES ('TSW','Kaninuwa','Papua New Guinea','Australia/Oceania',16511,'1991-04-08');

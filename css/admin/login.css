@@ -5,7 +5,10 @@
     top: 50%; 
     left: 50%; 
     transform: translate(-50%, -50%);
-    padding: 4em;
+    padding: 3em;
+    padding-left: 4em;
+    padding-right: 4em;
+    width: 27em;
     background: #fff;
     -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
     -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
@@ -29,9 +32,12 @@
 }
 #login-more{
     text-align: left;
-    font-size: 1em;
-    color: #777;
-    margin-top: 1.5em;
+    font-size: 0.9em;
+    color: #039da6;
+    margin-top: 0.5em;
+    margin-left: 1em;
+    margin-right: 1em;
+    padding-left: 0.5em;
 }
 #login-more a {
     display: block;
@@ -65,4 +71,35 @@
     font-size: 0.9em;
     text-align: center;
     color: #db5353;
+}
+
+
+#login-division {
+    height: 1px;
+    background: #d1d1d1;
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+#login-first-time {
+    text-align: center;
+}
+
+#login-first-time span {
+    font-size: 1em;
+    color: #444;
+    display: block;
+}
+
+.login-link {
+    border: 0;
+    background: none;
+    color: #039da6;
+    font-size: 1em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    font-family: "Gotham-Bold" !important;
+    width: 16em;
+    cursor: pointer;
+    margin-top: 0.6em;
 }

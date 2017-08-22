@@ -43,7 +43,7 @@
         </div>
     </th>
     <td id="right-cell">
-        <button id="button-menu" onclick="open_menu()">Welcome, David<img alt="" src="img/cart_close.png"></button>
+        <!-- JS checks if logged in -->
     </td>
     </tr></table></div>
     
@@ -425,7 +425,7 @@
                 
             </div>
         </section>
-        <section>
+        <section id="section-user">
             <div class="col-left">User</div>
             <div class="col-tip"></div>
             <div class="col-right">
@@ -474,10 +474,74 @@
 </div>
 
     
+<div class="remodal" id="remodal-login" data-remodal-id="login" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+    <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+
+    <div class="lightbox">
+        
+        
+        <img id="login-logo" alt="Adopt a Verse" src="img/wycliffe-logo.png">
+        <br>
+        <input type="email" id="login-email" class="login-text" placeholder="Email Address"><br>
+        <input type="password" id="login-password" class="login-text" placeholder="Password"><br>
+        <div id="login-error">
+            Invalid email or password
+        </div>
+        <button type="button" id="login-submit" class="admin-submit" onclick="login()">Sign In</button>
+        <div id="login-more">
+            <a href="#">Forgot your password?</a>
+        </div>
+
+        <div id="login-division"></div>
+
+        <div id="login-first-time">
+            <span>First time using Adopt-a-Verse?</span>
+            <button class="login-link" onclick="create_account()">Create an Account</button>
+        </div>
     
+        
+        
+        
+    </div>
+</div>
     
 
 <script>
+
+// CHECK USER LOGIN
+var user_data = {
+    id: 0,
+    first_name: "",
+    last_name: "",
+    email: ""
+};
+    
+function check_login() {
+    var ajaxObj = new XMLHttpRequest();
+    ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+        console.log("check login: "+ajaxObj.responseText);
+
+        if (ajaxObj.responseText == 0) {
+            document.getElementById('right-cell').innerHTML = '<a href="#login"><button class="button-submit" id="button-login">Log In</button></a>';
+        } else {
+            var resp = JSON.parse(ajaxObj.responseText);
+            user_data.id = resp.id;
+            user_data.first_name = resp.first_name;
+            user_data.last_name = resp.last_name;
+            user_data.email = resp.email;
+            
+            document.getElementById('right-cell').innerHTML = '<button id="button-profile" onclick="toggle_profile()">Welcome, '+resp.first_name+'<img id="profile-icon" alt="" src="img/cart_close.png"><div id="menu"><div class="button-menu" id="my_account" onclick="my_account()"><img class="menu-icon" alt="" src="img/icon_account.svg"> My Account</div><div class="button-menu" id="gift_history" onclick="gift_history()"><img class="menu-icon" alt="" src="img/icon_gift.svg"> Gift History</div><div id="menu-division"></div><div id="button-logout" onclick="logout()">Log Out</div></div></button>';
+        }
+
+    }}}
+    ajaxObj.open("GET", "sql-check-login.php");
+    ajaxObj.send();
+}
+check_login();
+
+
+    
+    
 $(document).ready(function () {
     $("html,body").scrollTop(0);
 });
@@ -1089,7 +1153,98 @@ function toggle_small_photo() {
     }
 } 
 
+  
+    
+    
+    
+    
+// USER LOGIN
+    
+// Toggle profile menu
+    
+var profile_menu = false;
+    
+function toggle_profile() {
+    if (profile_menu) {
+        document.getElementById('menu').style.display = "none";
+        $('#profile-icon').attr('src',"img/cart_close.png");
+        profile_menu = false;
+    } else {
+        document.getElementById('menu').style.display = "block";
+        $('#profile-icon').attr('src',"img/cart_open.png");
+        profile_menu = true;
+    }
+}
+$(document).mouseup(function(e) {
+    var menu = $("#menu");
+    var button = $("#button-profile");
+    if (!menu.is(e.target) && menu.has(e.target).length === 0 && !button.is(e.tartget) && button.has(e.target).length === 0) { 
+        $( "#menu" ).css({display: 'none'});
+        $('#profile-icon').attr('src',"img/cart_close.png");
+        profile_menu = false;
+    }
+});
 
+$('#login-password').keypress(function (e) {
+    if (e.which == 13) {
+        login();
+        return false;
+    }
+});
+    
+function login() {
+    var email = document.getElementById('login-email');
+    var password = document.getElementById('login-password');
+    
+    var ajaxObj = new XMLHttpRequest();
+    ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+
+        console.log(ajaxObj.responseText);
+        
+        if (ajaxObj.responseText == "no\n") {
+            document.getElementById('login-error').style.display = "block";
+        } else {
+            document.getElementById('login-error').style.display = "none";
+            window.location.href = "app.php?id="+code+"#";
+            check_login();
+        }
+
+    }}}
+    ajaxObj.open("GET", "sql-login.php?email="+email.value+"&password="+password.value);
+    ajaxObj.send();
+}
+    
+function logout() {
+    if (window.confirm("Would you like to log out?")) {
+        var ajaxObj = new XMLHttpRequest();
+        ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+
+            user_data = {
+                id: 0,
+                first_name: "",
+                last_name: "",
+                email: ""
+            };
+            
+            document.getElementById('right-cell').innerHTML = '<a href="#login"><button class="button-submit" id="button-login">Log In</button></a>';
+
+        }}}
+        ajaxObj.open("GET", "sql-logout.php");
+        ajaxObj.send();
+    }
+}
+    
+function my_account() {
+    if (window.confirm("Would you leave this page?\r\nNone of your works will be saved.")) {
+        window.location.href = "user/";
+    }
+}
+
+function gift_history() {
+    if (window.confirm("Would you leave this page?\r\nNone of your works will be saved.")) {
+        window.location.href = "user/";
+    }
+}
     
     
     

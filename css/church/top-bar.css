@@ -10,7 +10,7 @@
     top: 0;
     left; 0;
     background: #fff;
-    z-index: 10;
+    z-index: 10 !important;
     padding: 0;
     width: 100%;
     -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
@@ -43,25 +43,24 @@
 
 #right-cell {
     text-align: right;
-    padding-right: 1.5em !important;
+    padding-right: 1.4em !important;
 }
 
-#button-menu {
-    padding: 0.5em;
+#button-profile {
+    padding: 1.96em;
     padding-left: 0;
-    padding-right: 0;
+    padding-right: 1.5em;
     text-align: right;
-    min-width: 15em;
+    width: 19.5em;
     border: 0;
     font-family: "Gotham-Book" !important;
     background: none;
     cursor: pointer;
-    color: #888;
+    color: #666;
     font-size: 1em;
 }
-#button-menu img{
-    width: 1.3em;
-    margin-top: 0.2em;
+#profile-icon{
+    width: 1.1em;
     margin-left: 1em;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -70,6 +69,251 @@
     -ms-user-select: none;
     user-select: none;
 }
+
+#menu {
+    display: none;
+    position: absolute;
+    margin-top: 2.5em;
+    margin-left: 2.5em;
+    width: 17em;
+    //padding-top: 0.5em;
+    //padding-bottom: 0.5em;
+    background: #283344;
+    border-top: 1px solid #1e2733;
+    z-index: 5 !important;
+    border-radius: 6px;
+    //-webkit-box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.25);
+    //-moz-box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.25);
+    //box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.25);
+}
+.button-menu {
+    padding: 1.5em;
+    display: block;
+    text-align: left;
+    min-width: 12em;
+    border: 0;
+    font-family: "Gotham-Book" !important;
+    background: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.9em;
+    margin: 0;
+}
+.button-menu:hover {
+    background: #1e2733;
+}
+
+.menu-icon {
+    vertical-align: middle;
+    width: 2.6em;
+    height: 2.6em;
+    margin: 0;
+    margin-top: -0.8em;
+    margin-right: -0.3em;
+    float: right;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#button-logout {
+    padding: 0.8em;
+    display: block;
+    text-align: center;
+    border-radius: 4px;
+    margin: 1.5em;
+    border: 0;
+    font-family: "Gotham-Book" !important;
+    background: #039da6;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+#button-logout:hover {
+    background: #048484;
+}
+.button-submit {
+    padding: 0.8em;
+    text-align: center;
+    border-radius: 4px;
+    width: 12em;
+    border: 0;
+    font-family: "Gotham-Book" !important;
+    background: #039da6;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+.button-submit:hover {
+    background: #048484;
+}
+
+#button-login {
+    width: 9em;
+}
+
+
+
+
+
+
+#menu-division {
+    height: 1px;
+    background: #1e2733;
+    margin: 0.7em;
+    margin-top: 0;
+}
+
+#my_account:after{
+    content: '';
+    position: absolute;
+    left: 15.7em;
+    top: -13px;
+    width: 0;
+    height: 0;
+    border-left: 13px solid transparent;
+    border-right: 13px solid transparent;
+    border-bottom: 13px solid #283344;
+}
+
+#my_account {
+    border-radius: 4px 4px 0 0;
+}
+
+
+
+#login-logo {
+    width: 10em;
+    margin-bottom: 2em;
+}
+
+#login-tag {
+    font-size: 0.9em;
+    font-family: "Gotham-Bold" !important;
+    text-transform: uppercase;
+    position: absolute;
+    margin-top: 2em;
+    margin-left: -1.5em;
+}
+#login-more{
+    text-align: left;
+    font-size: 0.9em;
+    color: #039da6;
+    margin-top: 0.5em;
+    margin-left: 5.5em;
+    margin-right: 5.5em;
+    padding-left: 0.5em;
+}
+#login-more a {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+#login-submit {
+    width: 16em;
+    border: 1px solid #039da6;
+    margin-bottom: 0.5em;
+}
+.login-text {
+    width: 16em;
+    border: 1px solid #d1d1d1;
+    border-radius: 4px;
+    background: none;
+    padding: 0.7em;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: 1em;
+    font-family: "Gotham-Book" !important;
+    color: #606060;
+    margin-bottom: 0.7em;
+}
+
+
+#login-error {
+    display: none;
+    padding-bottom: 0.5em;
+    font-size: 0.9em;
+    text-align: center;
+    color: #db5353;
+}
+
+
+#login-division {
+    height: 1px;
+    background: #d1d1d1;
+    margin: 4em;
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+#login-first-time {
+    text-align: center;
+}
+
+#login-first-time span {
+    font-size: 1em;
+    color: #444;
+    display: block;
+}
+
+.login-link {
+    border: 0;
+    background: none;
+    color: #039da6;
+    font-size: 1em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    font-family: "Gotham-Bold" !important;
+    width: 16em;
+    cursor: pointer;
+    margin-top: 0.6em;
+}
+
+.admin-submit {
+    width: 12em;
+    border: 0;
+    border-radius: 4px;
+    background: #039da6;
+    padding: 0.7em;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: 1em;
+    font-family: "Gotham-Book" !important;
+    color: #fff;
+    cursor: pointer;
+    margin-left: 0.4em;
+    margin-right: 0.4em;
+}
+.admin-submit:hover {
+    background: #048484;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

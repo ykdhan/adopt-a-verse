@@ -5,9 +5,9 @@ Random Data
 */
 USE `aav`;
 
-INSERT INTO `aav`.`church` (`id`,`name`,`state`,`continent`,`profile_picture`) VALUES (1,'Wycliffe Church','FL','156-456-5612',null);
-INSERT INTO `aav`.`church` (`id`,`name`,`state`,`continent`,`profile_picture`) VALUES (2,'Good Church','IN','456-465-4564',null);
-INSERT INTO `aav`.`church` (`id`,`name`,`state`,`continent`,`profile_picture`) VALUES (3,'Best Church','CA','456-456-4587',null);
+INSERT INTO `aav`.`church` (`id`,`name`,`state`,`contact`,`profile_picture`) VALUES (1,'Wycliffe Church','FL','156-456-5612',null);
+INSERT INTO `aav`.`church` (`id`,`name`,`state`,`contact`,`profile_picture`) VALUES (2,'Good Church','IN','456-465-4564',null);
+INSERT INTO `aav`.`church` (`id`,`name`,`state`,`contact`,`profile_picture`) VALUES (3,'Best Church','CA','456-456-4587',null);
 
 INSERT INTO `aav`.`language` (`id`,`people_group`,`region`,`continent`,`number_of_speakers`,`scripture_published`,`project_description`,`pdf_url`) VALUES ('ABC','Thai','Thailand','Asia',505300,'1940-01-05','<p>This is Thai language proejct.</p><p>This is cool.</p>','');
 INSERT INTO `aav`.`language` (`id`,`people_group`,`region`,`continent`,`number_of_speakers`,`scripture_published`,`project_description`,`pdf_url`) VALUES ('TSW','Kaninuwa','Papua New Guinea','Australia/Oceania',16511,'1991-04-08','<p>This is Kaninuwa.</p><h3>This is cool.</h3>','');

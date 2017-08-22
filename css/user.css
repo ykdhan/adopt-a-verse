@@ -1,0 +1,1115 @@
+@import url("user/login.css?ver=1.0");
+@import url("user/admin.css?ver=1.0");
+
+@font-face {
+    font-family: "Gotham-Book";
+    src: url('../font/GothamSSm-Book.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Gotham-Bold";
+    src: url('../font/GothamSSm-Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Gotham-Medium";
+    src: url('../font/GothamSSm-Medium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'FontAwesome';
+    src: url('../font/fontawesome-webfont.eot?v=4.7.0');
+    src: url('../font/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('../font/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('../font/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('../font/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('../font/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html {
+    box-sizing: border-box;
+    display: block;
+}
+html[Attributes Style] {
+    -webkit-locale: "en-US";
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+    transition: all ease-out 0.3s;
+}
+
+body {
+    box-sizing: border-box;
+    display: block;
+    font-size: 0.9em;
+    background-image: url("../img/bg.jpg");
+    min-height: 100%;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: "Gotham-Book";
+    color: #777;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3 {
+    color: inherit;
+    font-family: "Gotham-Bold" !important;
+}
+
+h1 {
+    font-size: 1.7em;
+    text-align: left;
+    color: #555;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 1em;
+}
+
+table {
+    display: table;
+    border-collapse: collapse;
+    border-spacing: 0;
+    table-layout: fixed;
+    width: 100%;
+}
+
+/*   appreanace: none   */
+a,
+input[type='text']
+input[type='submit'],
+textarea,
+button,
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/*   outline: none   */
+input,
+textarea,
+button,
+select {
+    outline: none !important;
+}
+
+pre {
+    font-size: 1em;
+    color: #777;
+    font-family: "Gotham-Book" !important;
+    margin: 0;
+    padding: 0;
+}
+
+/*   margin, padding: 0   */
+img {
+    margin: 0;
+    padding: 0;
+    user-drag: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+input[type='text']
+input[type='submit'],
+button,
+textarea {
+    font-size: 0.9em;
+    color: #777;
+}
+
+a, a:hover, a:visited {
+    text-decoration: none;
+    color: inherit;
+}
+
+input[type='date'] {
+    margin: 0;
+    margin-bottom: 1em;
+}
+
+
+
+
+/*   fonts   */
+.font--book {
+    font-family: "Gotham-Book" !important;
+}
+.font--bold {
+    font-family: "Gotham-Bold" !important;
+}
+
+
+/*   border-radius: 4px   */
+.border--round {
+    border-radius: 4px;
+}
+
+.hide {
+    display: none !important;
+}
+
+
+
+
+#admin-layout {
+    display: grid;
+    grid-template-columns: 7.8em 1fr;
+    grid-template-rows: 1fr;
+    grid-gap: 0;
+    margin: 0;
+    padding: 0;
+}
+
+#side {
+    z-index: 10;
+    display: grid;
+    grid-template-rows: 8em 1fr 6em;
+    grid-gap: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    max-height: 100vh;
+    background: #283344;
+    color: #eee;
+    -webkit-box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.35);
+    -moz-box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.35);
+    box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.35);
+}
+
+#main {
+    overflow-y: auto;
+    text-align: center;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 2em;
+    height: 100vh;
+    max-height: 100vh;
+}
+
+
+/* Side bar */
+
+#section-logo {
+    padding: 1rem;
+    vertical-align: middle;
+}
+
+#section-setting {
+    vertical-align: middle;
+}
+
+
+.landing-tabs {
+    text-align: left;
+    font-size: 0.65em;
+    background: none;
+    border: none;
+    outline: none;
+    color: #f2f2f2;
+    font-family: "Gotham-Book" !important;
+    cursor: pointer;
+    padding: 1em;
+    padding-left: 0;
+    padding-right: 0;
+    border-left: 3px solid #283344;
+    margin: 0;
+    width: 12em;
+    text-align: center;
+    letter-spacing: 1px;
+    vertical-align: middle;
+    text-transform: uppercase;
+}
+.landing-tabs:hover {
+    background: #202835;
+    border-left: 3px solid #202835;
+}
+.landing-tabs-now {
+    border-left: 3px solid #039da6;
+    background: #202835;
+}
+.landing-tabs-now:hover {
+    background: #202835;
+    border-left: 3px solid #039da6;
+}
+
+.landing-tabs img {
+    width: 5em;
+    height: 5em;
+    display: inline-block;
+}
+
+.side-division {
+    height: 1px;
+    width: 7.05em;
+    margin-left: 0.3em;
+    margin-bottom: 1em;
+    background: #1c222d;
+}
+
+
+.button-setting {
+    width: 9.6em;
+    padding: 1em;
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.8em;
+    background: none;
+    color: #ddd;
+    border: 0;
+    text-align: left;
+    cursor: pointer;
+}
+.button-setting:hover {
+    background: #202835;
+}
+
+
+
+
+#adopt-logo {
+    width: 7em;
+    height: auto;
+    vertical-align: middle !important;
+}
+#tag-admin {
+    text-transform: uppercase;
+    font-family: "Gotham-Bold" !important;
+    font-size: 0.9em;
+}
+#admin-title {
+    float: right;
+    margin-right: 2em;
+    font-size: 0.9em;
+    font-family: "Gotham-Bold" !important;
+    text-transform: uppercase;
+}
+#admin-logout {
+    float: right;
+    margin-right: 2em;
+    font-size: 0.9em;
+    font-family: "Gotham-Bold" !important;
+    text-transform: uppercase;
+    color: #039da6;
+}
+#menu-icon {
+    width: 2.3em;
+    height: auto;
+    margin: 1.4em;
+}
+#top-bar-menu {
+    position: fixed;
+    cursor: pointer;
+}
+#top-bar-logo {
+    text-align: center;
+    vertical-align: middle;
+}
+#toggle-menu {
+    text-align: center;
+    display: none;
+    //background: #efefef;
+    padding: 1em;
+}
+#mobile-church-name {
+    text-transform: uppercase;
+    font-size: 0.9em;
+    font-family: "Gotham-Bold" !important;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
+
+
+
+/* Main */
+
+.landing-content {
+    display: none;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    text-align: center;
+}
+
+.landing-content-now {
+    display: block;
+}
+
+
+#landing-wrapper {
+    padding: 2.5em;
+    margin: 0;
+    background: #fff;
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    text-align: center;
+    border-radius: 4px;
+}
+
+
+.control-bar {
+    margin-top: 4em;
+    text-align: left;
+}
+.filters {
+    float: right;
+}
+
+.search-icon {
+    position: relative;
+    margin-left: 1em;
+    margin-top: 0.7em;
+    font-size: 1em;
+    color: #606060;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#wrapper {
+    width: 100%;
+    max-width: 1300px;
+    padding: 1em;
+    -moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+    display: block;
+}
+
+
+.admin-content {
+    display: block;
+    width: 100%;
+    padding: 2em;
+    margin: 0;
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    -moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+    background: #fff;
+    max-width: 1100px;
+    border-radius: 4px !important;
+}
+
+
+
+
+
+
+.highlight {
+    color: #039da6;
+}
+.capitalize {
+    text-transform: uppercase;
+}
+
+
+
+#footer {
+    display: inline-block;
+    color: #fff;
+    text-align: center;
+    font-size: 0.8em;
+    font-family: "Gotham-Book" !important;
+    line-height: 1.5;
+    margin-top: 2em;
+    margin-bottom: 3em !important;
+}
+
+
+
+#introduction {
+    font-size: 1.1em;
+    text-align: left;
+    padding-left: 2em;
+}
+
+
+
+
+
+/* Text Editor */
+#new-goal-description {
+    width: 38em !important;
+    color: #777;
+    font-size: 1em;
+    min-height: 8em;
+    font-family: "Gotham-Book" !important;
+    border-radius: 0 0 4px 4px;
+    margin-bottom: 1em;
+}
+#details-goal-description {
+    width: 38em !important;
+    color: #777;
+    font-size: 1em;
+    min-height: 8em;
+    font-family: "Gotham-Book" !important;
+    border-radius: 0 0 4px 4px;
+    margin-bottom: 1em;
+}
+#add-project-description {
+    width: 38em !important;
+    color: #777;
+    font-size: 1em;
+    min-height: 8em;
+    font-family: "Gotham-Book" !important;
+    border-radius: 0 0 4px 4px;
+    margin-bottom: 1.5em;
+}
+#language-project-description {
+    width: 38em !important;
+    color: #777;
+    font-size: 1em;
+    min-height: 8em;
+    font-family: "Gotham-Book" !important;
+    border-radius: 0 0 4px 4px;
+    margin-bottom: 1.5em;
+}
+.ql-toolbar {
+    width: 38em !important;
+    border: 1px solid #d1d1d1;
+    border-radius: 4px 4px 0 0;
+    margin-top: 0.55em;
+}
+.ql-container {
+    margin-top: 0.5em;
+}
+.text-editor {
+    margin-top: 0.5em;
+}
+.text-editor p {
+    margin: 0;
+    padding: 0;
+    font-size: 1em;
+}
+.ql-editor p, .ql-editor ol, .ql-editor ul, .ql-editor pre, .ql-editor blockquote, .ql-editor h1, .ql-editor h2, .ql-editor h3, .ql-editor h4, .ql-editor h5, .ql-editor h6 {
+    margin-bottom: 1em !important;
+}
+.ql-container, .ql-toolbar {
+    border-color: #d1d1d1;
+}
+
+.ql-snow.ql-toolbar button:hover, .ql-snow .ql-toolbar button:hover, .ql-snow.ql-toolbar button:focus, .ql-snow .ql-toolbar button:focus, .ql-snow.ql-toolbar button.ql-active, .ql-snow .ql-toolbar button.ql-active, .ql-snow.ql-toolbar .ql-picker-label:hover, .ql-snow .ql-toolbar .ql-picker-label:hover, .ql-snow.ql-toolbar .ql-picker-label.ql-active, .ql-snow .ql-toolbar .ql-picker-label.ql-active, .ql-snow.ql-toolbar .ql-picker-item:hover, .ql-snow .ql-toolbar .ql-picker-item:hover, .ql-snow.ql-toolbar .ql-picker-item.ql-selected, .ql-snow .ql-toolbar .ql-picker-item.ql-selected {
+    color: #039da6 !important;
+}
+
+
+
+
+.admin-text {
+    width: 16em;
+    border: 1px solid #d1d1d1;
+    border-radius: 4px;
+    background: none;
+    padding: 0.7em;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: 1em;
+    font-family: "Gotham-Book" !important;
+    color: #606060;
+    margin-right: 1em;
+    margin-bottom: 1em;
+}
+.admin-text-long {
+    width: 22em;
+    border: 1px solid #d1d1d1;
+    border-radius: 4px;
+    background: none;
+    padding: 0.7em;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: 1em;
+    font-family: "Gotham-Book" !important;
+    color: #606060;
+    margin-right: 1em;
+    margin-bottom: 1em;
+}
+.admin-textarea {
+    width: 33em;
+    border: 1px solid #d1d1d1;
+    border-radius: 4px;
+    background: none;
+    padding: 0.7em;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: 1em;
+    font-family: "Gotham-Book" !important;
+    color: #606060;
+    margin-right: 1em;
+    margin-bottom: 1em;
+}
+.admin-text.small {
+    width: 9em;
+}
+
+.admin-submit {
+    width: 12em;
+    border: 0;
+    border-radius: 4px;
+    background: #039da6;
+    padding: 0.7em;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: 1em;
+    font-family: "Gotham-Book" !important;
+    color: #fff;
+    cursor: pointer;
+    margin-left: 0.4em;
+    margin-right: 0.4em;
+}
+.admin-submit:hover {
+    background: #048484;
+}
+
+
+.admin-button {
+    width: 12em;
+    border: 0;
+    border-radius: 4px;
+    background: #777;
+    padding: 0.7em;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: 1em;
+    font-family: "Gotham-Book" !important;
+    color: #fff;
+    cursor: pointer;
+    margin-left: 0.4em;
+    margin-right: 0.4em;
+}
+.admin-button:hover {
+    background: #666;
+}
+
+.admin-filter {
+    width: 13em;
+    border: 0;
+    border-radius: 4px;
+    background: none;
+    padding: 0.7em;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: 1em;
+    font-family: "Gotham-Book" !important;
+    color: #444;
+    cursor: pointer;
+    border: 1px solid #d1d1d1;
+    margin-left: 0.4em;
+    margin-right: 0.4em;
+    text-align: left;
+}
+.admin-filter:hover {
+    background: #f2f2f2;
+}
+.filter-icon {
+    float: right;
+    font-size: 1em;
+    color: #606060;
+}
+.filter-dropdown {
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.25);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.25);
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.25);
+    display: none;
+    position: absolute;
+    margin-left: 5.7em;
+    border-radius: 4px;
+    border: 1px solid #d1d1d1;
+    background: #fff;
+    font-size: 0.9em;
+    color: #606060;
+    width: 14.3em;
+    padding-top: 0.3em;
+    padding-bottom: 0.3em;
+    font-family: "Gotham-Book" !important;
+}
+.filter-option {
+    cursor: pointer;
+    text-align: left;
+    padding: 0.5em;
+}
+.filter-option:hover {
+    background: #f2f2f2;
+}
+.filter-option-division {
+    height: 0.5px;
+    background: #d1d1d1;
+    margin: 0.2em;
+    margin-left: 0.4em;
+    margin-right: 0.4em;
+    
+}
+
+
+
+
+.checkbox-custom {
+    opacity: 0;
+    position: absolute;
+}
+.checkbox-custom, .checkbox-custom-label {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 4px;
+    cursor: pointer;
+}
+.checkbox-custom-label {
+    position: relative;
+    color: #5e5e5e;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.checkbox-custom + .checkbox-custom-label:before {
+    content: '';
+    background: #fff;
+    border: 1px solid #999;
+    display: inline-block;
+    vertical-align: middle;
+    width: 18px;
+    height: 18px;
+    padding: 2px;
+    font-size: 0.9em;
+    margin-top: -3px;
+    margin-left: 2px;
+    margin-right: 10px;
+    line-height: 1;
+    text-align: center;
+    transition: none;
+    border-radius: 4px !important;
+}
+.checkbox-custom:checked + .checkbox-custom-label:before {
+    content: "\f00c";
+    font-family: 'FontAwesome';
+    background: #a5a5a5;
+    font-size: 0.8em;
+    color: #fff;
+    font-weight: 100;
+    transition: none;
+    line-height: 1.17;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.admin-button-delete {
+    width: 8em;
+    text-align: left;
+    border: 0;
+    background: none;
+    padding: 0.7em;
+    font-size: 0.95em;
+    font-family: "Gotham-Book" !important;
+    color: #999;
+    cursor: pointer;
+    margin-left: 2em;
+    margin-top: -2.5em;
+    position: absolute;
+    left: 0;
+    text-transform: uppercase;
+}
+.admin-button-delete:hover {
+    color: #db5353;
+}
+
+
+
+.dropdown {
+    width: 22em;
+    border: 1px solid #d1d1d1;
+    border-radius: 4px;
+    background: none;
+    padding: 0.7em;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: 1em;
+    font-family: "Gotham-Book" !important;
+    color: #606060;
+    margin-right: 1em;
+    margin-bottom: 1em;
+    cursor: pointer;
+    text-align: left;
+}
+.dropdown img {
+    float: right;
+    width: 1.5em;
+    margin-top: 0.2em;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.drop {
+    visibility: hidden;
+    position: absolute;
+    width: 22em;
+    max-height: 20em;
+    overflow-y: auto;
+    border: 0;
+    border-radius: 4px;
+    background: #fff;
+    padding: 0.7em;
+    padding-left: 0;
+    padding-right: 0;
+    font-size: 1em;
+    font-family: "Gotham-Book" !important;
+    color: #606060;
+    margin-right: 1em;
+    margin-bottom: 1em;
+    margin-top: -0.5em;
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+}
+.drop-item {
+    color: #555;
+    cursor: pointer;
+    padding: 0.5em;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+    font-size: 1em;
+    background: none;
+    border: 0;
+    border-radius: 2px;
+}
+.drop-item:hover {
+    background: #e5e5e5;
+}
+.drop-item span {
+    float: right;
+    color: #aaa;
+    font-size: 0.9em;
+    vertical-align: middle;
+}
+.drop-group {
+    color: #aaa;
+    cursor: default;
+    font-size: 0.9em;
+    padding: 0.5em;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+}
+
+
+
+
+/* List  */
+
+.list {
+    border: 0;
+    padding: 0;
+    font-size: 0.9em;
+    font-family: "Gotham-Book" !important;
+    color: #606060;
+    margin: 0;
+}
+.list-item:last-child {
+    border-bottom: 0 !important;
+}
+.list-item {
+    color: #555;
+    text-align: left;
+    cursor: pointer;
+    padding: 1.2em;
+    padding-left: 1em;
+    padding-right: 1em;
+    background: none;
+    border: 0;
+    border-bottom: 1px solid #e1e1e1;
+}
+.list-item:hover {
+    background: #f2f2f2;
+}
+.list-item span {
+    float: right;
+    color: #aaa;
+    font-size: 0.9em;
+    vertical-align: middle;
+}
+.list-group {
+    color: #aaa;
+    cursor: default;
+    font-size: 0.9em;
+    padding: 0.5em;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+}
+.row-1 {
+    display: block;
+    text-align: left;
+}
+.row-2 {
+    display: block;
+    text-align: left;
+    color: #aaa;
+}
+
+.list-columns {
+    border: 0;
+    border-top: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
+    padding-top: 0.8em;
+    padding-bottom: 0.7em;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: 0.9em;
+    font-family: "Gotham-Book" !important;
+    color: #aaa;
+    text-align: left;
+    margin: 0;
+    margin-top: 2.5em;
+    text-transform: uppercase;
+}
+.list-column {
+    background: none;
+    border: 0;
+    vertical-align: middle;
+}
+
+
+
+
+
+
+/* Lightbox CSS */
+
+.lightbox {
+    padding-top: 3em;
+    padding-bottom: 3em;
+}
+.lightbox #title {
+    font-size: 1.5em;
+    font-family: "Gotham-Bold" !important;
+    color: #444;
+    text-transform: uppercase;
+    margin-bottom: 0.5em;
+}
+.lightbox .col-left {
+    font-family: "Gotham-Bold" !important;
+    color: #444;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    display: inline-block;
+    text-align: right;
+    vertical-align: top;
+    padding-top: 1em;
+    padding-bottom: 0.5em;
+    width: 23%;
+}
+.lightbox .col-tip {
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;
+    width: 4%;
+}
+.lightbox .col-right {
+    display: inline-block;
+    text-align: left;
+    vertical-align: top;
+    color: #777;
+    width: 71%;
+    font-size: 1em;
+}
+.lightbox p {
+    padding: 0;
+    margin: 0;
+    padding-top: 0.75em;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+}
+.lightbox section {
+    padding-top: 3em;
+    padding-bottom: 2em;
+    margin-left: 2em;
+    margin-right: 2em;
+    text-align: center;
+    border-bottom: 0.5px solid #d1d1d1;
+}
+
+.lightbox .last-section {
+    border: 0 !important;
+    margin-bottom: 2em;
+    padding-bottom: 0;
+    padding-top: 3em;
+}
+
+.lightbox .message {
+    color: #aaa;
+    font-size: 0.9em;
+    padding: 0;
+    padding-bottom: 1em;
+}
+
+
+
+
+
+
+
+
+
+
+
+.green {
+    color: #43b471 !important;
+}
+.red {
+    color: #db5353 !important;
+}
+
+
+.error {
+    visibility: hidden;
+    position: absolute;
+    float: right !important;
+    width: 26em;
+    border: 0;
+    border-radius: 4px;
+    background: none;
+    padding: 0.5em;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: 0.95em;
+    font-family: "Gotham-Book" !important;
+    color: #555;
+    margin-left: -1.3em;
+    vertical-align: middle;
+}
+.error span {
+    margin-left: 2.2em;
+}
+.error-icon {
+    margin-right: 0.5em;
+    width: 1.7em;
+    height: auto;
+    vertical-align: middle;
+}
+
+
+
+
+
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color: #bbb;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #bbb;
+    opacity: 1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #bbb;
+    opacity: 1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #bbb;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: #bbb;
+}
+
+
+
+
+/* width 1300+ px */
+@media only screen and (min-width : 1300px) {
+    
+    #landing-wrapper {
+        padding: 4em;
+    }
+    #main {
+        padding: 2em;
+        padding-left: 5em;
+        padding-right: 5em;
+    }
+}
+
+/* width 1600+ px */
+@media only screen and (min-width : 1600px) {
+    
+    #landing-wrapper {
+        padding: 4em;
+    }
+    #main {
+        padding: 2em;
+        padding-left: 12em;
+        padding-right: 12em;
+    }
+}
+
+
+
+
+
+
+
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+
+    
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px) {
+
+    
+}
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (max-width : 480px) {
+
+
+}
+

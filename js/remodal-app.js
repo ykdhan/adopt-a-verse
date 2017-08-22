@@ -608,6 +608,18 @@
     // for each button
 
     if (id == "give") {
+        
+        if (user_data.id != 0) {
+            give_data.first_name = user_data.first_name;
+            give_data.last_name = user_data.last_name;
+            give_data.email = user_data.email;
+            document.getElementById('section-user').style.display = "none";
+            give_preview(" by " + give_data.first_name + " " + give_data.last_name[0]);
+        } else {
+            document.getElementById('section-user').style.display = "block";
+        }
+        
+        
         function sortNumber(a,b) {
             return a - b;
         }
@@ -635,7 +647,11 @@
 
             }
         }
-    } 
+    } else if (id == "login") {
+        document.getElementById('login-error').style.display = "none";
+        document.getElementById('login-email').value = "";
+        document.getElementById('login-password').value = "";
+    }
       
       
       
