@@ -68,7 +68,7 @@
 var page_param = window.location.search.substring(1);
 var page_url = new URL(window.location.href);
 var transaction = page_url.searchParams.get("transaction");
-var campaign = 12495; //page_url.searchParams.get("campaign");
+var campaign = 12031; //page_url.searchParams.get("campaign");
 var amount = page_url.searchParams.get("amount");
     
 console.log(transaction);

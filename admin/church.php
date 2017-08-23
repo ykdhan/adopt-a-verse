@@ -2,12 +2,8 @@
 session_start();
 
 if (isset($_SESSION['aav-super-admin'])) { 
+    header("Location: admin.php");
 } else if (isset($_SESSION['aav-admin'])) { 
-    
-    if ($_GET['id'] != $_SESSION['aav-church']) {
-        header("Location: login.php");
-    }
-    
 } else {
     header("Location: login.php");
 }
@@ -42,68 +38,86 @@ if (isset($_SESSION['aav-super-admin'])) {
     
 <body>
     
+<div id="admin-layout">
+    
+    
 <!-- Top Bar -->
-<div class="top-bar desktop">
-    <table><tr>
-    <td>
-        <a href="index.php"><img id="adopt-logo" alt="Adopt-a-Verse Logo" align="middle" src="../img/wycliffe-logo.png"><span id="tag-admin">Admin</span></a>
-    </td>
-    <th>
-    </th>
-    <td>
-        <span id="admin-logout"><a href="logout.php">Logout</a></span>
-        <span id="admin-title">Church</span>
-    </td>
-    </tr></table>
+<div id="side">
+    <div id="section-logo">
+        <a href="index.php"><img id="adopt-logo" alt="Adopt-a-Verse Logo" align="middle" src="../img/wycliffe-admin-logo.png"></a>
+    </div>
+    <div id="section-tab">
+        <button class="landing-tabs landing-tabs-now" onclick="landing_tab(event, 'tab-account')"><img alt="" src="../img/icon_account.svg"><br>My Account</button>
+        <button class="landing-tabs" onclick="landing_tab(event, 'tab-giving')"><img alt="" src="../img/icon_gift.svg"><br>Giving History</button>
+        <button class="landing-tabs" onclick="landing_tab(event, 'tab-church')"><img alt="" src="../img/icon_church.svg"><br>Church</button>
+    </div>
+    <div id="section-setting">
+        <div class="side-division"></div>
+        <button class="button-setting" onclick="logout()">Logout</button>
+    </div>
 </div>
     
     
 <!-- Body -->
-<div id="bg" align="center">
-<div id="church-wrapper">
+<div id="main">
     
     
-    <div id="section-profile" class="church-section">
-        <div id="content-profile" class="church-content">
-            <div class="church-title">Profile</div>
-            <a href="#edit-profile-picture"><div id="church-profile-picture"><span><i class="fa fa-pencil" aria-hidden="true"></i> Change Picture</span></div></a>
-            <div id="church-name"></div>
-            <div id="church-state"></div>
-        </div>
-    </div><div id="section-admins" class="church-section">
-        <div id="content-admins" class="church-content">
-            <div class="church-title">Administrators
-                <a href="#add-admin"><img class="button-admin-add" alt="" src="../img/plus_admin.svg"></a>
+<div id="landing-wrapper">
+    
+    <div id="tab-account" class="landing-content landing-content-now">
+        <h1>My Account</h1>
+    </div>    
+        
+    <div id="tab-giving" class="landing-content">
+        <h1>Giving History</h1>
+    </div>
+    
+    <div id="tab-church" class="landing-content">
+        <div id="section-profile" class="church-section">
+            <div id="content-profile" class="church-content">
+                <div class="church-title">Profile</div>
+                <a href="#edit-profile-picture"><div id="church-profile-picture"><span><i class="fa fa-pencil" aria-hidden="true"></i> Change Picture</span></div></a>
+                <div id="church-name"></div>
+                <div id="church-state"></div>
             </div>
-            <div id="church-admins">
-                
-                <!-- church administrators -->
-                
+        </div><div id="section-admins" class="church-section">
+            <div id="content-admins" class="church-content">
+                <div class="church-title">Administrators
+                    <a href="#add-admin"><img class="button-admin-add" alt="" src="../img/plus_admin.svg"></a>
+                </div>
+                <div id="church-admins">
+
+                    <!-- church administrators -->
+
+                </div>
             </div>
-        </div>
-    </div><div id="section-campaigns" class="church-section">
-        <div id="content-campaigns" class="church-content">
-            <div class="church-title" id="church-campaign-bar">Campaigns
-                
-                <!-- only Wycliffe admins can create campaigns -->
-                <?php if (isset($_SESSION['aav-super-admin'])) { echo '<a href="#add-campaign"><img class="button-admin-add" alt="" src="../img/plus_admin.svg"></a>'; } ?>
-                
-            </div>
-            <div id="church-campaigns">
-                
-                <!-- church campaigns -->
-                
+        </div><div id="section-campaigns" class="church-section">
+            <div id="content-campaigns" class="church-content">
+                <div class="church-title" id="church-campaign-bar">Campaigns
+
+                    <!-- only Wycliffe admins can create campaigns -->
+                    <?php if (isset($_SESSION['aav-super-admin'])) { echo '<a href="#add-campaign"><img class="button-admin-add" alt="" src="../img/plus_admin.svg"></a>'; } ?>
+
+                </div>
+                <div id="church-campaigns">
+
+                    <!-- church campaigns -->
+
+                </div>
             </div>
         </div>
     </div>
     
     
-    <div id="footer">
-        ©2017 Wycliffe Bible Translators. All rights reserved.
-    </div>
     
 </div> <!-- wrapper -->
-</div> <!-- bg -->
+    
+<div id="footer">©2017 Wycliffe Bible Translators. All rights reserved.</div>
+    
+    
+</div> <!-- main -->
+    
+</div>
     
     
     
@@ -362,9 +376,100 @@ if (isset($_SESSION['aav-super-admin'])) {
 
 <script>
     
-var page_param = window.location.search.substring(1);
-var page_url = new URL(window.location.href);
-var church_id = page_url.searchParams.get("id");
+// CHECK USER LOGIN
+var user_data = {
+    id: 0,
+    first_name: "",
+    last_name: "",
+    email: ""
+};
+    
+var church_id = 0;
+    
+function check_admin() {
+    var ajaxObj = new XMLHttpRequest();
+    ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+        console.log("check admin: "+ajaxObj.responseText);
+
+        if (ajaxObj.responseText == 0) {
+            alert("Invalid church admin.");
+        } else {
+            var resp = JSON.parse(ajaxObj.responseText);
+            user_data.id = resp.id;
+            user_data.first_name = resp.first_name;
+            user_data.last_name = resp.last_name;
+            user_data.email = resp.email;
+            church_id = resp.church_id;
+            
+            search_church();
+            search_admins();
+            search_campaigns();
+        }
+
+    }}}
+    ajaxObj.open("GET", "sql-check-church-admin.php");
+    ajaxObj.send();
+}
+check_admin();
+    
+function logout() {
+    if (window.confirm("Would you like to log out?")) {
+        window.location.href = "logout.php";
+    }
+}
+    
+function landing_tab(evt, tabName) {
+    
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("landing-content");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("landing-tabs");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" landing-tabs-now", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " landing-tabs-now";
+    
+    if (tabName != "tab-church") {
+
+        $('#landing-wrapper').css({
+            background: '#fff',
+            boxShadow: '0px 0px 10px 0px rgba(0,0,0,0.35)'
+        });
+
+        if ($(window).width() > 1300) {
+            $('#landing-wrapper').css({
+                padding: '4em'
+            });
+        } else {
+            $('#landing-wrapper').css({
+                padding: '2.5em'
+            });
+        }
+     
+    } else {
+        $('#landing-wrapper').css({
+            background: 'none',
+            boxShadow: 'none',
+            padding: 0
+        });
+    }
+    
+}
+    
+    
+//var page_param = window.location.search.substring(1);
+//var page_url = new URL(window.location.href);
+//var church_id = page_url.searchParams.get("id");
     
 $("#select-profile-picture").click(function(){
     $("#input-profile-picture").click();
@@ -413,7 +518,7 @@ var campaigns = {};
 var campaign_id = "";
 var campaign_status = "";
     
-search_church();
+    
 function search_church() {
     
     var ajaxObj = new XMLHttpRequest();
@@ -447,7 +552,6 @@ function search_church() {
 }
     
     
-search_admins();
 function search_admins() {
     
     var ajaxObj = new XMLHttpRequest();
@@ -496,7 +600,6 @@ function search_admins() {
 
 var raised = {};
     
-search_campaigns();
 function search_campaigns() {
     
     
@@ -663,7 +766,7 @@ function delete_campaign(campaign) {
 
             if (ajaxObj.responseText == "yes\n") {
                 console.log("deleted");
-                window.location.href = "church.php?id="+church_id+"#";
+                window.location.href = "church.php#";
                 search_campaigns();
             } else {
                 console.log("Error: delete campaign");
@@ -750,7 +853,7 @@ function edit_profile_picture () {
             success: function(data) {
                 console.log(data);
                 if (data == "yes\n\n\n") {
-                    window.location.href = "church.php?id="+church_id+"#";
+                    window.location.href = "church.php#";
                     search_church();
                 } else {
                     alert("Error: "+data);
@@ -875,7 +978,7 @@ function edit_campaign(campaign) {
                 
             } else {
                 
-                window.location.href = "church.php?id="+church_id+"#";
+                window.location.href = "church.php#";
                 search_campaigns();
             }
             
@@ -1077,7 +1180,7 @@ function add_admin() {
         ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
 
             if (ajaxObj.responseText == "yes\n\n\n") {
-                window.location.href = "church.php?id="+church_id+"#";
+                window.location.href = "church.php#";
                 search_admins();
             } else {
                 alert("Error occurred");
@@ -1506,7 +1609,7 @@ function add_campaign() {
         ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
             
             if (ajaxObj.responseText == "yes\n\n\n") {
-                window.location.href = "church.php?id="+church_id+"#";
+                window.location.href = "church.php#";
                 search_campaigns();
                 alert("A new campaign has been created.\r\nPlease wait for its new fund ID to be processed.");
             } else {

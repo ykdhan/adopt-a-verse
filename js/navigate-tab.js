@@ -1,5 +1,7 @@
 function tab(evt, tabName) {
     toggle_menu();
+    
+    
     // Declare all variables
     var i, tabcontent, tablinks;
     document.getElementsByClassName("side-bar").className = "side-bar";
@@ -26,12 +28,13 @@ function tab(evt, tabName) {
         sides[i].className = "small-sides border--round";
     }
     
+    document.getElementById("small-side-photo").className += " hide";
     
     document.getElementById("side-bar").style.display = 'inline-block';
     document.getElementById("content").style.float = 'left';
     if (tabName == "tab-donate") {
         document.getElementById("small-side-language").className += " hide";
-        document.getElementById("small-side-photo").className += " hide";
+        //document.getElementById("small-side-photo").className += " hide";
         google.charts.load("current", {packages: ["corechart"]});
         initial_chart = true;
         google.charts.setOnLoadCallback(drawSmallChart);

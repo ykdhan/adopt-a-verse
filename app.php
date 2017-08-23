@@ -530,7 +530,7 @@ function check_login() {
             user_data.last_name = resp.last_name;
             user_data.email = resp.email;
             
-            document.getElementById('right-cell').innerHTML = '<button id="button-profile" onclick="toggle_profile()">Welcome, '+resp.first_name+'<img id="profile-icon" alt="" src="img/cart_close.png"><div id="menu"><div class="button-menu" id="my_account" onclick="my_account()"><img class="menu-icon" alt="" src="img/icon_account.svg"> My Account</div><div class="button-menu" id="gift_history" onclick="gift_history()"><img class="menu-icon" alt="" src="img/icon_gift.svg"> Gift History</div><div id="menu-division"></div><div id="button-logout" onclick="logout()">Log Out</div></div></button>';
+            document.getElementById('right-cell').innerHTML = '<button id="button-profile" onclick="toggle_profile()">Welcome, '+resp.first_name+'<img id="profile-icon" alt="" src="img/cart_close.png"><div id="menu"><div class="button-menu" id="my_account" onclick="my_account()"><img class="menu-icon" alt="" src="img/icon_account.svg"> My Account</div><div class="button-menu" id="giving_history" onclick="giving_history()"><img class="menu-icon" alt="" src="img/icon_gift.svg"> Giving History</div><div id="menu-division"></div><div id="button-logout" onclick="logout()">Log Out</div></div></button>';
         }
 
     }}}
@@ -640,7 +640,17 @@ function init() {
             document.getElementById('details-language').innerHTML = campaign.language;
             var num_speakers = campaign.number_of_speakers.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             document.getElementById('details-native-speakers').innerHTML = num_speakers;
-            document.getElementById('details-scripture-published').innerHTML = campaign.scripture_published;
+            
+            if (campaign.scripture_published == '0000-00-00') {
+                document.getElementById('details-scripture-published').innerHTML = "N/A";
+            } else {
+                var p_date = new Date(campaign.scripture_published);
+                var p_year = (""+p_date.getFullYear()).slice(-2);
+                var p_month = p_date.getMonth() + 1;
+                var publish_date = p_month+"/"+p_date.getDate()+"/"+p_year;
+                document.getElementById('details-scripture-published').innerHTML = publish_date;
+            }
+            
             document.getElementById('download-pdf').innerHTML = '<a href="'+campaign.pdf_url+'" target="_blank"><button class="tab-button" type="button">View PDF</button></a>';
             
             
@@ -1240,7 +1250,7 @@ function my_account() {
     }
 }
 
-function gift_history() {
+function giving_history() {
     if (window.confirm("Are you sure you want to leave this page?\r\nYour selections will not be saved.")) {
         window.location.href = "user/";
     }
@@ -1352,22 +1362,22 @@ function give_honor() {
                 if (give_data.last_name == "") {
                     give_preview("");
                 } else {
-                    give_preview(" " + give_data.last_name[0]);
+                    give_preview(" by " + give_data.last_name[0]);
                 }
 
             } else {
 
                 if (give_data.last_name == "") {
-                    give_preview(" " + give_data.first_name);
+                    give_preview(" by " + give_data.first_name);
                 } else {
-                    give_preview(" " + give_data.first_name + " " + give_data.last_name[0]);
+                    give_preview(" by " + give_data.first_name + " " + give_data.last_name[0]);
                 }
             }
 
         } else {
 
             if (!anonymous) {
-                give_preview(" " + give_data.display_name);
+                give_preview(" by " + give_data.display_name);
             }
         }
     }
@@ -1414,22 +1424,22 @@ function give_memory() {
                 if (give_data.last_name == "") {
                     give_preview("");
                 } else {
-                    give_preview(" " + give_data.last_name[0]);
+                    give_preview(" by " + give_data.last_name[0]);
                 }
 
             } else {
 
                 if (give_data.last_name == "") {
-                    give_preview(" " + give_data.first_name);
+                    give_preview(" by " + give_data.first_name);
                 } else {
-                    give_preview(" " + give_data.first_name + " " + give_data.last_name[0]);
+                    give_preview(" by " + give_data.first_name + " " + give_data.last_name[0]);
                 }
             }
 
         } else {
 
             if (!anonymous) {
-                give_preview(" " + give_data.display_name);
+                give_preview(" by " + give_data.display_name);
             }
         }
     }

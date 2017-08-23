@@ -835,11 +835,18 @@
               document.getElementById('language-continent').innerHTML = languages[language_id]['continent'];
               var num_speakers = languages[language_id]['num_speakers'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
               document.getElementById('language-number-speakers').innerHTML = num_speakers;
-              var p_date = new Date(languages[language_id]['publish_date']);
-              var p_year = (""+p_date.getFullYear()).slice(-2);
-              var p_month = p_date.getMonth() + 1;
-              var publish_date = p_month+"/"+p_date.getDate()+"/"+p_year;
-              document.getElementById('language-publish-date').innerHTML = publish_date;
+              
+              console.log(languages[language_id]['publish_date']);
+              if (languages[language_id]['publish_date'] == '0000-00-00') {
+                  document.getElementById('language-publish-date').innerHTML = "N/A";
+              } else {
+                  var p_date = new Date(languages[language_id]['publish_date']);
+                  var p_year = (""+p_date.getFullYear()).slice(-2);
+                  var p_month = p_date.getMonth() + 1;
+                  var publish_date = p_month+"/"+p_date.getDate()+"/"+p_year;
+                  document.getElementById('language-publish-date').innerHTML = publish_date;
+              }
+              
               document.getElementById('language-pdf-url').value = languages[language_id]['pdf_url'];;
 
               document.getElementById('language-pdf-url').style.borderColor = "#d1d1d1";
@@ -1003,7 +1010,133 @@
               user_data['initial_email'] = users[user_id]['email'];
           }
           
-      }
+      } else if ( id == 'add-church-admin' ) {
+          
+          document.getElementById('church-admin-existing-email').value = "";
+          document.getElementById('church-admin-new-email').value = "";
+          document.getElementById('church-admin-first-name').value = "";
+          document.getElementById('church-admin-last-name').value = "";
+          document.getElementById('church-admin-phone').value = "";
+          
+          document.getElementById('error-existing-email').innerHTML = "";
+          document.getElementById('error-existing-email').style.visibility = "hidden";
+          
+          document.getElementById('error-new-email').innerHTML = "";
+          document.getElementById('error-new-email').style.visibility = "hidden";
+          
+          document.getElementById('church-admin-first-name').style.borderColor = "#d1d1d1";
+          document.getElementById('church-admin-last-name').style.borderColor = "#d1d1d1";
+          document.getElementById('church-admin-new-email').style.borderColor = "#d1d1d1";
+          document.getElementById('church-admin-existing-email').style.borderColor = "#d1d1d1";
+          document.getElementById('church-admin-phone').style.borderColor = "#d1d1d1";
+          
+          admin_church_data = {
+            first_name: "",
+            last_name: "",
+            phone: "",
+            new_email: "",
+            existing_email: ""
+          }
+          
+      } else if (id == "change-profile-picture") {
+          
+          document.getElementById('church-input-profile-picture').value = "";
+          document.getElementById('church-preview-profile-picture').style.backgroundImage = 'url("../img/choose_image.png")';
+          
+          document.getElementById('church-select-profile-picture').style.borderColor = "#039da6";
+          document.getElementById('error-church-profile-picture').style.visibility = "hidden";
+          
+      } else if ( id == 'church-campaign' ) {
+      
+          console.log(church_campaign_id);
+          if (church_campaign_id == '') {
+              alert("Campaign is not selected.");
+              window.location.href = "admin.php#";
+          } else {
+              
+              clearInterval(timeinterval);
+              $('.d-day').css({ display: "none" });
+              
+              document.getElementById('church-campaign-description').innerHTML = '<div id="church-campaign-goal-description" class="text-editor"></div>';
+              document.getElementById('church-campaign-duration').innerHTML = '<input type="date" class="admin-text" id="church-campaign-start-date" onchange="edit_campaign_start_date(this)">&nbsp; to &nbsp;<input type="date" class="admin-text" id="church-campaign-end-date" onchange="edit_campaign_end_date(this)">';
+              
+              church_campaign_goal_description = new Quill('#church-campaign-goal-description', { theme: 'snow' });
+              
+              var goal = parseFloat(church_campaigns[church_campaign_id]['goal_amount'].toString().replace(/,/g,''));
+
+              var verse = parseFloat(church_campaigns[church_campaign_id]['verse_price'].toString().replace(/,/g,''));
+
+              // figure out dates
+              var start_now = new Date(church_campaigns[church_campaign_id]['start_date']);
+              var start_day = ("0" + start_now.getDate()).slice(-2);
+              var start_month = ("0" + (start_now.getMonth() + 1)).slice(-2);
+
+              var end_now = new Date(church_campaigns[church_campaign_id]['end_date']);
+              var end_day = ("0" + end_now.getDate()).slice(-2);
+              var end_month = ("0" + (end_now.getMonth() + 1)).slice(-2);
+
+              var start_date = start_now.getFullYear()+"-"+(start_month)+"-"+(start_day);
+              var end_date = end_now.getFullYear()+"-"+(end_month)+"-"+(end_day);
+              
+              document.getElementById('church-campaign-url').innerHTML = "adopt-wycliffe.org/"+church_campaigns[church_campaign_id]['url'];
+              document.getElementById('church-campaign-language').innerHTML = church_campaigns[church_campaign_id]['language'];
+              document.getElementById('church-campaign-book').innerHTML = church_campaigns[church_campaign_id]['book'];
+              document.getElementById('church-campaign-goal-amount').innerHTML = goal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+              document.getElementById('church-campaign-verse-price').innerHTML = verse.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+              
+              church_campaign_description = church_campaigns[church_campaign_id]['goal_description'];
+              church_campaign_data = {
+                start_date: start_date,
+                end_date: end_date
+              }
+              
+              if (church_campaigns[church_campaign_id]['status'] == "complete") {
+                  var start_year = (""+start_now.getFullYear()).slice(-2);
+                  var start_month = start_now.getMonth() + 1;
+                  var end_year = (""+end_now.getFullYear()).slice(-2);
+                  var end_month = end_now.getMonth() + 1;
+                  var start = start_month+"/"+start_now.getDate()+"/"+start_year;
+                  var end = end_month+"/"+end_now.getDate()+"/"+end_year;
+                  document.getElementById('church-campaign-buttons').innerHTML = '';
+                  document.getElementById('church-campaign-duration').innerHTML = "<p>"+start+"&nbsp; to &nbsp;"+end+"</p>";
+                  document.getElementById('church-campaign-description').innerHTML = church_campaigns[church_campaign_id]['goal_description'];
+                  
+              } else {
+                  
+                  $('.d-day').css({ display: "inline-block" });
+                  
+                  
+                  var edits = document.getElementById('church-campaign-goal-description').getElementsByClassName("ql-editor");
+                  for(var i = 0; i < edits.length; i++) {
+                      edits[i].innerHTML = church_campaigns[church_campaign_id]['goal_description'];
+                  }
+                  
+                  if (church_campaigns[church_campaign_id]['status'] == "inprogress") {
+                      var start_year = (""+start_now.getFullYear()).slice(-2);
+                      var start_month = start_now.getMonth() + 1;
+                      var start = start_month+"/"+start_now.getDate()+"/"+start_year;
+                      document.getElementById('church-campaign-duration').innerHTML = start+'&nbsp; to &nbsp;<input type="date" class="admin-text" id="church-campaign-end-date" onchange="edit_campaign_end_date(this)">';
+                      
+                      countdownDate(church_campaigns[church_campaign_id]['end_date']);
+                  } else {
+                      document.getElementById('church-campaign-start-date').value = start_date;
+                      
+                      countdownDate(church_campaigns[church_campaign_id]['start_date']);
+                  }
+                  document.getElementById('church-campaign-end-date').value = end_date;
+                  
+                  var today = new Date();
+                  
+                  if (start_now > today) {
+                      document.getElementById('church-campaign-buttons').innerHTML = '<button type="button" class="admin-button-delete" onclick="delete_campaign(\''+church_campaign_id+'\')">Delete</button><button type="button" class="admin-button" onclick="edit_church_campaign(\''+church_campaign_id+'\')">Save Changes</button><a href="../app.php?id='+church_campaign_id+'" target="_blank"><button type="button" class="admin-submit">Go to Campaign</button></a>';
+                  } else {
+                      document.getElementById('church-campaign-buttons').innerHTML = '<button type="button" class="admin-button" onclick="edit_church_campaign(\''+church_campaign_id+'\')">Save Changes</button><a href="../app.php?id='+church_campaign_id+'" target="_blank"><button type="button" class="admin-submit">Go to Campaign</button></a>';
+                  }
+              }
+          }
+          
+      
+      } 
       
 
       

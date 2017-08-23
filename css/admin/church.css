@@ -21,7 +21,7 @@
     width: 35%;
     height: 30em;
 }
-#section-campaigns {
+#section-campaigns, #section-church {
     width: 100%;
 }
 #section-admins {
@@ -402,3 +402,23 @@
     border-radius: 0px 100px 100px 0px;
 }
 
+
+
+
+#back-button {
+    font-size: 1.2em;
+    background: none;
+    cursor: pointer;
+    color: #fff;
+    border: 0;
+    margin-bottom: 0.4em;
+}
+#back-button i {
+    font-size: 1.25em;
+    font-weight: 700;
+    margin-right: 0.3em;
+}
+#section-church {
+    text-align: left;
+    padding-left: 1em;
+}

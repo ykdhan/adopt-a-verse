@@ -50,8 +50,8 @@
         <a href="index.php"><img id="adopt-logo" alt="Adopt-a-Verse Logo" align="middle" src="../img/wycliffe-admin-logo.png"></a>
     </div>
     <div id="section-tab">
-        <button class="landing-tabs landing-tabs-now" onclick="landing_tab(event, 'tab-user')"><img alt="" src="../img/icon_account.svg"><br>My Account</button>
-        <button class="landing-tabs" onclick="landing_tab(event, 'tab-transaction')"><img alt="" src="../img/icon_gift.svg"><br>Gift History</button>
+        <button class="landing-tabs landing-tabs-now" onclick="landing_tab(event, 'tab-account')"><img alt="" src="../img/icon_account.svg"><br>My Account</button>
+        <button class="landing-tabs" onclick="landing_tab(event, 'tab-giving')"><img alt="" src="../img/icon_gift.svg"><br>Giving History</button>
     </div>
     <div id="section-setting">
         <div class="side-division"></div>
@@ -66,58 +66,12 @@
     
 <div id="landing-wrapper">
    
-    <div id="tab-user" class="landing-content landing-content-now">
-        
-        <h1>Users</h1>
-        <div class="control-bar">
-            <span class="search-icon"><i class="fa fa-search" aria-hidden="true"></i></span><input type="text" class="landing-text" id="search-user" onkeyup="search_user()" placeholder="Search by name or email">
-            <a href="#add-wycliffe-admin"><button type="button" class="button-add"><i class="fa fa-plus" aria-hidden="true"></i> Add Wycliffe Admin</button></a>
-            <div class="filters">
-            Filter by <button type="button" class="admin-filter" id="filter-role">Role<span class="filter-icon"><i class="fa fa-caret-down" aria-hidden="true"></i></span></button>
-                <div class="filter-dropdown" id="dropdown-role">
-                    <div class="filter-option"><input id="role-user" class="checkbox-custom" name="role-user" type="checkbox" onclick="filter_by('role','user')" checked="true"><label for="role-user" class="checkbox-custom-label">User</label></div>
-                    <div class="filter-option"><input id="role-church-admin" class="checkbox-custom" name="role-church-admin" type="checkbox" onclick="filter_by('role','church_admin')" checked="true"><label for="role-church-admin" class="checkbox-custom-label">Church Admin</label></div>
-                    <div class="filter-option"><input id="role-wycliffe-admin" class="checkbox-custom" name="role-wycliffe-admin" type="checkbox" onclick="filter_by('role','wycliffe_admin')" checked="true"><label for="role-wycliffe-admin" class="checkbox-custom-label">Wycliffe Admin</label></div>
-                    <div class="filter-option-division"></div>
-                    <div class="filter-option"><input id="role-all" class="checkbox-custom" name="role-all" type="checkbox" onclick="filter_by('role','all')" checked="true"><label for="role-all" class="checkbox-custom-label">All</label></div>
-                </div>
-            </div>
-        </div>
-        <div class="list-columns"><div class="col-user">
-            <div class="list-column" id="column-user-name">Name</div>
-            <div class="list-column" id="column-user-email">Email Address</div>
-            <div class="list-column" id="column-user-role">Role</div>
-        </div></div>
-        <div class="list" id="list-user">Not Available</div>
-        
-        
+    <div id="tab-account" class="landing-content landing-content-now">
+        <h1>My Account</h1>
     </div>
     
-    <div id="tab-transaction" class="landing-content">
-        <h1>Transactions</h1>
-        <div class="control-bar">
-            <span class="search-icon"><i class="fa fa-search" aria-hidden="true"></i></span><input type="text" class="landing-text" id="search-transaction" onkeyup="search_transaction()" placeholder="Search by transaction ID, campaign ID or user name">
-            <div class="filters">
-            Filter by <button type="button" class="admin-filter" id="filter-transaction">Status<span class="filter-icon"><i class="fa fa-caret-down" aria-hidden="true"></i></span></button>
-                <div class="filter-dropdown" id="dropdown-transaction">
-                    <div class="filter-option"><input id="transaction-pending" class="checkbox-custom" name="transaction-pending" type="checkbox" onclick="filter_by('transaction','pending')" checked="true"><label for="transaction-pending" class="checkbox-custom-label">Pending</label></div>
-                    <div class="filter-option"><input id="transaction-completed" class="checkbox-custom" name="transaction-completed" type="checkbox" onclick="filter_by('transaction','completed')" checked="true"><label for="transaction-completed" class="checkbox-custom-label">Completed</label></div>
-                    <div class="filter-option"><input id="transaction-canceled" class="checkbox-custom" name="transaction-canceled" type="checkbox" onclick="filter_by('transaction','canceled')" checked="true"><label for="transaction-canceled" class="checkbox-custom-label">Canceled</label></div>
-                    <div class="filter-option-division"></div>
-                    <div class="filter-option"><input id="transaction-all" class="checkbox-custom" name="transaction-all" type="checkbox" onclick="filter_by('transaction','all')" checked="true"><label for="transaction-all" class="checkbox-custom-label">All</label></div>
-                </div>
-            </div>
-        </div>
-        <div class="list-columns"><div class="col-transaction">
-            <div class="list-column" id="column-transaction-tid">Transaction ID</div>
-            <div class="list-column" id="column-transaction-cid">Campaign ID</div>
-            <div class="list-column" id="column-transaction-name">User Name</div>
-            <div class="list-column" id="column-transaction-verses">Verses</div>
-            <div class="list-column" id="column-transaction-amount">Amount</div>
-            <div class="list-column" id="column-transaction-date">Date</div>
-            <div class="list-column" id="column-transaction-buttons"></div>
-        </div></div>
-        <div class="list" id="list-transaction">Not Available</div>
+    <div id="tab-giving" class="landing-content">
+        <h1>Giving History</h1>
     </div>
       
     

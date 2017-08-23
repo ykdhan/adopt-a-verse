@@ -13,7 +13,7 @@ if ($mysqli->connect_errno) {
     die('Connect Error ('.mysqli_connect_errno().') '.mysqli_connect_error());
 }
 
-$sql = "UPDATE campaign SET id = '{$fund_id}', verified = 1 WHERE id = '{$campaign_id}'";
+$sql = "UPDATE campaign SET verified = 1 WHERE id = '{$campaign_id}'";
 
 if ($result = $mysqli->query($sql)) {
     $output['id'] = $id;

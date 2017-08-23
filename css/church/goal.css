@@ -10,8 +10,8 @@
 #campaign-duration {
     margin-top: 5em;
     text-align: center;
-    background: #039da6;
-    color: #fff;
+    background: none;
+    color: #555;
     border-radius: 2px;
     padding: 1em;
     vertical-align: middle;
@@ -23,11 +23,11 @@
     vertical-align: middle;
     text-align: center !important;
     text-transform: uppercase;
-    width: 3.5em;
+    width: 3em;
 }
 #campaign-duration span {
     font-family: "Gotham-Bold" !important;
-    font-size: 2em !important;
+    font-size: 1.8em !important;
 }
 .count-days, .count-hours, .count-minutes {
     margin-right: 2em;
@@ -41,7 +41,7 @@
 #count-number {
     display: inline-block;
     padding-right: 2.5em;
-    border-right: 2px solid #fff;
+    border-right: 2px solid #555;
 }
 
 #div-chart {

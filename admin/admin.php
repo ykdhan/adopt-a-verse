@@ -50,7 +50,7 @@ if (isset($_SESSION['aav-admin'])) {
 <!-- Top Bar -->
 <div id="side">
     <div id="section-logo">
-        <a href="index.php"><img id="adopt-logo" alt="Adopt-a-Verse Logo" align="middle" src="../img/wycliffe-admin-logo.png"><span id="tag-admin">Admin</span></a>
+        <a href="index.php"><img id="adopt-logo" alt="Adopt-a-Verse Logo" align="middle" src="../img/wycliffe-admin-logo.png"></a>
     </div>
     <div id="section-tab">
         <button class="landing-tabs landing-tabs-now" onclick="landing_tab(event, 'tab-campaign')"><img alt="" src="../img/icon_campaign.svg"><br>Campaigns</button>
@@ -116,6 +116,45 @@ if (isset($_SESSION['aav-admin'])) {
             <div class="list-column" id="column-church-campaign">Campaigns</div>
         </div></div>
         <div class="list" id="list-church">Not Available</div>
+        
+    </div>
+    
+    <div id="tab-church-info" class="landing-content">
+        
+        <div id="section-church" class="church-section">
+            <button type="submit" id="back-button" onclick="back_to_churches()"><i class="fa fa-angle-left" aria-hidden="true"></i> Back to Churches</button>
+        </div><div id="section-profile" class="church-section">
+            <div id="content-profile" class="church-content">
+                <div class="church-title">Profile</div>
+                <a href="#change-profile-picture"><div id="church-profile-picture"><span><i class="fa fa-pencil" aria-hidden="true"></i> Change Picture</span></div></a>
+                <div id="church-name"></div>
+                <div id="church-state"></div>
+            </div>
+        </div><div id="section-admins" class="church-section">
+            <div id="content-admins" class="church-content">
+                <div class="church-title">Administrators
+                    <a href="#add-church-admin"><img class="button-admin-add" alt="" src="../img/plus_admin.svg"></a>
+                </div>
+                <div id="church-admins">
+
+                    <!-- church administrators -->
+
+                </div>
+            </div>
+        </div><div id="section-campaigns" class="church-section">
+            <div id="content-campaigns" class="church-content">
+                <div class="church-title" id="church-campaign-bar">Campaigns
+
+                    <a href="#add-campaign"><img class="button-admin-add" alt="" src="../img/plus_admin.svg"></a>
+
+                </div>
+                <div id="church-campaigns">
+
+                    <!-- church campaigns -->
+
+                </div>
+            </div>
+        </div>
         
     </div>
     
@@ -217,7 +256,7 @@ if (isset($_SESSION['aav-admin'])) {
 </div>
     
     
-    
+<!-- For Adopt-a-Verse -->
     
 <div class="remodal" data-remodal-id="add-church" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
     <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
@@ -576,11 +615,317 @@ if (isset($_SESSION['aav-admin'])) {
  
     
     
+    
+<!-- For Church -->  
+
+<div class="remodal" data-remodal-id="change-profile-picture" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+    <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+
+    <div class="lightbox">
+        <form method="post" enctype="multipart/form-data">
+        
+        <div id="title">Change Profile Picture</div>
+        <section>
+            <div class="col-left">Image File</div>
+            <div class="col-tip"></div>
+            <div class="col-right">
+                
+                <button type="button" class="outline-button" id="church-select-profile-picture">Choose Image</button>
+                <div class="error" id="error-church-profile-picture"></div>
+                
+                <input type="file" id="church-input-profile-picture" name="input-profile-picture" hidden onchange="choose_profile_picture(this)" accept="image/*">
+                
+            </div>
+            <div class="col-left">Preview</div>
+            <div class="col-tip"></div>
+            <div class="col-right">
+                
+                <div id="church-preview-profile-picture"></div>
+                <img id="church-profile-preview" alt="" src="" id="preview" hidden>
+
+            </div>
+        </section>
+        <section class="last-section">
+            <button type="button" class="admin-submit" id="button-edit-profile-picture" onclick="edit_profile_picture()">Change Image</button>
+        </section>
+        
+        </form>
+    </div>
+</div>
+
+    
+<div class="remodal" data-remodal-id="add-church-admin" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+    <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+
+    <div class="lightbox">
+        <div id="title">New Administrator</div>
+        <section>
+            <div class="col-left">Church</div>
+            <div class="col-tip"></div>
+            <div class="col-right">
+                <p id="admin-church"></p>
+            </div>
+        </section>
+        <section>
+            
+            <div class="admin-tab-div">
+                <div class="admin-tab">
+                    <button class="admin-tabs admin-tabs-now" onclick="admin_tab(event, 'tab-new-user')">Create New Admin</button>
+                    <button class="admin-tabs" id="admin-tab-2" onclick="admin_tab(event, 'tab-existing-user')">Make Existing User an Admin</button>
+                </div>
+            </div>
+
+            
+            <div id="tab-new-user" class="admin-tab-content admin-tab-content-now">
+
+                <div class="col-left">Account</div>
+                <div class="col-tip"></div>
+                <div class="col-right">
+                    <input type="text" class="admin-text" id="church-admin-first-name" placeholder="First Name" onkeyup="input_admin_form('first-name')">
+                    <input type="text" class="admin-text" id="church-admin-last-name" placeholder="Last Name" onkeyup="input_admin_form('last-name')">
+                </div>
+                <div class="col-left"></div>
+                <div class="col-tip"></div>
+                <div class="col-right">
+                    <input type="text" class="admin-text" id="church-admin-new-email" placeholder="Email Address"><span class="error" id="error-new-email"></span><br>
+                </div>
+                <div class="col-left"></div>
+                <div class="col-tip"></div>
+                <div class="col-right">
+                    <input type="text" class="admin-text" id="church-admin-phone" placeholder="Phone Number" onkeyup="input_admin_form('phone')">
+                </div>
+                
+            </div>
+
+            
+            <div id="tab-existing-user" class="admin-tab-content">
+
+                <div class="col-left">Account</div>
+                <div class="col-tip"></div>
+                <div class="col-right">
+                    <input type="text" class="admin-text" id="church-admin-existing-email" placeholder="Email Address"><span class="error" id="error-existing-email"></span><br>
+                </div>
+                
+            </div>
+            
+        </section>
+        <section class="last-section">
+            <p class="message" id="admin-message">An email will be sent to the new admin to set up their account password.</p>
+            <button type="button" id="admin-button" class="admin-submit" onclick="add_church_admin()">Create Admin</button>
+        </section>
+    </div>
+</div>
+    
+    
+<div class="remodal" data-remodal-id="add-campaign" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+    <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+
+    <div class="lightbox">
+        <div id="title">New Campaign</div>
+        <section>
+            
+            
+            <div class="col-left">Church</div>
+            <div class="col-tip"></div>
+            <div class="col-right">
+                
+                <p id="new-church"></p>
+
+            </div>
+            <div class="col-left">Campaign Url</div>
+            <div class="col-tip"></div>
+            <div class="col-right">adopt.wycliffe.org/ <input type="text" class="admin-text" id="new-url" placeholder="church-name"><span class="error" id="error-url"></span>
+            </div>
+            <div class="col-left">Campaign Duration</div>
+            <div class="col-tip"></div>
+            <div class="col-right"><input type="date" class="admin-text" id="new-start-date" onchange="select_start_date(this)">&nbsp; to &nbsp;<input type="date" class="admin-text" id="new-end-date" onchange="select_end_date(this)"></div>
+        </section>
+        <section>
+            <div class="col-left">Language</div>
+            <div class="col-tip"></div>
+            <div class="col-right">
+            
+                <input type="text" class="admin-text-long" id="new-language" onkeyup="search_church_language()" placeholder="Search for language">
+                
+                <div class="drop" id="drop-language"></div>
+                
+            </div>
+            <div class="col-left">Book</div>
+            <div class="col-tip"></div>
+            <div class="col-right">
+            
+                <input type="text" class="admin-text-long" id="new-book" onkeyup="search_book()" placeholder="Search for book of the Bible">
+                
+                <div class="drop" id="drop-book"></div>
+                
+                <span id="num-verses"></span>
+                
+            </div>
+        </section>
+        <section>
+            
+            <div class="col-left">Total Goal Amount</div>
+            <div class="col-tip"></div>
+            <div class="col-right">&#36;&nbsp; <input type="text" id="new-total-goal" class="admin-text small" onkeyup="input_fund('total')" placeholder="0"><span class="error" id="error-total"></span></div>
+            <div class="col-left">Cost per Verse</div>
+            <div class="col-tip"></div>
+            <div class="col-right">&#36;&nbsp; <input type="text" id="new-verse-price" class="admin-text small" onkeyup="input_fund('verse')" placeholder="0"><span class="error" id="error-verse"></span></div>
+            <div class="col-left">Goal Description</div>
+            <div class="col-tip"><span class="tool-tip">?<div class="tooltip">This message will appear on the "Our Campaign Goal" tab of your campaign.</div></span></div>
+            <div class="col-right">
+                <div id="new-goal-description" class="text-editor">
+                    
+                </div>
+            </div>
+            
+        </section>
+        <section class="last-section">
+            <button type="button" class="admin-submit" onclick="add_campaign()">Create Campaign</button>
+        </section>
+    </div>
+</div>
+    
+
+<div class="remodal" data-remodal-id="church-campaign" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+    <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+
+    <div class="lightbox">
+        <div id="title">Campaign Details</div>
+        <section>
+            <div class="col-left">Campaign Url</div>
+            <div class="col-tip"></div>
+            <div class="col-right">
+                <p id="church-campaign-url">adopt.wycliffe.org</p>
+            </div>
+            <div class="col-left">Campaign Duration</div>
+            <div class="col-tip"></div>
+            <div class="col-right" id="church-campaign-duration">
+                <input type="date" class="admin-text" id="church-campaign-start-date" onchange="edit_campaign_start_date(this)">&nbsp; to &nbsp;<input type="date" class="admin-text" id="church-campaign-end-date" onchange="edit_campaign_end_date(this)">
+            </div>
+            <div class="col-left d-day"></div>
+            <div class="col-tip d-day"></div>
+            <div class="col-right d-day">
+                <div id="count-number">
+                    <div class="count-days">
+                        <span class="countdown-days"></span><br>
+                        days
+                    </div>
+                    <div class="count-hours">
+                        <span class="countdown-hours"></span><br>
+                        hrs
+                    </div>
+                    <div class="count-minutes">
+                        <span class="countdown-minutes"></span><br>
+                        min
+                    </div>
+                    <div class="count-seconds">
+                        <span class="countdown-seconds"></span><br>
+                        sec
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="col-left">Language</div>
+            <div class="col-tip"></div>
+            <div class="col-right">
+                <p id="church-campaign-language"></p>
+            </div>
+            <div class="col-left">Book</div> 
+            <div class="col-tip"></div>
+            <div class="col-right">
+                <p id="church-campaign-book"></p>
+            </div>
+        </section>
+        <section>
+            <div class="col-left">Total Goal Amount</div>
+            <div class="col-tip"></div>
+            <div class="col-right"><p id="church-campaign-goal-amount">&#36; 100,000</p>
+            </div>
+            <div class="col-left">Cost per Verse</div>
+            <div class="col-tip"></div>
+            <div class="col-right"><p id="church-campaign-verse-price">&#36; 1.50</p>
+            </div>
+            <div class="col-left">Goal Description</div>
+            <div class="col-tip"><span class="tool-tip">?<div class="tooltip">This message will appear on the "Our Campaign Goal" tab of your campaign.</div></span></div>
+            <div class="col-right" id="church-campaign-description">
+                <div id="church-campaign-goal-description" class="text-editor">
+
+                </div>
+            </div>
+        </section>
+        <section class="last-section" id="church-campaign-buttons">
+            
+        </section>
+    </div>
+</div>
+    
+    
+    
+    
+    
+    
 
     
 
 <script>
     
+function logout() {
+    if (window.confirm("Would you like to log out?")) {
+        window.location.href = "logout.php";
+    }
+}
+    
+function landing_tab(evt, tabName) {
+
+    
+    if (view_church != 0) {
+        
+        $('#landing-wrapper').css({
+            background: '#fff',
+            boxShadow: '0px 0px 10px 0px rgba(0,0,0,0.35)'
+        });
+
+        if ($(window).width() > 1300) {
+            $('#landing-wrapper').css({
+                padding: '4em'
+            });
+        } else {
+            $('#landing-wrapper').css({
+                padding: '2.5em'
+            });
+        }
+        
+        view_church = 0;
+        
+    }
+    
+    
+    
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("landing-content");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("landing-tabs");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" landing-tabs-now", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " landing-tabs-now";
+    
+
+}
+    
+    
+// FILTERS
     
 $( "#filter-status" ).focusin(function() {
     $( "#dropdown-status" ).focus();
@@ -602,7 +947,6 @@ $( "#filter-transaction" ).focusin(function() {
     $( "#dropdown-transaction" ).css({display: 'block'});
     $( "#filter-transaction" ).css({background: '#f2f2f2'});
 }); 
-    
     
 $(document).mouseup(function(e) {
     var campaign_dropdown = $("#dropdown-status");
@@ -826,6 +1170,7 @@ function filter_by(filter,option) {
         
     
     
+// LOAD TABS
     
 var campaign_id = "";
 var campaigns = {};
@@ -1063,14 +1408,65 @@ function search_church() {
         
 }
     
+var view_church = 0;
+    
 function select_church(id) {
     
-    if (id == "") {
+    if (id != "") {
+        
+        var i, tabcontent;
 
-    } else {
-        window.location.href = "church.php?id="+id;
+        tabcontent = document.getElementsByClassName("landing-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        document.getElementById('tab-church-info').style.display = "block";
+        
+        $('#landing-wrapper').css({
+            background: 'none',
+            boxShadow: 'none',
+            padding: 0
+        });
+        
+        view_church = id;
+        
+        load_church();
+        load_church_admin();
+        load_church_campaign();
     }
     
+}
+    
+function back_to_churches() {
+    $('#landing-wrapper').css({
+            background: '#fff',
+            boxShadow: '0px 0px 10px 0px rgba(0,0,0,0.35)'
+    });
+    
+    if ($(window).width() > 1300) {
+        $('#landing-wrapper').css({
+            padding: '4em'
+        });
+    } else {
+        $('#landing-wrapper').css({
+            padding: '2.5em'
+        });
+    }
+    
+    
+    var i, tabcontent;
+    
+    tabcontent = document.getElementsByClassName("landing-content");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+
+    document.getElementById('tab-church').style.display = "block";
+    
+    view_church = 0;
+    
+    search_church();
 }
     
     
@@ -1337,43 +1733,6 @@ function search_transaction() {
         ajaxObj.send();
         
 }
-    
-    
-    
-    
-    
-function logout() {
-    if (window.confirm("Would you like to log out?")) {
-        window.location.href = "logout.php";
-    }
-}
-    
-    
-function landing_tab(evt, tabName) {
-
-    // Declare all variables
-    var i, tabcontent, tablinks;
-
-    // Get all elements with class="tabcontent" and hide them
-    tabcontent = document.getElementsByClassName("landing-content");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
-
-    // Get all elements with class="tablinks" and remove the class "active"
-    tablinks = document.getElementsByClassName("landing-tabs");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" landing-tabs-now", "");
-    }
-
-    // Show the current tab, and add an "active" class to the button that opened the tab
-    document.getElementById(tabName).style.display = "block";
-    evt.currentTarget.className += " landing-tabs-now";
-    
-
-}
-    
-    
     
     
     
@@ -2219,6 +2578,1138 @@ function cancel_transaction(id) {
         ajaxObj.send();
     }
 }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+// CHURCH FUNCTIONALITIES
+    
+    
+$("#church-select-profile-picture").click(function(){
+    $("#church-input-profile-picture").click();
+});
+    
+var admin_mode = "new";
+function admin_tab(evt, tabName) {
+
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("admin-tab-content");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("admin-tabs");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" admin-tabs-now", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " admin-tabs-now";
+    
+    
+    if (tabName == "tab-new-user") {
+        document.getElementById('admin-message').innerHTML = "An email will be sent to the new admin to set up their account password.";
+        document.getElementById('admin-button').innerHTML = "Create Admin";
+        admin_mode = "new";
+    } else {
+        document.getElementById('admin-message').innerHTML = "A notification email will be sent to this user.";
+        document.getElementById('admin-button').innerHTML = "Make Admin";
+        admin_mode = "existing";
+    }
+    
+}
+
+    
+var church_campaigns = {};
+var church_campaign_id = "";
+var church_campaign_status = "";
+    
+    
+    
+function load_church() {
+    
+    var ajaxObj = new XMLHttpRequest();
+    ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+
+        if (ajaxObj.responseText == "no\n") {
+            alert("Church not found");
+        } else {
+            var resp = JSON.parse(ajaxObj.responseText);
+
+            var state = resp['state'];
+            var church = resp['name'];
+            var profile_pic = resp['profile_picture'];
+
+            document.getElementById('church-name').innerHTML = church;
+            document.getElementById('admin-church').innerHTML = church;
+            document.getElementById('new-church').innerHTML = church;
+            document.getElementById('church-state').innerHTML = state;
+
+            if (profile_pic != null) {
+                document.getElementById('church-profile-picture').style.backgroundImage = 'url("../img/profile/'+profile_pic+'")';
+            } else {
+                document.getElementById('church-profile-picture').style.backgroundImage = 'url("../img/choose_image.png")';
+            }
+            
+        }
+
+    }}}
+    ajaxObj.open("GET", "sql-church.php?id="+view_church);
+    ajaxObj.send();
+
+}
+
+function load_church_admin() {
+    
+    var ajaxObj = new XMLHttpRequest();
+    ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+
+        document.getElementById('church-admins').innerHTML = "";
+
+        if (ajaxObj.responseText == "no\n") {
+            console.log("no admins");
+            document.getElementById('church-admins').innerHTML = "<span style='float: left; text-align: left;'>Please add church admins</span>";
+        } else {
+            var resp = JSON.parse(ajaxObj.responseText);
+
+            if (resp.verified != null) {
+            for (var i = 0; i < Object.keys(resp.verified).length; i++) {
+
+                var num = Object.keys(resp.verified)[i];
+                var first_name = resp.verified[num]['first_name'];
+                var last_name = resp.verified[num]['last_name'];
+                var email = resp.verified[num]['email'];
+                
+                document.getElementById('church-admins').innerHTML += '<div class="church-admin" onmouseover="show_admin_delete('+num+')" onmouseout="hide_admin_delete('+num+')"><div class="church-admin-name">'+first_name+' '+last_name+'</div><div class="church-admin-email">'+email+'</div><div class="church-admin-delete"><img alt="" src="../img/delete.svg" id="delete-'+num+'" onclick="delete_admin('+num+')"></div></div>';
+            }
+            }
+            if (resp.pending != null) {
+            for (var i = 0; i < Object.keys(resp.pending).length; i++) {
+
+                var num = Object.keys(resp.pending)[i];
+                var first_name = resp.pending[num]['first_name'];
+                var last_name = resp.pending[num]['last_name'];
+                var email = resp.pending[num]['email'];
+
+                document.getElementById('church-admins').innerHTML += '<div class="church-admin" onmouseover="show_admin_delete('+num+')" onmouseout="hide_admin_delete('+num+')"><div class="church-admin-name">'+first_name+' '+last_name+'</div><div class="church-admin-email">'+email+'</div><div class="church-admin-delete"><img alt="" src="../img/delete.svg" id="delete-'+num+'" onclick="delete_admin('+num+')"></div><div class="church-admin-pending">Pending</div></div>';
+            }
+            }
+            
+            
+        }
+
+    }}}
+    ajaxObj.open("GET", "sql-church-admins.php?id="+view_church);
+    ajaxObj.send();
+    
+}
+
+var raised = {};
+    
+function load_church_campaign() {
+    
+    raised = {};
+
+    var ajaxObj1 = new XMLHttpRequest();
+    ajaxObj1.onreadystatechange= function() { if(ajaxObj1.readyState == 4) { if(ajaxObj1.status == 200) {
+
+        if (ajaxObj1.responseText == "no\n") {
+            
+            console.log('no progress');
+            
+        } else {
+            var response = JSON.parse(ajaxObj1.responseText);
+
+            console.log(response);
+            
+            for (var i = 0; i < Object.keys(response).length; i++) {
+
+                var campaign = Object.keys(response)[i];
+                raised[campaign] = {};
+
+                var num_verses = 0;
+
+                for (var j = 0; j < Object.keys(response[campaign]['book']).length; j++) {
+
+                    var chapter = Object.keys(response[campaign]['book'])[j];
+
+                    for (var k = 0; k < Object.keys(response[campaign]['book'][chapter]).length; k++) {
+
+                        var verse = Object.keys(response[campaign]['book'][chapter])[k];
+                        num_verses++;
+                        
+                    }
+
+                }
+
+                console.log(campaign+": "+num_verses);
+                
+                if (num_verses == 0) {
+                    raised[campaign] = 0;
+                } else {
+                    raised[campaign] = (parseFloat(response[campaign]['verse_price']) * num_verses).toFixed(2);
+                }
+
+            }
+
+            console.log(raised);
+        }
+
+    }}}
+    ajaxObj1.open("GET", "sql-progress.php?id="+view_church);
+    ajaxObj1.send();
+
+    
+    
+    var ajaxObj = new XMLHttpRequest();
+        ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+            
+            document.getElementById('church-campaigns').innerHTML = "";
+            
+            if (ajaxObj.responseText == "no\n") {
+                console.log("no campaigns");
+                document.getElementById('church-campaigns').innerHTML = "Please contact Wycliffe to set up church campaigns";
+            
+            } else {
+                var resp = JSON.parse(ajaxObj.responseText);
+
+                for (var i = 0; i < Object.keys(resp).length; i++) {
+
+                    var num = Object.keys(resp)[i];
+                    
+                    var book = resp[num]['book'];
+                    var language = resp[num]['language'];
+                    var goal_description = resp[num]['goal_description'];
+                    var goal_amount = parseFloat(resp[num]['goal_amount']);
+                    var verse_price = parseFloat(resp[num]['verse_price']);
+                    var start_date = resp[num]['start_date'];
+                    var end_date = resp[num]['end_date'];
+                    var url = resp[num]['url'];
+                    var status = resp[num]['status'];
+                    
+                    church_campaigns[num] = {};
+                    church_campaigns[num]['book'] = book;
+                    church_campaigns[num]['language'] = language;
+                    church_campaigns[num]['goal_description'] = goal_description;
+                    church_campaigns[num]['goal_amount'] = goal_amount;
+                    church_campaigns[num]['verse_price'] = verse_price;
+                    church_campaigns[num]['start_date'] = start_date;
+                    church_campaigns[num]['end_date'] = end_date;
+                    church_campaigns[num]['url'] = url;
+                    church_campaigns[num]['status'] = status;
+                    
+                    if (raised[num] != null) {
+                        church_campaigns[num]['still_need'] = raised[num];
+                        church_campaigns[num]['percentage'] = Math.round(raised[num] / goal_amount * 100);
+                    } else {
+                        church_campaigns[num]['still_need'] = 0;
+                        church_campaigns[num]['percentage'] = 0;
+                    }
+                    
+                    
+                    var goal = parseFloat(goal_amount.toString().replace(/,/g,''));
+                    goal_amount = goal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    
+                    var verse = parseFloat(verse_price.toString().replace(/,/g,''));
+                    verse_price = verse.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+                    if (status == "inprogress") {
+                        document.getElementById('church-campaigns').innerHTML += '<div class="church-campaign-div"><a href="#church-campaign"><div class="church-campaign" onclick="select_church_campaign(\''+num+'\')"><div class="church-campaign-top">'+start_date+' - '+end_date+'<span class="church-campaign-status active">In Progress</span></div><div class="church-campaign-book">'+book+'</div><div class="church-campaign-language">'+language+'</div><div class="church-campaign-raised">$'+church_campaigns[num]['still_need']+'</div><div class="church-campaign-goal">$'+goal_amount+'</div><div class="church-campaign-bottom"><div class="church-campaign-bar"><div class="church-campaign-progress" style="width: '+church_campaigns[num]['percentage']+'%;"></div></div><div class="church-campaign-percent">'+church_campaigns[num]['percentage']+'%</div></div></div></a></div>';
+                    } else if (status == "coming") {
+                        document.getElementById('church-campaigns').innerHTML += '<div class="church-campaign-div"><a href="#church-campaign"><div class="church-campaign coming" onclick="select_church_campaign(\''+num+'\')"><div class="church-campaign-top">'+start_date+' - '+end_date+'<span class="church-campaign-status coming">Scheduled</span></div><div class="church-campaign-book">'+book+'</div><div class="church-campaign-language">'+language+'</div><div class="church-campaign-raised">$'+church_campaigns[num]['still_need']+'</div><div class="church-campaign-goal">$'+goal_amount+'</div><div class="church-campaign-bottom"><div class="church-campaign-bar"><div class="church-campaign-progress coming"></div></div><div class="church-campaign-percent coming">'+church_campaigns[num]['percentage']+'%</div></div></div></a></div>';
+                    } else if (status == "complete") {
+                        document.getElementById('church-campaigns').innerHTML += '<div class="church-campaign-div"><a href="#church-campaign"><div class="church-campaign complete" onclick="select_church_campaign(\''+num+'\')"><div class="church-campaign-top">'+start_date+' - '+end_date+'<span class="church-campaign-status complete">Complete</span></div><div class="church-campaign-book">'+book+'</div><div class="church-campaign-language">'+language+'</div><div class="church-campaign-raised">$'+church_campaigns[num]['still_need']+'</div><div class="church-campaign-goal">$'+goal_amount+'</div><div class="church-campaign-bottom"><div class="church-campaign-bar"><div class="church-campaign-progress complete" style="width: '+church_campaigns[num]['percentage']+'%;"></div></div><div class="church-campaign-percent complete">'+church_campaigns[num]['percentage']+'%</div></div></div></a></div>';
+                    }
+                }
+            }
+            
+        }}}
+        ajaxObj.open("GET", "sql-church-campaigns.php?id="+view_church);
+        ajaxObj.send();
+    
+}
+
+    
+    
+function show_admin_delete(admin) {
+    document.getElementById('delete-'+admin).style.visibility = "visible";
+}
+function hide_admin_delete(admin) {
+    document.getElementById('delete-'+admin).style.visibility = "hidden";
+}
+    
+function delete_admin(admin) {
+    console.log("delete- "+admin);
+    
+    if(confirm("Delete admin?")) {
+        var ajaxObj = new XMLHttpRequest();
+        ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+
+            if (ajaxObj.responseText == "yes\n") {
+                load_church_admin();
+            } else {
+                alert("Error: delete admin");
+            }
+
+        }}}
+        ajaxObj.open("GET", "sql-delete-church-admin.php?id="+admin);
+        ajaxObj.send();
+    }
+    
+}
+    
+function delete_campaign(campaign) {
+    console.log("delete- "+campaign);
+    
+    if(confirm("Delete campaign?")) {
+        var ajaxObj = new XMLHttpRequest();
+        ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+
+            if (ajaxObj.responseText == "yes\n") {
+                window.location.href = "admin.php#";
+                if (view_church == 0) {
+                    search_campaign();
+                } else {
+                    load_church_campaign();
+                }
+            } else {
+                alert("Error: delete campaign");
+            }
+
+        }}}
+        ajaxObj.open("GET", "sql-delete-church-campaign.php?id="+campaign);
+        ajaxObj.send();
+    }
+}
+    
+    
+var church_formdata = new FormData();
+var church_form_profile = false;
+var church_profile_type = "";
+function choose_profile_picture(prof) {
+    
+    document.getElementById('error-church-profile-picture').style.visibility = "visible";
+            
+    var file = prof.files[0];
+    var imagefile = file.type;
+    church_profile_type = file.type.split("/")[1];
+        
+    var match = ["image/jpeg","image/png","image/jpg","image/gif"];
+    
+    if(!((imagefile==match[0]) || (imagefile==match[1]) || (imagefile==match[2]) || (imagefile==match[3]))) {
+        church_form_profile = false;
+        church_imageNotLoaded();
+        $('#church-input-profile-picture').val('');
+        document.getElementById('error-church-profile-picture').className = "error red";
+        document.getElementById('error-church-profile-picture').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">Invalid file type (jpg, gif, png)';
+    } else {
+        if (file.size > 2000000) {
+            church_form_profile = false;
+            church_imageNotLoaded();
+            $('#church-input-profile-picture').val('');
+            document.getElementById('error-church-profile-picture').className = "error red";
+            document.getElementById('error-church-profile-picture').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">Invalid file size (Max: 2 MB)';
+        } else {
+            church_form_profile = true;
+            var reader = new FileReader();
+            reader.onload = church_imageIsLoaded;
+            reader.readAsDataURL(file);
+            document.getElementById('error-church-profile-picture').className = "error green";
+            document.getElementById('error-church-profile-picture').innerHTML = '<img class="error-icon" alt="" src="../img/error_valid.png">Valid image';
+            
+            church_formdata.append("input_profile_picture", file);
+        }
+    }
+    
+}
+function church_imageIsLoaded(e) {
+    $('#church-profile-preview').attr('src', e.target.result);
+    $('#church-preview-profile-picture').css({backgroundImage: 'url("'+$('#church-profile-preview').attr('src')+'")'});
+}  
+function church_imageNotLoaded() {
+    $('#church-preview-preview-picture').css({backgroundImage: 'url("../../img/choose_image.png")'});
+}
+
+function edit_profile_picture () {
+    
+    var valid = true;
+    
+    document.getElementById('church-select-profile-picture').style.borderColor = "#d1d1d1";
+    
+    if (document.getElementById('church-input-profile-picture').value == '') {
+        document.getElementById('church-select-profile-picture').style.borderColor = "#db5353";
+        document.getElementById('church-select-profile-picture').focus();
+        valid = false;
+    }
+    
+    if (valid) {
+        
+        $.ajax({
+            url: "sql-update-church-profile-picture.php?id="+view_church,
+            type: "POST",
+            data:  church_formdata,
+            contentType: false,
+            processData:false,
+            success: function(data) {
+                console.log(data);
+                if (data == "yes\n\n\n") {
+                    window.location.href = "admin.php#";
+                    load_church();
+                } else {
+                    alert("Error: "+data);
+                }
+            }      
+        });
+        
+    }
+    
+}
+
+
+    
+var admin_church_data = {
+    first_name: "",
+    last_name: "",
+    phone: "",
+    new_email: "",
+    existing_email: ""
+}
+    
+function search_new_email() {
+    
+    var email = document.getElementById('church-admin-new-email');
+    
+    document.getElementById('error-new-email').style.visibility = "visible";
+
+    var ajaxObj = new XMLHttpRequest();
+    ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+        
+        
+        var valid = true;
+        admin_church_data.new_email = "";
+        
+        if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.value))) {
+            document.getElementById('error-new-email').className = "error red";
+            document.getElementById('error-new-email').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">Email is invalid';
+            valid = false;
+        }
+        
+        if (ajaxObj.responseText == "yes\n") {
+            document.getElementById('error-new-email').className = "error red";
+            document.getElementById('error-new-email').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">Email already exists';
+            valid = false;
+        } 
+        
+        if (valid) {
+            admin_church_data.new_email = email.value;
+            document.getElementById('error-new-email').className = "error green";
+            document.getElementById('error-new-email').innerHTML = '<img class="error-icon" alt="" src="../img/error_valid.png">Email is valid';
+        }
+
+    }}}
+    ajaxObj.open("GET", "sql-check-new-email.php?email="+email.value);
+    ajaxObj.send();
+}
+    
+function search_existing_email() {
+    
+    var email = document.getElementById('church-admin-existing-email');
+    
+    document.getElementById('error-existing-email').style.visibility = "visible";
+
+    var ajaxObj = new XMLHttpRequest();
+    ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+        
+        console.log(ajaxObj.responseText);
+        
+        var valid = true;
+        admin_church_data.existing_email = "";
+        
+        if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.value))) {
+            document.getElementById('error-existing-email').className = "error red";
+            document.getElementById('error-existing-email').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">Email is invalid';
+            valid = false;
+        }
+        
+        if (ajaxObj.responseText == "no\n") {
+            document.getElementById('error-existing-email').className = "error red";
+            document.getElementById('error-existing-email').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">Email is invalid';
+            valid = false;
+        } 
+        
+        if (ajaxObj.responseText == "already\n") {
+            document.getElementById('error-existing-email').className = "error red";
+            document.getElementById('error-existing-email').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">User is already an admin';
+            valid = false;
+        } 
+        
+        if (ajaxObj.responseText == "verify\n") {
+            document.getElementById('error-existing-email').className = "error red";
+            document.getElementById('error-existing-email').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">User has not verified this email address.<br><span>Please try again later.</span>';
+            valid = false;
+        } 
+        
+        if (valid) {
+            admin_church_data.existing_email = email.value;
+            document.getElementById('error-existing-email').className = "error green";
+            document.getElementById('error-existing-email').innerHTML = '<img class="error-icon" alt="" src="../img/error_valid.png">Email is valid';
+        }
+
+    }}}
+    ajaxObj.open("GET", "sql-check-existing-email.php?email="+email.value+"&church="+view_church);
+    ajaxObj.send();
+}
+    
+$( "#church-admin-new-email" ).focusout(function() {
+    search_new_email();
+});
+$( "#church-admin-existing-email" ).focusout(function() {
+    search_existing_email();
+});
+
+function input_admin_form(title) {
+    
+    var word = document.getElementById('church-admin-'+title);
+    
+    switch(title) {
+        case 'first-name':
+            word.value = word.value.replace(/[^a-zA-Z\.\s]+/, '');
+            admin_church_data.first_name = document.getElementById('church-admin-first-name').value;
+            break;
+        case 'last-name':
+            word.value = word.value.replace(/[^a-zA-Z\.\s]+/, '');
+            admin_church_data.last_name = document.getElementById('church-admin-last-name').value;
+            break;
+        case 'phone':
+            word.value = word.value.replace(/[^0-9\)-\.\+\s]+/, '');
+            admin_church_data.phone = document.getElementById('church-admin-phone').value;
+            break;
+        default:
+            break;
+    }
+}
+    
+function add_church_admin() {
+    
+    var valid = true;
+    
+    if (admin_mode == "new") {
+    
+        document.getElementById('church-admin-first-name').style.borderColor = "#d1d1d1";
+        document.getElementById('church-admin-last-name').style.borderColor = "#d1d1d1";
+        document.getElementById('church-admin-new-email').style.borderColor = "#d1d1d1";
+        document.getElementById('church-admin-phone').style.borderColor = "#d1d1d1";
+
+        if (admin_church_data.first_name == "") {
+            document.getElementById('church-admin-first-name').style.borderColor = "#db5353";
+            document.getElementById('church-admin-first-name').focus();
+            valid = false;
+        } else if (admin_church_data.last_name == "") {
+            document.getElementById('church-admin-last-name').style.borderColor = "#db5353";
+            document.getElementById('church-admin-last-name').focus();
+            valid = false;
+        } else if (admin_church_data.new_email == "") {
+            document.getElementById('church-admin-new-email').style.borderColor = "#db5353";
+            document.getElementById('church-admin-new-email').focus();
+            valid = false;
+        } else if (admin_church_data.phone == "") {
+            document.getElementById('church-admin-phone').style.borderColor = "#db5353";
+            document.getElementById('church-admin-phone').focus();
+            valid = false;
+        }
+        
+    } else {
+
+        document.getElementById('church-admin-existing-email').style.borderColor = "#d1d1d1";
+        
+        if (admin_church_data.existing_email == "") {
+            document.getElementById('church-admin-existing-email').style.borderColor = "#db5353";
+            document.getElementById('church-admin-existing-email').focus();
+            valid = false;
+        }
+        
+    }
+        
+    
+    if (valid) {
+        
+        var params = "";
+        
+        if (admin_mode == "new") {
+            params = 'mode=new&church='+view_church+'&first_name='+admin_church_data.first_name+'&last_name='+admin_church_data.last_name+'&email='+admin_church_data.new_email+'&phone='+admin_church_data.phone;
+        } else {
+            params = 'mode=existing&church='+view_church+'&email='+admin_church_data.existing_email;
+        }
+        
+        console.log(params);
+        
+        var ajaxObj = new XMLHttpRequest();
+        ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+
+            if (ajaxObj.responseText == "yes\n\n\n") {
+                window.location.href = "admin.php#";
+                load_church_admin();
+            } else {
+                alert("Error occurred");
+            }
+            
+        }}}
+        ajaxObj.open("GET", "sql-insert-church-admin.php?"+params);
+        ajaxObj.send();
+        
+    }
+}
+    
+    
+    
+    
+var new_goal_description = new Quill('#new-goal-description', {
+    theme: 'snow'
+});
+
+var campaign_description = "";
+var campaign_data = {
+    url: "",
+    start_date: "",
+    end_date: "",
+    language: "",
+    book: "",
+    total_goal: "",
+    verse_price: ""
+}
+    
+var verses = {};
+    
+load_bible_data();
+    
+function load_bible_data() {
+    var ajaxObj = new XMLHttpRequest();
+    ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+
+        if (ajaxObj.responseText == "no\n") {
+            alert("Error: load_bible_data");
+        } else {
+            var resp = JSON.parse(ajaxObj.responseText);
+
+            for (var i = 0; i < Object.keys(resp).length; i++) {
+
+                var bk = Object.keys(resp)[i];
+                var chs = resp[bk]['chapters'];
+                var vs = resp[bk]['verses'];
+                
+                verses[bk] = vs;
+            }
+        }
+
+    }}}
+    ajaxObj.open("GET", "sql-chapters-verses.php");
+    ajaxObj.send();
+}
+
+
+function search_book() {
+    
+    var word = document.getElementById('new-book');
+    word.value = word.value.replace(/[^a-zA-Z0-9\s]+/, '');
+    
+    document.getElementById('drop-book').style.visibility = "visible";
+    
+    var ajaxObj = new XMLHttpRequest();
+        ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+            
+            document.getElementById('drop-book').innerHTML = "";
+            
+            if (ajaxObj.responseText == "no\n") {
+                document.getElementById('drop-book').innerHTML += '<div class="drop-group book-group">No search result.</div>';
+            } else {
+                var resp = JSON.parse(ajaxObj.responseText);
+
+                for (var i = 0; i < Object.keys(resp).length; i++) {
+
+                    var book = Object.keys(resp)[i];
+                    var verses = resp[book];
+
+                    document.getElementById('drop-book').innerHTML += '<div class="drop-item book-item" onclick="select_book(\''+book+'\')">'+book+'<span class="book-tag">'+verses.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+' verses</span></div>';
+
+                }
+            }
+            
+        }}}
+        ajaxObj.open("GET", "search-book.php?book="+word.value);
+        ajaxObj.send();
+        
+}
+
+function select_book(bk) {
+    campaign_data.book = bk;
+    document.getElementById('new-book').value = bk;
+    
+    if (bk == "") {
+        document.getElementById('num-verses').innerHTML = "";
+    } else {
+        document.getElementById('error-total').style.visibility = "hidden";
+        document.getElementById('num-verses').innerHTML = verses[bk].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+" verses";
+    }
+    
+    
+    var items = document.getElementsByClassName("book-item");
+    for(var i = 0; i < items.length; i++)
+    {
+       items[i].style.visibility = "hidden";
+    }
+    var groups = document.getElementsByClassName("book-group");
+    for(var i = 0; i < groups.length; i++)
+    {
+       groups[i].style.visibility = "hidden";
+    }
+    var tags = document.getElementsByClassName("book-tag");
+    for(var i = 0; i < tags.length; i++)
+    {
+       tags[i].style.visibility = "hidden";
+    }
+
+    document.getElementById('drop-book').style.visibility = "hidden";
+}
+
+    
+function search_church_language() {
+    
+    var word = document.getElementById('new-language');
+    word.value = word.value.replace(/[^a-zA-Z0-9\s]+/, '');
+    
+    document.getElementById('drop-language').style.visibility = "visible";
+    
+    var ajaxObj = new XMLHttpRequest();
+    ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+
+        document.getElementById('drop-language').innerHTML = "";
+
+        if (ajaxObj.responseText == "no\n") {
+            document.getElementById('drop-language').innerHTML += '<div class="drop-group language-group">No search result.</div>';
+        } else {
+            var resp = JSON.parse(ajaxObj.responseText);
+
+            for (var i = 0; i < Object.keys(resp.language).length; i++) {
+
+                var name = Object.keys(resp.language)[i];
+                var region = resp.language[name]['region'];
+                var id = resp.language[name]['id'];
+
+                document.getElementById('drop-language').innerHTML += '<div class="drop-item language-item" onclick="select_church_language(\''+id+'\',\''+name+'\')">'+name+'<span class="language-tag">'+region+'</span></div>';
+
+            }
+        }
+
+    }}}
+    ajaxObj.open("GET", "search-language.php?language="+word.value);
+    ajaxObj.send();
+        
+}
+    
+function select_church_language(lang,name) {
+    campaign_data.language = lang;
+    document.getElementById('new-language').value = name;
+    
+    var items = document.getElementsByClassName("language-item");
+    for(var i = 0; i < items.length; i++)
+    {
+       items[i].style.visibility = "hidden";
+    }
+    var groups = document.getElementsByClassName("language-group");
+    for(var i = 0; i < groups.length; i++)
+    {
+       groups[i].style.visibility = "hidden";
+    }
+    var tags = document.getElementsByClassName("language-tag");
+    for(var i = 0; i < tags.length; i++)
+    {
+       tags[i].style.visibility = "hidden";
+    }
+
+    document.getElementById('drop-language').style.visibility = "hidden";
+}
+    
+
+function search_url() {
+    
+    var word = document.getElementById('new-url');
+
+    var ajaxObj = new XMLHttpRequest();
+    ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+        
+        var valid = true;
+        campaign_data.url = "";
+        document.getElementById('error-url').style.visibility = "visible";
+        
+        if (word.value.length < 6) {
+            document.getElementById('error-url').className = "error red";
+            document.getElementById('error-url').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">URL is too short';
+            valid = false;
+        }
+        
+        if (word.value.length > 30) {
+            document.getElementById('error-url').className = "error red";
+            document.getElementById('error-url').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">URL is too long';
+            valid = false;
+        }
+        
+        if (ajaxObj.responseText == "exist\n") {
+            document.getElementById('error-url').className = "error red";
+            document.getElementById('error-url').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">URL already exists';
+            valid = false;
+        }
+
+        if (valid) {
+            document.getElementById('error-url').className = "error green";
+            document.getElementById('error-url').innerHTML = '<img class="error-icon" alt="" src="../img/error_valid.png">URL is valid';
+            campaign_data.url = word.value;
+        }
+
+    }}}
+    ajaxObj.open("GET", "search-url.php?url="+word.value);
+    ajaxObj.send();
+        
+}
+    
+
+function select_start_date(e) {
+    var start_now = new Date(e.value);
+    var start_day = ("0" + start_now.getDate()).slice(-2);
+    var start_month = ("0" + (start_now.getMonth() + 1)).slice(-2);
+    var start_date = start_now.getFullYear()+"-"+(start_month)+"-"+(start_day);
+    
+    var today = new Date();
+    if (start_now < today) {
+        e.style.borderColor = "#db5353";
+        campaign_data.start_date = "";
+        alert("Invalid duration");
+    } else {
+        e.style.borderColor = "#d1d1d1";
+        campaign_data.start_date = e.value;
+        document.getElementById('new-end-date').focus();
+    }
+    
+}
+function select_end_date(e) {
+    
+    var start_now = new Date(campaign_data.start_date);
+    var start_day = ("0" + start_now.getDate()).slice(-2);
+    var start_month = ("0" + (start_now.getMonth() + 1)).slice(-2);
+
+    var end_now = new Date(e.value);
+    var end_day = ("0" + end_now.getDate()).slice(-2);
+    var end_month = ("0" + (end_now.getMonth() + 1)).slice(-2);
+
+    var start_date = start_now.getFullYear()+"-"+(start_month)+"-"+(start_day);
+    var end_date = end_now.getFullYear()+"-"+(end_month)+"-"+(end_day);
+
+    if (start_date >= end_date) {
+        e.style.borderColor = "#db5353";
+        campaign_data.end_date = "";
+        alert("Invalid duration");
+    } else {
+        e.style.borderColor = "#d1d1d1";
+        campaign_data.end_date = e.value;
+        document.getElementById('new-language').focus();
+    }
+    
+}
+    
+
+$( "#new-language" ).focusout(function() {
+    select_language("","");
+});    
+$( "#new-book" ).focusout(function() {
+    select_book("");
+});    
+$( "#new-url" ).focusout(function() {
+    search_url();
+});
+    
+function input_fund(title) {
+
+    var money_total = document.getElementById('new-total-goal');
+    var money_verse = document.getElementById('new-verse-price');
+
+    
+    if (title == 'total') {
+        money_total.value = money_total.value.replace(/[^0-9\.,]+/, '');
+        var before = parseFloat(money_total.value.toString().replace(/,/g,''));
+        money_total.value = before.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        
+        var valid = true;
+        campaign_data.total_goal = "";
+        
+        if (campaign_data.book == "") {
+            document.getElementById('error-total').style.visibility = "visible";
+            document.getElementById('error-total').className = "error red";
+            document.getElementById('error-total').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">Book is not selected';
+            valid = false;
+            money_total.value = "";
+        }
+        
+        if (valid) {
+            document.getElementById('error-total').style.visibility = "hidden";
+            
+            var pure = parseFloat(money_total.value.toString().replace(/,/g,''));
+            campaign_data.total_goal = pure;
+            
+            money_verse.value = (pure/parseFloat(verses[campaign_data.book])).toFixed(2);
+            
+            campaign_data.verse_price = money_verse.value;
+            
+            money_verse.value = money_verse.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        
+    } else if (title == 'verse') {
+        money_verse.value = money_verse.value.replace(/[^0-9\.,]+/, '');
+        var before = parseFloat(money_verse.value.toString().replace(/,/g,''));
+        money_verse.value = before.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        
+        var valid = true;
+        campaign_data.verse_price = "";
+        
+        if (campaign_data.book == "") {
+            document.getElementById('error-verse').style.visibility = "visible";
+            document.getElementById('error-verse').className = "error red";
+            document.getElementById('error-verse').innerHTML = '<img class="error-icon" alt="" src="../img/error_invalid.png">Book is not selected';
+            valid = false;
+            money_verse.value = "";
+        }
+        
+        if (valid) {
+            document.getElementById('error-verse').style.visibility = "hidden";
+            
+            var pure = parseFloat(money_verse.value.toString().replace(/,/g,''));
+            campaign_data.verse_price = pure;
+            
+            money_total.value = (pure*parseFloat(verses[campaign_data.book])).toFixed(2);
+            
+            campaign_data.total_goal = money_total.value;
+            
+            money_total.value = money_total.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+    }
+    
+}
+    
+function add_campaign() {
+    console.log(campaign_data);
+    console.log(new_goal_description.getLength());
+    
+    var edits = document.getElementById('new-goal-description').getElementsByClassName("ql-editor");
+    for(var i = 0; i < edits.length; i++) {
+        campaign_description = edits[i].innerHTML;
+        console.log(campaign_description);
+    }
+    
+    var valid = true;
+    
+
+    document.getElementById('new-url').style.borderColor = "#d1d1d1";
+    document.getElementById('new-start-date').style.borderColor = "#d1d1d1";
+    document.getElementById('new-end-date').style.borderColor = "#d1d1d1";
+    document.getElementById('new-language').style.borderColor = "#d1d1d1";
+    document.getElementById('new-book').style.borderColor = "#d1d1d1";
+    document.getElementById('new-total-goal').style.borderColor = "#d1d1d1";
+    document.getElementById('new-verse-price').style.borderColor = "#d1d1d1";
+    $( "#new-goal-description.ql-container" ).css( "border-color", "#d1d1d1" );
+    
+    
+    if (campaign_data.url == "") {
+        document.getElementById('new-url').style.borderColor = "#db5353";
+        document.getElementById('new-url').focus();
+        valid = false;
+    } else if (campaign_data.start_date == "") {
+        document.getElementById('new-start-date').style.borderColor = "#db5353";
+        document.getElementById('new-start-date').focus();
+        valid = false;
+    } else if (campaign_data.end_date == "") {
+        document.getElementById('new-end-date').style.borderColor = "#db5353";
+        document.getElementById('new-end-date').focus();
+        valid = false;
+    } else if (campaign_data.language == "") {
+        document.getElementById('new-language').style.borderColor = "#db5353";
+        document.getElementById('new-language').focus();
+        valid = false;
+    } else if (campaign_data.book == "") {
+        document.getElementById('new-book').style.borderColor = "#db5353";
+        document.getElementById('new-book').focus();
+        valid = false;
+    } else if (campaign_data.total_goal == "") {
+        document.getElementById('new-total-goal').style.borderColor = "#db5353";
+        document.getElementById('new-total-goal').focus();
+        valid = false;
+    } else if (campaign_data.verse_price == "") {
+        document.getElementById('new-verse-price').style.borderColor = "#db5353";
+        document.getElementById('new-verse-price').focus();
+        valid = false;
+    } else if (new_goal_description.getLength() <= 1) {
+        $( "#new-goal-description.ql-container" ).css( "border-color", "#db5353" );
+        new_goal_description.focus();
+        valid = false;
+    } 
+    
+    
+    if (valid) {
+        
+        var params = 'church='+view_church+'&language='+campaign_data.language+'&book='+campaign_data.book+'&goal_description='+campaign_description+'&goal_amount='+campaign_data.total_goal+'&verse_price='+campaign_data.verse_price+'&start_date='+campaign_data.start_date+'&end_date='+campaign_data.end_date+'&url='+campaign_data.url;
+        
+        console.log(params);
+        
+        var ajaxObj = new XMLHttpRequest();
+        ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+            
+            if (ajaxObj.responseText == "yes\n\n\n") {
+                window.location.href = "admin.php#";
+                load_church_campaign();
+                alert("A new campaign has been created.\r\nPlease wait for its new fund ID to be processed.");
+            } else {
+                alert("Error occurred");
+            }
+            
+        }}}
+        ajaxObj.open("GET", "sql-add-church-campaign.php?"+params);
+        ajaxObj.send();
+        
+        
+        
+    }
+}
+    
+    
+
+var church_campaign_goal_description = "";
+    
+var church_campaign_description = "";
+var church_campaign_data = {
+    start_date: "",
+    end_date: ""
+}
+    
+function select_church_campaign(num) {
+    church_campaign_id = num;
+}
+
+function edit_campaign_start_date(e) {
+    var start_now = new Date(e.value);
+    var start_day = ("0" + start_now.getDate()).slice(-2);
+    var start_month = ("0" + (start_now.getMonth() + 1)).slice(-2);
+    var start_date = start_now.getFullYear()+"-"+(start_month)+"-"+(start_day);
+    
+    var today = new Date();
+    if (start_now < today) {
+        e.style.borderColor = "#db5353";
+        church_campaign_data.start_date = "";
+        alert("Invalid duration");
+    } else {
+        e.style.borderColor = "#d1d1d1";
+        church_campaign_data.start_date = e.value;
+        document.getElementById('church-campaign-end-date').focus();
+    }
+    
+}
+function edit_campaign_end_date(e) {
+    
+    var start_now = new Date(church_campaign_data.start_date);
+    var start_day = ("0" + start_now.getDate()).slice(-2);
+    var start_month = ("0" + (start_now.getMonth() + 1)).slice(-2);
+
+    var end_now = new Date(e.value);
+    var end_day = ("0" + end_now.getDate()).slice(-2);
+    var end_month = ("0" + (end_now.getMonth() + 1)).slice(-2);
+
+    var start_date = start_now.getFullYear()+"-"+(start_month)+"-"+(start_day);
+    var end_date = end_now.getFullYear()+"-"+(end_month)+"-"+(end_day);
+
+    var today = new Date();
+    if (start_date >= end_date || today > end_date) {
+        e.style.borderColor = "#db5353";
+        church_campaign_data.end_date = "";
+        alert("Invalid duration");
+    } else {
+        e.style.borderColor = "#d1d1d1";
+        church_campaign_data.end_date = e.value;
+    }
+    
+}
+    
+function edit_church_campaign(campaign) {
+    console.log(church_campaign_data);
+    console.log(church_campaign_goal_description.getLength());
+    
+    var edits = document.getElementById('church-campaign-goal-description').getElementsByClassName("ql-editor");
+    for(var i = 0; i < edits.length; i++) {
+        church_campaign_description = edits[i].innerHTML;
+        console.log(church_campaign_description);
+    }
+    
+    var valid = true;
+    
+    if ( $( "#church-campaign-start-date" ).length ) {
+        document.getElementById('church-campaign-start-date').style.borderColor = "#d1d1d1";
+    }
+    document.getElementById('church-campaign-end-date').style.borderColor = "#d1d1d1";
+    $( "#church-campaign-goal-description.ql-container" ).css( "border-color", "#d1d1d1" );
+    
+
+    if (church_campaign_data.start_date == "") {
+        document.getElementById('church-campaign-start-date').style.borderColor = "#db5353";
+        document.getElementById('church-campaign-start-date').focus();
+        valid = false;
+    } else if (church_campaign_data.end_date == "") {
+        document.getElementById('church-campaign-end-date').style.borderColor = "#db5353";
+        document.getElementById('church-campaign-end-date').focus();
+        valid = false;
+    } else if (church_campaign_goal_description.getLength() <= 1) {
+        $( "#church-campaign-goal-description.ql-container" ).css( "border-color", "#db5353" );
+        church_campaign_goal_description.focus();
+        valid = false;
+    } 
+    
+    
+    if (valid) {
+        
+        var params = 'id='+campaign+'&goal_description='+church_campaign_description+'&start_date='+church_campaign_data.start_date+'&end_date='+church_campaign_data.end_date;
+        
+        console.log(params);
+        
+        var ajaxObj = new XMLHttpRequest();
+        ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+
+            if (ajaxObj.responseText == "no\n") {
+                
+                alert("Error occurred");
+                
+            } else {
+                
+                window.location.href = "admin.php#";
+                load_church_campaign();
+            }
+            
+        }}}
+        ajaxObj.open("GET", "sql-update-church-campaign.php?"+params);
+        ajaxObj.send();
+        
+        
+        
+    }
+}
+        
+    
+    
+    
+    
     
     
     

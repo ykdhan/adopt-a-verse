@@ -50,8 +50,8 @@
 
 
 #small-div-details {
-    max-height: 19em !important;
-    height: 19em;
+    max-height: 25em !important;
+    height: 25em;
     padding-top: 1em;
     padding-bottom: 1em;
     margin-top: 2em;
@@ -96,6 +96,14 @@
     color: #5E5E5E;
     font-family: "Gotham-Medium" !important;
 }
+
+
+
+#small-language-content {
+    height: 26em;
+}
+
+
 
 
 #small-side-photo {

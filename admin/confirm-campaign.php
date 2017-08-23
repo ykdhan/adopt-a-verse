@@ -41,23 +41,15 @@
     
 <!-- Top Bar -->
 <div class="top-bar desktop">
-    <table><tr>
-    <td>
-        <a href="index.php"><img id="adopt-logo" alt="Adopt-a-Verse Logo" align="middle" src="../img/wycliffe-logo.png"><span id="tag-admin">Admin</span></a>
-    </td>
-    <th>
-    </th>
-    <td>
-        <span id="admin-logout"><a href="logout.php">Logout</a></span>
-        <span id="admin-title"></span>
-    </td>
-    </tr></table>
+    <div id="confirm-top-bar">
+        <img id="adopt-logo-big" alt="Adopt-a-Verse Logo" align="middle" src="../img/wycliffe-logo-white.png">
+    </div>
 </div>
     
     
 <!-- Body -->
 <div id="bg" align="center">
-<div id="landing-wrapper">
+<div id="confirm-wrapper">
      
     <div class="lightbox">
         <div id="title">Confirm Campaign</div>
@@ -171,7 +163,8 @@ function load_campaign() {
             
             
             if (ajaxObj.responseText == "no\n") {
-                alert("Error: No campaign");
+                alert("Error: Invalid campaign");
+                window.location.href = "index.php";
             } else {
                 var resp = JSON.parse(ajaxObj.responseText);
 
@@ -188,6 +181,7 @@ function load_campaign() {
                 
                 if (verified != 0) {
                     alert("This campaign has already been confirmed.");
+                    window.location.href = "index.php";
                 } else {
                     var start_year = (""+start_date.getFullYear()).slice(-2);
                     var start_month = start_date.getMonth() + 1;
@@ -286,8 +280,10 @@ function confirm_campaign() {
             
             console.log(ajaxObj.responseText);
 
-            if (ajaxObj.responseText != "no\n") {
-                alert("Confirmed");
+            if (ajaxObj.responseText != "no\n\n\n") {
+                alert("Campaign is confirmed.");
+                window.location.href = "index.php";
+                
             } else {
                 alert("Error occurred");
             }

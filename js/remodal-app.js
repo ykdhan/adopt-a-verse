@@ -619,7 +619,6 @@
             document.getElementById('section-user').style.display = "block";
         }
         
-        
         function sortNumber(a,b) {
             return a - b;
         }

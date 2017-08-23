@@ -15,7 +15,8 @@ $seed = str_split('abcdefghijklmnopqrstuvwxyz'
                  .'0123456789');
 shuffle($seed);
 $id = '';
-foreach (array_rand($seed, 10) as $k) $id .= $seed[$k];  // 6-char random id
+foreach (array_rand($seed, 7) as $k) $id .= $seed[$k];  // 7-char random id
+$id = 'aav'.$id;
 
 $campaign = $_GET['campaign'];
 $display = $_GET['display_name'];
