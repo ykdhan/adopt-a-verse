@@ -870,6 +870,12 @@ if (isset($_SESSION['aav-admin'])) {
 
 <script>
     
+$(".refresh").hover(function() {
+    $( '.refresh' ).attr("src","../img/refresh_hover.svg");
+}, function() {
+    $( '.refresh' ).attr("src","../img/refresh.svg");
+});
+    
 function logout() {
     if (window.confirm("Would you like to log out?")) {
         window.location.href = "logout.php";
