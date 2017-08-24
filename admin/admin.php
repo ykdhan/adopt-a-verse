@@ -50,7 +50,7 @@ if (isset($_SESSION['aav-admin'])) {
 <!-- Top Bar -->
 <div id="side">
     <div id="section-logo">
-        <a href="index.php"><img id="adopt-logo" alt="Adopt-a-Verse Logo" align="middle" src="../img/wycliffe-admin-logo.png"></a>
+        <a href="index.php"><img id="adopt-logo" alt="Adopt-a-Verse Logo" align="middle" src="../img/wycliffe-logo-white.png"></a>
     </div>
     <div id="section-tab">
         <button class="landing-tabs landing-tabs-now" onclick="landing_tab(event, 'tab-campaign')"><img alt="" src="../img/icon_campaign.svg"><br>Campaigns</button>
@@ -61,7 +61,7 @@ if (isset($_SESSION['aav-admin'])) {
     </div>
     <div id="section-setting">
         <div class="side-division"></div>
-        <button class="button-setting" onclick="logout()">Logout</button>
+        <button class="button-setting" onclick="logout()">Logout<img alt="" src="../img/logout.svg"></button>
     </div>
 </div>
     
@@ -73,7 +73,7 @@ if (isset($_SESSION['aav-admin'])) {
 <div id="landing-wrapper">
     
     <div id="tab-campaign" class="landing-content landing-content-now">
-        <h1>Campaigns</h1>
+        <h1>Campaigns<img onclick="search_campaign()" alt="" class="refresh" src="../img/refresh.svg"></h1>
         <div class="control-bar">
             <span class="search-icon"><i class="fa fa-search" aria-hidden="true"></i></span><input type="text" class="landing-text" id="search-campaign" onkeyup="search_campaign()" placeholder="Search by a book of the Bible, language or church name">
             <div class="filters">
@@ -103,7 +103,7 @@ if (isset($_SESSION['aav-admin'])) {
     
     <div id="tab-church" class="landing-content">
         
-        <h1>Churches</h1>
+        <h1>Churches<img onclick="search_church()" alt="" class="refresh" src="../img/refresh.svg"></h1>
         <div class="control-bar">
             <span class="search-icon"><i class="fa fa-search" aria-hidden="true"></i></span><input type="text" class="landing-text" id="search-church" onkeyup="search_church()" placeholder="Search by church name, account number or state">
             <a href="#add-church"><button type="button" class="button-add"><i class="fa fa-plus" aria-hidden="true"></i> Add Church</button></a>
@@ -160,7 +160,7 @@ if (isset($_SESSION['aav-admin'])) {
     
     <div id="tab-language" class="landing-content">
         
-        <h1>Languages</h1>
+        <h1>Languages<img onclick="search_language()" alt="" class="refresh" src="../img/refresh.svg"></h1>
         <div class="control-bar">
             <span class="search-icon"><i class="fa fa-search" aria-hidden="true"></i></span><input type="text" class="landing-text" id="search-language" onkeyup="search_language()" placeholder="Search by ID, people group or region">
             <a href="#add-language"><button type="button" class="button-add"><i class="fa fa-plus" aria-hidden="true"></i> Add Language</button></a>
@@ -191,7 +191,7 @@ if (isset($_SESSION['aav-admin'])) {
     
     <div id="tab-user" class="landing-content">
         
-        <h1>Users</h1>
+        <h1>Users<img onclick="search_user()" alt="" class="refresh" src="../img/refresh.svg"></h1>
         <div class="control-bar">
             <span class="search-icon"><i class="fa fa-search" aria-hidden="true"></i></span><input type="text" class="landing-text" id="search-user" onkeyup="search_user()" placeholder="Search by name or email">
             <a href="#add-wycliffe-admin"><button type="button" class="button-add"><i class="fa fa-plus" aria-hidden="true"></i> Add Wycliffe Admin</button></a>
@@ -217,7 +217,7 @@ if (isset($_SESSION['aav-admin'])) {
     </div>
     
     <div id="tab-transaction" class="landing-content">
-        <h1>Transactions</h1>
+        <h1>Transactions<img onclick="search_transaction()" alt="" class="refresh" src="../img/refresh.svg"></h1>
         <div class="control-bar">
             <span class="search-icon"><i class="fa fa-search" aria-hidden="true"></i></span><input type="text" class="landing-text" id="search-transaction" onkeyup="search_transaction()" placeholder="Search by transaction ID, campaign ID or user name">
             <div class="filters">
@@ -2874,6 +2874,8 @@ function delete_campaign(campaign) {
     if(confirm("Delete campaign?")) {
         var ajaxObj = new XMLHttpRequest();
         ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
+            
+            console.log(ajaxObj.responseText);
 
             if (ajaxObj.responseText == "yes\n") {
                 window.location.href = "admin.php#";

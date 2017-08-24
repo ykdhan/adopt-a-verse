@@ -181,7 +181,7 @@ input[type='date'] {
 #side {
     z-index: 10;
     display: grid;
-    grid-template-rows: 8em 1fr 6em;
+    grid-template-rows: 6.5em 1fr 6em;
     grid-gap: 0;
     box-sizing: border-box;
     margin: 0;
@@ -272,7 +272,7 @@ input[type='date'] {
     padding: 1.1em;
     font-size: 0.8em;
     background: none;
-    color: #ddd;
+    color: #eee;
     border: 0;
     text-align: left;
     cursor: pointer;
@@ -281,7 +281,11 @@ input[type='date'] {
 .button-setting:hover {
     background: #202835;
 }
-
+.button-setting img {
+    width: 1.3em;
+    float: right;
+    margin-top: -0.11em;
+}
 
 
 
@@ -984,7 +988,11 @@ input[type='date'] {
 
 
 
-
+.refresh {
+    width: 1.25em;
+    float: right;
+    cursor: pointer;
+}
 
 
 

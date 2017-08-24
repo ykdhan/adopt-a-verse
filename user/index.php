@@ -47,7 +47,7 @@
 <!-- Top Bar -->
 <div id="side">
     <div id="section-logo">
-        <a href="index.php"><img id="adopt-logo" alt="Adopt-a-Verse Logo" align="middle" src="../img/wycliffe-admin-logo.png"></a>
+        <a href="index.php"><img id="adopt-logo" alt="Adopt-a-Verse Logo" align="middle" src="../img/wycliffe-logo-white.png"></a>
     </div>
     <div id="section-tab">
         <button class="landing-tabs landing-tabs-now" onclick="landing_tab(event, 'tab-account')"><img alt="" src="../img/icon_account.svg"><br>My Account</button>
