@@ -72,8 +72,9 @@ if (isset($_SESSION['aav-admin'])) {
     
 <div id="landing-wrapper">
     
+    
     <div id="tab-campaign" class="landing-content landing-content-now">
-        <h1>Campaigns<img onclick="search_campaign()" alt="" class="refresh" src="../img/refresh.svg"></h1>
+        <h1>Campaigns<img onclick="refresh_campaign()" alt="" class="refresh" src="../img/refresh.svg"></h1>
         <div class="control-bar">
             <span class="search-icon"><i class="fa fa-search" aria-hidden="true"></i></span><input type="text" class="landing-text" id="search-campaign" onkeyup="search_campaign()" placeholder="Search by a book of the Bible, language or church name">
             <div class="filters">
@@ -103,7 +104,7 @@ if (isset($_SESSION['aav-admin'])) {
     
     <div id="tab-church" class="landing-content">
         
-        <h1>Churches<img onclick="search_church()" alt="" class="refresh" src="../img/refresh.svg"></h1>
+        <h1>Churches<img onclick="refresh_church()" alt="" class="refresh" src="../img/refresh.svg"></h1>
         <div class="control-bar">
             <span class="search-icon"><i class="fa fa-search" aria-hidden="true"></i></span><input type="text" class="landing-text" id="search-church" onkeyup="search_church()" placeholder="Search by church name, account number or state">
             <a href="#add-church"><button type="button" class="button-add"><i class="fa fa-plus" aria-hidden="true"></i> Add Church</button></a>
@@ -160,7 +161,7 @@ if (isset($_SESSION['aav-admin'])) {
     
     <div id="tab-language" class="landing-content">
         
-        <h1>Languages<img onclick="search_language()" alt="" class="refresh" src="../img/refresh.svg"></h1>
+        <h1>Languages<img onclick="refresh_language()" alt="" class="refresh" src="../img/refresh.svg"></h1>
         <div class="control-bar">
             <span class="search-icon"><i class="fa fa-search" aria-hidden="true"></i></span><input type="text" class="landing-text" id="search-language" onkeyup="search_language()" placeholder="Search by ID, people group or region">
             <a href="#add-language"><button type="button" class="button-add"><i class="fa fa-plus" aria-hidden="true"></i> Add Language</button></a>
@@ -191,7 +192,7 @@ if (isset($_SESSION['aav-admin'])) {
     
     <div id="tab-user" class="landing-content">
         
-        <h1>Users<img onclick="search_user()" alt="" class="refresh" src="../img/refresh.svg"></h1>
+        <h1>Users<img onclick="refresh_user()" alt="" class="refresh" src="../img/refresh.svg"></h1>
         <div class="control-bar">
             <span class="search-icon"><i class="fa fa-search" aria-hidden="true"></i></span><input type="text" class="landing-text" id="search-user" onkeyup="search_user()" placeholder="Search by name or email">
             <a href="#add-wycliffe-admin"><button type="button" class="button-add"><i class="fa fa-plus" aria-hidden="true"></i> Add Wycliffe Admin</button></a>
@@ -217,7 +218,7 @@ if (isset($_SESSION['aav-admin'])) {
     </div>
     
     <div id="tab-transaction" class="landing-content">
-        <h1>Transactions<img onclick="search_transaction()" alt="" class="refresh" src="../img/refresh.svg"></h1>
+        <h1>Transactions<img onclick="refresh_transaction()" alt="" class="refresh" src="../img/refresh.svg"></h1>
         <div class="control-bar">
             <span class="search-icon"><i class="fa fa-search" aria-hidden="true"></i></span><input type="text" class="landing-text" id="search-transaction" onkeyup="search_transaction()" placeholder="Search by transaction ID, campaign ID or user name">
             <div class="filters">
@@ -242,8 +243,6 @@ if (isset($_SESSION['aav-admin'])) {
         </div></div>
         <div class="list" id="list-transaction">Not Available</div>
     </div>
-      
-    
     
     
 </div> <!-- wrapper -->
@@ -876,9 +875,35 @@ $(".refresh").hover(function() {
     $( '.refresh' ).attr("src","../img/refresh.svg");
 });
     
+function refresh_campaign() {
+    document.getElementById('search-campaign').value = "";
+    filter_by('status','all');
+    search_campaign();
+}
+function refresh_church() {
+    document.getElementById('search-church').value = "";
+    search_church();
+}
+function refresh_language() {
+    document.getElementById('search-language').value = "";
+    filter_by('continent','all');
+    search_language();
+}
+function refresh_user() {
+    document.getElementById('search-user').value = "";
+    filter_by('role','all');
+    search_user();
+}
+function refresh_transaction() {
+    document.getElementById('search-transaction').value = "";
+    filter_by('transaction','all');
+    search_transaction();
+}
+    
+    
 function logout() {
     if (window.confirm("Would you like to log out?")) {
-        window.location.href = "logout.php";
+        window.location.href = "../logout.php";
     }
 }
     
@@ -1195,7 +1220,6 @@ function search_campaign() {
     var word = document.getElementById('search-campaign');
     word.value = word.value.replace(/[^a-zA-Z0-9\s]+/, '');
     
-    
     var ajaxObj = new XMLHttpRequest();
         ajaxObj.onreadystatechange= function() { if(ajaxObj.readyState == 4) { if(ajaxObj.status == 200) {
             
@@ -1205,6 +1229,8 @@ function search_campaign() {
                 document.getElementById('list-campaign').innerHTML += '<div class="list-group">No search result.</div>';
             } else {
                 var resp = JSON.parse(ajaxObj.responseText);
+                
+                campaigns = {};
 
                 for (var i = 0; i < Object.keys(resp).length; i++) {
 
@@ -1508,6 +1534,8 @@ function search_language() {
             } else {
                 var resp = JSON.parse(ajaxObj.responseText);
 
+                languages = {};
+                
                 for (var i = 0; i < Object.keys(resp).length; i++) {
 
                     var num = Object.keys(resp)[i];
@@ -1610,6 +1638,8 @@ function search_user() {
                 document.getElementById('list-user').innerHTML += '<div class="list-group">No search result.</div>';
             } else {
                 var resp = JSON.parse(ajaxObj.responseText);
+                
+                users = {};
 
                 for (var i = 0; i < Object.keys(resp).length; i++) {
 
@@ -1692,7 +1722,7 @@ function search_transaction() {
             } else {
                 var resp = JSON.parse(ajaxObj.responseText);
                 
-                console.log(resp);
+                transactions = {};
 
                 for (var i = 0; i < Object.keys(resp).length; i++) {
 
